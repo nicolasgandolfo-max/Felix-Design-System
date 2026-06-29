@@ -22,7 +22,7 @@
     "changeset": "changeset",
     "version": "changeset version",
     "release": "npm run build && changeset publish",
-    "prepare": "husky",
+    "prepare": "husky || true",
     "generate": "plop"
   },
   "lint-staged": {
