@@ -135,8 +135,13 @@ body {
 .kicker::before { content: ""; width: 26px; height: 2px; background: var(--turquoise); }
 .hero h1 { font-family: var(--font-heading); font-weight: 900; font-size: clamp(2.7rem, 6.2vw, 5.1rem); line-height: .98;
   letter-spacing: -.035em; margin: 0 0 26px; text-wrap: balance; }
-.hero h1 em { font-style: normal; color: var(--turquoise); position: relative; white-space: nowrap; }
+.hero h1 em { font-style: normal; color: var(--turquoise); position: relative; }
 .hero h1 em::after { content: ""; position: absolute; left: 0; right: 0; bottom: .06em; height: .10em; background: var(--lime); z-index: -1; opacity: .9; }
+/* Keep the highlighted phrase intact only once there's room for it — at
+   narrow widths `nowrap` would force the whole page to scroll horizontally. */
+@media (min-width: 480px) {
+  .hero h1 em { white-space: nowrap; }
+}
 .hero .desc { font-size: 1.28rem; line-height: 1.5; color: var(--fg-muted); max-width: 60ch; margin: 0 0 34px; }
 .meta { display: flex; flex-wrap: wrap; gap: 10px 26px; padding-top: 26px; border-top: 1px solid var(--stone); }
 .meta div { display: flex; flex-direction: column; gap: 3px; }
