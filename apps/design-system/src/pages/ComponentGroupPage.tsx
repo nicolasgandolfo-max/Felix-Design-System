@@ -1,8 +1,144 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, Navigate, useLocation, useParams } from "react-router-dom";
+import { CaretRightIcon } from "@phosphor-icons/react";
 import { GROUP_LABELS, GROUP_SLUGS, INVENTORY, slugify } from "../data";
 import { SHOWCASES } from "../components-registry";
 import { useTr } from "../i18n";
+
+const VOID_TAGS = new Set(["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "track", "wbr"]);
+
+/** Pretty-print a live DOM node as indented HTML. SVG internals are collapsed to keep the snippet readable. */
+function formatNode(node: Node, indent: string, out: string[]) {
+  if (node.nodeType === Node.TEXT_NODE) {
+    const t = node.textContent?.trim();
+    if (t) out.push(indent + t);
+    return;
+  }
+  if (node.nodeType !== Node.ELEMENT_NODE) return;
+  const el = node as Element;
+  const tag = el.tagName.toLowerCase();
+  const attrs = [...el.attributes].map((a) => (a.value === "" ? a.name : `${a.name}="${a.value}"`)).join(" ");
+  const openTag = attrs ? `<${tag} ${attrs}>` : `<${tag}>`;
+  if (VOID_TAGS.has(tag)) {
+    out.push(indent + openTag);
+    return;
+  }
+  if (tag === "svg") {
+    out.push(indent + openTag + "…</svg>");
+    return;
+  }
+  const kids = [...el.childNodes].filter(
+    (n) => n.nodeType === Node.ELEMENT_NODE || (n.nodeType === Node.TEXT_NODE && n.textContent?.trim())
+  );
+  if (kids.length === 0) {
+    out.push(indent + openTag + `</${tag}>`);
+    return;
+  }
+  if (kids.length === 1 && kids[0].nodeType === Node.TEXT_NODE) {
+    out.push(indent + openTag + kids[0].textContent!.trim() + `</${tag}>`);
+    return;
+  }
+  out.push(indent + openTag);
+  kids.forEach((k) => formatNode(k, indent + "  ", out));
+  out.push(indent + `</${tag}>`);
+}
+
+/**
+ * Serialize the rendered showcase to readable HTML. Showcases are built from
+ * labelled Demo panels (.panel > .ph + .cluster); we emit each panel's label
+ * as a comment and only the actual component markup inside it.
+ */
+function captureHtml(root: HTMLElement): string {
+  const panels = [...root.querySelectorAll(".panel")];
+  const targets = panels.length
+    ? panels.map((p) => ({
+        label: p.querySelector(".ph")?.textContent ?? "",
+        nodes: [...(p.querySelector(".cluster")?.childNodes ?? [])],
+      }))
+    : [{ label: "", nodes: [...root.childNodes] }];
+  const out: string[] = [];
+  targets.forEach((t, i) => {
+    if (i > 0) out.push("");
+    if (t.label) out.push(`<!-- ${t.label} -->`);
+    t.nodes.forEach((n) => formatNode(n, "", out));
+  });
+  return out.join("\n");
+}
+
+/** One component's docs block: title, description, usage, live showcase, and an HTML-code disclosure. */
+function ComponentBlock({ name, slug }: { name: string; slug: string }) {
+  const tr = useTr();
+  const entry = SHOWCASES[slug];
+  const showcaseRef = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
+  const [html, setHtml] = useState("");
+  const [copied, setCopied] = useState(false);
+
+  const toggle = () => {
+    if (!open && showcaseRef.current) setHtml(captureHtml(showcaseRef.current));
+    setOpen((o) => !o);
+  };
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(html);
+    } catch {
+      // Clipboard API can be permission-gated (embedded browsers); fall back to execCommand.
+      const ta = document.createElement("textarea");
+      ta.value = html;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      ta.remove();
+    }
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+  };
+
+  const Showcase = entry?.render;
+  return (
+    <div id={slug} className="comp-block">
+      <h3 className="h3">{name}</h3>
+      {entry && Showcase ? (
+        <>
+          <p className="comp-desc">{tr(entry.es, entry.en, entry.pt)}</p>
+          {entry.usage && <p className="comp-usage">{tr(entry.usage.es, entry.usage.en, entry.usage.pt)}</p>}
+          <div ref={showcaseRef}>
+            <Showcase />
+          </div>
+          <button type="button" className="code-toggle" aria-expanded={open} onClick={toggle}>
+            <CaretRightIcon />
+            {open
+              ? tr("Ocultar código", "Hide code", "Ocultar código")
+              : tr("Ver código HTML", "View HTML code", "Ver código HTML")}
+          </button>
+          {open && (
+            <div className="code-block">
+              <button type="button" className="code-copy" onClick={copy}>
+                {copied ? tr("¡Copiado!", "Copied!", "Copiado!") : tr("Copiar", "Copy", "Copiar")}
+              </button>
+              <pre>
+                <code>{html}</code>
+              </pre>
+            </div>
+          )}
+        </>
+      ) : (
+        <div className="holder" style={{ marginTop: 8 }}>
+          <p>
+            {tr(
+              "El showcase en vivo de este componente está en progreso. Por ahora podés verlo en el Storybook del repositorio.",
+              "This component's live showcase is in progress. For now you can see it in the repo's Storybook.",
+              "O showcase ao vivo deste componente está em andamento. Por enquanto você pode vê-lo no Storybook do repositório."
+            )}
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
 
 /** All components of one group (Atoms/Molecules/Organisms) on a single scrollable page. */
 export function ComponentGroupPage() {
@@ -54,32 +190,9 @@ export function ComponentGroupPage() {
         ))}
       </nav>
 
-      {group.items.map((name) => {
-        const slug = slugify(name);
-        const entry = SHOWCASES[slug];
-        const Showcase = entry?.render;
-        return (
-          <div key={name} id={slug} className="comp-block">
-            <h3 className="h3">{name}</h3>
-            {entry && Showcase ? (
-              <>
-                <p className="comp-desc">{tr(entry.es, entry.en, entry.pt)}</p>
-                <Showcase />
-              </>
-            ) : (
-              <div className="holder" style={{ marginTop: 8 }}>
-                <p>
-                  {tr(
-                    "El showcase en vivo de este componente está en progreso. Por ahora podés verlo en el Storybook del repositorio.",
-                    "This component's live showcase is in progress. For now you can see it in the repo's Storybook.",
-                    "O showcase ao vivo deste componente está em andamento. Por enquanto você pode vê-lo no Storybook do repositório.",
-                  )}
-                </p>
-              </div>
-            )}
-          </div>
-        );
-      })}
+      {group.items.map((name) => (
+        <ComponentBlock key={name} name={name} slug={slugify(name)} />
+      ))}
     </section>
   );
 }
