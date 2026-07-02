@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 
-export type Lang = "es" | "en";
+export type Lang = "es" | "en" | "pt";
 
 const LangContext = createContext<{ lang: Lang; setLang: (l: Lang) => void }>({
   lang: "es",
@@ -17,8 +17,12 @@ export function LangProvider({ children }: { children: ReactNode }) {
 
 export const useLang = () => useContext(LangContext);
 
-/** Returns a translator: tr("Español", "English") → string for the active language. */
+/** Returns a translator: tr("Español", "English", "Português") → string for the active language. */
 export function useTr() {
   const { lang } = useLang();
-  return (es: string, en: string) => (lang === "es" ? es : en);
+  return (es: string, en: string, pt?: string) => {
+    if (lang === "es") return es;
+    if (lang === "en") return en;
+    return pt || en || es;
+  };
 }

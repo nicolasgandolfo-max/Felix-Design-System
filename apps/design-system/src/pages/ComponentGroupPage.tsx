@@ -26,28 +26,29 @@ export function ComponentGroupPage() {
     }
     return (
       <section className="sec flush">
-        <Link to="/componentes" className="back-link">← {tr("Componentes", "Components")}</Link>
-        <h2 className="h2">{tr("Grupo no encontrado", "Group not found")}</h2>
-        <p className="lead">{tr("Ese grupo no existe en el sistema.", "That group doesn't exist in the system.")}</p>
+        <Link to="/componentes" className="back-link">← {tr("Componentes", "Components", "Componentes")}</Link>
+        <h2 className="h2">{tr("Grupo no encontrado", "Group not found", "Grupo não encontrado")}</h2>
+        <p className="lead">{tr("Ese grupo no existe en el sistema.", "That group doesn't exist in the system.", "Esse grupo não existe no sistema.")}</p>
       </section>
     );
   }
 
-  const label = GROUP_LABELS[group.group] ?? { es: group.group, en: group.group };
+  const label = GROUP_LABELS[group.group] ?? { es: group.group, en: group.group, pt: group.group };
 
   return (
     <section className="sec flush">
-      <Link to="/componentes" className="back-link">← {tr("Componentes", "Components")}</Link>
-      <div className="eyebrow"><span>{tr(label.es, label.en)}</span></div>
-      <h2 className="h2">{tr(label.es, label.en)} · {group.items.length}</h2>
+      <Link to="/componentes" className="back-link">← {tr("Componentes", "Components", "Componentes")}</Link>
+      <div className="eyebrow"><span>{tr(label.es, label.en, label.pt)}</span></div>
+      <h2 className="h2">{tr(label.es, label.en, label.pt)} · {group.items.length}</h2>
       <p className="lead">
         {tr(
           `Todos los componentes de ${label.es.toLowerCase()} del sistema, en una sola página.`,
           `Every ${label.en.toLowerCase()} component in the system, on one page.`,
+          `Todos os componentes de ${label.pt.toLowerCase()} do sistema, em uma só página.`,
         )}
       </p>
 
-      <nav className="comp-jump" aria-label={tr("Ir a componente", "Jump to component")}>
+      <nav className="comp-jump" aria-label={tr("Ir a componente", "Jump to component", "Ir para o componente")}>
         {group.items.map((name) => (
           <a key={name} href={`#${slugify(name)}`} className="comp-jump-link">{name}</a>
         ))}
@@ -62,7 +63,7 @@ export function ComponentGroupPage() {
             <h3 className="h3">{name}</h3>
             {entry && Showcase ? (
               <>
-                <p className="comp-desc">{tr(entry.es, entry.en)}</p>
+                <p className="comp-desc">{tr(entry.es, entry.en, entry.pt)}</p>
                 <Showcase />
               </>
             ) : (
@@ -71,6 +72,7 @@ export function ComponentGroupPage() {
                   {tr(
                     "El showcase en vivo de este componente está en progreso. Por ahora podés verlo en el Storybook del repositorio.",
                     "This component's live showcase is in progress. For now you can see it in the repo's Storybook.",
+                    "O showcase ao vivo deste componente está em andamento. Por enquanto você pode vê-lo no Storybook do repositório.",
                   )}
                 </p>
               </div>

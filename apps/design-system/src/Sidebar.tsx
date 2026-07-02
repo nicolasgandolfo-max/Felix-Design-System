@@ -1,7 +1,7 @@
 import { Fragment, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { CaretRightIcon, PuzzlePieceIcon } from "@phosphor-icons/react";
-import { NAV, INVENTORY, GROUP_SLUGS, GROUP_ICONS, ILLUSTRATION_SECTIONS, slugify } from "./data";
+import { NAV, INVENTORY, GROUP_SLUGS, GROUP_ICONS, GROUP_LABELS, ILLUSTRATION_SECTIONS, slugify } from "./data";
 import { useLang, useTr } from "./i18n";
 
 function Logo() {
@@ -38,14 +38,14 @@ export function Sidebar({ onNavigate, open }: { onNavigate: () => void; open: bo
     <aside className={"sidebar" + (open ? " open" : "")} id="sidebar">
       <NavLink to="/" className="brand" onClick={onNavigate} aria-label="Felix — inicio">
         <Logo />
-        <span className="sub">{tr("Sistema de diseño", "Design System")}</span>
+        <span className="sub">{tr("Sistema de diseño", "Design System", "Sistema de design")}</span>
         <span className="ver">v1.0.0 · alpha</span>
       </NavLink>
 
-      <nav className="nav" aria-label={tr("Secciones", "Sections")}>
+      <nav className="nav" aria-label={tr("Secciones", "Sections", "Seções")}>
         {NAV.map((g) => (
           <Fragment key={g.group.en}>
-            <span className="nav-group">{tr(g.group.es, g.group.en)}</span>
+            <span className="nav-group">{tr(g.group.es, g.group.en, g.group.pt)}</span>
             {g.items.map((it) => {
               const Icon = it.icon;
               if (it.id !== "illustrations") {
@@ -54,7 +54,7 @@ export function Sidebar({ onNavigate, open }: { onNavigate: () => void; open: bo
                     {({ isActive }) => (
                       <>
                         <Icon weight={isActive ? "fill" : "regular"} />
-                        <span>{tr(it.es, it.en)}</span>
+                        <span>{tr(it.es, it.en, it.pt)}</span>
                       </>
                     )}
                   </NavLink>
@@ -71,7 +71,7 @@ export function Sidebar({ onNavigate, open }: { onNavigate: () => void; open: bo
                       {({ isActive }) => (
                         <>
                           <Icon weight={isActive ? "fill" : "regular"} />
-                          <span>{tr(it.es, it.en)}</span>
+                          <span>{tr(it.es, it.en, it.pt)}</span>
                         </>
                       )}
                     </NavLink>
@@ -79,7 +79,7 @@ export function Sidebar({ onNavigate, open }: { onNavigate: () => void; open: bo
                       type="button"
                       className={"nav-caret" + (expanded ? " open" : "")}
                       aria-expanded={expanded}
-                      aria-label={expanded ? tr("Colapsar", "Collapse") : tr("Expandir", "Expand")}
+                      aria-label={expanded ? tr("Colapsar", "Collapse", "Recolher") : tr("Expandir", "Expand", "Expandir")}
                       onClick={() => toggleGroup("illustrations", active)}
                     >
                       <CaretRightIcon />
@@ -88,7 +88,7 @@ export function Sidebar({ onNavigate, open }: { onNavigate: () => void; open: bo
                   {expanded &&
                     ILLUSTRATION_SECTIONS.map((s) => (
                       <Link key={s.id} to={`/ilustraciones#${s.id}`} onClick={onNavigate} className="sub">
-                        <span>{tr(s.es, s.en)}</span>
+                        <span>{tr(s.es, s.en, s.pt)}</span>
                       </Link>
                     ))}
                 </Fragment>
@@ -98,12 +98,12 @@ export function Sidebar({ onNavigate, open }: { onNavigate: () => void; open: bo
         ))}
 
         {/* Componentes — full section with every component linked */}
-        <span className="nav-group">{tr("Componentes", "Components")}</span>
+        <span className="nav-group">{tr("Componentes", "Components", "Componentes")}</span>
         <NavLink to="/componentes" end onClick={onNavigate} className={navClass}>
           {({ isActive }) => (
             <>
               <PuzzlePieceIcon weight={isActive ? "fill" : "regular"} />
-              <span>{tr("Visión general", "Overview")}</span>
+              <span>{tr("Visión general", "Overview", "Visão geral")}</span>
             </>
           )}
         </NavLink>
@@ -119,7 +119,7 @@ export function Sidebar({ onNavigate, open }: { onNavigate: () => void; open: bo
                   {({ isActive }) => (
                     <>
                       <GroupIcon weight={isActive ? "fill" : "regular"} />
-                      <span>{group.group}</span>
+                      <span>{tr(GROUP_LABELS[group.group].es, GROUP_LABELS[group.group].en, GROUP_LABELS[group.group].pt)}</span>
                     </>
                   )}
                 </NavLink>
@@ -127,7 +127,7 @@ export function Sidebar({ onNavigate, open }: { onNavigate: () => void; open: bo
                   type="button"
                   className={"nav-caret" + (expanded ? " open" : "")}
                   aria-expanded={expanded}
-                  aria-label={expanded ? tr("Colapsar", "Collapse") : tr("Expandir", "Expand")}
+                  aria-label={expanded ? tr("Colapsar", "Collapse", "Recolher") : tr("Expandir", "Expand", "Expandir")}
                   onClick={() => toggleGroup(groupSlug, active)}
                 >
                   <CaretRightIcon />
@@ -148,12 +148,15 @@ export function Sidebar({ onNavigate, open }: { onNavigate: () => void; open: bo
       </nav>
 
       <div className="side-foot">
-        <div className="lang" role="group" aria-label={tr("Idioma", "Language")}>
+        <div className="lang" role="group" aria-label={tr("Idioma", "Language", "Idioma")}>
           <button aria-pressed={lang === "es"} onClick={() => setLang("es")}>
             ES
           </button>
           <button aria-pressed={lang === "en"} onClick={() => setLang("en")}>
             EN
+          </button>
+          <button aria-pressed={lang === "pt"} onClick={() => setLang("pt")}>
+            PT
           </button>
         </div>
       </div>
