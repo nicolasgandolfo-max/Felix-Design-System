@@ -46,6 +46,7 @@ export interface Showcase {
   /** Short bilingual description shown under the component title. */
   es: string;
   en: string;
+  pt: string;
   render: () => ReactNode;
   /** Compact, non-interactive visual used in the components index card. */
   preview: () => ReactNode;
@@ -74,6 +75,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   avatar: {
     es: "Imagen de perfil con iniciales de respaldo, 5 tamaños y estado.",
     en: "Profile image with initials fallback, 5 sizes, and status.",
+    pt: "Imagem de perfil com iniciais de reserva, 5 tamanhos e status.",
     preview: () => <Avatar size="lg"><AvatarFallback>MG</AvatarFallback></Avatar>,
     render: () => (
       <>
@@ -96,6 +98,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   badge: {
     es: "Etiqueta pill para estados y metadatos.",
     en: "Pill label for status and metadata.",
+    pt: "Rótulo pill para status e metadados.",
     preview: () => (
       <div style={{ display: "flex", gap: 8 }}>
         <Badge variant="default">Nuevo</Badge>
@@ -116,6 +119,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   button: {
     es: "Acción principal. 5 variantes y 3 tamaños; pill siempre.",
     en: "Primary action. 5 variants and 3 sizes; always a pill.",
+    pt: "Ação principal. 5 variantes e 3 tamanhos; sempre pill.",
     preview: () => <Button variant="primary"><PaperPlaneTiltIcon />Enviar dinero</Button>,
     render: () => (
       <>
@@ -141,6 +145,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   checkbox: {
     es: "Selección múltiple. Componer con Label vía id.",
     en: "Multi-select. Compose with Label via id.",
+    pt: "Seleção múltipla. Combine com Label via id.",
     preview: () => (
       <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
         <Checkbox id="cb-prev" defaultChecked />
@@ -166,6 +171,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   coinloader: {
     es: "Loader de marca (la moneda de Felix) para esperas largas.",
     en: "Branded loader (Felix's coin) for longer waits.",
+    pt: "Loader da marca (a moeda do Felix) para esperas mais longas.",
     preview: () => <CoinLoader size="lg" label="Cargando" />,
     render: () => (
       <Demo label="Tamaños">
@@ -178,6 +184,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   dots: {
     es: "Indicador de carga compacto en línea.",
     en: "Compact inline loading indicator.",
+    pt: "Indicador de carregamento compacto em linha.",
     preview: () => <Dots size="lg" label="Cargando" />,
     render: () => (
       <Demo label="Tamaños">
@@ -190,6 +197,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   iconbutton: {
     es: "Botón solo-ícono. Mismas variantes que Button. aria-label obligatorio.",
     en: "Icon-only button. Same variants as Button. aria-label required.",
+    pt: "Botão só de ícone. Mesmas variantes do Button. aria-label obrigatório.",
     preview: () => <IconButton variant="primary" aria-label="Favorito" icon={<HeartIcon />} />,
     render: () => (
       <>
@@ -211,6 +219,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   input: {
     es: "Campo de texto con label flotante y helper/error.",
     en: "Text field with floating label and helper/error.",
+    pt: "Campo de texto com label flutuante e helper/erro.",
     preview: () => (
       <div style={{ width: 200 }}>
         <Input label="Monto a enviar" defaultValue="$60.00 USD" />
@@ -230,6 +239,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   label: {
     es: "Etiqueta de formulario. 4 variantes.",
     en: "Form label. 4 variants.",
+    pt: "Rótulo de formulário. 4 variantes.",
     preview: () => <Label variant="required">Campo obligatorio</Label>,
     render: () => (
       <Demo label="Variantes" col>
@@ -243,6 +253,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   logo: {
     es: "Marca Felix: logotipo y símbolo.",
     en: "Felix mark: logotype and symbol.",
+    pt: "Marca Felix: logotipo e símbolo.",
     preview: () => <Logo type="symbol-circular" style={{ height: 44 }} />,
     render: () => (
       <Demo label="Tipos">
@@ -255,6 +266,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   progress: {
     es: "Barra de progreso determinada.",
     en: "Determinate progress bar.",
+    pt: "Barra de progresso determinada.",
     preview: () => (
       <div style={{ width: 180 }}>
         <Progress value={62} aria-label="62%" />
@@ -271,6 +283,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   radiogroup: {
     es: "Selección única entre opciones. Componer con Label.",
     en: "Single choice among options. Compose with Label.",
+    pt: "Seleção única entre opções. Combine com Label.",
     preview: () => (
       <RadioGroup defaultValue="whatsapp" aria-label="Canal">
         <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
@@ -305,6 +318,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   separator: {
     es: "Divisor horizontal o vertical, con o sin etiqueta.",
     en: "Horizontal or vertical divider, with or without a label.",
+    pt: "Divisor horizontal ou vertical, com ou sem rótulo.",
     preview: () => (
       <div style={{ width: 160 }}>
         <Separator label="o" />
@@ -327,6 +341,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   skeleton: {
     es: "Placeholder de carga: texto, bloque o círculo.",
     en: "Loading placeholder: text, block, or circle.",
+    pt: "Placeholder de carregamento: texto, bloco ou círculo.",
     preview: () => (
       <div style={{ display: "flex", alignItems: "center", gap: 12, width: 190 }}>
         <Skeleton type="circle" className="size-10" />
@@ -352,6 +367,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   slider: {
     es: "Selección de un valor o un rango.",
     en: "Select a single value or a range.",
+    pt: "Seleção de um valor único ou um intervalo.",
     preview: () => (
       <div style={{ width: 190 }}>
         <Slider defaultValue={[40]} aria-label="Valor" />
@@ -367,6 +383,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   spinner: {
     es: "Indicador de carga circular.",
     en: "Circular loading indicator.",
+    pt: "Indicador de carregamento circular.",
     preview: () => <Spinner size="lg" label="Cargando" />,
     render: () => (
       <Demo label="Tamaños">
@@ -379,6 +396,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   switch: {
     es: "Interruptor on/off. Componer con Label vía id.",
     en: "On/off toggle. Compose with Label via id.",
+    pt: "Interruptor on/off. Combine com Label via id.",
     preview: () => (
       <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
         <Switch id="sw-prev" defaultChecked />
@@ -404,6 +422,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   text: {
     es: "Componente tipográfico con la escala del sistema.",
     en: "Typographic component using the system scale.",
+    pt: "Componente tipográfico com a escala do sistema.",
     preview: () => <Text variant="heading-1">$1,020.00</Text>,
     render: () => (
       <Demo label="Variantes" col>
@@ -417,6 +436,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   textarea: {
     es: "Entrada de texto multilínea con label flotante.",
     en: "Multi-line text input with floating label.",
+    pt: "Entrada de texto multilinha com label flutuante.",
     preview: () => (
       <div style={{ width: 200 }}>
         <Textarea label="Mensaje" rows={2} />
@@ -435,6 +455,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   accordion: {
     es: "Secciones colapsables. Una abierta a la vez.",
     en: "Collapsible sections. One open at a time.",
+    pt: "Seções recolhíveis. Uma aberta por vez.",
     preview: () => (
       <Accordion type="single" collapsible style={{ width: 210 }}>
         <AccordionItem value="a">
@@ -461,6 +482,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   alert: {
     es: "Mensaje contextual de estado.",
     en: "Contextual status message.",
+    pt: "Mensagem contextual de status.",
     preview: () => (
       <div style={{ width: 220 }}>
         <Alert variant="success"><AlertTitle>Transferencia completada</AlertTitle></Alert>
@@ -477,6 +499,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   breadcrumb: {
     es: "Ruta de navegación jerárquica.",
     en: "Hierarchical navigation trail.",
+    pt: "Trilha de navegação hierárquica.",
     preview: () => (
       <Breadcrumb>
         <BreadcrumbList>
@@ -503,6 +526,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   calendar: {
     es: "Calendario para elegir una fecha.",
     en: "Calendar to pick a date.",
+    pt: "Calendário para escolher uma data.",
     previewTall: true,
     preview: () => (
       <div style={{ transform: "scale(0.6)", transformOrigin: "top center" }}>
@@ -521,6 +545,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   card: {
     es: "Contenedor de contenido. Borde o sombra, nunca ambos.",
     en: "Content container. Border or shadow, never both.",
+    pt: "Contêiner de conteúdo. Borda ou sombra, nunca os dois.",
     preview: () => (
       <Card style={{ width: 190 }}>
         <CardHeader><CardTitle>Recibe María</CardTitle></CardHeader>
@@ -547,6 +572,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   choicecard: {
     es: "Tarjetas de opción excluyente (radio enriquecido).",
     en: "Mutually-exclusive option cards (rich radio).",
+    pt: "Cards de opção exclusiva (radio enriquecido).",
     preview: () => (
       <div style={{ width: 210 }}>
         <ChoiceCardGroup value="bank" onValueChange={() => {}}>
@@ -571,6 +597,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   collapse: {
     es: "Contenido que se expande y colapsa.",
     en: "Content that expands and collapses.",
+    pt: "Conteúdo que expande e recolhe.",
     preview: () => (
       <div style={{ width: 210 }}>
         <Collapse open={false} onOpenChange={() => {}}>
@@ -596,6 +623,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   datepicker: {
     es: "Campo con calendario en popover.",
     en: "Field with a calendar in a popover.",
+    pt: "Campo com calendário em popover.",
     preview: () => (
       <div style={{ width: 190 }}>
         <DatePicker value={undefined} onChange={() => {}} placeholder="Elegí una fecha" />
@@ -613,6 +641,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   dialog: {
     es: "Diálogo modal centrado para confirmaciones.",
     en: "Centered modal dialog for confirmations.",
+    pt: "Diálogo modal centralizado para confirmações.",
     preview: () => (
       <Dialog>
         <DialogTrigger asChild><Button variant="primary">Abrir diálogo</Button></DialogTrigger>
@@ -639,6 +668,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   drawer: {
     es: "Panel deslizante desde el borde (móvil-first).",
     en: "Edge-anchored sliding panel (mobile-first).",
+    pt: "Painel deslizante a partir da borda (mobile-first).",
     preview: () => (
       <Drawer>
         <DrawerTrigger asChild><Button variant="line">Abrir drawer</Button></DrawerTrigger>
@@ -664,6 +694,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   dropdownmenu: {
     es: "Menú contextual anclado a un disparador.",
     en: "Contextual menu anchored to a trigger.",
+    pt: "Menu contextual ancorado a um acionador.",
     preview: () => (
       <DropdownMenu>
         <DropdownMenuTrigger asChild><Button variant="line">Opciones</Button></DropdownMenuTrigger>
@@ -687,6 +718,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   hovercard: {
     es: "Tarjeta que aparece al pasar el mouse.",
     en: "Card that appears on hover.",
+    pt: "Card que aparece ao passar o mouse.",
     preview: () => (
       <HoverCard>
         <HoverCardTrigger asChild><Button variant="line">@maria</Button></HoverCardTrigger>
@@ -704,6 +736,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   navigationmenu: {
     es: "Navegación principal con menús desplegables.",
     en: "Primary navigation with dropdown menus.",
+    pt: "Navegação principal com menus suspensos.",
     preview: () => (
       <NavigationMenu>
         <NavigationMenuList>
@@ -734,6 +767,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   pagination: {
     es: "Navegación entre páginas de resultados.",
     en: "Navigation across pages of results.",
+    pt: "Navegação entre páginas de resultados.",
     preview: () => (
       <Pagination>
         <PaginationContent>
@@ -761,6 +795,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   popover: {
     es: "Panel flotante anclado a un disparador.",
     en: "Floating panel anchored to a trigger.",
+    pt: "Painel flutuante ancorado a um acionador.",
     preview: () => (
       <Popover>
         <PopoverTrigger asChild><Button variant="line">Abrir popover</Button></PopoverTrigger>
@@ -778,6 +813,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   select: {
     es: "Selección de una opción de una lista.",
     en: "Select one option from a list.",
+    pt: "Seleção de uma opção em uma lista.",
     preview: () => (
       <div style={{ width: 190 }}>
         <Select>
@@ -803,6 +839,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   sheet: {
     es: "Panel lateral para flujos secundarios.",
     en: "Side panel for secondary flows.",
+    pt: "Painel lateral para fluxos secundários.",
     preview: () => (
       <Sheet>
         <SheetTrigger asChild><Button variant="line">Abrir panel</Button></SheetTrigger>
@@ -827,6 +864,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   sidebarfooter: {
     es: "Pie del sidebar con la cuenta del usuario.",
     en: "Sidebar footer with the user's account.",
+    pt: "Rodapé do sidebar com a conta do usuário.",
     preview: () => (
       <div style={{ width: 210, border: "1px solid var(--border-strong)", borderRadius: 12, background: "var(--white)", overflow: "hidden" }}>
         <SidebarFooter name="María González" email="maria@felix.com" avatar={<Avatar size="sm"><AvatarFallback>MG</AvatarFallback></Avatar>} />
@@ -847,6 +885,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   stepper: {
     es: "Progreso por pasos en un flujo.",
     en: "Step progress through a flow.",
+    pt: "Progresso por etapas em um fluxo.",
     preview: () => (
       <div style={{ width: 210 }}>
         <Stepper activeIndex={1}>
@@ -871,6 +910,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   table: {
     es: "Datos tabulares con encabezado.",
     en: "Tabular data with a header.",
+    pt: "Dados tabulares com cabeçalho.",
     previewTall: true,
     preview: () => (
       <div style={{ width: 220 }}>
@@ -903,6 +943,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   tabs: {
     es: "Vistas alternables bajo una misma área.",
     en: "Switchable views under one area.",
+    pt: "Visualizações alternáveis em uma mesma área.",
     preview: () => (
       <Tabs defaultValue="envios" style={{ width: 210 }}>
         <TabsList>
@@ -927,6 +968,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   toast: {
     es: "Notificación temporal. Disparar con toast(...).",
     en: "Transient notification. Fire with toast(...).",
+    pt: "Notificação temporária. Dispare com toast(...).",
     preview: () => <Button variant="primary">Mostrar toast</Button>,
     render: () => (
       <Demo label="Disparadores">
@@ -943,6 +985,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   tooltip: {
     es: "Etiqueta breve al pasar el mouse o enfocar.",
     en: "Brief label on hover or focus.",
+    pt: "Rótulo breve ao passar o mouse ou focar.",
     preview: () => (
       <TooltipProvider>
         <Tooltip>
@@ -966,6 +1009,7 @@ export const SHOWCASES: Record<string, Showcase> = {
   sidebar: {
     es: "Navegación lateral completa: header, secciones y footer.",
     en: "Full side navigation: header, sections, and footer.",
+    pt: "Navegação lateral completa: header, seções e footer.",
     previewTall: true,
     preview: () => (
       <div style={{ transform: "scale(0.45)", transformOrigin: "top center" }}>

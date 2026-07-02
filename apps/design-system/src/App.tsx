@@ -19,9 +19,9 @@ function NotFound() {
   return (
     <section className="sec flush">
       <div className="eyebrow"><span>404</span></div>
-      <h2 className="h2">{tr("Página no encontrada", "Page not found")}</h2>
-      <p className="lead">{tr("Esa ruta no existe en el sistema.", "That route doesn't exist in the system.")}</p>
-      <Link className="btn-link" to="/">{tr("← Volver al inicio", "← Back to overview")}</Link>
+      <h2 className="h2">{tr("Página no encontrada", "Page not found", "Página não encontrada")}</h2>
+      <p className="lead">{tr("Esa ruta no existe en el sistema.", "That route doesn't exist in the system.", "Essa rota não existe no sistema.")}</p>
+      <Link className="btn-link" to="/">{tr("← Volver al inicio", "← Back to overview", "← Voltar ao início")}</Link>
     </section>
   );
 }

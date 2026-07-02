@@ -19,7 +19,7 @@ export function Layout() {
 
   return (
     <>
-      <button className="menu-btn" aria-label={tr("Abrir menú", "Open menu")} onClick={() => setOpen((o) => !o)}>
+      <button className="menu-btn" aria-label={tr("Abrir menú", "Open menu", "Abrir menu")} onClick={() => setOpen((o) => !o)}>
         <ListIcon size={22} />
       </button>
       <div className={"scrim" + (open ? " show" : "")} onClick={() => setOpen(false)} aria-hidden="true" />
