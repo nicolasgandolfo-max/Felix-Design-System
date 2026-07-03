@@ -223,6 +223,16 @@ body {
 .voice .v { padding: 18px; border: 1px solid var(--concrete); border-radius: 14px; background: var(--neutral-50); }
 .voice .v b { font-size: 14px; } .voice .v p { font-size: 13px; color: var(--fg-muted); margin: 6px 0 0; }
 
+/* Markdown files for LLMs */
+.md-files { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 20px; }
+.md-file { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding: 22px;
+  border: 1px solid var(--concrete); border-radius: 16px; background: var(--neutral-50); }
+.md-file-name { font-family: var(--font-mono); font-size: 12px; color: var(--turquoise-800);
+  background: var(--light-sky); padding: 3px 10px; border-radius: 9999px; }
+.md-file b { font-size: 15px; }
+.md-file p { margin: 0 0 8px; font-size: 13.5px; line-height: 1.55; color: var(--fg-muted); flex: 1; }
+@media (max-width: 760px) { .md-files { grid-template-columns: 1fr; } }
+
 /* Product design content glossary */
 .gloss .tbl td { vertical-align: top; }
 .gloss .tbl th:nth-child(4), .gloss .tbl th:nth-child(5) { min-width: 260px; }

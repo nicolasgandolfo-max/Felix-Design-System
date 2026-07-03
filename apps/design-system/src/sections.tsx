@@ -78,6 +78,7 @@ import {
   type Icon,
 } from "@phosphor-icons/react";
 import designMd from "../../../DESIGN.md?raw";
+import componentsMd from "../../../components.md?raw";
 import { useTr } from "./i18n";
 import {
   BRAND_COLORS,
@@ -1473,95 +1474,144 @@ export function Editorial() {
   );
 }
 
-/* ──────────────────────────────── DESIGN.md ──────────────────────────── */
-export function DesignMd() {
+/* ──────────────────────────────── Markdown ───────────────────────────── */
+/** Download/copy card for one markdown file the user can feed to an LLM. */
+function MdFileCard({
+  filename,
+  content,
+  title,
+  desc,
+}: {
+  filename: string;
+  content: string;
+  title: string;
+  desc: string;
+}) {
   const tr = useTr();
   const [copied, setCopied] = useState(false);
 
   const download = () => {
-    const blob = new Blob([designMd], { type: "text/markdown;charset=utf-8" });
+    const blob = new Blob([content], { type: "text/markdown;charset=utf-8" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "DESIGN.md";
+    a.download = filename;
     a.click();
     URL.revokeObjectURL(url);
   };
 
   const copy = async () => {
     try {
-      await navigator.clipboard.writeText(designMd);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      await navigator.clipboard.writeText(content);
     } catch {
-      /* clipboard unavailable — the Download button still works */
+      // Clipboard API can be permission-gated (embedded browsers); fall back to execCommand.
+      const ta = document.createElement("textarea");
+      ta.value = content;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      ta.remove();
     }
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
   };
+
+  return (
+    <div className="md-file">
+      <span className="md-file-name">{filename}</span>
+      <b>{title}</b>
+      <p>{desc}</p>
+      <div className="cluster">
+        <Button variant="primary" size="sm" onClick={download}>
+          <DownloadSimpleIcon />
+          {tr("Descargar", "Download", "Baixar")}
+        </Button>
+        <Button variant="line" size="sm" onClick={copy}>
+          {copied ? <CheckIcon /> : <CopyIcon />}
+          {copied
+            ? tr("¡Copiado!", "Copied!", "Copiado!")
+            : tr("Copiar para tu LLM", "Copy for your LLM", "Copiar para seu LLM")}
+        </Button>
+      </div>
+    </div>
+  );
+}
+
+export function MarkdownFiles() {
+  const tr = useTr();
 
   const tools: { name: string; es: string; en: string; pt: string }[] = [
     {
       name: "Cursor",
-      es: "Arrastrá el archivo al chat o referencialo con @DESIGN.md. Cursor lo toma como contexto de marca al generar UI.",
-      en: "Drag the file into chat or reference it with @DESIGN.md. Cursor uses it as brand context when generating UI.",
-      pt: "Arraste o arquivo para o chat ou referencie com @DESIGN.md. O Cursor usa como contexto de marca ao gerar UI.",
+      es: "Arrastrá los archivos al chat o referencialos con @DESIGN.md y @components.md. Cursor los toma como contexto al generar UI.",
+      en: "Drag the files into chat or reference them with @DESIGN.md and @components.md. Cursor uses them as context when generating UI.",
+      pt: "Arraste os arquivos para o chat ou referencie com @DESIGN.md e @components.md. O Cursor usa como contexto ao gerar UI.",
     },
     {
       name: "Claude Code",
-      es: "Pedile que lea DESIGN.md del repo (o adjuntalo) antes de generar componentes; respeta tokens, formas y voz.",
-      en: "Ask it to read DESIGN.md from the repo (or attach it) before generating components; it respects tokens, shapes, and voice.",
-      pt: "Peça para ele ler o DESIGN.md do repositório (ou anexe o arquivo) antes de gerar componentes; ele respeita tokens, formas e voz.",
+      es: "Pedile que lea DESIGN.md y components.md del repo (o adjuntalos) antes de generar pantallas; respeta tokens, voz y los componentes reales de @felix/ui.",
+      en: "Ask it to read DESIGN.md and components.md from the repo (or attach them) before generating screens; it respects tokens, voice, and the real @felix/ui components.",
+      pt: "Peça para ele ler o DESIGN.md e o components.md do repositório (ou anexe os arquivos) antes de gerar telas; ele respeita tokens, voz e os componentes reais do @felix/ui.",
     },
     {
       name: "v0",
-      es: "Pegá el contenido como Project Instructions; v0 reskinnea shadcn con la estética de Felix. Ver V0_SETUP.md.",
-      en: "Paste the content as Project Instructions; v0 reskins shadcn with Felix's look. See V0_SETUP.md.",
-      pt: "Cole o conteúdo como Project Instructions; o v0 reestiliza o shadcn com a estética da Felix. Veja o V0_SETUP.md.",
+      es: "Pegá DESIGN.md como Project Instructions; v0 reskinnea shadcn con la estética de Felix. Ver V0_SETUP.md.",
+      en: "Paste DESIGN.md as Project Instructions; v0 reskins shadcn with Felix's look. See V0_SETUP.md.",
+      pt: "Cole o DESIGN.md como Project Instructions; o v0 reestiliza o shadcn com a estética da Felix. Veja o V0_SETUP.md.",
     },
     {
       name: "ChatGPT · Gemini · otros",
-      es: "Usá «Copiar para tu LLM» y pegá el archivo al inicio de la conversación como contexto.",
-      en: "Use “Copy for your LLM” and paste the file at the start of the conversation as context.",
-      pt: "Use «Copiar para seu LLM» e cole o arquivo no começo da conversa como contexto.",
+      es: "Usá «Copiar para tu LLM» y pegá los archivos al inicio de la conversación: DESIGN.md como contexto de marca, components.md cuando pidas pantallas con componentes.",
+      en: "Use “Copy for your LLM” and paste the files at the start of the conversation: DESIGN.md as brand context, components.md when asking for screens built from components.",
+      pt: "Use «Copiar para seu LLM» e cole os arquivos no começo da conversa: DESIGN.md como contexto de marca, components.md quando pedir telas com componentes.",
     },
   ];
 
   return (
-    <section className="sec" id="design-md">
+    <section className="sec" id="markdown">
       <div className="eyebrow">
         <span className="n">08</span>
-        <span>DESIGN.md</span>
+        <span>Markdown</span>
       </div>
       <h2 className="h2">
         {tr(
-          "El sistema, en un archivo que la IA entiende",
-          "The system, in a file AI understands",
-          "O sistema, em um arquivo que a IA entende"
+          "El sistema, en archivos que la IA entiende",
+          "The system, in files AI understands",
+          "O sistema, em arquivos que a IA entende"
         )}
       </h2>
       <p className="lead">
         {tr(
-          "DESIGN.md es el contrato de identidad de Felix en un solo archivo legible por personas y por IA: colores, tipografía, tokens, componentes, formas y voz. Descargalo o copialo y pegáselo a tu herramienta de IA para que genere interfaces fieles a la marca.",
-          "DESIGN.md is Felix's identity contract in a single file readable by people and AI: colors, typography, tokens, components, shapes, and voice. Download it or copy it into your AI tool so it generates on-brand interfaces.",
-          "O DESIGN.md é o contrato de identidade da Felix em um único arquivo legível por pessoas e por IA: cores, tipografia, tokens, componentes, formas e voz. Baixe ou copie e cole na sua ferramenta de IA para que ela gere interfaces fiéis à marca."
+          "Dos archivos legibles por personas y por IA resumen todo el sistema. Descargalos o copialos y pegáselos a tu herramienta de IA para que genere interfaces fieles a la marca, con los componentes reales de @felix/ui.",
+          "Two files readable by people and AI capture the whole system. Download or copy them into your AI tool so it generates on-brand interfaces using the real @felix/ui components.",
+          "Dois arquivos legíveis por pessoas e por IA resumem todo o sistema. Baixe ou copie e cole na sua ferramenta de IA para que ela gere interfaces fiéis à marca, com os componentes reais do @felix/ui."
         )}
       </p>
-      <div className="cluster">
-        <Button variant="primary" onClick={download}>
-          <DownloadSimpleIcon />
-          {tr("Descargar DESIGN.md", "Download DESIGN.md", "Baixar DESIGN.md")}
-        </Button>
-        <Button variant="line" onClick={copy}>
-          {copied ? <CheckIcon /> : <CopyIcon />}
-          {copied
-            ? tr("¡Copiado!", "Copied!", "Copiado!")
-            : tr(
-                "Copiar para tu LLM",
-                "Copy for your LLM",
-                "Copiar para seu LLM"
-              )}
-        </Button>
+      <div className="md-files">
+        <MdFileCard
+          filename="DESIGN.md"
+          content={designMd}
+          title={tr("El contrato de identidad", "The identity contract", "O contrato de identidade")}
+          desc={tr(
+            "Colores, tipografía, tokens, formas, voz y reglas del sistema en un solo archivo. Usalo como contexto base en cualquier conversación donde la IA genere UI de Felix.",
+            "Colors, typography, tokens, shapes, voice, and system rules in a single file. Use it as base context in any conversation where AI generates Felix UI.",
+            "Cores, tipografia, tokens, formas, voz e regras do sistema em um único arquivo. Use como contexto base em qualquer conversa em que a IA gere UI da Felix."
+          )}
+        />
+        <MdFileCard
+          filename="components.md"
+          content={componentsMd}
+          title={tr("La referencia de componentes", "The component reference", "A referência de componentes")}
+          desc={tr(
+            "Los 43 componentes de @felix/ui: para qué sirve cada uno, cómo se usa y qué exporta. Sumalo cuando le pidas a la IA pantallas armadas con componentes existentes en vez de HTML desde cero.",
+            "All 43 @felix/ui components: what each is for, how to use it, and what it exports. Add it when asking AI for screens built from existing components instead of raw HTML.",
+            "Os 43 componentes do @felix/ui: para que serve cada um, como usar e o que exporta. Adicione quando pedir à IA telas montadas com componentes existentes em vez de HTML do zero."
+          )}
+        />
       </div>
-      <h3 className="h3">{tr("Cómo usarlo", "How to use it", "Como usar")}</h3>
+      <h3 className="h3">{tr("Cómo usarlos", "How to use them", "Como usar")}</h3>
       <div className="voice" style={{ gridTemplateColumns: "repeat(2, 1fr)" }}>
         {tools.map((t) => (
           <div className="v" key={t.name}>
