@@ -8,7 +8,7 @@ import {
   Illustrations,
   Tokens,
   Editorial,
-  DesignMd,
+  MarkdownFiles,
 } from "./sections";
 import { ComponentsIndex } from "./pages/ComponentsIndex";
 import { ComponentGroupPage } from "./pages/ComponentGroupPage";
@@ -41,7 +41,9 @@ export function App() {
         <Route path="componentes/:groupSlug" element={<ComponentGroupPage />} />
         <Route path="tokens" element={<Tokens />} />
         <Route path="editorial" element={<Editorial />} />
-        <Route path="design-md" element={<DesignMd />} />
+        <Route path="markdown" element={<MarkdownFiles />} />
+        {/* DESIGN.md section became Markdown (now also ships components.md) — keep old links working. */}
+        <Route path="design-md" element={<Navigate to="/markdown" replace />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

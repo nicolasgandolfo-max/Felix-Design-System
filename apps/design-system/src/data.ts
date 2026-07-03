@@ -44,7 +44,7 @@ export const NAV: NavGroup[] = [
     items: [
       { id: "tokens", path: "/tokens", icon: CubeIcon, es: "Design Tokens", en: "Design Tokens", pt: "Design Tokens" },
       { id: "editorial", path: "/editorial", icon: PencilSimpleIcon, es: "Guía editorial", en: "Editorial", pt: "Guia editorial" },
-      { id: "design-md", path: "/design-md", icon: MarkdownLogoIcon, es: "DESIGN.md", en: "DESIGN.md", pt: "DESIGN.md" },
+      { id: "markdown", path: "/markdown", icon: MarkdownLogoIcon, es: "Markdown", en: "Markdown", pt: "Markdown" },
     ],
   },
 ];
