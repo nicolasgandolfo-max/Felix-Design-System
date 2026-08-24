@@ -32,7 +32,7 @@ export const NAV: NavGroup[] = [
   {
     group: { es: "Fundamentos", en: "Foundations", pt: "Fundamentos" },
     items: [
-      { id: "overview", path: "/", end: true, icon: SquaresFourIcon, es: "Visión general", en: "Overview", pt: "Visão geral" },
+      { id: "overview", path: "/sistema", end: true, icon: SquaresFourIcon, es: "Visión general", en: "Overview", pt: "Visão geral" },
       { id: "principles", path: "/principios", icon: StarIcon, es: "Principios", en: "Principles", pt: "Princípios" },
       { id: "colors", path: "/colores", icon: PaletteIcon, es: "Colores", en: "Colors", pt: "Cores" },
       { id: "typography", path: "/tipografia", icon: TextAaIcon, es: "Tipografía", en: "Typography", pt: "Tipografia" },

@@ -12,6 +12,7 @@ import {
 } from "./sections";
 import { ComponentsIndex } from "./pages/ComponentsIndex";
 import { ComponentGroupPage } from "./pages/ComponentGroupPage";
+import { PlazaHome } from "./pages/PlazaHome";
 import { useTr } from "./i18n";
 
 function NotFound() {
@@ -29,8 +30,10 @@ function NotFound() {
 export function App() {
   return (
     <Routes>
+      {/* Plaza Félix — hub de entrada, standalone (sin sidebar). */}
+      <Route index element={<PlazaHome />} />
       <Route element={<Layout />}>
-        <Route index element={<Overview />} />
+        <Route path="sistema" element={<Overview />} />
         <Route path="principios" element={<Principles />} />
         <Route path="colores" element={<Colors />} />
         <Route path="tipografia" element={<Typography />} />
