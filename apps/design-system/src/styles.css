@@ -388,3 +388,101 @@ body {
 
 @media (max-width: 900px) { .gallery-grid { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 560px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
+
+/* ════════════════════════════ PLAZA FÉLIX ══════════════════════════════
+   Landing hub previa al portal — réplica del home de Figma (DRAFT
+   Conversational Guidelines). Página standalone, sin sidebar. */
+.plaza { min-height: 100vh; background: #fff; display: flex; flex-direction: column; }
+.plaza-main { width: min(1280px, calc(100% - 48px)); margin: 0 auto; flex: 1; }
+
+/* Navbar pill */
+.plaza-nav { width: min(1268px, calc(100% - 48px)); margin: 43px auto 0; background: #fff;
+  border-radius: 40px; padding: 12px 32px; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  border: 1px solid rgba(8, 36, 34, 0.08); }
+.plaza-brand { display: inline-flex; align-items: center; gap: 10px; color: var(--slate); text-decoration: none; }
+.plaza-brand svg { height: 34px; width: auto; }
+.plaza-brand span { font-family: var(--font-heading); font-weight: 900; font-size: 17px; letter-spacing: -0.01em;
+  padding: 3px 10px; border-radius: 9999px; background: var(--turquoise); }
+.plaza-nav-links { display: flex; gap: 10px; }
+.plaza-nav-links a { padding: 12px; font-size: 16px; color: var(--slate); text-decoration: none; border-radius: 10px;
+  transition: background 0.15s; white-space: nowrap; }
+.plaza-nav-links a:hover { background: var(--stone); }
+.plaza-lang { display: inline-flex; background: rgba(8, 36, 34, 0.04); border: 1px solid rgba(8, 36, 34, 0.12);
+  border-radius: 9999px; padding: 3px; }
+.plaza-lang button { border: 0; background: transparent; color: rgba(8, 36, 34, 0.6); font-family: var(--font-sans);
+  font-weight: 600; font-size: 12px; padding: 5px 13px; border-radius: 9999px; cursor: pointer; transition: 0.15s; }
+.plaza-lang button[aria-pressed="true"] { background: var(--turquoise); color: var(--slate); }
+
+/* Shared bits */
+.plaza-eyebrow { margin: 0; font-size: 16px; line-height: 24px; text-transform: uppercase; letter-spacing: 0.02em; }
+.plaza-body { margin: 0; font-size: 16px; line-height: 24px; }
+.plaza-btn { display: inline-flex; align-items: center; gap: 8px; height: 48px; padding: 12px 24px; border-radius: 9999px;
+  background: var(--turquoise); color: var(--slate); font-weight: 600; font-size: 16px; line-height: 24px;
+  text-decoration: none; transition: filter 0.15s, transform 0.15s; }
+.plaza-btn:hover { filter: brightness(0.94); }
+.plaza-btn:active { transform: scale(0.98); }
+
+/* Hero */
+.plaza-hero { position: relative; margin-top: 41px; background: var(--slate); color: var(--linen);
+  border: 1px solid rgba(8, 36, 34, 0.12); border-radius: 31px; min-height: 463px;
+  display: flex; align-items: center; padding: 48px 620px 48px 96px; }
+.plaza-hero-copy { display: flex; flex-direction: column; gap: 16px; max-width: 476px; }
+.plaza-hero h1 { margin: 0; font-family: var(--font-heading); font-weight: 900; font-size: 60px; line-height: 54px;
+  letter-spacing: -0.01em; }
+.plaza-hero .plaza-eyebrow { margin-bottom: -10px; }
+.plaza-hero .plaza-btn { margin-top: 8px; align-self: flex-start; }
+.plaza-hero-img { position: absolute; top: -8px; right: 24px; width: 560px; max-width: 44%;
+  filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.1)); }
+
+/* Feature cards */
+.plaza-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 79px; }
+.plaza-card { background: var(--linen); border: 1px solid rgba(8, 36, 34, 0.12); border-radius: 31px;
+  padding: 40px; color: var(--slate); display: flex; flex-direction: column; gap: 16px; }
+.plaza-card-media { background: var(--stone); border-radius: 31px; aspect-ratio: 548 / 270;
+  display: flex; align-items: center; justify-content: center; overflow: hidden; margin-bottom: 24px; }
+.plaza-card-media img { width: 79%; height: auto; display: block; }
+.plaza-card-media.is-full img { width: 100%; height: 100%; object-fit: cover; }
+.plaza-card h2 { margin: -10px 0 0; font-family: var(--font-heading); font-weight: 900; font-size: 48px;
+  line-height: 54px; letter-spacing: -0.01em; }
+.plaza-card .plaza-btn { align-self: flex-start; margin-top: 4px; }
+
+/* Useful links */
+.plaza-links-title { margin: 90px 6px 30px; font-weight: 700; font-size: 40px; letter-spacing: -0.01em; color: var(--slate); }
+.plaza-links { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 96px; }
+.plaza-link-card { background: var(--linen); border: 1px solid rgba(8, 36, 34, 0.12); border-radius: 31px;
+  padding: 40px; color: var(--slate); display: flex; flex-direction: column; gap: 11px; justify-content: center; min-height: 268px; }
+.plaza-link-card h3 { margin: 0; font-weight: 700; font-size: 38px; line-height: 1.2; letter-spacing: -0.01em; }
+.plaza-link-card .plaza-btn { align-self: flex-start; margin-top: 6px; }
+
+/* Footer */
+.plaza-footer { background: var(--slate); color: #fff; border-radius: 31px 31px 0 0; min-height: 147px;
+  display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding: 24px 95px; }
+.plaza-footer p { margin: 0; font-size: 18px; letter-spacing: -0.01em; }
+
+/* Responsive */
+@media (max-width: 1180px) {
+  .plaza-hero { padding-right: 48%; }
+  .plaza-hero h1 { font-size: 48px; line-height: 48px; }
+}
+@media (max-width: 960px) {
+  .plaza-nav-links { display: none; }
+  .plaza-hero { flex-direction: column; align-items: flex-start; gap: 32px; padding: 48px 32px; }
+  .plaza-hero-img { position: static; width: 100%; max-width: 560px; align-self: center; }
+  .plaza-cards, .plaza-links { grid-template-columns: 1fr; }
+  .plaza-links-title { margin-top: 56px; font-size: 32px; }
+  .plaza-card h2 { font-size: 38px; line-height: 44px; }
+  .plaza-link-card h3 { font-size: 30px; }
+  .plaza-footer { padding: 24px 32px; justify-content: center; text-align: center; }
+}
+@media (max-width: 560px) {
+  .plaza-nav { padding: 10px 18px; }
+  .plaza-brand svg { height: 28px; }
+  .plaza-hero h1 { font-size: 38px; line-height: 40px; }
+  .plaza-card, .plaza-link-card { padding: 24px; }
+  .plaza-cards { margin-top: 48px; }
+}
+
+/* Enlace de vuelta a Plaza desde el sidebar del portal */
+.plaza-back { display: block; margin-bottom: 12px; font-size: 13px; font-weight: 600; color: rgba(254, 252, 249, 0.74);
+  text-decoration: none; transition: color 0.15s; }
+.plaza-back:hover { color: var(--turquoise); }

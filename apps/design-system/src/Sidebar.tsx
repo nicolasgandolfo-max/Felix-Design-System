@@ -4,7 +4,7 @@ import { CaretRightIcon, PuzzlePieceIcon } from "@phosphor-icons/react";
 import { NAV, INVENTORY, GROUP_SLUGS, GROUP_ICONS, GROUP_LABELS, ILLUSTRATION_SECTIONS, slugify } from "./data";
 import { useLang, useTr } from "./i18n";
 
-function Logo() {
+export function Logo() {
   return (
     <svg viewBox="0 0 218 78" aria-label="Félix" role="img">
       <g fill="currentColor">
@@ -36,7 +36,7 @@ export function Sidebar({ onNavigate, open }: { onNavigate: () => void; open: bo
 
   return (
     <aside className={"sidebar" + (open ? " open" : "")} id="sidebar">
-      <NavLink to="/" className="brand" onClick={onNavigate} aria-label="Felix — inicio">
+      <NavLink to="/sistema" className="brand" onClick={onNavigate} aria-label="Felix — inicio">
         <Logo />
         <span className="sub">{tr("Sistema de diseño", "Design System", "Sistema de design")}</span>
         <span className="ver">v1.0.0 · alpha</span>
@@ -148,6 +148,9 @@ export function Sidebar({ onNavigate, open }: { onNavigate: () => void; open: bo
       </nav>
 
       <div className="side-foot">
+        <Link to="/" onClick={onNavigate} className="plaza-back">
+          ← Plaza Félix
+        </Link>
         <div className="lang" role="group" aria-label={tr("Idioma", "Language", "Idioma")}>
           <button aria-pressed={lang === "es"} onClick={() => setLang("es")}>
             ES
