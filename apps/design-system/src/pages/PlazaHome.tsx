@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Logo } from "../Sidebar";
 import { useLang, useTr } from "../i18n";
 
 /* Destinos aún sin sección propia en el portal — apuntan al archivo de Figma
