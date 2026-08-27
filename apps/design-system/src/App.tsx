@@ -1,7 +1,6 @@
 import { Routes, Route, Link, Navigate } from "react-router-dom";
 import { Layout } from "./Layout";
 import {
-  Overview,
   Principles,
   Colors,
   Typography,
@@ -13,6 +12,7 @@ import {
 import { ComponentsIndex } from "./pages/ComponentsIndex";
 import { ComponentGroupPage } from "./pages/ComponentGroupPage";
 import { PlazaHome } from "./pages/PlazaHome";
+import { PlazaSistema } from "./pages/PlazaSistema";
 import { useTr } from "./i18n";
 
 function NotFound() {
@@ -32,8 +32,9 @@ export function App() {
     <Routes>
       {/* Plaza Félix — hub de entrada, standalone (sin sidebar). */}
       <Route index element={<PlazaHome />} />
+
       <Route element={<Layout />}>
-        <Route path="sistema" element={<Overview />} />
+        <Route path="sistema" element={<PlazaSistema />} />
         <Route path="principios" element={<Principles />} />
         <Route path="colores" element={<Colors />} />
         <Route path="tipografia" element={<Typography />} />

@@ -10,7 +10,7 @@ import {
   ILLUSTRATION_SECTIONS,
   slugify,
 } from "./data";
-import { useLang, useTr } from "./i18n";
+import { useTr } from "./i18n";
 
 export function Logo() {
   return (
@@ -21,34 +21,34 @@ export function Logo() {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0_113_4040)">
+      <g clipPath="url(#clip0_113_4040)">
         <path
           d="M50.6382 28.9693C48.9127 34.7316 44.1952 38.9989 35.9755 38.9989C26.7923 38.9989 21.4644 33.0766 21.4644 23.9007C21.4644 15.2583 27.5531 9.17589 36.2796 9.17589C45.0062 9.17589 50.9423 14.7781 50.9423 24.9678C50.9423 25.4479 50.9423 25.8214 50.8911 26.515H32.0166C32.1682 29.7163 33.6397 31.4237 36.2284 31.4237C38.6635 31.4237 39.6783 29.9831 40.0336 28.9693H50.6371H50.6382ZM37.6803 8.00101L39.13 0H50.1826L48.6904 8.00101H37.6803ZM40.3889 20.7005C40.0848 17.766 38.7648 16.272 36.381 16.272C33.7933 16.272 32.4232 17.9794 32.069 20.7005H40.39H40.3889Z"
-          fill="#fff"
+          fill="#082422"
         />
-        <path d="M52.9011 38.1463V0H63.7586V38.1463H52.9011Z" fill="#fff" />
+        <path d="M52.9011 38.1463V0H63.7586V38.1463H52.9011Z" fill="#082422" />
         <path
           d="M66.3311 0H77.1886V8.00101H66.3311V0ZM66.3311 38.1463V10.1363H77.1886V38.1452H66.3311V38.1463Z"
-          fill="#fff"
+          fill="#082422"
         />
         <path
           d="M86.8785 23.9016L77.7966 10.1372H90.0242C90.9878 12.1113 92.1039 13.8187 93.3225 16.2196C94.3373 14.1388 95.3009 12.5382 96.5697 10.1372H108.188C105.753 14.2455 101.998 19.8466 99.5628 23.8482C102.252 28.3834 106.26 33.7177 109 38.1462H97.0765C95.0469 34.4113 93.9809 32.9174 93.2201 31.4235C91.9513 33.9312 90.8352 35.8519 89.4661 38.1462H77.7454L86.8785 23.9016Z"
-          fill="#fff"
+          fill="#082422"
         />
         <path
           d="M11.6292 25.4401H19.3595L21.0762 15.9136H16.1571C7.97989 15.9136 0.89925 21.0269 0.60822 29.6834L0 38.1461H10.743L11.6292 25.4401Z"
-          fill="#fff"
+          fill="#082422"
         />
         <path
           d="M12.4479 8.38102H27.5836L29.1074 0H1.8836C1.8836 0 1.37021 2.52617 1.24377 4.07019C0.714028 10.5098 5.15142 15.1418 11.5443 15.3302L11.9912 15.3378L12.449 8.38102H12.4479Z"
-          fill="#fff"
+          fill="#082422"
         />
         <path
           d="M185.807 10.25L123.19 10.25C115.491 10.25 109.248 16.4712 109.25 24.1406C109.25 31.8119 115.491 38.0313 123.192 38.0313L184.131 38.0313L184.096 38.3125L183.672 41.6455C183.694 41.6384 183.717 41.6318 183.741 41.624C184.024 41.5317 184.435 41.3908 184.941 41.1982C185.954 40.8131 187.351 40.2209 188.883 39.3936C191.855 37.7879 195.313 35.3086 197.482 31.7578L197.688 31.4102L197.692 31.4043L197.931 31.0029C199.088 28.9781 199.75 26.6368 199.75 24.1406C199.75 16.4713 193.508 10.2503 185.807 10.25Z"
           fill="#2BF2F1"
           stroke="#082422"
-          stroke-width="0.5"
-          stroke-miterlimit="10"
+          strokeWidth="0.5"
+          strokeMiterlimit="10"
         />
         <path
           d="M175.299 32.0001C172.805 32.0001 171.15 30.7201 171.15 28.5574C171.15 26.6374 172.717 25.5781 174.99 25.0264C176.071 24.7616 177.307 24.6071 178.587 24.5409V24.4085C178.587 23.0623 178.035 22.5988 177.042 22.5988C176.093 22.5988 175.563 23.1064 175.453 23.9671H171.613C171.768 21.4071 173.82 19.8623 177.108 19.8623C180.595 19.8623 182.515 21.1864 182.515 25.1147V28.3367C182.515 29.5946 182.537 30.8305 182.758 31.7794H179.05C179.006 31.4042 178.984 31.007 178.984 30.6098H178.94C178.057 31.4925 177.042 32.0001 175.299 32.0001ZM176.579 29.6387C177.748 29.6387 178.609 28.9988 178.609 27.1229V26.7919L177.925 26.8802C175.983 27.1229 175.078 27.476 175.078 28.447C175.078 29.1974 175.674 29.6387 176.579 29.6387Z"
@@ -77,8 +77,8 @@ export function Logo() {
   );
 }
 
-const navClass = ({ isActive }: { isActive: boolean }) =>
-  isActive ? "active" : undefined;
+const itemClass = ({ isActive }: { isActive: boolean }) =>
+  "sys-nav-item" + (isActive ? " active" : "");
 
 export function Sidebar({
   onNavigate,
@@ -87,37 +87,23 @@ export function Sidebar({
   onNavigate: () => void;
   open: boolean;
 }) {
-  const { lang, setLang } = useLang();
   const tr = useTr();
   const { pathname } = useLocation();
 
-  // Groups with nested sub-items (Atoms/Molecules/Organisms/Ilustraciones) start collapsed;
-  // they auto-expand while their page is active, and the user can pin them open/closed via
-  // the caret — that explicit choice then wins over the auto-expand-on-active default.
   const [manualOpen, setManualOpen] = useState<Record<string, boolean>>({});
   const isGroupOpen = (id: string, active: boolean) => manualOpen[id] ?? active;
   const toggleGroup = (id: string, active: boolean) =>
     setManualOpen((m) => ({ ...m, [id]: !isGroupOpen(id, active) }));
 
   return (
-    <aside className={"sidebar" + (open ? " open" : "")} id="sidebar">
-      <NavLink
-        to="/sistema"
-        className="brand"
-        onClick={onNavigate}
-        aria-label="Felix — inicio"
-      >
-        <Logo />
-        <span className="sub">
-          {tr("Sistema de diseño", "Design System", "Sistema de design")}
-        </span>
-        <span className="ver">v1.0.0 · alpha</span>
-      </NavLink>
-
-      <nav className="nav" aria-label={tr("Secciones", "Sections", "Seções")}>
+    <aside
+      className={"plaza-sys-sidebar" + (open ? " open" : "")}
+      id="sidebar"
+    >
+      <nav className="sys-nav" aria-label={tr("Secciones", "Sections", "Seções")}>
         {NAV.map((g) => (
-          <Fragment key={g.group.en}>
-            <span className="nav-group">
+          <div key={g.group.en} className="sys-nav-group">
+            <span className="sys-group-label">
               {tr(g.group.es, g.group.en, g.group.pt)}
             </span>
             {g.items.map((it) => {
@@ -129,39 +115,37 @@ export function Sidebar({
                     to={it.path}
                     end={it.end}
                     onClick={onNavigate}
-                    className={navClass}
+                    className={itemClass}
                   >
                     {({ isActive }) => (
                       <>
-                        <Icon weight={isActive ? "fill" : "regular"} />
+                        <Icon size={18} weight={isActive ? "fill" : "regular"} />
                         <span>{tr(it.es, it.en, it.pt)}</span>
                       </>
                     )}
                   </NavLink>
                 );
               }
-              // Illustrations has 4 nested subsections — same collapsible pattern as the
-              // Componentes groups below.
               const active = pathname === it.path;
               const expanded = isGroupOpen("illustrations", active);
               return (
                 <Fragment key={it.id}>
-                  <div className="nav-row">
+                  <div className="nav-row-plaza">
                     <NavLink
                       to={it.path}
                       onClick={onNavigate}
-                      className={navClass}
+                      className={itemClass}
                     >
                       {({ isActive }) => (
                         <>
-                          <Icon weight={isActive ? "fill" : "regular"} />
+                          <Icon size={18} weight={isActive ? "fill" : "regular"} />
                           <span>{tr(it.es, it.en, it.pt)}</span>
                         </>
                       )}
                     </NavLink>
                     <button
                       type="button"
-                      className={"nav-caret" + (expanded ? " open" : "")}
+                      className={"nav-caret-plaza" + (expanded ? " open" : "")}
                       aria-expanded={expanded}
                       aria-label={
                         expanded
@@ -170,7 +154,7 @@ export function Sidebar({
                       }
                       onClick={() => toggleGroup("illustrations", active)}
                     >
-                      <CaretRightIcon />
+                      <CaretRightIcon size={14} />
                     </button>
                   </div>
                   {expanded &&
@@ -179,7 +163,7 @@ export function Sidebar({
                         key={s.id}
                         to={`/ilustraciones#${s.id}`}
                         onClick={onNavigate}
-                        className="sub"
+                        className="sys-sub-item"
                       >
                         <span>{tr(s.es, s.en, s.pt)}</span>
                       </Link>
@@ -187,105 +171,83 @@ export function Sidebar({
                 </Fragment>
               );
             })}
-          </Fragment>
+          </div>
         ))}
 
-        {/* Componentes — full section with every component linked */}
-        <span className="nav-group">
-          {tr("Componentes", "Components", "Componentes")}
-        </span>
-        <NavLink
-          to="/componentes"
-          end
-          onClick={onNavigate}
-          className={navClass}
-        >
-          {({ isActive }) => (
-            <>
-              <PuzzlePieceIcon weight={isActive ? "fill" : "regular"} />
-              <span>{tr("Visión general", "Overview", "Visão geral")}</span>
-            </>
-          )}
-        </NavLink>
-        {INVENTORY.map((group) => {
-          const groupSlug = GROUP_SLUGS[group.group];
-          const GroupIcon = GROUP_ICONS[group.group];
-          const active = pathname === `/componentes/${groupSlug}`;
-          const expanded = isGroupOpen(groupSlug, active);
-          return (
-            <Fragment key={group.group}>
-              <div className="nav-row">
-                <NavLink
-                  to={`/componentes/${groupSlug}`}
-                  onClick={onNavigate}
-                  className={navClass}
-                >
-                  {({ isActive }) => (
-                    <>
-                      <GroupIcon weight={isActive ? "fill" : "regular"} />
-                      <span>
-                        {tr(
-                          GROUP_LABELS[group.group].es,
-                          GROUP_LABELS[group.group].en,
-                          GROUP_LABELS[group.group].pt
-                        )}
-                      </span>
-                    </>
-                  )}
-                </NavLink>
-                <button
-                  type="button"
-                  className={"nav-caret" + (expanded ? " open" : "")}
-                  aria-expanded={expanded}
-                  aria-label={
-                    expanded
-                      ? tr("Colapsar", "Collapse", "Recolher")
-                      : tr("Expandir", "Expand", "Expandir")
-                  }
-                  onClick={() => toggleGroup(groupSlug, active)}
-                >
-                  <CaretRightIcon />
-                </button>
-              </div>
-              {/* Nested one level deeper — plain Link (not NavLink) so they never pick up an
-                  auto "active" class; all items in a group share the same pathname (only the
-                  hash differs), so only the group row above should ever look selected. */}
-              {expanded &&
-                group.items.map((name) => (
-                  <Link
-                    key={name}
-                    to={`/componentes/${groupSlug}#${slugify(name)}`}
+        {/* Componentes section */}
+        <div className="sys-nav-group">
+          <span className="sys-group-label">
+            {tr("Componentes", "Components", "Componentes")}
+          </span>
+          <NavLink
+            to="/componentes"
+            end
+            onClick={onNavigate}
+            className={itemClass}
+          >
+            {({ isActive }) => (
+              <>
+                <PuzzlePieceIcon size={18} weight={isActive ? "fill" : "regular"} />
+                <span>{tr("Visión general", "Overview", "Visão geral")}</span>
+              </>
+            )}
+          </NavLink>
+          {INVENTORY.map((group) => {
+            const groupSlug = GROUP_SLUGS[group.group];
+            const GroupIcon = GROUP_ICONS[group.group];
+            const active = pathname === `/componentes/${groupSlug}`;
+            const expanded = isGroupOpen(groupSlug, active);
+            return (
+              <Fragment key={group.group}>
+                <div className="nav-row-plaza">
+                  <NavLink
+                    to={`/componentes/${groupSlug}`}
                     onClick={onNavigate}
-                    className="sub"
+                    className={itemClass}
                   >
-                    <span>{name}</span>
-                  </Link>
-                ))}
-            </Fragment>
-          );
-        })}
-      </nav>
-
-      <div className="side-foot">
-        <Link to="/" onClick={onNavigate} className="plaza-back">
-          ← Plaza Félix
-        </Link>
-        <div
-          className="lang"
-          role="group"
-          aria-label={tr("Idioma", "Language", "Idioma")}
-        >
-          <button aria-pressed={lang === "es"} onClick={() => setLang("es")}>
-            ES
-          </button>
-          <button aria-pressed={lang === "en"} onClick={() => setLang("en")}>
-            EN
-          </button>
-          <button aria-pressed={lang === "pt"} onClick={() => setLang("pt")}>
-            PT
-          </button>
+                    {({ isActive }) => (
+                      <>
+                        <GroupIcon size={18} weight={isActive ? "fill" : "regular"} />
+                        <span>
+                          {tr(
+                            GROUP_LABELS[group.group].es,
+                            GROUP_LABELS[group.group].en,
+                            GROUP_LABELS[group.group].pt
+                          )}
+                        </span>
+                      </>
+                    )}
+                  </NavLink>
+                  <button
+                    type="button"
+                    className={"nav-caret-plaza" + (expanded ? " open" : "")}
+                    aria-expanded={expanded}
+                    aria-label={
+                      expanded
+                        ? tr("Colapsar", "Collapse", "Recolher")
+                        : tr("Expandir", "Expand", "Expandir")
+                    }
+                    onClick={() => toggleGroup(groupSlug, active)}
+                  >
+                    <CaretRightIcon size={14} />
+                  </button>
+                </div>
+                {expanded &&
+                  group.items.map((name) => (
+                    <Link
+                      key={name}
+                      to={`/componentes/${groupSlug}#${slugify(name)}`}
+                      onClick={onNavigate}
+                      className="sys-sub-item"
+                    >
+                      <span>{name}</span>
+                    </Link>
+                  ))}
+              </Fragment>
+            );
+          })}
         </div>
-      </div>
+      </nav>
     </aside>
   );
 }
