@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useLang, useTr } from "../i18n";
+import { GlobeIcon, CaretDownIcon } from "@phosphor-icons/react";
 
 /* Destinos aún sin sección propia en el portal — apuntan al archivo de Figma
    hasta que existan como rutas. Reemplazar acá cuando estén publicados. */
@@ -127,20 +128,24 @@ export function PlazaHome() {
             )}
           </a>
         </nav>
-        <div
-          className="plaza-lang"
-          role="group"
-          aria-label={tr("Idioma", "Language", "Idioma")}
-        >
-          <button aria-pressed={lang === "es"} onClick={() => setLang("es")}>
-            ES
-          </button>
-          <button aria-pressed={lang === "en"} onClick={() => setLang("en")}>
-            EN
-          </button>
-          <button aria-pressed={lang === "pt"} onClick={() => setLang("pt")}>
-            PT
-          </button>
+        <div className="header-right">
+          <div className="lang-dropdown">
+            <GlobeIcon size={18} />
+            <select
+              value={lang}
+              onChange={(e) => setLang(e.target.value as "es" | "en" | "pt")}
+              aria-label={tr(
+                "Seleccionar idioma",
+                "Select language",
+                "Selecionar idioma"
+              )}
+            >
+              <option value="es">ES</option>
+              <option value="en">EN</option>
+              <option value="pt">PT</option>
+            </select>
+            <CaretDownIcon size={14} className="caret" />
+          </div>
         </div>
       </header>
 
