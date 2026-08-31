@@ -147,10 +147,10 @@ export function PatternPage() {
   const { overview, specs, guidelines } = pattern;
 
   return (
-    <PlazaChrome activeNav="patterns">
-      <main className="mx-auto w-full max-w-6xl flex-1 px-7 pb-16">
+    <PlazaChrome>
+      <main className="plaza-main pb-16">
         {/* ── Hero ──────────────────────────────────────────────────────── */}
-        <section className="mt-4 grid items-center gap-10 rounded-3xl bg-card p-8 md:grid-cols-2 md:p-14">
+        <section className="mt-4 [display:grid] items-center gap-10 rounded-3xl bg-card p-8 md:grid-cols-2 md:p-14">
           <div>
             <Breadcrumb className="mb-4">
               <BreadcrumbList className="uppercase tracking-wider">
@@ -216,7 +216,7 @@ export function PatternPage() {
 
           {/* ── Resumen ──────────────────────────────────────────────── */}
           <TabsContent value="overview" className="pt-8">
-            <div className="grid items-start gap-11 md:grid-cols-2">
+            <div className="[display:grid] items-start gap-11 md:grid-cols-2">
               <div>
                 <h2 className="font-heading text-3xl tracking-heading text-foreground">
                   {tr("Cuándo usarlo", "Usage", "Quando usar")}
@@ -341,7 +341,7 @@ export function PatternPage() {
               {tr("Guías", "Guidelines", "Diretrizes")}
             </h2>
 
-            <div className="mt-6 grid gap-11 md:grid-cols-2">
+            <div className="mt-6 [display:grid] gap-11 md:grid-cols-2">
               <div>
                 <h3 className="font-heading text-lg tracking-heading text-foreground">
                   {tr("Cuándo usarlo", "Usage", "Quando usar")}
@@ -360,7 +360,7 @@ export function PatternPage() {
               </div>
             </div>
 
-            <div className="mt-8 grid gap-5 md:grid-cols-2">
+            <div className="mt-8 [display:grid] gap-5 md:grid-cols-2">
               {guidelines.examples.map((ex, i) => (
                 <ExampleFigure key={i} example={ex} tr={tr} />
               ))}
@@ -373,7 +373,7 @@ export function PatternPage() {
           <h2 className="font-heading text-3xl tracking-heading text-foreground">
             {tr("Explorar patrones", "Explore patterns", "Explorar padrões")}
           </h2>
-          <div className="mt-4 grid gap-5 md:grid-cols-2">
+          <div className="mt-4 [display:grid] gap-5 md:grid-cols-2">
             {otherPatterns(pattern.slug).map((p) => (
               <Card key={p.slug}>
                 <h3 className="font-heading text-lg tracking-heading text-foreground">
