@@ -13,6 +13,7 @@ import { ComponentsIndex } from "./pages/ComponentsIndex";
 import { ComponentGroupPage } from "./pages/ComponentGroupPage";
 import { PlazaHome } from "./pages/PlazaHome";
 import { PlazaSistema } from "./pages/PlazaSistema";
+import { PatternClosedInput } from "./pages/PatternClosedInput";
 import { useTr } from "./i18n";
 
 function NotFound() {
@@ -32,6 +33,9 @@ export function App() {
     <Routes>
       {/* Plaza Félix — hub de entrada, standalone (sin sidebar). */}
       <Route index element={<PlazaHome />} />
+
+      {/* Patrones conversacionales — standalone, misma chrome que la Plaza. */}
+      <Route path="patrones/entrada-cerrada" element={<PatternClosedInput />} />
 
       <Route element={<Layout />}>
         <Route path="sistema" element={<PlazaSistema />} />
