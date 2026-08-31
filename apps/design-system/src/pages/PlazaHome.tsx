@@ -120,13 +120,13 @@ export function PlazaHome() {
           <a href={FIGMA_GUIDELINES_URL} target="_blank" rel="noreferrer">
             {tr("Voz y tono", "Voice and tone", "Voz e tom")}
           </a>
-          <a href={FIGMA_GUIDELINES_URL} target="_blank" rel="noreferrer">
+          <Link to="/patrones">
             {tr(
               "Guías conversacionales",
               "Conversational guidelines",
               "Guias de conversa"
             )}
-          </a>
+          </Link>
         </nav>
         <div className="header-right">
           <div className="lang-dropdown">
