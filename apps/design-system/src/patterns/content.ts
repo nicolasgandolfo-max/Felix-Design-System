@@ -35,9 +35,8 @@ const SHARED_RESOURCES: ResourceRow[] = [
 // ─── Entrada cerrada ─────────────────────────────────────────────────────────
 
 const closedInput: Pattern = {
-  slug: "entrada-cerrada",
-  name: { es: "Entrada cerrada", en: "Closed input" },
-  title: { es: "Entrada cerrada", en: "Closed Input" },
+  slug: "closed-input",
+  name: { es: "Closed Input", en: "Closed Input" },
   lede: {
     es: "Botones o una lista cuando el conjunto de respuestas posibles se conoce. El usuario elige; nunca tiene que adivinar cómo escribirlo.",
     en: "Buttons or a list when the set of possible answers is known. The user picks; they never have to guess the wording.",
@@ -260,8 +259,8 @@ const closedInput: Pattern = {
 // ─── Entrada abierta ─────────────────────────────────────────────────────────
 
 const openInput: Pattern = {
-  slug: "entrada-abierta",
-  name: { es: "Entrada abierta", en: "Open input" },
+  slug: "open-input",
+  name: { es: "Open Input", en: "Open Input" },
   lede: {
     es: "Una pregunta que se responde con texto libre, para cuando la respuesta no se puede listar de antemano (un nombre, un monto a medida, una ciudad). El usuario escribe, y el bot tiene que leer lo que venga.",
     en: "A question answered with free text, for when the answer can't be listed in advance (a name, a custom amount, a city). The user types, and the bot has to read whatever comes back.",
@@ -457,10 +456,10 @@ const openInput: Pattern = {
 // ─── Entrada mixta ───────────────────────────────────────────────────────────
 
 const mixedInput: Pattern = {
-  slug: "entrada-mixta",
-  name: { es: "Entrada mixta", en: "Mixed input" },
+  slug: "mixed-input",
+  name: { es: "Mixed input", en: "Mixed input" },
   title: {
-    es: "Entrada mixta (botones y pregunta abierta)",
+    es: "Mixed input (buttons and open question)",
     en: "Mixed input (buttons and open question)",
   },
   lede: {
