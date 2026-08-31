@@ -196,10 +196,11 @@ export function PatternPage() {
             remonta, así que sin esto el tab elegido persiste y caés en
             Guidelines del patrón nuevo en lugar de Resumen. */}
         <Tabs key={pattern.slug} defaultValue="overview" className="mt-10">
-          {/* `--card` y `--background` son el mismo valor en claro, así que el
-              track va en `bg-muted` para que el pill activo (`bg-background`
-              por defecto en el DS) tenga contraste en ambos temas. */}
-          <TabsList className="w-full max-w-[540px] rounded-full bg-muted p-2">
+          {/* Segmentado según Figma: track stone (padding 7px, gap 6px) y el
+              tab activo como pill slate con texto linen — no el default del
+              DS (pill blanco con sombra). Inactivo en --slate-500, el token
+              más cercano al text-soft del diseño. */}
+          <TabsList className="w-full max-w-[540px] gap-1.5 rounded-full bg-(--stone) p-[7px]">
             {(
               [
                 ["overview", tr("Resumen", "Overview", "Resumo")],
@@ -210,7 +211,7 @@ export function PatternPage() {
               <TabsTrigger
                 key={value}
                 value={value}
-                className="flex-1 rounded-full px-4 py-3 font-heading text-base"
+                className="flex-1 justify-center rounded-full px-3.5 py-3 font-heading text-[17px] font-bold tracking-heading text-(--slate-500) data-[state=active]:bg-(--slate) data-[state=active]:text-(--linen) data-[state=active]:shadow-none"
               >
                 {label}
               </TabsTrigger>
