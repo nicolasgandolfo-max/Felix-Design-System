@@ -167,7 +167,7 @@ export function PatternClosedInput() {
               <BreadcrumbList className="uppercase tracking-wider">
                 <BreadcrumbItem>
                   <BreadcrumbLink asChild>
-                    <Link to="/">
+                    <Link to="/patrones">
                       {tr(
                         "Guías conversacionales",
                         "Conversational guidelines",

@@ -14,6 +14,7 @@ import { ComponentGroupPage } from "./pages/ComponentGroupPage";
 import { PlazaHome } from "./pages/PlazaHome";
 import { PlazaSistema } from "./pages/PlazaSistema";
 import { PatternClosedInput } from "./pages/PatternClosedInput";
+import { PatternsLanding } from "./pages/PatternsLanding";
 import { useTr } from "./i18n";
 
 function NotFound() {
@@ -35,6 +36,7 @@ export function App() {
       <Route index element={<PlazaHome />} />
 
       {/* Patrones conversacionales — standalone, misma chrome que la Plaza. */}
+      <Route path="patrones" element={<PatternsLanding />} />
       <Route path="patrones/entrada-cerrada" element={<PatternClosedInput />} />
 
       <Route element={<Layout />}>

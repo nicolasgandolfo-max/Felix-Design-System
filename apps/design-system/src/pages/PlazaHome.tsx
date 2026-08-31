@@ -162,14 +162,9 @@ export function PlazaHome() {
                 "Os padrões que reutilizamos no bot, cada um com quando usar, quando não usar, um exemplo e o porquê. Agrupados em duas famílias: como perguntamos e o que dizemos."
               )}
             </p>
-            <a
-              className="plaza-btn"
-              href={FIGMA_GUIDELINES_URL}
-              target="_blank"
-              rel="noreferrer"
-            >
+            <Link className="plaza-btn" to="/patrones">
               {tr("Explorar patrones", "Browse patterns", "Explorar padrões")}
-            </a>
+            </Link>
           </div>
           <img
             className="plaza-hero-img"
