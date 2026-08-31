@@ -150,7 +150,10 @@ export function PatternPage() {
     <PlazaChrome>
       <main className="plaza-main pb-16">
         {/* ── Hero ──────────────────────────────────────────────────────── */}
-        <section className="mt-4 [display:grid] items-center gap-10 rounded-3xl bg-card p-8 md:grid-cols-2 md:p-14">
+        {/* Borde 1px `stroke/soft` (rgba(8,36,34,0.12)) como en Figma — el
+            mismo trazo que usan .plaza-hero y .plaza-card; el token `--border`
+            del DS es #cfcabf y no corresponde acá. */}
+        <section className="mt-4 [display:grid] items-center gap-10 rounded-3xl border border-[rgba(8,36,34,0.12)] bg-card p-8 md:grid-cols-2 md:p-14">
           <div>
             <Breadcrumb className="mb-4">
               <BreadcrumbList className="uppercase tracking-wider">
