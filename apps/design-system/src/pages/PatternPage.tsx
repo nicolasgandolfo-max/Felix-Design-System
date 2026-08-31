@@ -196,11 +196,11 @@ export function PatternPage() {
             remonta, así que sin esto el tab elegido persiste y caés en
             Guidelines del patrón nuevo en lugar de Resumen. */}
         <Tabs key={pattern.slug} defaultValue="overview" className="mt-10">
-          {/* Segmentado según Figma: track stone (padding 7px, gap 6px) y el
-              tab activo como pill slate con texto linen — no el default del
-              DS (pill blanco con sombra). Inactivo en --slate-500, el token
-              más cercano al text-soft del diseño. */}
-          <TabsList className="w-full max-w-[540px] gap-1.5 rounded-full bg-(--stone) p-[7px]">
+          {/* Segmentado según Figma: track con el mismo estilo que el hero
+              (linen + borde stroke/soft), y el tab activo como pill slate con
+              texto linen — no el default del DS (pill blanco con sombra).
+              Inactivo en --slate-500, el token más cercano al text-soft. */}
+          <TabsList className="w-full max-w-[540px] gap-1.5 rounded-full border border-[rgba(8,36,34,0.12)] bg-card p-[7px]">
             {(
               [
                 ["overview", tr("Resumen", "Overview", "Resumo")],
@@ -232,7 +232,9 @@ export function PatternPage() {
                 </ul>
               </div>
 
-              <div className="rounded-xl bg-primary p-7 text-primary-foreground">
+              {/* "Secondary Sky" de la paleta Félix (--sky #8dfdfa), no el
+                  primary turquesa. */}
+              <div className="rounded-xl bg-(--sky) p-7 text-(--slate)">
                 <h2 className="font-heading text-2xl tracking-heading">
                   {L(tr, overview.metric.title)}
                 </h2>
