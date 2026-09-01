@@ -8,7 +8,6 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
   Button,
-  Card,
   Table,
   TableBody,
   TableCell,
@@ -20,6 +19,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "@felix/ui";
+import { CheckCircleIcon, XCircleIcon } from "@phosphor-icons/react";
 import { PlazaChrome } from "../components/PlazaChrome";
 import { getPattern, otherPatterns } from "../patterns/content";
 import type {
@@ -34,6 +34,13 @@ type Tr = (es: string, en: string, pt?: string) => string;
 
 /** Resuelve un texto localizado con el traductor activo. PT cae a EN. */
 const L = (tr: Tr, l: Localized) => tr(l.es, l.en);
+
+/* Trazo `stroke/soft` de Figma — el mismo que usan .plaza-hero y .plaza-card.
+   El token --border del DS es #cfcabf y no corresponde acá. */
+const STROKE_SOFT = "border-[rgba(8,36,34,0.12)]";
+
+/* Título de sección según Figma: Saans/Inter Medium 30px, no display. */
+const SECTION_H = "font-sans text-[30px] font-medium tracking-[-0.01em] text-foreground";
 
 const STATUS_CLASSES: Record<ResourceStatus, string> = {
   ok: "bg-status-success-bg text-status-success-text",
@@ -69,23 +76,27 @@ function SpecTableBlock({ table, tr }: { table: SpecTable; tr: Tr }) {
   return (
     <>
       {table.heading && (
-        <h3 className="mt-10 font-heading text-lg tracking-heading text-foreground">
-          {L(tr, table.heading)}
-        </h3>
+        <h3 className={`mt-12 ${SECTION_H}`}>{L(tr, table.heading)}</h3>
       )}
-      <div className="mt-3 overflow-x-auto">
+      <div className="mt-4 overflow-x-auto">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>{L(tr, table.columns[0])}</TableHead>
-              <TableHead>{L(tr, table.columns[1])}</TableHead>
+              {table.columns.map((col, i) => (
+                <TableHead
+                  key={i}
+                  className="font-sans text-base font-medium uppercase text-foreground/50"
+                >
+                  {L(tr, col)}
+                </TableHead>
+              ))}
             </TableRow>
           </TableHeader>
           <TableBody>
             {table.rows.map(([a, b], i) => (
               <TableRow key={i}>
-                <TableCell>{L(tr, a)}</TableCell>
-                <TableCell>{L(tr, b)}</TableCell>
+                <TableCell className="text-base">{L(tr, a)}</TableCell>
+                <TableCell className="text-base">{L(tr, b)}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -95,34 +106,42 @@ function SpecTableBlock({ table, tr }: { table: SpecTable; tr: Tr }) {
   );
 }
 
-/** Par sí / no. La barra de color la pone el template, no el PNG. */
+/** Par sí / no según Figma: tarjeta linen con la pantalla adentro, barra de
+ *  veredicto abajo (cactus / papaya) y el caption afuera, debajo. */
 function ExampleFigure({ example, tr }: { example: Example; tr: Tr }) {
   const isDo = example.tone === "do";
-  /* Los tokens de status no invierten entre temas, así que el texto va en
-     `primary-foreground`, que es slate oscuro en claro y en oscuro. */
-  const bar = isDo
-    ? "bg-status-success text-primary-foreground"
-    : "bg-status-error text-primary-foreground";
 
   return (
-    <figure className="m-0 overflow-hidden rounded-lg border border-border">
+    <div>
       <div
-        className={`flex items-center gap-2 px-4 py-3 font-sans text-sm font-bold ${bar}`}
+        className={`flex flex-col overflow-hidden rounded-[31px] border ${STROKE_SOFT} bg-card`}
       >
-        <span aria-hidden="true">{isDo ? "✓" : "✕"}</span>
-        {isDo ? tr("Sí", "Do") : tr("No", "Don't")}
+        <div className="flex min-h-[283px] flex-1 items-center justify-center p-8">
+          <img
+            src={example.img}
+            alt={L(tr, example.alt)}
+            className="h-auto w-full max-w-[300px]"
+          />
+        </div>
+        <div
+          className={`flex h-[59px] shrink-0 items-center gap-3 border-t ${STROKE_SOFT} px-6 ${
+            isDo ? "bg-(--cactus)" : "bg-(--papaya)"
+          }`}
+        >
+          {isDo ? (
+            <CheckCircleIcon size={24} color="white" aria-hidden="true" />
+          ) : (
+            <XCircleIcon size={24} color="white" aria-hidden="true" />
+          )}
+          <span className="font-heading text-base font-extrabold tracking-[-0.01em] text-white">
+            {isDo ? tr("Sí", "Do") : tr("No", "Don't")}
+          </span>
+        </div>
       </div>
-      <div className="bg-muted p-4">
-        <img
-          src={example.img}
-          alt={L(tr, example.alt)}
-          className="mx-auto block max-w-full"
-        />
-      </div>
-      <figcaption className="px-4 pb-4 pt-3 font-sans text-sm text-secondary">
+      <p className="mt-4 font-sans text-base font-medium tracking-[-0.01em] text-foreground">
         {L(tr, example.caption)}
-      </figcaption>
-    </figure>
+      </p>
+    </div>
   );
 }
 
@@ -145,18 +164,20 @@ export function PatternPage() {
   if (!pattern) return <Navigate to="/patrones" replace />;
 
   const { overview, specs, guidelines } = pattern;
+  const heroImgs = pattern.heroDetail ?? [pattern.hero];
 
   return (
     <PlazaChrome>
       <main className="plaza-main pb-16">
-        {/* ── Hero ──────────────────────────────────────────────────────── */}
-        {/* Borde 1px `stroke/soft` (rgba(8,36,34,0.12)) como en Figma — el
-            mismo trazo que usan .plaza-hero y .plaza-card; el token `--border`
-            del DS es #cfcabf y no corresponde acá. */}
-        <section className="mt-4 [display:grid] items-center gap-10 rounded-3xl border border-[rgba(8,36,34,0.12)] bg-card p-8 md:grid-cols-2 md:p-14">
+        {/* ── Hero ─────────────────────────────────────────────────────────
+            Panel linen 463px con borde stroke/soft; título Plain Black 60/54
+            y bajada 16/24 en slate, como el hero del home. */}
+        <section
+          className={`mt-4 [display:grid] min-h-[463px] items-center gap-10 rounded-[31px] border ${STROKE_SOFT} bg-card p-8 md:grid-cols-2 md:px-24 md:py-12`}
+        >
           <div>
-            <Breadcrumb className="mb-4">
-              <BreadcrumbList className="uppercase tracking-wider">
+            <Breadcrumb className="mb-1.5">
+              <BreadcrumbList className="uppercase">
                 <BreadcrumbItem>
                   <BreadcrumbLink asChild>
                     <Link to="/patrones">
@@ -175,32 +196,36 @@ export function PatternPage() {
               </BreadcrumbList>
             </Breadcrumb>
 
-            <h1 className="font-heading text-5xl leading-none tracking-display text-foreground md:text-6xl">
+            <h1 className="font-heading text-[60px] font-black leading-[54px] tracking-[-0.01em] text-foreground">
               {heroTitle}
             </h1>
 
-            <p className="mt-4 max-w-[42ch] font-sans text-lg text-secondary">
+            <p className="mt-4 max-w-[448px] font-sans text-base leading-6 text-foreground">
               {L(tr, pattern.lede)}
             </p>
           </div>
 
-          <img
-            src={pattern.hero}
-            alt={L(tr, pattern.heroAlt)}
-            className="mx-auto w-full max-w-[420px]"
-          />
+          <div className="flex flex-col items-center gap-4">
+            {heroImgs.map((src, i) => (
+              <img
+                key={i}
+                /* El alt describe el conjunto; las láminas extra son decorativas. */
+                alt={i === 0 ? L(tr, pattern.heroAlt) : ""}
+                src={src}
+                className="h-auto w-full max-w-[393px]"
+              />
+            ))}
+          </div>
         </section>
 
-        {/* ── Tabs ──────────────────────────────────────────────────────── */}
-        {/* `key` por slug: al navegar entre patrones el componente no se
-            remonta, así que sin esto el tab elegido persiste y caés en
-            Guidelines del patrón nuevo en lugar de Resumen. */}
-        <Tabs key={pattern.slug} defaultValue="overview" className="mt-10">
-          {/* Segmentado según Figma: track con el mismo estilo que el hero
-              (linen + borde stroke/soft), y el tab activo como pill slate con
-              texto linen — no el default del DS (pill blanco con sombra).
-              Inactivo en --slate-500, el token más cercano al text-soft. */}
-          <TabsList className="w-full max-w-[540px] gap-1.5 rounded-full border border-[rgba(8,36,34,0.12)] bg-card p-[7px]">
+        {/* ── Tabs ─────────────────────────────────────────────────────────
+            Segmentado según Figma: track linen full-width con borde
+            stroke/soft (alto 79), pill activo slate de 59 con texto linen,
+            labels display 24px. */}
+        <Tabs key={pattern.slug} defaultValue="overview" className="mt-12">
+          <TabsList
+            className={`w-full gap-1.5 rounded-full border ${STROKE_SOFT} bg-card p-[9px]`}
+          >
             {(
               [
                 ["overview", tr("Resumen", "Overview", "Resumo")],
@@ -211,7 +236,7 @@ export function PatternPage() {
               <TabsTrigger
                 key={value}
                 value={value}
-                className="flex-1 justify-center rounded-full px-3.5 py-3 font-heading text-[17px] font-bold tracking-heading text-(--slate-500) data-[state=active]:bg-(--slate) data-[state=active]:text-(--linen) data-[state=active]:shadow-none"
+                className="h-[59px] justify-center rounded-full px-10 font-heading text-[24px] font-black tracking-[-0.01em] text-foreground data-[state=active]:bg-(--slate) data-[state=active]:text-(--linen) data-[state=active]:shadow-none"
               >
                 {label}
               </TabsTrigger>
@@ -219,40 +244,41 @@ export function PatternPage() {
           </TabsList>
 
           {/* ── Resumen ──────────────────────────────────────────────── */}
-          <TabsContent value="overview" className="pt-8">
+          <TabsContent value="overview" className="pt-10">
             <div className="[display:grid] items-start gap-11 md:grid-cols-2">
               <div>
-                <h2 className="font-heading text-3xl tracking-heading text-foreground">
+                <h2 className={SECTION_H}>
                   {tr("Cuándo usarlo", "Usage", "Quando usar")}
                 </h2>
-                <ul className="mt-4 list-disc space-y-2 pl-6 font-sans text-base text-foreground">
+                <ul className="mt-5 list-disc space-y-1 pl-6 font-sans text-[20px] leading-7 text-foreground">
                   {overview.usage.map((item, i) => (
                     <li key={i}>{L(tr, item)}</li>
                   ))}
                 </ul>
               </div>
 
-              {/* "Secondary Sky" de la paleta Félix (--sky #8dfdfa), no el
-                  primary turquesa. */}
-              <div className="rounded-xl bg-(--sky) p-7 text-(--slate)">
-                <h2 className="font-heading text-2xl tracking-heading">
+              {/* "Secondary Sky" de la paleta Félix (--sky #8dfdfa). */}
+              <div
+                className={`rounded-[31px] border ${STROKE_SOFT} bg-(--sky) p-8 text-(--slate)`}
+              >
+                <h2 className="font-sans text-[30px] font-medium tracking-[-0.01em]">
                   {L(tr, overview.metric.title)}
                 </h2>
                 {overview.metric.body.map((p, i) => (
-                  <p key={i} className="mt-3 font-sans text-base">
+                  <p key={i} className="mt-4 font-sans text-base leading-6">
                     {withInlineCode(L(tr, p))}
                   </p>
                 ))}
                 {overview.metric.note && (
-                  <p className="mt-3 font-sans text-sm opacity-80">
+                  <p className="mt-4 font-sans text-base leading-6">
                     {L(tr, overview.metric.note)}
                   </p>
                 )}
               </div>
             </div>
 
-            <section className="mt-14">
-              <h2 className="font-heading text-3xl tracking-heading text-foreground">
+            <section className="mt-16">
+              <h2 className={SECTION_H}>
                 {tr(
                   "Recursos y disponibilidad",
                   "Resources & availability",
@@ -263,18 +289,29 @@ export function PatternPage() {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>{tr("Tipo", "Type", "Tipo")}</TableHead>
-                      <TableHead>
-                        {tr("Recurso", "Resource", "Recurso")}
-                      </TableHead>
-                      <TableHead>{tr("Estado", "Status", "Estado")}</TableHead>
+                      {(
+                        [
+                          tr("Tipo", "Type", "Tipo"),
+                          tr("Recurso", "Resource", "Recurso"),
+                          tr("Estado", "Status", "Estado"),
+                        ] as const
+                      ).map((h) => (
+                        <TableHead
+                          key={h}
+                          className="font-sans text-base font-medium uppercase text-foreground/50"
+                        >
+                          {h}
+                        </TableHead>
+                      ))}
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {overview.resources.map((r, i) => (
                       <TableRow key={i}>
-                        <TableCell>{L(tr, r.type)}</TableCell>
-                        <TableCell>
+                        <TableCell className="text-base">
+                          {L(tr, r.type)}
+                        </TableCell>
+                        <TableCell className="text-base">
                           {r.href ? (
                             <Button asChild variant="primary" size="sm">
                               <a
@@ -289,7 +326,7 @@ export function PatternPage() {
                             L(tr, r.resource)
                           )}
                         </TableCell>
-                        <TableCell>
+                        <TableCell className="text-base">
                           <span
                             className={`inline-flex items-center rounded-full px-3 py-1 font-sans text-xs font-semibold ${STATUS_CLASSES[r.status]}`}
                           >
@@ -305,11 +342,11 @@ export function PatternPage() {
           </TabsContent>
 
           {/* ── Especificaciones ─────────────────────────────────────── */}
-          <TabsContent value="specs" className="pt-8">
-            <h2 className="font-heading text-3xl tracking-heading text-foreground">
+          <TabsContent value="specs" className="pt-10">
+            <h2 className={SECTION_H}>
               {tr("Especificaciones", "Specs", "Especificações")}
             </h2>
-            <p className="mt-2 font-sans text-base text-secondary">
+            <p className="mt-3 font-sans text-[20px] leading-7 text-foreground">
               {L(tr, specs.intro)}
             </p>
 
@@ -320,13 +357,13 @@ export function PatternPage() {
             {specs.notes?.map((note, i) => (
               <p
                 key={i}
-                className="mt-6 border-l-2 border-primary pl-4 font-sans text-sm text-secondary"
+                className="mt-8 border-l-2 border-primary pl-4 font-sans text-base leading-6 text-foreground"
               >
                 {L(tr, note)}
               </p>
             ))}
 
-            <p className="mt-6 font-sans text-sm text-secondary">
+            <p className="mt-8 font-sans text-xs font-medium leading-7 text-foreground/50">
               {L(tr, specs.source)}
               {specs.sourceHref && (
                 <a
@@ -342,31 +379,25 @@ export function PatternPage() {
           </TabsContent>
 
           {/* ── Guías ────────────────────────────────────────────────── */}
-          <TabsContent value="guidelines" className="pt-8">
-            <h2 className="font-heading text-3xl tracking-heading text-foreground">
-              {tr("Guías", "Guidelines", "Diretrizes")}
-            </h2>
-
-            <div className="mt-6 [display:grid] gap-11 md:grid-cols-2">
+          <TabsContent value="guidelines" className="pt-10">
+            <div className="[display:grid] gap-11 md:grid-cols-2">
               <div>
-                <h3 className="font-heading text-lg tracking-heading text-foreground">
+                <h2 className={SECTION_H}>
                   {tr("Cuándo usarlo", "Usage", "Quando usar")}
-                </h3>
-                <p className="mt-2 font-sans text-base text-foreground">
+                </h2>
+                <p className="mt-3 font-sans text-[20px] leading-7 text-foreground">
                   {L(tr, guidelines.usage)}
                 </p>
               </div>
               <div>
-                <h3 className="font-heading text-lg tracking-heading text-foreground">
-                  {tr("Tips", "Tips", "Dicas")}
-                </h3>
-                <p className="mt-2 font-sans text-base text-foreground">
+                <h2 className={SECTION_H}>{tr("Tips", "Tips", "Dicas")}</h2>
+                <p className="mt-3 font-sans text-[20px] leading-7 text-foreground">
                   {L(tr, guidelines.tips)}
                 </p>
               </div>
             </div>
 
-            <div className="mt-8 [display:grid] gap-5 md:grid-cols-2">
+            <div className="mt-10 [display:grid] items-start gap-x-12 gap-y-10 md:grid-cols-2">
               {guidelines.examples.map((ex, i) => (
                 <ExampleFigure key={i} example={ex} tr={tr} />
               ))}
@@ -374,29 +405,26 @@ export function PatternPage() {
           </TabsContent>
         </Tabs>
 
-        {/* ── Explorar patrones ─────────────────────────────────────────── */}
-        <section className="mt-16">
-          <h2 className="font-heading text-3xl tracking-heading text-foreground">
-            {tr("Explorar patrones", "Explore patterns", "Explorar padrões")}
-          </h2>
-          <div className="mt-4 [display:grid] gap-5 md:grid-cols-2">
-            {otherPatterns(pattern.slug).map((p) => (
-              <Card key={p.slug}>
-                <h3 className="font-heading text-lg tracking-heading text-foreground">
-                  {L(tr, p.title ?? p.name)}
-                </h3>
-                <p className="font-sans text-sm text-secondary">
-                  {L(tr, p.cardBody)}
-                </p>
-                <Button asChild variant="line" size="sm" className="self-start">
-                  <Link to={`/patrones/${p.slug}`}>
-                    {tr("Ver el patrón", "Go to pattern", "Ver o padrão")}
-                  </Link>
-                </Button>
-              </Card>
-            ))}
-          </div>
-        </section>
+        {/* ── Explorar patrones ────────────────────────────────────────────
+            Mismas tarjetas que los "enlaces útiles" del home. */}
+        <h2 className="plaza-links-title">
+          {tr("Explorar patrones", "Explore patterns", "Explorar padrões")}
+        </h2>
+        <div className="[display:grid] gap-6 md:grid-cols-2">
+          {otherPatterns(pattern.slug).map((p) => (
+            <article key={p.slug} className="plaza-link-card">
+              <h3>{L(tr, p.name)}</h3>
+              <p className="plaza-body">{L(tr, p.cardBody)}</p>
+              <Link className="plaza-btn" to={`/patrones/${p.slug}`}>
+                {tr(
+                  "Ver las guías del patrón",
+                  "Go to pattern guidelines",
+                  "Ver as diretrizes do padrão"
+                )}
+              </Link>
+            </article>
+          ))}
+        </div>
       </main>
     </PlazaChrome>
   );
