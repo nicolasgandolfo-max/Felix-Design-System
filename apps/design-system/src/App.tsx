@@ -13,6 +13,8 @@ import { ComponentsIndex } from "./pages/ComponentsIndex";
 import { ComponentGroupPage } from "./pages/ComponentGroupPage";
 import { PlazaHome } from "./pages/PlazaHome";
 import { PlazaSistema } from "./pages/PlazaSistema";
+import { PatternsLanding } from "./pages/PatternsLanding";
+import { PatternPage } from "./pages/PatternPage";
 import { useTr } from "./i18n";
 
 function NotFound() {
@@ -32,6 +34,12 @@ export function App() {
     <Routes>
       {/* Plaza Félix — hub de entrada, standalone (sin sidebar). */}
       <Route index element={<PlazaHome />} />
+
+      {/* Patrones conversacionales — standalone, misma chrome que la Plaza.
+          `:slug` se resuelve contra el registro en `patterns/content.ts`, así
+          que un patrón nuevo no necesita ruta propia. */}
+      <Route path="patrones" element={<PatternsLanding />} />
+      <Route path="patrones/:slug" element={<PatternPage />} />
 
       <Route element={<Layout />}>
         <Route path="sistema" element={<PlazaSistema />} />
