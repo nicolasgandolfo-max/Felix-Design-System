@@ -5,8 +5,12 @@ import {
   TextAaIcon,
   ImageIcon,
   CubeIcon,
-  PencilSimpleIcon,
   MarkdownLogoIcon,
+  ChatCircleTextIcon,
+  BookOpenIcon,
+  MagnifyingGlassIcon,
+  BookmarksIcon,
+  ListChecksIcon,
   AtomIcon,
   CirclesThreeIcon,
   TreeStructureIcon,
@@ -43,8 +47,33 @@ export const NAV: NavGroup[] = [
     group: { es: "Construcción", en: "Build", pt: "Construção" },
     items: [
       { id: "tokens", path: "/tokens", icon: CubeIcon, es: "Design Tokens", en: "Design Tokens", pt: "Design Tokens" },
-      { id: "editorial", path: "/editorial", icon: PencilSimpleIcon, es: "Guía editorial", en: "Editorial", pt: "Guia editorial" },
       { id: "markdown", path: "/markdown", icon: MarkdownLogoIcon, es: "Markdown", en: "Markdown", pt: "Markdown" },
+    ],
+  },
+];
+
+/**
+ * Nav de la Guía editorial. Es una sección propia del portal, hermana del
+ * sistema de diseño y no parte de él: por eso vive en su propio árbol y no
+ * dentro de `NAV`. Hoy la guía es una sola página, así que los ítems de
+ * contenido apuntan a anclas de `/editorial`; cuando cada bloque tenga su
+ * página, alcanza con cambiar el `path` por la ruta nueva.
+ */
+export const EDITORIAL_NAV: NavGroup[] = [
+  {
+    group: { es: "Guía editorial", en: "Editorial guide", pt: "Guia editorial" },
+    items: [
+      { id: "editorial-overview", path: "/editorial", end: true, icon: SquaresFourIcon, es: "Visión general", en: "Overview", pt: "Visão geral" },
+    ],
+  },
+  {
+    group: { es: "Contenido", en: "Content", pt: "Conteúdo" },
+    items: [
+      { id: "voice", path: "/editorial#voz", icon: ChatCircleTextIcon, es: "La voz de Felix", en: "Felix's voice", pt: "A voz da Felix" },
+      { id: "ux-writing", path: "/editorial#ux-writing", icon: BookOpenIcon, es: "Principios de UX writing", en: "UX writing principles", pt: "Princípios de UX writing" },
+      { id: "case-study", path: "/editorial#caso-de-estudio", icon: MagnifyingGlassIcon, es: "Caso de estudio", en: "Case study", pt: "Estudo de caso" },
+      { id: "glossary", path: "/editorial#glosario", icon: BookmarksIcon, es: "Glosario", en: "Glossary", pt: "Glossário" },
+      { id: "do-dont", path: "/editorial#hace-y-evita", icon: ListChecksIcon, es: "Hacé y evitá", en: "Do and don't", pt: "Faça e evite" },
     ],
   },
 ];

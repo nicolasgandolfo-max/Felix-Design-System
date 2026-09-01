@@ -1,18 +1,18 @@
 import { Routes, Route, Link, Navigate } from "react-router-dom";
-import { Layout } from "./Layout";
+import { Layout, EditorialLayout } from "./Layout";
 import {
   Principles,
   Colors,
   Typography,
   Illustrations,
   Tokens,
-  Editorial,
   MarkdownFiles,
 } from "./sections";
 import { ComponentsIndex } from "./pages/ComponentsIndex";
 import { ComponentGroupPage } from "./pages/ComponentGroupPage";
 import { PlazaHome } from "./pages/PlazaHome";
 import { PlazaSistema } from "./pages/PlazaSistema";
+import { PlazaEditorial } from "./pages/PlazaEditorial";
 import { PatternsLanding } from "./pages/PatternsLanding";
 import { PatternPage } from "./pages/PatternPage";
 import { useTr } from "./i18n";
@@ -41,6 +41,12 @@ export function App() {
       <Route path="patrones" element={<PatternsLanding />} />
       <Route path="patrones/:slug" element={<PatternPage />} />
 
+      {/* Guía editorial — sección propia, hermana del sistema de diseño:
+          misma estructura (header + barra al costado) pero su propio nav. */}
+      <Route element={<EditorialLayout />}>
+        <Route path="editorial" element={<PlazaEditorial />} />
+      </Route>
+
       <Route element={<Layout />}>
         <Route path="sistema" element={<PlazaSistema />} />
         <Route path="principios" element={<Principles />} />
@@ -52,7 +58,6 @@ export function App() {
         <Route path="componentes" element={<ComponentsIndex />} />
         <Route path="componentes/:groupSlug" element={<ComponentGroupPage />} />
         <Route path="tokens" element={<Tokens />} />
-        <Route path="editorial" element={<Editorial />} />
         <Route path="markdown" element={<MarkdownFiles />} />
         {/* DESIGN.md section became Markdown (now also ships components.md) — keep old links working. */}
         <Route path="design-md" element={<Navigate to="/markdown" replace />} />

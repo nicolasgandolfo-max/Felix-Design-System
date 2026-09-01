@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Outlet, useLocation, Link } from "react-router-dom";
 import {
   ListIcon,
@@ -7,11 +7,26 @@ import {
   CaretDownIcon,
   XIcon,
 } from "@phosphor-icons/react";
-import { Sidebar, Logo } from "./Sidebar";
+import { Sidebar, EditorialSidebar, Logo } from "./Sidebar";
 import { Footer } from "./sections";
 import { useLang, useTr } from "./i18n";
 
-export function Layout() {
+/**
+ * Estructura compartida por las secciones con panel lateral (sistema de diseño
+ * y guía editorial): mismo header, mismo grid y mismo footer. Cada sección
+ * pasa su título, su badge y su propio panel lateral.
+ */
+function SectionLayout({
+  title,
+  badge,
+  sidebar,
+  footerNote,
+}: {
+  title: string;
+  badge?: ReactNode;
+  sidebar: (props: { open: boolean; onNavigate: () => void }) => ReactNode;
+  footerNote?: string;
+}) {
   const tr = useTr();
   const { lang, setLang } = useLang();
   const [open, setOpen] = useState(false);
@@ -52,12 +67,8 @@ export function Layout() {
         </div>
 
         <div className="header-center">
-          <h1 className="sys-title">
-            {tr("Sistema de Diseño", "Design System", "Sistema de Design")}
-          </h1>
-          <span className="sys-version-badge">
-            <span className="dot" />v 1.0.0. - Alpha
-          </span>
+          <h1 className="sys-title">{title}</h1>
+          {badge}
         </div>
 
         <div className="header-right">
@@ -90,12 +101,48 @@ export function Layout() {
 
       {/* ── Main Layout Grid ─────────────────────────────────────────── */}
       <div className="plaza-sys-container">
-        <Sidebar open={open} onNavigate={() => setOpen(false)} />
+        {sidebar({ open, onNavigate: () => setOpen(false) })}
         <main className="plaza-sys-main">
           <Outlet />
         </main>
       </div>
-      <Footer />
+      <Footer note={footerNote} />
     </div>
+  );
+}
+
+export function Layout() {
+  const tr = useTr();
+  return (
+    <SectionLayout
+      title={tr("Sistema de Diseño", "Design System", "Sistema de Design")}
+      badge={
+        <span className="sys-version-badge">
+          <span className="dot" />v 1.0.0. - Alpha
+        </span>
+      }
+      sidebar={(props) => <Sidebar {...props} />}
+    />
+  );
+}
+
+export function EditorialLayout() {
+  const tr = useTr();
+  return (
+    <SectionLayout
+      title={tr("Guía Editorial", "Editorial Guide", "Guia Editorial")}
+      badge={
+        <span className="sys-version-badge">
+          <span className="dot" />
+          {tr("Voz y tono", "Voice and tone", "Voz e tom")}
+        </span>
+      }
+      sidebar={(props) => <EditorialSidebar {...props} />}
+      footerNote={tr(
+        "Felix Pago · Guía editorial · v1.0.0 alpha — voz, tono y glosario de producto.",
+        "Felix Pago · Editorial guide · v1.0.0 alpha — voice, tone, and product glossary.",
+        "Felix Pago · Guia editorial · v1.0.0 alpha — voz, tom e glossário de produto."
+      )}
+    />
   );
 }

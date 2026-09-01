@@ -4,11 +4,6 @@ import { GlobeIcon, CaretDownIcon } from "@phosphor-icons/react";
 import { FelixPlazaLogo } from "./FelixPlazaLogo";
 import { useLang, useTr } from "../i18n";
 
-/* Destino aún sin sección propia en el portal — apunta al archivo de Figma
-   hasta que exista como ruta. Mismo criterio que PlazaHome. */
-const FIGMA_VOICE_URL =
-  "https://www.figma.com/design/N9dG8uXXR7FkLkuSZT5oex/DRAFT-Conversational-Guidelines";
-
 /**
  * Chrome compartido por las páginas standalone (landing de patrones y páginas
  * de patrón): exactamente el mismo wrapper `.plaza`, nav y footer que
@@ -31,9 +26,9 @@ export function PlazaChrome({ children }: { children: ReactNode }) {
         >
           <Link to="/">{tr("Inicio", "Home", "Início")}</Link>
           <Link to="/sistema">Design System</Link>
-          <a href={FIGMA_VOICE_URL} target="_blank" rel="noreferrer">
+          <Link to="/editorial">
             {tr("Voz y tono", "Voice and tone", "Voz e tom")}
-          </a>
+          </Link>
           <Link to="/patrones">
             {tr(
               "Guías conversacionales",
@@ -73,6 +68,7 @@ export function PlazaChrome({ children }: { children: ReactNode }) {
             "Feito com amor pela equipe de design do Félix"
           )}
         </p>
+        <img src="../assets/plaza/heartfelix.png" alt="" />
         <p>
           © 2026 Felix Technologies Inc.{" "}
           {tr(

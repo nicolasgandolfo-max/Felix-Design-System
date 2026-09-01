@@ -1,14 +1,16 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, type ReactNode } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { CaretRightIcon, PuzzlePieceIcon } from "@phosphor-icons/react";
 import {
   NAV,
+  EDITORIAL_NAV,
   INVENTORY,
   GROUP_SLUGS,
   GROUP_ICONS,
   GROUP_LABELS,
   ILLUSTRATION_SECTIONS,
   slugify,
+  type NavGroup,
 } from "./data";
 import { useTr } from "./i18n";
 
@@ -80,15 +82,22 @@ export function Logo() {
 const itemClass = ({ isActive }: { isActive: boolean }) =>
   "sys-nav-item" + (isActive ? " active" : "");
 
-export function Sidebar({
+/**
+ * Renderiza un árbol de nav (`NAV`, `EDITORIAL_NAV`, …). Dos casos especiales:
+ * "illustrations", que despliega sus anclas, y los ítems cuyo `path` ya trae un
+ * ancla — `NavLink` no marca activo por hash, así que lo resolvemos a mano.
+ */
+function NavTree({
+  groups,
+  showComponents = false,
   onNavigate,
-  open,
 }: {
+  groups: NavGroup[];
+  showComponents?: boolean;
   onNavigate: () => void;
-  open: boolean;
 }) {
   const tr = useTr();
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
 
   const [manualOpen, setManualOpen] = useState<Record<string, boolean>>({});
   const isGroupOpen = (id: string, active: boolean) => manualOpen[id] ?? active;
@@ -96,24 +105,53 @@ export function Sidebar({
     setManualOpen((m) => ({ ...m, [id]: !isGroupOpen(id, active) }));
 
   return (
-    <aside
-      className={"plaza-sys-sidebar" + (open ? " open" : "")}
-      id="sidebar"
-    >
-      <nav className="sys-nav" aria-label={tr("Secciones", "Sections", "Seções")}>
-        {NAV.map((g) => (
-          <div key={g.group.en} className="sys-nav-group">
-            <span className="sys-group-label">
-              {tr(g.group.es, g.group.en, g.group.pt)}
-            </span>
-            {g.items.map((it) => {
-              const Icon = it.icon;
-              if (it.id !== "illustrations") {
-                return (
+    <>
+      {groups.map((g) => (
+        <div key={g.group.en} className="sys-nav-group">
+          <span className="sys-group-label">
+            {tr(g.group.es, g.group.en, g.group.pt)}
+          </span>
+          {g.items.map((it) => {
+            const Icon = it.icon;
+            if (it.path.includes("#")) {
+              const isActive = pathname + hash === it.path;
+              return (
+                <Link
+                  key={it.id}
+                  to={it.path}
+                  onClick={onNavigate}
+                  className={itemClass({ isActive })}
+                >
+                  <Icon size={18} weight={isActive ? "fill" : "regular"} />
+                  <span>{tr(it.es, it.en, it.pt)}</span>
+                </Link>
+              );
+            }
+            if (it.id !== "illustrations") {
+              return (
+                <NavLink
+                  key={it.id}
+                  to={it.path}
+                  end={it.end}
+                  onClick={onNavigate}
+                  className={itemClass}
+                >
+                  {({ isActive }) => (
+                    <>
+                      <Icon size={18} weight={isActive ? "fill" : "regular"} />
+                      <span>{tr(it.es, it.en, it.pt)}</span>
+                    </>
+                  )}
+                </NavLink>
+              );
+            }
+            const active = pathname === it.path;
+            const expanded = isGroupOpen("illustrations", active);
+            return (
+              <Fragment key={it.id}>
+                <div className="nav-row-plaza">
                   <NavLink
-                    key={it.id}
                     to={it.path}
-                    end={it.end}
                     onClick={onNavigate}
                     className={itemClass}
                   >
@@ -124,57 +162,38 @@ export function Sidebar({
                       </>
                     )}
                   </NavLink>
-                );
-              }
-              const active = pathname === it.path;
-              const expanded = isGroupOpen("illustrations", active);
-              return (
-                <Fragment key={it.id}>
-                  <div className="nav-row-plaza">
-                    <NavLink
-                      to={it.path}
+                  <button
+                    type="button"
+                    className={"nav-caret-plaza" + (expanded ? " open" : "")}
+                    aria-expanded={expanded}
+                    aria-label={
+                      expanded
+                        ? tr("Colapsar", "Collapse", "Recolher")
+                        : tr("Expandir", "Expand", "Expandir")
+                    }
+                    onClick={() => toggleGroup("illustrations", active)}
+                  >
+                    <CaretRightIcon size={14} />
+                  </button>
+                </div>
+                {expanded &&
+                  ILLUSTRATION_SECTIONS.map((s) => (
+                    <Link
+                      key={s.id}
+                      to={`/ilustraciones#${s.id}`}
                       onClick={onNavigate}
-                      className={itemClass}
+                      className="sys-sub-item"
                     >
-                      {({ isActive }) => (
-                        <>
-                          <Icon size={18} weight={isActive ? "fill" : "regular"} />
-                          <span>{tr(it.es, it.en, it.pt)}</span>
-                        </>
-                      )}
-                    </NavLink>
-                    <button
-                      type="button"
-                      className={"nav-caret-plaza" + (expanded ? " open" : "")}
-                      aria-expanded={expanded}
-                      aria-label={
-                        expanded
-                          ? tr("Colapsar", "Collapse", "Recolher")
-                          : tr("Expandir", "Expand", "Expandir")
-                      }
-                      onClick={() => toggleGroup("illustrations", active)}
-                    >
-                      <CaretRightIcon size={14} />
-                    </button>
-                  </div>
-                  {expanded &&
-                    ILLUSTRATION_SECTIONS.map((s) => (
-                      <Link
-                        key={s.id}
-                        to={`/ilustraciones#${s.id}`}
-                        onClick={onNavigate}
-                        className="sys-sub-item"
-                      >
-                        <span>{tr(s.es, s.en, s.pt)}</span>
-                      </Link>
-                    ))}
-                </Fragment>
-              );
-            })}
-          </div>
-        ))}
+                      <span>{tr(s.es, s.en, s.pt)}</span>
+                    </Link>
+                  ))}
+              </Fragment>
+            );
+          })}
+        </div>
+      ))}
 
-        {/* Componentes section */}
+      {showComponents && (
         <div className="sys-nav-group">
           <span className="sys-group-label">
             {tr("Componentes", "Components", "Componentes")}
@@ -247,7 +266,55 @@ export function Sidebar({
             );
           })}
         </div>
+      )}
+    </>
+  );
+}
+
+/** Shell del panel lateral: sólo cambia el árbol de nav que lleva dentro. */
+function SidebarShell({
+  open,
+  children,
+}: {
+  open: boolean;
+  children: ReactNode;
+}) {
+  const tr = useTr();
+  return (
+    <aside className={"plaza-sys-sidebar" + (open ? " open" : "")} id="sidebar">
+      <nav className="sys-nav" aria-label={tr("Secciones", "Sections", "Seções")}>
+        {children}
       </nav>
     </aside>
+  );
+}
+
+/** Panel lateral del sistema de diseño: fundamentos, construcción y componentes. */
+export function Sidebar({
+  onNavigate,
+  open,
+}: {
+  onNavigate: () => void;
+  open: boolean;
+}) {
+  return (
+    <SidebarShell open={open}>
+      <NavTree groups={NAV} showComponents onNavigate={onNavigate} />
+    </SidebarShell>
+  );
+}
+
+/** Panel lateral de la Guía editorial. */
+export function EditorialSidebar({
+  onNavigate,
+  open,
+}: {
+  onNavigate: () => void;
+  open: boolean;
+}) {
+  return (
+    <SidebarShell open={open}>
+      <NavTree groups={EDITORIAL_NAV} onNavigate={onNavigate} />
+    </SidebarShell>
   );
 }

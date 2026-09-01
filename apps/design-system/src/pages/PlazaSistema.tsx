@@ -5,7 +5,7 @@ import {
   PaletteIcon,
   TextAaIcon,
   CubeIcon,
-  PencilSimpleIcon,
+  MarkdownLogoIcon,
   PuzzlePieceIcon,
 } from "@phosphor-icons/react";
 import { useTr } from "../i18n";
@@ -178,23 +178,21 @@ export function PlazaSistema() {
             </span>
           </Link>
 
-          {/* Tile 6: Voz y copy */}
-          <Link to="/editorial" className="sys-card-tile">
+          {/* Tile 6: Markdown */}
+          <Link to="/markdown" className="sys-card-tile">
             <div className="tile-icon-badge">
-              <PencilSimpleIcon size={22} weight="regular" />
+              <MarkdownLogoIcon size={22} weight="regular" />
             </div>
-            <h3 className="tile-title">
-              {tr("Voz y copy", "Voice & copy", "Voz e copy")}
-            </h3>
+            <h3 className="tile-title">Markdown</h3>
             <p className="tile-desc">
               {tr(
-                "Español primero, tú siempre. Claro, cálido, sin jerga.",
-                "Spanish-first, informal tú always. Clear, warm, jargon-free.",
-                "Espanhol primeiro, você sempre. Claro, caloroso, sem jargão."
+                "El sistema en archivos .md, listos para pasarle a un LLM.",
+                "The system as .md files, ready to hand to an LLM.",
+                "O sistema em arquivos .md, prontos para passar a um LLM."
               )}
             </p>
             <span className="tile-link">
-              {tr("Leer guía", "Read guide", "Ler guia")} →
+              {tr("Ver archivos", "View files", "Ver arquivos")} →
             </span>
           </Link>
         </div>

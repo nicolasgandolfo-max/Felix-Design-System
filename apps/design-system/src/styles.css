@@ -1740,20 +1740,18 @@ body {
 
 /* Footer */
 .plaza-footer {
-  background: var(--slate);
-  color: #fff;
-  border-radius: 31px 31px 0 0;
-  min-height: 147px;
+  color: var(--slate);
+  min-height: 100px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 24px;
   flex-wrap: wrap;
-  padding: 24px 95px;
+  padding: 12px 45px;
 }
 .plaza-footer p {
   margin: 0;
-  font-size: 18px;
+  font-size: 12px;
   letter-spacing: -0.01em;
 }
 
@@ -2033,6 +2031,9 @@ body {
   display: flex;
   flex-direction: column;
   padding-top: 12px;
+  /* Sin esto, una tabla ancha (el glosario) estira la columna del grid y
+     desborda la página en horizontal en lugar de scrollear dentro de la tabla. */
+  min-width: 0;
 }
 .sys-hero-eyebrow {
   display: flex;

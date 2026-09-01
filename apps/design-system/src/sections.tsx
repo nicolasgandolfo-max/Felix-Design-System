@@ -1298,8 +1298,7 @@ export function Editorial() {
   ];
   return (
     <section className="sec" id="editorial">
-      <div className="eyebrow">
-        <span className="n">07</span>
+      <div className="eyebrow" id="voz">
         <span>
           {tr("Guía editorial", "Editorial guidelines", "Guia editorial")}
         </span>
@@ -1323,7 +1322,7 @@ export function Editorial() {
         ))}
       </div>
 
-      <h3 className="h3">
+      <h3 className="h3" id="ux-writing">
         {tr(
           "Principios de UX writing",
           "UX writing principles",
@@ -1346,7 +1345,7 @@ export function Editorial() {
         ))}
       </div>
 
-      <h3 className="h3">
+      <h3 className="h3" id="caso-de-estudio">
         {tr(
           "Caso de estudio · Checkout & Payment",
           "Case study · Checkout & Payment",
@@ -1389,7 +1388,7 @@ export function Editorial() {
         )}
       </p>
 
-      <h3 className="h3">
+      <h3 className="h3" id="glosario">
         {tr(
           "Glosario · Product design content",
           "Glossary · Product design content",
@@ -1449,7 +1448,7 @@ export function Editorial() {
         </table>
       </div>
 
-      <h3 className="h3">
+      <h3 className="h3" id="hace-y-evita">
         {tr("Hacé y evitá", "Do and don't", "Faça e evite")}
       </h3>
       <div className="dd" style={{ marginTop: 4 }}>
@@ -1623,15 +1622,17 @@ export function MarkdownFiles() {
     </section>
   );
 }
-export function Footer() {
+/** `note` reemplaza la línea por defecto (la del sistema de diseño). */
+export function Footer({ note }: { note?: string }) {
   const tr = useTr();
   return (
     <footer className="foot">
-      {tr(
-        "Felix Pago · Sistema de diseño · v1.0.0 alpha — generado desde DESIGN.md y @felix/ui.",
-        "Felix Pago · Design System · v1.0.0 alpha — generated from DESIGN.md and @felix/ui.",
-        "Felix Pago · Sistema de design · v1.0.0 alpha — gerado a partir do DESIGN.md e do @felix/ui."
-      )}
+      {note ??
+        tr(
+          "Felix Pago · Sistema de diseño · v1.0.0 alpha — generado desde DESIGN.md y @felix/ui.",
+          "Felix Pago · Design System · v1.0.0 alpha — generated from DESIGN.md and @felix/ui.",
+          "Felix Pago · Sistema de design · v1.0.0 alpha — gerado a partir do DESIGN.md e do @felix/ui."
+        )}
     </footer>
   );
 }
