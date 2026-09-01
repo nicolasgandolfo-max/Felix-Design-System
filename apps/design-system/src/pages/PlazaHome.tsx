@@ -4,8 +4,8 @@ import { useLang, useTr } from "../i18n";
 import { GlobeIcon, CaretDownIcon } from "@phosphor-icons/react";
 import { FelixPlazaLogo } from "../components/FelixPlazaLogo";
 
-/* Destinos aún sin sección propia en el portal — apuntan al archivo de Figma
-   hasta que existan como rutas. Reemplazar acá cuando estén publicados. */
+/* Enlaces externos de la sección "Enlaces útiles": destinos que viven en Figma
+   y no tienen (ni van a tener) sección propia en el portal. */
 const FIGMA_GUIDELINES_URL =
   "https://www.figma.com/design/N9dG8uXXR7FkLkuSZT5oex/DRAFT-Conversational-Guidelines";
 const FIGMA_DS_FILE_URL = FIGMA_GUIDELINES_URL;
@@ -53,9 +53,9 @@ export function PlazaHome() {
         >
           <Link to="/">{tr("Inicio", "Home", "Início")}</Link>
           <Link to="/sistema">Design System</Link>
-          <a href={FIGMA_GUIDELINES_URL} target="_blank" rel="noreferrer">
+          <Link to="/editorial">
             {tr("Voz y tono", "Voice and tone", "Voz e tom")}
-          </a>
+          </Link>
           <Link to="/patrones">
             {tr(
               "Guías conversacionales",
@@ -150,14 +150,9 @@ export function PlazaHome() {
                 "Como o Félix soa em toda a experiência: a personalidade por trás do bot, os princípios que o mantêm claro e caloroso, e exemplos de antes e depois para escrever."
               )}
             </p>
-            <a
-              className="plaza-btn"
-              href={FIGMA_GUIDELINES_URL}
-              target="_blank"
-              rel="noreferrer"
-            >
+            <Link className="plaza-btn" to="/editorial">
               {tr("Leer la guía", "Read the guide", "Ler o guia")}
-            </a>
+            </Link>
           </article>
         </section>
 
@@ -218,14 +213,15 @@ export function PlazaHome() {
       </main>
 
       <footer className="plaza-footer">
-        <p>
+        <p className="align-left">
           {tr(
             "Hecho con amor por el equipo de diseño de Félix",
             "Made with love by Félix Design Team",
             "Feito com amor pela equipe de design do Félix"
           )}
         </p>
-        <p>
+        <img src="../assets/plaza/heartfelix.png" alt="" />
+        <p className="align-right">
           © 2026 Felix Technologies Inc.{" "}
           {tr(
             "Todos los derechos reservados.",

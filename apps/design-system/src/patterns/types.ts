@@ -51,6 +51,9 @@ export type Pattern = {
   /** Arte del patrón: se usa en la tarjeta y en el hero de la página. */
   hero: string;
   heroAlt: Localized;
+  /** Láminas del hero del detalle (burbujas exportadas de Figma), apiladas en
+   *  columna. Si falta, el hero usa `hero`. */
+  heroDetail?: string[];
 
   overview: {
     usage: Localized[];

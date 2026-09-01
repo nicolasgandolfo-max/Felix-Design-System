@@ -46,6 +46,7 @@ const closedInput: Pattern = {
     en: "Buttons or a list when the set of possible answers is known. The user picks; they never have to guess the wording.",
   },
   hero: `${ASSETS}/closed-input-hero.png`,
+  heroDetail: [`${ASSETS}/closed-input-hero.png`],
   heroAlt: {
     es: "Pantalla de WhatsApp mostrando una pregunta con botones de respuesta",
     en: "WhatsApp screen showing a question with reply buttons",
@@ -270,6 +271,10 @@ const openInput: Pattern = {
     en: "A question answered with free text, for when the answer can't be listed in advance (a name, a custom amount, a city). The user types, and the bot has to read whatever comes back.",
   },
   hero: `${ASSETS}/open-input-hero.png`,
+  heroDetail: [
+    `${ASSETS}/open-input-hero-a.png`,
+    `${ASSETS}/open-input-hero-b.png`,
+  ],
   heroAlt: {
     es: "Pantalla de WhatsApp preguntando a quién enviar dinero, con una pista de formato y un ejemplo",
     en: "WhatsApp screen asking who to send money to, with a format hint and a worked example",
@@ -471,6 +476,10 @@ const mixedInput: Pattern = {
     en: "A question that offers the most common answers as buttons and still lets the user type their own. A fast path for the majority, an open door for the long tail.",
   },
   hero: `${ASSETS}/mixed-input-hero.png`,
+  heroDetail: [
+    `${ASSETS}/mixed-input-hero-a.png`,
+    `${ASSETS}/mixed-input-hero-b.png`,
+  ],
   heroAlt: {
     es: "Pantalla de WhatsApp con botones de montos comunes y la opción de escribir un monto propio",
     en: "WhatsApp screen with common amount buttons plus the option to type a custom amount",
