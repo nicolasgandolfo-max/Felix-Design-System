@@ -241,7 +241,7 @@ export function StartGrid() {
         />
         <Tile
           icon={PencilSimpleIcon}
-          to="/editorial"
+          to="/voz-y-tono"
           title={tr("Voz y copy", "Voice & copy", "Voz e copy")}
           desc={tr(
             "Español primero, tú siempre. Claro, cálido, sin jerga.",
@@ -1418,7 +1418,9 @@ export function Editorial() {
             {GLOSSARY.map((group) => (
               <Fragment key={group.id}>
                 <tr className="gloss-group">
-                  <td colSpan={6}>{tr(group.label.es, group.label.en, group.label.pt)}</td>
+                  <td colSpan={6}>
+                    {tr(group.label.es, group.label.en, group.label.pt)}
+                  </td>
                 </tr>
                 {group.entries.map((e) => (
                   <Fragment key={e.term}>
@@ -1426,16 +1428,26 @@ export function Editorial() {
                       <td className="gloss-term">{e.term}</td>
                       <td className="gloss-lang">{e.termEs}</td>
                       <td className="gloss-lang">{e.termPt}</td>
-                      <td className="gloss-guide">{tr(e.use.es, e.use.en, e.use.pt)}</td>
+                      <td className="gloss-guide">
+                        {tr(e.use.es, e.use.en, e.use.pt)}
+                      </td>
                       <td className="gloss-guide">
                         {e.avoid ? tr(e.avoid.es, e.avoid.en, e.avoid.pt) : "—"}
                       </td>
-                      <td className="gloss-reg">{tr(e.register.es, e.register.en, e.register.pt)}</td>
+                      <td className="gloss-reg">
+                        {tr(e.register.es, e.register.en, e.register.pt)}
+                      </td>
                     </tr>
                     {e.note && (
                       <tr className="gloss-note">
                         <td colSpan={6}>
-                          <b>{tr("Nota · marketing", "Note · marketing", "Nota · marketing")}</b>{" "}
+                          <b>
+                            {tr(
+                              "Nota · marketing",
+                              "Note · marketing",
+                              "Nota · marketing"
+                            )}
+                          </b>{" "}
                           {tr(e.note.es, e.note.en, e.note.pt)}
                         </td>
                       </tr>
@@ -1531,7 +1543,11 @@ function MdFileCard({
           {copied ? <CheckIcon /> : <CopyIcon />}
           {copied
             ? tr("¡Copiado!", "Copied!", "Copiado!")
-            : tr("Copiar para tu LLM", "Copy for your LLM", "Copiar para seu LLM")}
+            : tr(
+                "Copiar para tu LLM",
+                "Copy for your LLM",
+                "Copiar para seu LLM"
+              )}
         </Button>
       </div>
     </div>
@@ -1592,7 +1608,11 @@ export function MarkdownFiles() {
         <MdFileCard
           filename="DESIGN.md"
           content={designMd}
-          title={tr("El contrato de identidad", "The identity contract", "O contrato de identidade")}
+          title={tr(
+            "El contrato de identidad",
+            "The identity contract",
+            "O contrato de identidade"
+          )}
           desc={tr(
             "Colores, tipografía, tokens, formas, voz y reglas del sistema en un solo archivo. Usalo como contexto base en cualquier conversación donde la IA genere UI de Felix.",
             "Colors, typography, tokens, shapes, voice, and system rules in a single file. Use it as base context in any conversation where AI generates Felix UI.",
@@ -1602,7 +1622,11 @@ export function MarkdownFiles() {
         <MdFileCard
           filename="components.md"
           content={componentsMd}
-          title={tr("La referencia de componentes", "The component reference", "A referência de componentes")}
+          title={tr(
+            "La referencia de componentes",
+            "The component reference",
+            "A referência de componentes"
+          )}
           desc={tr(
             "Los 43 componentes de @felix/ui: para qué sirve cada uno, cómo se usa y qué exporta. Sumalo cuando le pidas a la IA pantallas armadas con componentes existentes en vez de HTML desde cero.",
             "All 43 @felix/ui components: what each is for, how to use it, and what it exports. Add it when asking AI for screens built from existing components instead of raw HTML.",
@@ -1610,7 +1634,9 @@ export function MarkdownFiles() {
           )}
         />
       </div>
-      <h3 className="h3">{tr("Cómo usarlos", "How to use them", "Como usar")}</h3>
+      <h3 className="h3">
+        {tr("Cómo usarlos", "How to use them", "Como usar")}
+      </h3>
       <div className="voice" style={{ gridTemplateColumns: "repeat(2, 1fr)" }}>
         {tools.map((t) => (
           <div className="v" key={t.name}>
@@ -1626,13 +1652,24 @@ export function MarkdownFiles() {
 export function Footer({ note }: { note?: string }) {
   const tr = useTr();
   return (
-    <footer className="foot">
-      {note ??
-        tr(
-          "Felix Pago · Sistema de diseño · v1.0.0 alpha — generado desde DESIGN.md y @felix/ui.",
-          "Felix Pago · Design System · v1.0.0 alpha — generated from DESIGN.md and @felix/ui.",
-          "Felix Pago · Sistema de design · v1.0.0 alpha — gerado a partir do DESIGN.md e do @felix/ui."
+    <footer className="plaza-footer foot">
+      <p>
+        {note ??
+          tr(
+            "Hecho con amor por el equipo de diseño de Félix",
+            "Made with love by Félix Design Team",
+            "Feito com amor pela equipe de design do Félix"
+          )}
+      </p>
+      <img src="../assets/plaza/heartfelix.png" alt="" />
+      <p>
+        © 2026 Felix Technologies Inc.{" "}
+        {tr(
+          "Todos los derechos reservados.",
+          "All rights reserved.",
+          "Todos os direitos reservados."
         )}
+      </p>
     </footer>
   );
 }

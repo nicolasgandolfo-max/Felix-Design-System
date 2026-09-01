@@ -88,7 +88,7 @@ export function PlazaEditorial() {
         </h2>
 
         <div className="sys-cards-grid">
-          <Link to="/editorial#voz" className="sys-card-tile">
+          <Link to="/voz-y-tono/version-anterior#voz" className="sys-card-tile">
             <div className="tile-icon-badge">
               <ChatCircleTextIcon size={22} weight="regular" />
             </div>
@@ -105,7 +105,7 @@ export function PlazaEditorial() {
             <span className="tile-link">{tr("Ver guía", "View guide", "Ver guia")} →</span>
           </Link>
 
-          <Link to="/editorial#ux-writing" className="sys-card-tile">
+          <Link to="/voz-y-tono/version-anterior#ux-writing" className="sys-card-tile">
             <div className="tile-icon-badge">
               <BookOpenIcon size={22} weight="regular" />
             </div>
@@ -122,7 +122,7 @@ export function PlazaEditorial() {
             <span className="tile-link">{tr("Explorar", "Explore", "Explorar")} →</span>
           </Link>
 
-          <Link to="/editorial#glosario" className="sys-card-tile">
+          <Link to="/voz-y-tono/version-anterior#glosario" className="sys-card-tile">
             <div className="tile-icon-badge">
               <BookmarksIcon size={22} weight="regular" />
             </div>

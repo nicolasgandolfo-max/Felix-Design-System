@@ -7,13 +7,13 @@ import {
   CaretDownIcon,
   XIcon,
 } from "@phosphor-icons/react";
-import { Sidebar, EditorialSidebar, Logo } from "./Sidebar";
+import { Sidebar, VoiceToneSidebar, Logo } from "./Sidebar";
 import { Footer } from "./sections";
 import { useLang, useTr } from "./i18n";
 
 /**
  * Estructura compartida por las secciones con panel lateral (sistema de diseño
- * y guía editorial): mismo header, mismo grid y mismo footer. Cada sección
+ * y Voice & Tone): mismo header, mismo grid y mismo footer. Cada sección
  * pasa su título, su badge y su propio panel lateral.
  */
 function SectionLayout({
@@ -126,22 +126,27 @@ export function Layout() {
   );
 }
 
-export function EditorialLayout() {
+/**
+ * Voice & Tone: sección propia, hermana de la guía editorial. Su contenido es
+ * la transcripción del Notion que mantiene Content Design, así que el badge
+ * lleva la versión de esa fuente, no la del portal.
+ */
+export function VoiceToneLayout() {
   const tr = useTr();
   return (
     <SectionLayout
-      title={tr("Guía Editorial", "Editorial Guide", "Guia Editorial")}
+      title="Voice & Tone"
       badge={
         <span className="sys-version-badge">
           <span className="dot" />
-          {tr("Voz y tono", "Voice and tone", "Voz e tom")}
+          v0.4
         </span>
       }
-      sidebar={(props) => <EditorialSidebar {...props} />}
+      sidebar={(props) => <VoiceToneSidebar {...props} />}
       footerNote={tr(
-        "Felix Pago · Guía editorial · v1.0.0 alpha — voz, tono y glosario de producto.",
-        "Felix Pago · Editorial guide · v1.0.0 alpha — voice, tone, and product glossary.",
-        "Felix Pago · Guia editorial · v1.0.0 alpha — voz, tom e glossário de produto."
+        "Felix Pago · Voice & Tone Guidelines v0.4 — mantenido por Content Design.",
+        "Felix Pago · Voice & Tone Guidelines v0.4 — maintained by Content Design.",
+        "Felix Pago · Voice & Tone Guidelines v0.4 — mantido por Content Design."
       )}
     />
   );

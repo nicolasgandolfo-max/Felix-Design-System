@@ -14,8 +14,22 @@ import {
   AtomIcon,
   CirclesThreeIcon,
   TreeStructureIcon,
+  CurrencyDollarIcon,
+  CardsIcon,
+  GlobeHemisphereWestIcon,
+  WarningIcon,
+  CheckCircleIcon,
+  ClockIcon,
+  ScalesIcon,
+  CalendarBlankIcon,
+  CursorClickIcon,
+  EyeIcon,
+  UsersThreeIcon,
+  SparkleIcon,
+  HandshakeIcon,
   type Icon,
 } from "@phosphor-icons/react";
+import { VT_GROUPS, VT_SECTIONS, shortTitle } from "./voiceTone";
 
 export interface NavItem {
   id: string;
@@ -52,28 +66,78 @@ export const NAV: NavGroup[] = [
   },
 ];
 
+/** Ruta de la guía editorial, hoy la versión anterior de Voice & Tone. */
+export const PREVIOUS_VERSION_PATH = "/voz-y-tono/version-anterior";
+
 /**
- * Nav de la Guía editorial. Es una sección propia del portal, hermana del
- * sistema de diseño y no parte de él: por eso vive en su propio árbol y no
- * dentro de `NAV`. Hoy la guía es una sola página, así que los ítems de
- * contenido apuntan a anclas de `/editorial`; cuando cada bloque tenga su
- * página, alcanza con cambiar el `path` por la ruta nueva.
+ * Nav de Voice & Tone: el único árbol de la sección. Cada sección de la guía
+ * es su propia página (`/voz-y-tono/:slug`) en vez de un ancla, para no dejar
+ * 50.000 px de scroll continuo. Los grupos salen de `VT_GROUPS` y los títulos
+ * de `VT_SECTIONS`, así que agregar una sección al contenido la agrega acá
+ * sola; van en inglés en los tres idiomas porque el contenido de la guía está
+ * escrito en inglés y no se traduce.
+ *
+ * La guía editorial cuelga del último grupo, "Previous version": es la versión
+ * previa de este mismo material y no tiene entrada propia en ningún otro lado.
  */
-export const EDITORIAL_NAV: NavGroup[] = [
+const VT_ICONS: Record<string, Icon> = {
+  "number-formatting": CurrencyDollarIcon,
+  "interface-labels": ListChecksIcon,
+  "form-card-copy": CardsIcon,
+  "language-mechanics": TextAaIcon,
+  "multi-corridor": GlobeHemisphereWestIcon,
+  "terms-glossary": BookmarksIcon,
+  "error-messages": WarningIcon,
+  "confirmation-messages": CheckCircleIcon,
+  "pending-definitions": ClockIcon,
+  "supplementary-authority": ScalesIcon,
+  "dates-times": CalendarBlankIcon,
+  "buttons-ctas": CursorClickIcon,
+  "message-structure": ChatCircleTextIcon,
+  accessibility: EyeIcon,
+  "inclusive-language": UsersThreeIcon,
+  "bot-personality": SparkleIcon,
+  escalation: HandshakeIcon,
+};
+
+/** Un grupo del menú lateral que se puede plegar. */
+export interface CollapsibleNavGroup {
+  id: string;
+  group: { es: string; en: string; pt: string };
+  items: NavItem[];
+  /** Arranca plegado salvo que la ruta activa esté adentro. */
+  collapsed?: boolean;
+}
+
+export const VOICE_TONE_NAV: CollapsibleNavGroup[] = [
+  ...VT_GROUPS.map((g) => ({
+    id: g.id,
+    group: { es: g.es, en: g.en, pt: g.pt },
+    items: g.ids.map((id) => {
+      const s = VT_SECTIONS.find((sec) => sec.id === id)!;
+      const label = shortTitle(s.title);
+      return {
+        id: `vt-${s.id}`,
+        path: `/voz-y-tono/${s.id}`,
+        icon: VT_ICONS[s.id] ?? BookOpenIcon,
+        es: label,
+        en: label,
+        pt: label,
+      };
+    }),
+  })),
   {
-    group: { es: "Guía editorial", en: "Editorial guide", pt: "Guia editorial" },
+    id: "previous-version",
+    group: { es: "Previous version", en: "Previous version", pt: "Previous version" },
+    /* Es material archivado: se muestra plegado hasta que lo abren. */
+    collapsed: true,
     items: [
-      { id: "editorial-overview", path: "/editorial", end: true, icon: SquaresFourIcon, es: "Visión general", en: "Overview", pt: "Visão geral" },
-    ],
-  },
-  {
-    group: { es: "Contenido", en: "Content", pt: "Conteúdo" },
-    items: [
-      { id: "voice", path: "/editorial#voz", icon: ChatCircleTextIcon, es: "La voz de Felix", en: "Felix's voice", pt: "A voz da Felix" },
-      { id: "ux-writing", path: "/editorial#ux-writing", icon: BookOpenIcon, es: "Principios de UX writing", en: "UX writing principles", pt: "Princípios de UX writing" },
-      { id: "case-study", path: "/editorial#caso-de-estudio", icon: MagnifyingGlassIcon, es: "Caso de estudio", en: "Case study", pt: "Estudo de caso" },
-      { id: "glossary", path: "/editorial#glosario", icon: BookmarksIcon, es: "Glosario", en: "Glossary", pt: "Glossário" },
-      { id: "do-dont", path: "/editorial#hace-y-evita", icon: ListChecksIcon, es: "Hacé y evitá", en: "Do and don't", pt: "Faça e evite" },
+      { id: "prev-overview", path: PREVIOUS_VERSION_PATH, end: true, icon: SquaresFourIcon, es: "Visión general", en: "Overview", pt: "Visão geral" },
+      { id: "prev-voice", path: `${PREVIOUS_VERSION_PATH}#voz`, icon: ChatCircleTextIcon, es: "La voz de Felix", en: "Felix's voice", pt: "A voz da Felix" },
+      { id: "prev-ux-writing", path: `${PREVIOUS_VERSION_PATH}#ux-writing`, icon: BookOpenIcon, es: "Principios de UX writing", en: "UX writing principles", pt: "Princípios de UX writing" },
+      { id: "prev-case-study", path: `${PREVIOUS_VERSION_PATH}#caso-de-estudio`, icon: MagnifyingGlassIcon, es: "Caso de estudio", en: "Case study", pt: "Estudo de caso" },
+      { id: "prev-glossary", path: `${PREVIOUS_VERSION_PATH}#glosario`, icon: BookmarksIcon, es: "Glosario", en: "Glossary", pt: "Glossário" },
+      { id: "prev-do-dont", path: `${PREVIOUS_VERSION_PATH}#hace-y-evita`, icon: ListChecksIcon, es: "Hacé y evitá", en: "Do and don't", pt: "Faça e evite" },
     ],
   },
 ];
