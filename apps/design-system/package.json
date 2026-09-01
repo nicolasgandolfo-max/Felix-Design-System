@@ -6,7 +6,7 @@
   "description": "Felix Pago Design System — public documentation portal",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build",
+    "build": "npm run build -w @felix/ui && tsc --noEmit && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
