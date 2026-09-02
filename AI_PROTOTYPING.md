@@ -15,12 +15,12 @@ the Felix components and aesthetic — instead of inventing generic UI.
 
 You already have four assets. Each plays a distinct role when prompting an AI:
 
-| Asset | Path | Role for the AI |
-|---|---|---|
-| **`DESIGN.md`** | repo root | The **aesthetic + voice contract** — colors, typography, spacing, radius, shadows, do's & don'ts, Spanish-first copy. Tells the AI *how it should look and feel*. |
-| **Token source** | [`packages/ui/src/theme.css`](packages/ui/src/theme.css) | The **real CSS variables** the generated code must use. `DESIGN.md` → "Token Reference" maps friendly names to these. |
-| **Component library** | [`@felix/ui`](packages/ui/src/index.ts) | The **components that exist** and their props/variants. The AI must only use these. |
-| **Storybook** | [`storybook/`](storybook) (`npm run storybook`) | The **interactive catalog** — every component, every variant, every prop, plus DesignTokens stories. The ground truth for *what's available and how it's used*. |
+| Asset                 | Path                                                     | Role for the AI                                                                                                                                                   |
+| --------------------- | -------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`DESIGN.md`**       | repo root                                                | The **aesthetic + voice contract** — colors, typography, spacing, radius, shadows, do's & don'ts, Spanish-first copy. Tells the AI _how it should look and feel_. |
+| **Token source**      | [`packages/ui/src/theme.css`](packages/ui/src/theme.css) | The **real CSS variables** the generated code must use. `DESIGN.md` → "Token Reference" maps friendly names to these.                                             |
+| **Component library** | [`@felix/ui`](packages/ui/src/index.ts)                  | The **components that exist** and their props/variants. The AI must only use these.                                                                               |
+| **Storybook**         | [`storybook/`](storybook) (`npm run storybook`)          | The **interactive catalog** — every component, every variant, every prop, plus DesignTokens stories. The ground truth for _what's available and how it's used_.   |
 
 **The mental model:** `DESIGN.md` is the style guide, Storybook is the parts
 catalog, `@felix/ui` is the warehouse. A good prototype = Felix parts, assembled
@@ -76,16 +76,18 @@ FELIX UI — RULES FOR GENERATING UI
 
 The AI should treat this as the allowlist. Current `@felix/ui` exports:
 
-**Atoms:** `Avatar`, `Badge`, `Button`, `Checkbox`, `CoinLoader`, `Dots`,
-`IconButton`, `Input`, `Label`, `Logo`, `Progress`, `RadioGroup`, `Separator`,
-`Skeleton`, `Slider`, `Spinner`, `Switch`, `Text`, `Textarea`
+**Atoms:** `Avatar`, `Badge`, `Bubble`, `Button`, `Checkbox`, `CoinLoader`,
+`Dots`, `IconButton`, `Input`, `Label`, `Logo`, `Marker`, `Progress`,
+`RadioGroup`, `Separator`, `Skeleton`, `Slider`, `Spinner`, `Switch`, `Text`,
+`Textarea`
 
-**Molecules:** `Accordion`, `Alert`, `Breadcrumb`, `Calendar`, `Card`,
-`ChoiceCard`, `Collapse`, `DatePicker`, `Dialog`, `Drawer`, `DropdownMenu`,
-`HoverCard`, `NavigationMenu`, `Pagination`, `Popover`, `Select`, `Sheet`,
-`SidebarFooter`, `Stepper`, `Table`, `Tabs`, `Toast`, `Tooltip`
+**Molecules:** `Accordion`, `Alert`, `Attachment`, `Breadcrumb`, `Calendar`,
+`Card`, `ChoiceCard`, `Collapse`, `DatePicker`, `Dialog`, `Drawer`,
+`DropdownMenu`, `HoverCard`, `Message`, `NavigationMenu`, `Pagination`,
+`Popover`, `Select`, `Sheet`, `SidebarFooter`, `Stepper`, `Table`, `Tabs`,
+`Toast`, `Tooltip`
 
-**Organisms:** `Sidebar`
+**Organisms:** `MessageScroller`, `Sidebar`
 
 > Keep this in sync with [`packages/ui/src/index.ts`](packages/ui/src/index.ts).
 > When in doubt, the export list there and the Storybook sidebar are the truth.
@@ -129,6 +131,7 @@ Claude Code can read your repo directly, so it's the highest-fidelity option.
    # Felix UI — prototyping context
 
    When generating or modifying UI in this repo:
+
    - Read DESIGN.md for the aesthetic + token contract.
    - Only use components exported from @felix/ui (see packages/ui/src/index.ts).
    - Reference the matching story in storybook/stories/<Component>.stories.tsx
@@ -137,8 +140,8 @@ Claude Code can read your repo directly, so it's the highest-fidelity option.
    ```
 
 2. **Point at the catalog.** In a prompt, just say:
-   *"Read `DESIGN.md` and `packages/ui/src/index.ts`, then build a remittance
-   confirmation screen using only `@felix/ui` components."*
+   _"Read `DESIGN.md` and `packages/ui/src/index.ts`, then build a remittance
+   confirmation screen using only `@felix/ui` components."_
    Claude Code will open the story files (`storybook/stories/*.stories.tsx`) to
    learn exact props.
 
@@ -166,13 +169,14 @@ The repo already ships Cursor rules in [`.cursor/rules/`](.cursor/rules):
    description: Rules for generating Felix prototypes from the design system
    alwaysApply: true
    ---
+
    - Only use components exported from @felix/ui.
    - Follow DESIGN.md tokens and do's/don'ts; no raw hex or px.
-   - Mirror the matching storybook/stories/*.stories.tsx for props.
+   - Mirror the matching storybook/stories/\*.stories.tsx for props.
    - See AI_PROTOTYPING.md §2 for the full golden rules.
    ```
 
-3. **Index Storybook as a Doc.** In Cursor settings → *Docs*, add your hosted
+3. **Index Storybook as a Doc.** In Cursor settings → _Docs_, add your hosted
    Storybook URL. Then reference it with `@Docs` so Cursor can look up component
    APIs directly.
 
@@ -182,8 +186,8 @@ The repo already ships Cursor rules in [`.cursor/rules/`](.cursor/rules):
 ### C) v0 (Vercel)
 
 v0 runs in the browser and **cannot install the private `@felix/ui` package**
-(it's published to a restricted registry). So the workflow is *theme-match, then
-port*:
+(it's published to a restricted registry). So the workflow is _theme-match, then
+port_:
 
 1. **Give v0 the tokens.** Paste the `:root` block from
    [`packages/ui/src/theme.css`](packages/ui/src/theme.css) into v0's project
@@ -193,9 +197,9 @@ port*:
 2. **Give v0 the rules + voice.** Paste `DESIGN.md` §"Overview", §"Token
    Reference", and the "Do's and Don'ts", plus the golden rules from §2 above.
 
-3. **Constrain the parts.** Tell v0: *"Use only these shadcn components: button,
+3. **Constrain the parts.** Tell v0: _"Use only these shadcn components: button,
    card, input, badge, dialog, tabs, … (map to the Felix inventory in §3). Pill
-   buttons, rounded-xl cards, no gradients, Spanish copy."*
+   buttons, rounded-xl cards, no gradients, Spanish copy."_
 
 4. **Port back.** Once the layout is right, bring the JSX into the repo and
    **swap the imports**: replace v0's local `@/components/ui/*` with `@felix/ui`,
@@ -244,12 +248,12 @@ you'll use. If something you need doesn't exist in the library, stop and tell me
 - [ ] Interactive elements are pills; cards are `rounded-xl`/`2xl`; no card has both border and shadow.
 - [ ] Display amounts use Plain; everything else Saans.
 - [ ] No gradients, no emoji, no sharp corners; Phosphor (not Lucide) icons.
-- [ ] Copy is Spanish, informal *tú*; amounts show currency codes; fees are visible.
+- [ ] Copy is Spanish, informal _tú_; amounts show currency codes; fees are visible.
 - [ ] Renders correctly in both light and `.dark` mode.
 - [ ] Focus states (turquoise glow) are present and unremoved.
 
-If a box fails, the fastest fix is: *"Re-check against DESIGN.md §<section> and
-the `<Component>` story, then correct."*
+If a box fails, the fastest fix is: _"Re-check against DESIGN.md §<section> and
+the `<Component>` story, then correct."_
 
 ---
 
