@@ -35,6 +35,8 @@ export type VtBlock =
 export interface VtSection {
   id: string;
   title: string;
+  /** Una línea para la tarjeta del índice: de qué se ocupa la sección. */
+  blurb: string;
   blocks: VtBlock[];
 }
 
@@ -51,9 +53,18 @@ export const shortTitle = (title: string) => title.split(" — ")[0];
  * original no se muestra en ningún lado: las referencias cruzadas que en el
  * Notion decían "§4" son acá enlaces con el nombre de la sección.
  */
-export const VT_GROUPS: { id: string; es: string; en: string; pt: string; ids: string[] }[] = [
+export const VT_GROUPS: {
+  id: string;
+  /** Color del grupo; `--{accent}-100/-700` en el tema. */
+  accent: string;
+  es: string;
+  en: string;
+  pt: string;
+  ids: string[];
+}[] = [
   {
     id: "voice",
+    accent: "turquoise",
     es: "La voz",
     en: "The voice",
     pt: "A voz",
@@ -61,6 +72,7 @@ export const VT_GROUPS: { id: string; es: string; en: string; pt: string; ids: s
   },
   {
     id: "language",
+    accent: "blueberry",
     es: "Idioma",
     en: "Language",
     pt: "Idioma",
@@ -68,6 +80,7 @@ export const VT_GROUPS: { id: string; es: string; en: string; pt: string; ids: s
   },
   {
     id: "messages",
+    accent: "green",
     es: "Mensajes",
     en: "Messages",
     pt: "Mensagens",
@@ -75,6 +88,7 @@ export const VT_GROUPS: { id: string; es: string; en: string; pt: string; ids: s
   },
   {
     id: "interface",
+    accent: "amber",
     es: "Interfaz",
     en: "Interface",
     pt: "Interface",
@@ -82,6 +96,7 @@ export const VT_GROUPS: { id: string; es: string; en: string; pt: string; ids: s
   },
   {
     id: "standards",
+    accent: "earth",
     es: "Estándares",
     en: "Standards",
     pt: "Padrões",
@@ -89,6 +104,7 @@ export const VT_GROUPS: { id: string; es: string; en: string; pt: string; ids: s
   },
   {
     id: "governance",
+    accent: "slate",
     es: "Gobernanza",
     en: "Governance",
     pt: "Governança",
@@ -108,6 +124,7 @@ export const VT_SECTIONS: VtSection[] = [
   {
     id: "number-formatting",
     title: "Number & amount formatting",
+    blurb: "Separators, decimals, and how two currencies sit in the same message.",
     blocks: [
       {
         k: "p",
@@ -163,6 +180,7 @@ export const VT_SECTIONS: VtSection[] = [
   {
     id: "interface-labels",
     title: "Interface labels — menus & navigation",
+    blurb: "Twenty characters, sentence case, and when a label is a verb or a place.",
     blocks: [
       {
         k: "link",
@@ -196,6 +214,7 @@ export const VT_SECTIONS: VtSection[] = [
   {
     id: "form-card-copy",
     title: "Form card copy",
+    blurb: "Two lines per card, functional over promotional, no internal jargon.",
     blocks: [
       {
         k: "p",
@@ -225,6 +244,7 @@ export const VT_SECTIONS: VtSection[] = [
   {
     id: "language-mechanics",
     title: "Language mechanics — grammar, register & neutral Spanish",
+    blurb: "Tú over usted, no gendered slashes, and the calques to keep out of neutral Spanish.",
     blocks: [
       {
         k: "p",
@@ -317,6 +337,7 @@ export const VT_SECTIONS: VtSection[] = [
   {
     id: "multi-corridor",
     title: "Multi-corridor content accuracy",
+    blurb: "A field that is right for one country's banking system can be plain wrong for another.",
     blocks: [
       {
         k: "p",
@@ -347,6 +368,7 @@ export const VT_SECTIONS: VtSection[] = [
   {
     id: "terms-glossary",
     title: "Terms glossary",
+    blurb: "Comisión, envío, formulario, destinatario — the terms ratified across corridors.",
     blocks: [
       {
         k: "link",
@@ -398,6 +420,7 @@ export const VT_SECTIONS: VtSection[] = [
   {
     id: "error-messages",
     title: "Error messages",
+    blurb: "Never blame the user. State what happened and give exactly one next step.",
     blocks: [
       {
         k: "p",
@@ -435,6 +458,7 @@ export const VT_SECTIONS: VtSection[] = [
   {
     id: "confirmation-messages",
     title: "Confirmation & success messages",
+    blurb: "Say what happens next and when. Never leave a transaction on a bare status word.",
     blocks: [
       {
         k: "p",
@@ -474,6 +498,7 @@ export const VT_SECTIONS: VtSection[] = [
   {
     id: "pending-definitions",
     title: "Pending definitions",
+    blurb: "What is still open, and who has to sign it off before the guide is complete.",
     blocks: [
       {
         k: "p",
@@ -500,6 +525,7 @@ export const VT_SECTIONS: VtSection[] = [
   {
     id: "supplementary-authority",
     title: "Supplementary authority",
+    blurb: "When a case is not covered here, the order to resolve it in — and where to stop.",
     blocks: [
       {
         k: "p",
@@ -543,6 +569,7 @@ export const VT_SECTIONS: VtSection[] = [
   {
     id: "dates-times",
     title: "Dates, times & durations",
+    blurb: "Months in words, a 12-hour clock with its time zone, and durations that are not clock times.",
     blocks: [
       {
         k: "p",
@@ -659,6 +686,7 @@ export const VT_SECTIONS: VtSection[] = [
   {
     id: "buttons-ctas",
     title: "Buttons & CTAs",
+    blurb: "The button reuses the words of the message above it. Name the outcome, not the acknowledgement.",
     blocks: [
       {
         k: "p",
@@ -755,6 +783,7 @@ export const VT_SECTIONS: VtSection[] = [
   {
     id: "message-structure",
     title: "Message structure, length & emphasis",
+    blurb: "One idea per bubble, four sentences at most, and what bold is allowed to mark.",
     blocks: [
       {
         k: "p",
@@ -960,6 +989,7 @@ export const VT_SECTIONS: VtSection[] = [
   {
     id: "accessibility",
     title: "Accessibility",
+    blurb: "Emoji after the punctuation, never data as an image alone, plain language over precision.",
     blocks: [
       {
         k: "p",
@@ -1009,6 +1039,7 @@ export const VT_SECTIONS: VtSection[] = [
   {
     id: "inclusive-language",
     title: "Inclusive language",
+    blurb: "Rephrase before you gender anything. Never @, x, or -e.",
     blocks: [
       {
         k: "p",
@@ -1083,6 +1114,7 @@ export const VT_SECTIONS: VtSection[] = [
   {
     id: "bot-personality",
     title: "Bot personality attributes",
+    blurb: "Clear, steady, useful, warm — in that order. When two pull apart, the higher one wins.",
     blocks: [
       {
         k: "p",
@@ -1173,6 +1205,7 @@ export const VT_SECTIONS: VtSection[] = [
   {
     id: "escalation",
     title: "Escalation & human handoff",
+    blurb: "Handing off to a person, visibly and finitely. Bound the wait, never a dead end.",
     blocks: [
       {
         k: "p",
