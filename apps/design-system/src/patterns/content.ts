@@ -9,7 +9,7 @@ const WA_LIST_DOCS_URL =
   "https://developers.facebook.com/documentation/business-messaging/whatsapp/messages/interactive-list-messages";
 
 /* Los tres patrones comparten la misma grilla de recursos por ahora. Cuando
-   alguno se desvíe, copiá el array en su entrada y editalo ahí. */
+   alguno se desvíe, copia el array en su entrada y edítalo ahí. */
 const SHARED_RESOURCES: ResourceRow[] = [
   {
     type: { es: "Diseño", en: "Design" },
@@ -55,19 +55,19 @@ const closedInput: Pattern = {
   overview: {
     usage: [
       {
-        es: "Usá botones cuando hay de 1 a 3 opciones conocidas.",
+        es: "Usa botones cuando hay de 1 a 3 opciones conocidas.",
         en: "Use buttons when there are 1 to 3 known options.",
       },
       {
-        es: "Usá una lista cuando hay de 4 a 10 opciones conocidas.",
+        es: "Usa una lista cuando hay de 4 a 10 opciones conocidas.",
         en: "Use a list when there are 4 to 10 known options.",
       },
       {
-        es: "Más de 10 opciones: repensá la pregunta, es demasiado amplia para un solo paso.",
+        es: "Más de 10 opciones: repiensa la pregunta, es demasiado amplia para un solo paso.",
         en: "Beyond 10 options, rethink the question, it is too broad for a single step.",
       },
       {
-        es: "Nunca hagas que el usuario adivine cómo escribir algo de un conjunto que ya conocés.",
+        es: "Nunca hagas que el usuario adivine cómo escribir algo de un conjunto que ya conoces.",
         en: "Never make the user guess the wording for a set you already know.",
       },
     ],
@@ -83,7 +83,7 @@ const closedInput: Pattern = {
         },
       ],
       note: {
-        es: "Por medir: ratio de taps en botón vs. tipeo, y abandono en este paso. Ver el mapa de cruce con Amplitude.",
+        es: "Por medir: ratio de taps en botón vs. escritura, y abandono en este paso. Ver el mapa de cruce con Amplitude.",
         en: "To pull: button-tap vs typed ratio and abandonment at this step. See the Amplitude cross-check map.",
       },
     },
@@ -92,7 +92,7 @@ const closedInput: Pattern = {
 
   specs: {
     intro: {
-      es: "Los límites de WhatsApp que definen este patrón. Diseñá dentro de ellos.",
+      es: "Los límites de WhatsApp que definen este patrón. Diseña dentro de ellos.",
       en: "The WhatsApp limits that define this pattern. Design within them.",
     },
     tables: [
@@ -197,11 +197,11 @@ const closedInput: Pattern = {
 
   guidelines: {
     usage: {
-      es: "Recurrí a la entrada cerrada siempre que el conjunto de respuestas se conozca de antemano. Mantiene a la gente en un camino que el bot puede leer, y le saca la adivinanza a un paso que si no se trabaría.",
+      es: "Recurre a la entrada cerrada siempre que el conjunto de respuestas se conozca de antemano. Mantiene a la gente en un camino que el bot puede leer, y le saca la adivinanza a un paso que si no se trabaría.",
       en: "Reach for closed input whenever the set of answers is known in advance. It keeps people on a path the bot can read, and it takes the guesswork out of a step that would otherwise stall.",
     },
     tips: {
-      es: "Escribí cada opción como la diría el usuario, no como la guarda el sistema. Mantené las etiquetas cortas, asegurate de que ninguna se solape con otra, y ordenalas por frecuencia de uso o en una secuencia que ya tenga sentido (de menor a mayor monto, del destino más al menos común).",
+      es: "Escribe cada opción como la diría el usuario, no como la guarda el sistema. Mantén las etiquetas cortas, asegúrate de que ninguna se solape con otra, y ordénalas por frecuencia de uso o en una secuencia que ya tenga sentido (de menor a mayor monto, del destino más al menos común).",
       en: "Write each option the way the user would say it, not the way the system stores it. Keep the labels short, make sure no two overlap, and order them by how often they get picked or in a sequence that already makes sense (lowest to highest amount, most to least common destination).",
     },
     examples: [
@@ -213,7 +213,7 @@ const closedInput: Pattern = {
           en: "WhatsApp question offering the known options as reply buttons",
         },
         caption: {
-          es: "Ofrecé las opciones conocidas como botones. Un tap, sin tipear.",
+          es: "Ofrece las opciones conocidas como botones. Un tap, sin escribir.",
           en: "Offer the known options as buttons. One tap, no typing.",
         },
       },
@@ -237,7 +237,7 @@ const closedInput: Pattern = {
           en: "WhatsApp question using a list message for more than three options",
         },
         caption: {
-          es: "Usá una lista cuando hay más de 3 opciones.",
+          es: "Usa una lista cuando hay más de 3 opciones.",
           en: "Use a list when there are more than 3 options.",
         },
       },
@@ -283,23 +283,23 @@ const openInput: Pattern = {
   overview: {
     usage: [
       {
-        es: "Usá entrada abierta solo cuando el conjunto de respuestas es genuinamente impredecible (un nombre completo, un monto a medida, una ciudad libre).",
+        es: "Usa entrada abierta solo cuando el conjunto de respuestas es genuinamente impredecible (un nombre completo, un monto a medida, una ciudad libre).",
         en: "Use open input only when the set of answers is genuinely unpredictable (a full name, a custom amount, a free city).",
       },
       {
-        es: "Si las respuestas se conocen, usá entrada cerrada (botones para 1 a 3, una lista para 4 a 10).",
+        es: "Si las respuestas se conocen, usa entrada cerrada (botones para 1 a 3, una lista para 4 a 10).",
         en: "If the answers are known, use Closed input instead (buttons for 1 to 3, a list for 4 to 10).",
       },
       {
-        es: "Acompañá siempre la pregunta con una pista de formato, para que el usuario sepa cómo responder.",
+        es: "Acompaña siempre la pregunta con una pista de formato, para que el usuario sepa cómo responder.",
         en: "Always pair the question with a format hint, so the user knows how to answer.",
       },
       {
-        es: "Preguntá una sola cosa por mensaje. Dos preguntas en una burbuja duplican las formas de malinterpretar la respuesta.",
+        es: "Pregunta una sola cosa por mensaje. Dos preguntas en una burbuja duplican las formas de malinterpretar la respuesta.",
         en: "Ask one thing per message. Two questions in one bubble double the ways a reply can be misread.",
       },
       {
-        es: 'Mostrá un ejemplo resuelto ("Ejemplo: Juan Pérez López") las primeras una o dos veces que el usuario llega a este paso, y retiralo cuando el patrón ya se aprendió. Cuándo dejar de mostrarlo está por definirse.',
+        es: 'Muestra un ejemplo resuelto ("Ejemplo: Juan Pérez López") las primeras una o dos veces que el usuario llega a este paso, y retíralo cuando el patrón ya se aprendió. Cuándo dejar de mostrarlo está por definirse.',
         en: 'Show a worked example ("Ejemplo: Juan Pérez López") the first one or two times a user reaches this step, then retire it once the pattern is learned. When exactly to stop showing it is TBD.',
       },
     ],
@@ -422,11 +422,11 @@ const openInput: Pattern = {
 
   guidelines: {
     usage: {
-      es: "Recurrí a la entrada abierta solo cuando realmente no podés enumerar las respuestas. Cada paso abierto es un lugar donde el bot puede malinterpretar, entrar en loop o perder al usuario, así que la vara para usarlo debería ser alta.",
+      es: "Recurre a la entrada abierta solo cuando realmente no puedes enumerar las respuestas. Cada paso abierto es un lugar donde el bot puede malinterpretar, entrar en loop o perder al usuario, así que la vara para usarlo debería ser alta.",
       en: "Reach for open input only when you truly can't enumerate the answers. Every open step is a place the bot can misread, loop, or lose the user, so the bar for using it should be high.",
     },
     tips: {
-      es: "Arrancá con la pregunta, después la pista de formato en su propia línea, y después el ejemplo. Mantené la pista concreta y en las palabras del usuario. Si te encontrás escribiendo una pista que lista las respuestas válidas, es señal de que el paso debería ser entrada cerrada, no abierta.",
+      es: "Empieza con la pregunta, después la pista de formato en su propia línea, y después el ejemplo. Mantén la pista concreta y en las palabras del usuario. Si te encuentras escribiendo una pista que lista las respuestas válidas, es señal de que el paso debería ser entrada cerrada, no abierta.",
       en: "Lead with the question, then the format hint on its own line, then the example. Keep the hint concrete and in the user's own words. If you find yourself writing a hint that lists the valid answers, that is a sign the step should be closed input, not open.",
     },
     examples: [
@@ -488,19 +488,19 @@ const mixedInput: Pattern = {
   overview: {
     usage: [
       {
-        es: "Usá entrada mixta cuando unos pocos valores cubren a la mayoría pero no a todos (montos frecuentes de envío, ciudades habituales), y todavía querés aceptar cualquier cosa fuera de los presets.",
+        es: "Usa entrada mixta cuando unos pocos valores cubren a la mayoría pero no a todos (montos frecuentes de envío, ciudades habituales), y todavía quieres aceptar cualquier cosa fuera de los presets.",
         en: "Use mixed input when a few values cover most people but not everyone (common send amounts, frequent cities), and you still want to accept anything outside the presets.",
       },
       {
-        es: "Poné las 2 o 3 respuestas más comunes en botones. Dejá el camino abierto para el resto.",
+        es: "Pon las 2 o 3 respuestas más comunes en botones. Deja el camino abierto para el resto.",
         en: "Put the 2 to 3 most common answers on buttons. Keep the open path for the rest.",
       },
       {
-        es: 'Decí los dos caminos en voz alta en el copy, por ejemplo "Puedes elegir una opción o escribir el monto que prefieras".',
+        es: 'Di los dos caminos en voz alta en el copy, por ejemplo "Puedes elegir una opción o escribir el monto que prefieras".',
         en: 'Say both paths out loud in the copy, for example "Puedes elegir una opción o escribir el monto que prefieras".',
       },
       {
-        es: "WhatsApp siempre deja escribir, así que incluso un mensaje de solo botones es en realidad mixto. Diseñá la respuesta escrita a propósito, no por accidente.",
+        es: "WhatsApp siempre deja escribir, así que incluso un mensaje de solo botones es en realidad mixto. Diseña la respuesta escrita a propósito, no por accidente.",
         en: "WhatsApp always lets people type, so even a buttons-only message is really mixed. Design for the typed reply on purpose, not by accident.",
       },
     ],
@@ -511,12 +511,12 @@ const mixedInput: Pattern = {
       },
       body: [
         {
-          es: "Cuando se ofrecen botones, casi todos los usan: en el flujo de modificación, el texto libre se usó solo el 1,6% de las veces. La entrada mixta le da ese camino rápido a la mayoría y mantiene la puerta abierta para valores que no podés predecir, sin forzar a todos a pasar por texto abierto propenso a errores.",
+          es: "Cuando se ofrecen botones, casi todos los usan: en el flujo de modificación, el texto libre se usó solo el 1,6% de las veces. La entrada mixta le da ese camino rápido a la mayoría y mantiene la puerta abierta para valores que no puedes predecir, sin forzar a todos a pasar por texto abierto propenso a errores.",
           en: "When buttons are offered, almost everyone takes them: in the modify flow, free text was used only 1.6% of the time. Mixed input gives that fast path to the majority while keeping the door open for values you can't predict, without forcing everyone through error-prone open text.",
         },
       ],
       note: {
-        es: "Por medir: ratio de taps en botón vs. tipeo en el paso, y completado vs. abandono por camino. Si el uso escrito se mantiene mínimo, los presets están bien; si sube, a los botones les falta una respuesta común.",
+        es: "Por medir: ratio de taps en botón vs. escritura en el paso, y completado vs. abandono por camino. Si el uso escrito se mantiene mínimo, los presets están bien; si sube, a los botones les falta una respuesta común.",
         en: "To pull: button-tap vs typed ratio at the step, and completion vs abandon per path. If typed usage stays tiny, the presets are right; if it climbs, the buttons are missing a common answer.",
       },
     },
@@ -619,11 +619,11 @@ const mixedInput: Pattern = {
 
   guidelines: {
     usage: {
-      es: "Recurrí a la entrada mixta cuando las respuestas comunes merecen un atajo de un tap pero la cola larga es real. Es el punto medio entre la entrada cerrada (todas las respuestas conocidas) y la abierta (ninguna conocida).",
+      es: "Recurre a la entrada mixta cuando las respuestas comunes merecen un atajo de un tap pero la cola larga es real. Es el punto medio entre la entrada cerrada (todas las respuestas conocidas) y la abierta (ninguna conocida).",
       en: "Reach for mixed input when the common answers are worth a one-tap shortcut but the tail is real. It is the middle ground between closed input (all answers known) and open input (nothing known).",
     },
     tips: {
-      es: "Nombrá los presets que la gente realmente elige, en sus propias palabras, y ordenalos por frecuencia. Hacé explícita la opción abierta en el copy, así escribir no se siente como romper el flujo. Mantené los botones en las respuestas top de verdad; si necesitás más de 3, pasá la parte cerrada a una lista.",
+      es: "Nombra los presets que la gente realmente elige, en sus propias palabras, y ordénalos por frecuencia. Haz explícita la opción abierta en el copy, así escribir no se siente como romper el flujo. Mantén los botones en las respuestas top de verdad; si necesitas más de 3, pasa la parte cerrada a una lista.",
       en: "Name the presets people actually pick, in their own words, and order them by frequency. Make the open option explicit in the copy so typing doesn't feel like breaking the flow. Keep buttons to the true top answers; if you need more than 3, switch the closed part to a list.",
     },
     examples: [
@@ -655,7 +655,7 @@ const mixedInput: Pattern = {
   },
 };
 
-/** Registro. El orden acá es el orden de la grilla en la landing. */
+/** Registro. El orden aquí es el orden de la grilla en la landing. */
 export const PATTERNS: Pattern[] = [closedInput, openInput, mixedInput];
 
 export const getPattern = (slug: string): Pattern | undefined =>

@@ -20,7 +20,7 @@ export function PatternsLanding() {
       <main className="plaza-main">
         {/* ── Hero ──────────────────────────────────────────────────────────
             El mismo hero del home, clases incluidas — el diseño reusa el
-            frame tal cual. Acá el botón baja a la grilla en lugar de navegar,
+            frame tal cual. Aquí el botón baja a la grilla en lugar de navegar,
             porque ya estamos en la página que ese botón abre desde el home. */}
         <section className="plaza-hero">
           <div className="plaza-hero-copy">
@@ -50,7 +50,7 @@ export function PatternsLanding() {
 
         {/* ── Grilla de patrones ────────────────────────────────────────────
             Se deriva del registro en `patterns/content.ts`: agregar un patrón
-            ahí lo suma acá, en las rutas y en los links cruzados. Dentro de
+            ahí lo suma aquí, en las rutas y en los links cruzados. Dentro de
             `.plaza-main`, la grilla ocupa todo el ancho (80px de margen por
             lado a 1440). */}
         <h2 id="browse" className="plaza-links-title">
@@ -77,7 +77,9 @@ export function PatternsLanding() {
               <h3 className="-mt-2 font-heading text-[31px] font-black leading-[35px] tracking-[-0.01em]">
                 {tr(p.name.es, p.name.en)}
               </h3>
-              <p className="plaza-body flex-1">{tr(p.cardBody.es, p.cardBody.en)}</p>
+              <p className="plaza-body flex-1">
+                {tr(p.cardBody.es, p.cardBody.en)}
+              </p>
               <Link className="plaza-btn self-start" to={`/patrones/${p.slug}`}>
                 {tr(
                   "Ver las guías del patrón",

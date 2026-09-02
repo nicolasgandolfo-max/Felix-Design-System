@@ -416,7 +416,7 @@ export function Colors() {
       </p>
       <p className="copyhint">
         {tr(
-          "Tip: hacé clic en cualquier muestra para copiar su hex.",
+          "Tip: haz clic en cualquier muestra para copiar su hex.",
           "Tip: click any swatch to copy its hex.",
           "Dica: clique em qualquer amostra para copiar o hex."
         )}
@@ -910,7 +910,7 @@ export function Tokens() {
       </h2>
       <p className="lead">
         {tr(
-          "Todos los tokens viven en theme.css (generado desde tokens.ts) y se exponen como variables CSS y utilidades Tailwind v4. Los nombres cortos no existen — usá los reales.",
+          "Todos los tokens viven en theme.css (generado desde tokens.ts) y se exponen como variables CSS y utilidades Tailwind v4. Los nombres cortos no existen — usa los reales.",
           "Every token lives in theme.css (generated from tokens.ts) and is exposed as CSS variables and Tailwind v4 utilities. Short names don't exist — use the real ones.",
           "Todos os tokens vivem no theme.css (gerado a partir de tokens.ts) e são expostos como variáveis CSS e utilitários do Tailwind v4. Os nomes curtos não existem — use os reais."
         )}
@@ -1048,7 +1048,7 @@ const UX_PRINCIPLES: {
     es: "Concisión",
     en: "Concision",
     pt: "Concisão",
-    descEs: "Decí lo necesario, nada más. Cada palabra se gana su lugar.",
+    descEs: "Di lo necesario, nada más. Cada palabra se gana su lugar.",
     descEn: "Say what's needed, nothing more. Every word earns its place.",
     descPt: "Diga o necessário, nada mais. Cada palavra conquista seu lugar.",
   },
@@ -1075,7 +1075,8 @@ const UX_PRINCIPLES: {
     es: "Precisión",
     en: "Accuracy",
     pt: "Precisão",
-    descEs: "Sin errores de tipeo ni de género. La exactitud genera confianza.",
+    descEs:
+      "Sin errores de escritura ni de género. La exactitud genera confianza.",
     descEn: "No typos, no gender mismatches. Accuracy builds trust.",
     descPt: "Sem erros de digitação nem de gênero. A exatidão gera confiança.",
   },
@@ -1141,7 +1142,7 @@ const CASE_STUDY_ROWS: {
     beforePt:
       "O consentimento passava para o “usted” formal em um fluxo que fala “tú” — frio bem no momento de maior confiança.",
     afterEs:
-      "Consentimiento en “tú” de punta a punta: autorizás, podés, seleccionás.",
+      "Consentimiento en “tú” de punta a punta: autorizas, puedes, seleccionas.",
     afterEn: "Consent in “tú” end to end: you authorize, you can, you select.",
     afterPt:
       "Consentimento em “tú” de ponta a ponta: você autoriza, você pode, você seleciona.",
@@ -1189,8 +1190,7 @@ const CASE_STUDY_ROWS: {
       "“By clicking…” — but the real action was selecting a checkbox, not clicking.",
     beforePt:
       "“Ao clicar…” — mas a ação real era selecionar um checkbox, não clicar.",
-    afterEs:
-      "Decí lo que realmente pasa: “Si seleccionás ‘Estoy de acuerdo’…”.",
+    afterEs: "Di lo que realmente pasa: “Si seleccionas ‘Estoy de acuerdo’…”.",
     afterEn: "Say what actually happens: “If you select ‘I agree’…”",
     afterPt:
       "Diga o que realmente acontece: “Se você selecionar ‘Estou de acordo’…”.",
@@ -1206,7 +1206,7 @@ const CASE_STUDY_ROWS: {
     beforePt:
       "Menção a “empréstimo” dentro de um fluxo de remessas; texto legal denso e repetitivo.",
     afterEs:
-      "La razón correcta, en contexto: “Necesitamos revisar tu cuenta…”; “Vinculá tu banco”.",
+      "La razón correcta, en contexto: “Necesitamos revisar tu cuenta…”; “Vincula tu banco”.",
     afterEn:
       "The right reason, in context: “We need to review your account…”; “Link your bank.”",
     afterPt:
@@ -1244,27 +1244,27 @@ export function Editorial() {
   ];
   const dos = [
     tr(
-      "Escribí en español primero, con tú informal.",
+      "Escribe en español primero, con tú informal.",
       "Write Spanish-first, with informal tú.",
       "Escreva em espanhol primeiro, com o tú informal."
     ),
     tr(
-      "Mostrá el código de moneda en cada monto ($60.00 USD).",
+      "Muestra el código de moneda en cada monto ($60.00 USD).",
       "Show the currency code on every amount ($60.00 USD).",
       "Mostre o código da moeda em cada valor ($60.00 USD)."
     ),
     tr(
-      "Mostrá la comisión como línea visible, aunque sea cero.",
+      "Muestra la comisión como línea visible, aunque sea cero.",
       "Show the fee as a visible line item, even when zero.",
       "Mostre a taxa como uma linha visível, mesmo quando for zero."
     ),
     tr(
-      "Usá un solo botón primario por pantalla.",
+      "Usa un solo botón primario por pantalla.",
       "Use a single primary button per screen.",
       "Use um único botão primário por tela."
     ),
     tr(
-      "Usá el mismo término para lo mismo, siempre (comisión, no tarifa).",
+      "Usa el mismo término para lo mismo, siempre (comisión, no tarifa).",
       "Use the same term for the same thing, always (fee, not charge).",
       "Use o mesmo termo para a mesma coisa, sempre (taxa, não tarifa)."
     ),
@@ -1461,11 +1461,11 @@ export function Editorial() {
       </div>
 
       <h3 className="h3" id="hace-y-evita">
-        {tr("Hacé y evitá", "Do and don't", "Faça e evite")}
+        {tr("Haz y evita", "Do and don't", "Faça e evite")}
       </h3>
       <div className="dd" style={{ marginTop: 4 }}>
         <div className="col do">
-          <div className="ch">{tr("Hacé", "Do", "Faça")}</div>
+          <div className="ch">{tr("Haz", "Do", "Faça")}</div>
           <ul>
             {dos.map((x, i) => (
               <li key={i}>{x}</li>
@@ -1473,7 +1473,7 @@ export function Editorial() {
           </ul>
         </div>
         <div className="col dont">
-          <div className="ch">{tr("Evitá", "Don't", "Evite")}</div>
+          <div className="ch">{tr("Evita", "Don't", "Evite")}</div>
           <ul>
             {donts.map((x, i) => (
               <li key={i}>{x}</li>
@@ -1560,25 +1560,25 @@ export function MarkdownFiles() {
   const tools: { name: string; es: string; en: string; pt: string }[] = [
     {
       name: "Cursor",
-      es: "Arrastrá los archivos al chat o referencialos con @DESIGN.md y @components.md. Cursor los toma como contexto al generar UI.",
+      es: "Arrastra los archivos al chat o referéncialos con @DESIGN.md y @components.md. Cursor los toma como contexto al generar UI.",
       en: "Drag the files into chat or reference them with @DESIGN.md and @components.md. Cursor uses them as context when generating UI.",
       pt: "Arraste os arquivos para o chat ou referencie com @DESIGN.md e @components.md. O Cursor usa como contexto ao gerar UI.",
     },
     {
       name: "Claude Code",
-      es: "Pedile que lea DESIGN.md y components.md del repo (o adjuntalos) antes de generar pantallas; respeta tokens, voz y los componentes reales de @felix/ui.",
+      es: "Pídele que lea DESIGN.md y components.md del repo (o adjúntalos) antes de generar pantallas; respeta tokens, voz y los componentes reales de @felix/ui.",
       en: "Ask it to read DESIGN.md and components.md from the repo (or attach them) before generating screens; it respects tokens, voice, and the real @felix/ui components.",
       pt: "Peça para ele ler o DESIGN.md e o components.md do repositório (ou anexe os arquivos) antes de gerar telas; ele respeita tokens, voz e os componentes reais do @felix/ui.",
     },
     {
       name: "v0",
-      es: "Pegá DESIGN.md como Project Instructions; v0 reskinnea shadcn con la estética de Felix. Ver V0_SETUP.md.",
+      es: "Pega DESIGN.md como Project Instructions; v0 reskinnea shadcn con la estética de Felix. Ver V0_SETUP.md.",
       en: "Paste DESIGN.md as Project Instructions; v0 reskins shadcn with Felix's look. See V0_SETUP.md.",
       pt: "Cole o DESIGN.md como Project Instructions; o v0 reestiliza o shadcn com a estética da Felix. Veja o V0_SETUP.md.",
     },
     {
       name: "ChatGPT · Gemini · otros",
-      es: "Usá «Copiar para tu LLM» y pegá los archivos al inicio de la conversación: DESIGN.md como contexto de marca, components.md cuando pidas pantallas con componentes.",
+      es: "Usa «Copiar para tu LLM» y pega los archivos al inicio de la conversación: DESIGN.md como contexto de marca, components.md cuando pidas pantallas con componentes.",
       en: "Use “Copy for your LLM” and paste the files at the start of the conversation: DESIGN.md as brand context, components.md when asking for screens built from components.",
       pt: "Use «Copiar para seu LLM» e cole os arquivos no começo da conversa: DESIGN.md como contexto de marca, components.md quando pedir telas com componentes.",
     },
@@ -1599,7 +1599,7 @@ export function MarkdownFiles() {
       </h2>
       <p className="lead">
         {tr(
-          "Dos archivos legibles por personas y por IA resumen todo el sistema. Descargalos o copialos y pegáselos a tu herramienta de IA para que genere interfaces fieles a la marca, con los componentes reales de @felix/ui.",
+          "Dos archivos legibles por personas y por IA resumen todo el sistema. Descárgalos o cópialos y pégaselos a tu herramienta de IA para que genere interfaces fieles a la marca, con los componentes reales de @felix/ui.",
           "Two files readable by people and AI capture the whole system. Download or copy them into your AI tool so it generates on-brand interfaces using the real @felix/ui components.",
           "Dois arquivos legíveis por pessoas e por IA resumem todo o sistema. Baixe ou copie e cole na sua ferramenta de IA para que ela gere interfaces fiéis à marca, com os componentes reais do @felix/ui."
         )}
@@ -1614,7 +1614,7 @@ export function MarkdownFiles() {
             "O contrato de identidade"
           )}
           desc={tr(
-            "Colores, tipografía, tokens, formas, voz y reglas del sistema en un solo archivo. Usalo como contexto base en cualquier conversación donde la IA genere UI de Felix.",
+            "Colores, tipografía, tokens, formas, voz y reglas del sistema en un solo archivo. Úsalo como contexto base en cualquier conversación donde la IA genere UI de Felix.",
             "Colors, typography, tokens, shapes, voice, and system rules in a single file. Use it as base context in any conversation where AI generates Felix UI.",
             "Cores, tipografia, tokens, formas, voz e regras do sistema em um único arquivo. Use como contexto base em qualquer conversa em que a IA gere UI da Felix."
           )}
@@ -1628,7 +1628,7 @@ export function MarkdownFiles() {
             "A referência de componentes"
           )}
           desc={tr(
-            "Los 43 componentes de @felix/ui: para qué sirve cada uno, cómo se usa y qué exporta. Sumalo cuando le pidas a la IA pantallas armadas con componentes existentes en vez de HTML desde cero.",
+            "Los 43 componentes de @felix/ui: para qué sirve cada uno, cómo se usa y qué exporta. Súmalo cuando le pidas a la IA pantallas armadas con componentes existentes en vez de HTML desde cero.",
             "All 43 @felix/ui components: what each is for, how to use it, and what it exports. Add it when asking AI for screens built from existing components instead of raw HTML.",
             "Os 43 componentes do @felix/ui: para que serve cada um, como usar e o que exporta. Adicione quando pedir à IA telas montadas com componentes existentes em vez de HTML do zero."
           )}

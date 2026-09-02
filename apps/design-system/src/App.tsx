@@ -61,7 +61,7 @@ export function App() {
           propia del portal, con su propio nav al costado. Cada sección de la
           guía es su propia página: `:slug` se resuelve contra `VT_SECTIONS`,
           así que una sección nueva del contenido no necesita ruta propia.
-          La guía editorial cuelga de acá como "Previous version". */}
+          La guía editorial cuelga de aquí como "Previous version". */}
         <Route element={<VoiceToneLayout />}>
           <Route path="voz-y-tono" element={<VoiceToneOverview />} />
           <Route

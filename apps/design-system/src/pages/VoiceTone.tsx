@@ -21,7 +21,7 @@ import {
  *
  * El token de referencia existe porque el original numeraba las secciones y
  * se citaba a sí mismo como "§7". Sin numeración a la vista, ese "§7" no
- * llevaría a ningún lado: acá cada cita es un enlace con el nombre.
+ * llevaría a ningún lado: aquí cada cita es un enlace con el nombre.
  */
 function inline(text: string): ReactNode[] {
   const out: ReactNode[] = [];
@@ -63,7 +63,9 @@ function inline(text: string): ReactNode[] {
 
 function VtTableBlock({ table }: { table: VtTable }) {
   return (
-    <div className={"tbl-wrap vt-tbl" + (table.headerColumn ? " head-col" : "")}>
+    <div
+      className={"tbl-wrap vt-tbl" + (table.headerColumn ? " head-col" : "")}
+    >
       <table className="tbl">
         {table.cols && (
           <thead>
@@ -103,7 +105,9 @@ function Block({ block }: { block: VtBlock }) {
     case "code":
       return (
         <div className="vt-example">
-          {block.label && <span className="vt-example-label">{block.label}</span>}
+          {block.label && (
+            <span className="vt-example-label">{block.label}</span>
+          )}
           <div className="code-block">
             <pre>{block.t}</pre>
           </div>
@@ -129,7 +133,12 @@ function Block({ block }: { block: VtBlock }) {
     case "link":
       return (
         <p className="vt-p">
-          <a className="btn-link" href={block.href} target="_blank" rel="noreferrer">
+          <a
+            className="btn-link"
+            href={block.href}
+            target="_blank"
+            rel="noreferrer"
+          >
             {block.t}
           </a>
         </p>
@@ -187,7 +196,9 @@ export function VoiceToneOverview() {
           <span className="val">{VT_SECTIONS.length}</span>
         </div>
         <div className="meta-col">
-          <span className="lbl">{tr("TRATAMIENTO", "FORMALITY", "TRATAMENTO")}</span>
+          <span className="lbl">
+            {tr("TRATAMIENTO", "FORMALITY", "TRATAMENTO")}
+          </span>
           <span className="val">Tú (informal)</span>
         </div>
         <div className="meta-col">
@@ -213,8 +224,14 @@ export function VoiceToneOverview() {
             {g.ids.map((id) => {
               const s = getSection(id)!;
               return (
-                <Link className="vt-group-card" to={`/voz-y-tono/${s.id}`} key={s.id}>
-                  <span className="vt-group-card-title">{shortTitle(s.title)}</span>
+                <Link
+                  className="vt-group-card"
+                  to={`/voz-y-tono/${s.id}`}
+                  key={s.id}
+                >
+                  <span className="vt-group-card-title">
+                    {shortTitle(s.title)}
+                  </span>
                 </Link>
               );
             })}
@@ -303,7 +320,10 @@ export function VoiceToneSection() {
         <Block block={b} key={i} />
       ))}
 
-      <nav className="vt-pager" aria-label={tr("Secciones", "Sections", "Seções")}>
+      <nav
+        className="vt-pager"
+        aria-label={tr("Secciones", "Sections", "Seções")}
+      >
         {prev ? (
           <Link className="vt-pager-link prev" to={`/voz-y-tono/${prev.id}`}>
             <ArrowLeftIcon size={16} />

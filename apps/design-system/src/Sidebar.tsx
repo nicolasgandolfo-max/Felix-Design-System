@@ -1,6 +1,10 @@
 import { Fragment, useState, type ReactNode } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { CaretRightIcon, PuzzlePieceIcon, SquaresFourIcon } from "@phosphor-icons/react";
+import {
+  CaretRightIcon,
+  PuzzlePieceIcon,
+  SquaresFourIcon,
+} from "@phosphor-icons/react";
 import {
   NAV,
   VOICE_TONE_NAV,
@@ -157,7 +161,10 @@ function NavTree({
                   >
                     {({ isActive }) => (
                       <>
-                        <Icon size={18} weight={isActive ? "fill" : "regular"} />
+                        <Icon
+                          size={18}
+                          weight={isActive ? "fill" : "regular"}
+                        />
                         <span>{tr(it.es, it.en, it.pt)}</span>
                       </>
                     )}
@@ -206,7 +213,10 @@ function NavTree({
           >
             {({ isActive }) => (
               <>
-                <PuzzlePieceIcon size={18} weight={isActive ? "fill" : "regular"} />
+                <PuzzlePieceIcon
+                  size={18}
+                  weight={isActive ? "fill" : "regular"}
+                />
                 <span>{tr("Visión general", "Overview", "Visão geral")}</span>
               </>
             )}
@@ -226,7 +236,10 @@ function NavTree({
                   >
                     {({ isActive }) => (
                       <>
-                        <GroupIcon size={18} weight={isActive ? "fill" : "regular"} />
+                        <GroupIcon
+                          size={18}
+                          weight={isActive ? "fill" : "regular"}
+                        />
                         <span>
                           {tr(
                             GROUP_LABELS[group.group].es,
@@ -282,7 +295,10 @@ function SidebarShell({
   const tr = useTr();
   return (
     <aside className={"plaza-sys-sidebar" + (open ? " open" : "")} id="sidebar">
-      <nav className="sys-nav" aria-label={tr("Secciones", "Sections", "Seções")}>
+      <nav
+        className="sys-nav"
+        aria-label={tr("Secciones", "Sections", "Seções")}
+      >
         {children}
       </nav>
     </aside>
@@ -306,7 +322,7 @@ export function Sidebar({
 
 /** Panel lateral de la Guía editorial. */
 /**
- * Menú de Voice & Tone. A diferencia de `NavTree`, acá el que se pliega es el
+ * Menú de Voice & Tone. A diferencia de `NavTree`, aquí el que se pliega es el
  * grupo entero, no un ítem con hijos: son 17 secciones en seis grupos y seis
  * encabezados plegables se recorren de un vistazo. Un grupo se abre solo
  * cuando la ruta activa está adentro.
@@ -320,7 +336,9 @@ function VoiceToneNavTree({ onNavigate }: { onNavigate: () => void }) {
     <>
       {VOICE_TONE_NAV.map((g) => {
         const hasActive = g.items.some((it) =>
-          it.path.includes("#") ? pathname + hash === it.path : pathname === it.path
+          it.path.includes("#")
+            ? pathname + hash === it.path
+            : pathname === it.path
         );
         // El grupo de la ruta activa manda; después, lo que haya elegido quien lee.
         const expanded = manualOpen[g.id] ?? (hasActive || !g.collapsed);
@@ -330,10 +348,14 @@ function VoiceToneNavTree({ onNavigate }: { onNavigate: () => void }) {
               type="button"
               className={"vt-group-toggle" + (expanded ? " open" : "")}
               aria-expanded={expanded}
-              onClick={() => setManualOpen((m) => ({ ...m, [g.id]: !expanded }))}
+              onClick={() =>
+                setManualOpen((m) => ({ ...m, [g.id]: !expanded }))
+              }
             >
               <CaretRightIcon size={12} weight="bold" />
-              <span className="sys-group-label">{tr(g.group.es, g.group.en, g.group.pt)}</span>
+              <span className="sys-group-label">
+                {tr(g.group.es, g.group.en, g.group.pt)}
+              </span>
             </button>
             {expanded &&
               g.items.map((it) => {
@@ -364,7 +386,10 @@ function VoiceToneNavTree({ onNavigate }: { onNavigate: () => void }) {
                   >
                     {({ isActive }) => (
                       <>
-                        <Icon size={18} weight={isActive ? "fill" : "regular"} />
+                        <Icon
+                          size={18}
+                          weight={isActive ? "fill" : "regular"}
+                        />
                         <span>{tr(it.es, it.en, it.pt)}</span>
                       </>
                     )}
@@ -396,7 +421,10 @@ export function VoiceToneSidebar({
           onClick={onNavigate}
           className={itemClass({ isActive: pathname === "/voz-y-tono" })}
         >
-          <SquaresFourIcon size={18} weight={pathname === "/voz-y-tono" ? "fill" : "regular"} />
+          <SquaresFourIcon
+            size={18}
+            weight={pathname === "/voz-y-tono" ? "fill" : "regular"}
+          />
           <span>{tr("Visión general", "Overview", "Visão geral")}</span>
         </NavLink>
       </div>

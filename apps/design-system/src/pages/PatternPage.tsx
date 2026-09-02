@@ -36,11 +36,12 @@ type Tr = (es: string, en: string, pt?: string) => string;
 const L = (tr: Tr, l: Localized) => tr(l.es, l.en);
 
 /* Trazo `stroke/soft` de Figma — el mismo que usan .plaza-hero y .plaza-card.
-   El token --border del DS es #cfcabf y no corresponde acá. */
+   El token --border del DS es #cfcabf y no corresponde aquí. */
 const STROKE_SOFT = "border-[rgba(8,36,34,0.12)]";
 
 /* Título de sección según Figma: Saans/Inter Medium 30px, no display. */
-const SECTION_H = "font-sans text-[30px] font-medium tracking-[-0.01em] text-foreground";
+const SECTION_H =
+  "font-sans text-[30px] font-medium tracking-[-0.01em] text-foreground";
 
 const STATUS_CLASSES: Record<ResourceStatus, string> = {
   ok: "bg-status-success-bg text-status-success-text",
@@ -314,11 +315,7 @@ export function PatternPage() {
                         <TableCell className="text-base">
                           {r.href ? (
                             <Button asChild variant="primary" size="sm">
-                              <a
-                                href={r.href}
-                                target="_blank"
-                                rel="noreferrer"
-                              >
+                              <a href={r.href} target="_blank" rel="noreferrer">
                                 {L(tr, r.resource)}
                               </a>
                             </Button>

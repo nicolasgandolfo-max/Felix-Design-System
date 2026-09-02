@@ -3,7 +3,7 @@
  *
  * Las tres páginas de patrón (y las que se agreguen) comparten el template
  * `PatternPage`; lo único propio de cada una es un objeto `Pattern`. Para sumar
- * un patrón nuevo: agregá su entrada en `content.ts` y listo — la landing, las
+ * un patrón nuevo: agrega su entrada en `content.ts` y listo — la landing, las
  * rutas y los links cruzados de "Explorar patrones" se derivan del registro.
  */
 
