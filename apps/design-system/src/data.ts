@@ -80,7 +80,7 @@ export const PREVIOUS_VERSION_PATH = "/voz-y-tono/version-anterior";
  * La guía editorial cuelga del último grupo, "Previous version": es la versión
  * previa de este mismo material y no tiene entrada propia en ningún otro lado.
  */
-const VT_ICONS: Record<string, Icon> = {
+export const VT_ICONS: Record<string, Icon> = {
   "number-formatting": CurrencyDollarIcon,
   "interface-labels": ListChecksIcon,
   "form-card-copy": CardsIcon,
