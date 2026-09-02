@@ -36,7 +36,7 @@ const fileFor = (name) => name.toLowerCase().replace(/\s+/g, "-")
   .replace("radiogroup", "radio-group").replace("choicecard", "choice-card")
   .replace("datepicker", "date-picker").replace("dropdownmenu", "dropdown-menu")
   .replace("hovercard", "hover-card").replace("navigationmenu", "navigation-menu")
-  .replace("sidebarfooter", "sidebar-footer");
+  .replace("sidebarfooter", "sidebar-footer").replace("messagescroller", "message-scroller");
 
 const exportsFor = {};
 for (const groupDir of ["Atoms", "Molecules", "Organisms"]) {

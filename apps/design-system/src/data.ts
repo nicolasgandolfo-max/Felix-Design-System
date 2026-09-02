@@ -265,21 +265,21 @@ export const INVENTORY: { group: string; items: string[] }[] = [
   {
     group: "Atoms",
     items: [
-      "Avatar", "Badge", "Button", "Checkbox", "CoinLoader", "Dots", "IconButton",
-      "Input", "Label", "Logo", "Progress", "RadioGroup", "Separator", "Skeleton",
+      "Avatar", "Badge", "Bubble", "Button", "Checkbox", "CoinLoader", "Dots", "IconButton",
+      "Input", "Label", "Logo", "Marker", "Progress", "RadioGroup", "Separator", "Skeleton",
       "Slider", "Spinner", "Switch", "Text", "Textarea",
     ],
   },
   {
     group: "Molecules",
     items: [
-      "Accordion", "Alert", "Breadcrumb", "Calendar", "Card", "ChoiceCard", "Collapse",
-      "DatePicker", "Dialog", "Drawer", "DropdownMenu", "HoverCard", "NavigationMenu",
+      "Accordion", "Alert", "Attachment", "Breadcrumb", "Calendar", "Card", "ChoiceCard", "Collapse",
+      "DatePicker", "Dialog", "Drawer", "DropdownMenu", "HoverCard", "Message", "NavigationMenu",
       "Pagination", "Popover", "Select", "Sheet", "SidebarFooter", "Stepper", "Table",
       "Tabs", "Toast", "Tooltip",
     ],
   },
-  { group: "Organisms", items: ["Sidebar"] },
+  { group: "Organisms", items: ["MessageScroller", "Sidebar"] },
 ];
 
 /** URL-safe slug for a component name, e.g. "RadioGroup" → "radiogroup". */

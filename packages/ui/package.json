@@ -63,7 +63,7 @@
       "name": "Full bundle (import *)",
       "path": "dist/index.js",
       "import": "*",
-      "limit": "115 kB"
+      "limit": "120 kB"
     },
     {
       "name": "Avatar only",
@@ -285,6 +285,36 @@
       "name": "Sidebar only",
       "path": "dist/index.js",
       "import": "{ Sidebar, SidebarHeader, SidebarBody, SidebarSection, SidebarSectionTitle, SidebarNavItem, SidebarFooter }",
+      "limit": "15 kB"
+    },
+    {
+      "name": "Marker only",
+      "path": "dist/index.js",
+      "import": "{ Marker }",
+      "limit": "10 kB"
+    },
+    {
+      "name": "Bubble only",
+      "path": "dist/index.js",
+      "import": "{ Bubble }",
+      "limit": "10 kB"
+    },
+    {
+      "name": "Message only",
+      "path": "dist/index.js",
+      "import": "{ Message, MessageAvatar, MessageContent, MessageHeader, MessageFooter }",
+      "limit": "10 kB"
+    },
+    {
+      "name": "Attachment only",
+      "path": "dist/index.js",
+      "import": "{ Attachment }",
+      "limit": "15 kB"
+    },
+    {
+      "name": "MessageScroller only",
+      "path": "dist/index.js",
+      "import": "{ MessageScroller, MessageScrollerHeader, MessageScrollerEmpty, MessageScrollerMessages, MessageScrollerInput }",
       "limit": "15 kB"
     }
   ],

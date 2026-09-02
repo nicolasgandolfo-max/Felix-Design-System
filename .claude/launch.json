@@ -1,6 +1,50 @@
 {
   "version": "0.0.1",
   "configurations": [
-    { "name": "felix-design-app", "runtimeExecutable": "npm", "runtimeArgs": ["run", "dev", "-w", "@felix/design-system-site", "--", "--port", "5191", "--strictPort"], "port": 5191 }
+    {
+      "name": "felix-design-app",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "-w",
+        "@felix/design-system-site",
+        "--",
+        "--port",
+        "5191",
+        "--strictPort"
+      ],
+      "port": 5191
+    },
+    {
+      "name": "design-system",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "-w",
+        "@felix/design-system-site",
+        "--",
+        "--port",
+        "5180",
+        "--strictPort"
+      ],
+      "port": 5180
+    },
+    {
+      "name": "storybook",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "-w",
+        "@felix/storybook",
+        "--",
+        "--port",
+        "6016",
+        "--no-open"
+      ],
+      "port": 6016
+    }
   ]
 }

@@ -19,6 +19,9 @@ export type {
 export { Badge, badgeVariants } from "./components/Atoms/badge";
 export type { BadgeProps } from "./components/Atoms/badge";
 
+export { Bubble, bubbleVariants } from "./components/Atoms/bubble";
+export type { BubbleProps, BubbleVariant } from "./components/Atoms/bubble";
+
 export { Button, buttonVariants } from "./components/Atoms/button";
 export type { ButtonProps } from "./components/Atoms/button";
 
@@ -49,6 +52,9 @@ export type { LabelProps } from "./components/Atoms/label";
 
 export { Logo } from "./components/Atoms/logo";
 export type { LogoProps, LogoType } from "./components/Atoms/logo";
+
+export { Marker, markerVariants } from "./components/Atoms/marker";
+export type { MarkerProps, MarkerVariant } from "./components/Atoms/marker";
 
 export {
   Progress,
@@ -124,6 +130,22 @@ export type {
   AlertDescriptionProps,
   AlertVariant,
 } from "./components/Molecules/alert";
+
+export {
+  Attachment,
+  attachmentVariants,
+  attachmentIconWrapVariants,
+  attachmentInfoVariants,
+  attachmentNameVariants,
+  attachmentMetaVariants,
+  attachmentCloseVariants,
+} from "./components/Molecules/attachment";
+export type {
+  AttachmentProps,
+  AttachmentSize,
+  AttachmentState,
+  AttachmentType,
+} from "./components/Molecules/attachment";
 
 export {
   Breadcrumb,
@@ -324,6 +346,25 @@ export type {
 } from "./components/Molecules/hover-card";
 
 export {
+  Message,
+  MessageAvatar,
+  MessageContent,
+  MessageHeader,
+  MessageFooter,
+  messageVariants,
+  messageContentVariants,
+  messageMetaVariants,
+} from "./components/Molecules/message";
+export type {
+  MessageProps,
+  MessageAvatarProps,
+  MessageContentProps,
+  MessageHeaderProps,
+  MessageFooterProps,
+  MessageAlign,
+} from "./components/Molecules/message";
+
+export {
   NavigationMenu,
   NavigationMenuList,
   NavigationMenuItem,
@@ -516,6 +557,21 @@ export type {
 } from "./components/Molecules/tooltip";
 
 // ─── Organisms ───────────────────────────────────────────────────────────────
+
+export {
+  MessageScroller,
+  MessageScrollerHeader,
+  MessageScrollerEmpty,
+  MessageScrollerMessages,
+  MessageScrollerInput,
+} from "./components/Organisms/message-scroller";
+export type {
+  MessageScrollerProps,
+  MessageScrollerHeaderProps,
+  MessageScrollerEmptyProps,
+  MessageScrollerMessagesProps,
+  MessageScrollerInputProps,
+} from "./components/Organisms/message-scroller";
 
 export {
   Sidebar,
