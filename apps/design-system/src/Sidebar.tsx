@@ -1,9 +1,9 @@
 import { Fragment, useState, type ReactNode } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { CaretRightIcon, PuzzlePieceIcon } from "@phosphor-icons/react";
+import { CaretRightIcon, PuzzlePieceIcon, SquaresFourIcon } from "@phosphor-icons/react";
 import {
   NAV,
-  EDITORIAL_NAV,
+  VOICE_TONE_NAV,
   INVENTORY,
   GROUP_SLUGS,
   GROUP_ICONS,
@@ -83,7 +83,7 @@ const itemClass = ({ isActive }: { isActive: boolean }) =>
   "sys-nav-item" + (isActive ? " active" : "");
 
 /**
- * Renderiza un árbol de nav (`NAV`, `EDITORIAL_NAV`, …). Dos casos especiales:
+ * Renderiza un árbol de nav (hoy sólo `NAV`). Dos casos especiales:
  * "illustrations", que despliega sus anclas, y los ítems cuyo `path` ya trae un
  * ancla — `NavLink` no marca activo por hash, así que lo resolvemos a mano.
  */
@@ -305,16 +305,102 @@ export function Sidebar({
 }
 
 /** Panel lateral de la Guía editorial. */
-export function EditorialSidebar({
+/**
+ * Menú de Voice & Tone. A diferencia de `NavTree`, acá el que se pliega es el
+ * grupo entero, no un ítem con hijos: son 17 secciones en seis grupos y seis
+ * encabezados plegables se recorren de un vistazo. Un grupo se abre solo
+ * cuando la ruta activa está adentro.
+ */
+function VoiceToneNavTree({ onNavigate }: { onNavigate: () => void }) {
+  const tr = useTr();
+  const { pathname, hash } = useLocation();
+  const [manualOpen, setManualOpen] = useState<Record<string, boolean>>({});
+
+  return (
+    <>
+      {VOICE_TONE_NAV.map((g) => {
+        const hasActive = g.items.some((it) =>
+          it.path.includes("#") ? pathname + hash === it.path : pathname === it.path
+        );
+        // El grupo de la ruta activa manda; después, lo que haya elegido quien lee.
+        const expanded = manualOpen[g.id] ?? (hasActive || !g.collapsed);
+        return (
+          <div key={g.id} className="sys-nav-group vt-nav-group">
+            <button
+              type="button"
+              className={"vt-group-toggle" + (expanded ? " open" : "")}
+              aria-expanded={expanded}
+              onClick={() => setManualOpen((m) => ({ ...m, [g.id]: !expanded }))}
+            >
+              <CaretRightIcon size={12} weight="bold" />
+              <span className="sys-group-label">{tr(g.group.es, g.group.en, g.group.pt)}</span>
+            </button>
+            {expanded &&
+              g.items.map((it) => {
+                const Icon = it.icon;
+                /* Los ítems de la versión anterior son anclas de una misma
+                   página: `NavLink` no marca activo por hash. */
+                if (it.path.includes("#")) {
+                  const isActive = pathname + hash === it.path;
+                  return (
+                    <Link
+                      key={it.id}
+                      to={it.path}
+                      onClick={onNavigate}
+                      className={itemClass({ isActive })}
+                    >
+                      <Icon size={18} weight={isActive ? "fill" : "regular"} />
+                      <span>{tr(it.es, it.en, it.pt)}</span>
+                    </Link>
+                  );
+                }
+                return (
+                  <NavLink
+                    key={it.id}
+                    to={it.path}
+                    end={it.end}
+                    onClick={onNavigate}
+                    className={itemClass}
+                  >
+                    {({ isActive }) => (
+                      <>
+                        <Icon size={18} weight={isActive ? "fill" : "regular"} />
+                        <span>{tr(it.es, it.en, it.pt)}</span>
+                      </>
+                    )}
+                  </NavLink>
+                );
+              })}
+          </div>
+        );
+      })}
+    </>
+  );
+}
+
+export function VoiceToneSidebar({
   onNavigate,
   open,
 }: {
   onNavigate: () => void;
   open: boolean;
 }) {
+  const tr = useTr();
+  const { pathname } = useLocation();
   return (
     <SidebarShell open={open}>
-      <NavTree groups={EDITORIAL_NAV} onNavigate={onNavigate} />
+      <div className="sys-nav-group">
+        <NavLink
+          to="/voz-y-tono"
+          end
+          onClick={onNavigate}
+          className={itemClass({ isActive: pathname === "/voz-y-tono" })}
+        >
+          <SquaresFourIcon size={18} weight={pathname === "/voz-y-tono" ? "fill" : "regular"} />
+          <span>{tr("Visión general", "Overview", "Visão geral")}</span>
+        </NavLink>
+      </div>
+      <VoiceToneNavTree onNavigate={onNavigate} />
     </SidebarShell>
   );
 }

@@ -26,7 +26,7 @@ export function PlazaChrome({ children }: { children: ReactNode }) {
         >
           <Link to="/">{tr("Inicio", "Home", "Início")}</Link>
           <Link to="/sistema">Design System</Link>
-          <Link to="/editorial">
+          <Link to="/voz-y-tono">
             {tr("Voz y tono", "Voice and tone", "Voz e tom")}
           </Link>
           <Link to="/patrones">

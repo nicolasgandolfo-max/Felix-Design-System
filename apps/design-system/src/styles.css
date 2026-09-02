@@ -1019,6 +1019,7 @@ body {
   font-size: 13px;
   border-top: 1px solid var(--stone);
   margin-top: 60px;
+  min-height: 60px !important;
   width: 100%;
   text-align: center;
   position: fixed;
@@ -2283,5 +2284,291 @@ body {
     z-index: 100;
     max-height: calc(100vh - 80px);
     overflow-y: auto;
+  }
+}
+
+/* ── Voice & Tone ─────────────────────────────────────────────────────────
+   La guía es la transcripción de un Notion: prosa densa, tablas de reglas y
+   callouts. Reusa .tbl / .code-block del portal y sólo agrega lo que el
+   formato del Notion necesita. */
+.vt-sec {
+  padding-top: 44px;
+  scroll-margin-top: 88px;
+}
+.vt-h2 {
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  margin-bottom: 18px;
+}
+.vt-h3 {
+  margin: 32px 0 12px;
+  scroll-margin-top: 88px;
+}
+.vt-p {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--fg-muted, rgba(8, 36, 34, 0.72));
+  max-width: 78ch;
+  margin: 0 0 16px;
+}
+.vt-p b {
+  color: var(--fg, #082422);
+}
+.vt-list {
+  margin: 0 0 16px;
+  padding-left: 20px;
+  max-width: 78ch;
+}
+.vt-list li {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--fg-muted, rgba(8, 36, 34, 0.72));
+  margin-bottom: 6px;
+}
+.vt-code {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  background: var(--stone);
+  border-radius: 5px;
+  padding: 1px 5px;
+}
+
+/* Tablas: el Notion usa dos formas — con fila de encabezado, o con la primera
+   columna como etiqueta de la fila. */
+.vt-tbl {
+  margin: 0 0 20px;
+}
+.vt-tbl .tbl td {
+  vertical-align: top;
+  line-height: 1.55;
+}
+.vt-tbl .tbl td:first-child {
+  font-weight: 600;
+  color: var(--fg, #082422);
+}
+.vt-tbl.head-col .tbl td:first-child {
+  width: 190px;
+  background: var(--linen);
+}
+
+/* Callouts del Notion. El color codifica el estado, no la decoración:
+   info = contexto, warn = pendiente de definir, ok = ratificado, alert = ojo. */
+.vt-callout {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 16px 18px;
+  border-radius: 14px;
+  border: 1px solid var(--concrete);
+  background: var(--neutral-50);
+  margin: 0 0 20px;
+}
+.vt-callout p {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--fg-muted, rgba(8, 36, 34, 0.72));
+}
+.vt-callout p b {
+  color: var(--fg, #082422);
+}
+.vt-callout-icon {
+  font-size: 18px;
+  line-height: 1.4;
+  flex: none;
+}
+.vt-callout.info {
+  background: var(--light-sky);
+  border-color: var(--turquoise-300, var(--concrete));
+}
+.vt-callout.warn {
+  background: var(--status-warning-bg);
+  border-color: transparent;
+}
+.vt-callout.ok {
+  background: var(--status-success-bg);
+  border-color: transparent;
+}
+.vt-callout.alert {
+  background: var(--status-error-bg);
+  border-color: transparent;
+}
+.vt-intro {
+  margin-top: 8px;
+}
+
+/* Bloques de ejemplo: el <pre> oscuro del portal, con su etiqueta arriba. */
+.vt-example {
+  margin: 0 0 20px;
+}
+.vt-example-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--fg-subtle, rgba(8, 36, 34, 0.55));
+  margin-bottom: 2px;
+}
+
+/* Índice de la visión general: una grilla por grupo, en el mismo orden que el
+   menú lateral. Reemplaza al índice corrido de cuando todo vivía en una página. */
+.vt-group-sec {
+  padding-top: 26px;
+}
+.vt-group-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+.vt-group-card {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 14px 16px;
+  border: 1px solid var(--concrete);
+  border-radius: 12px;
+  background: var(--neutral-50);
+  text-decoration: none;
+  color: var(--fg, #082422);
+  transition: border-color 0.12s ease, background 0.12s ease;
+}
+.vt-group-card:hover {
+  border-color: var(--slate);
+  background: var(--light-sky);
+}
+.vt-group-card-title {
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+/* Menú lateral: encabezado de grupo plegable. */
+.vt-nav-group {
+  margin-bottom: 2px;
+}
+.vt-group-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  color: inherit;
+}
+.vt-group-toggle svg {
+  color: var(--fg-subtle, rgba(8, 36, 34, 0.55));
+  transition: transform 0.15s ease;
+  flex: none;
+}
+.vt-group-toggle.open svg {
+  transform: rotate(90deg);
+}
+.vt-group-toggle .sys-group-label {
+  cursor: pointer;
+}
+
+/* Referencia a otra sección dentro del texto. En el Notion esto era "§7";
+   sin numeración a la vista, es un enlace con el nombre de la sección. */
+.vt-ref {
+  color: var(--turquoise-800);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(6, 89, 88, 0.3);
+}
+.vt-ref:hover {
+  border-bottom-color: var(--turquoise-800);
+}
+
+/* Pie de cada sección: anterior / siguiente en el orden del menú. */
+.vt-pager {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid var(--stone);
+}
+.vt-pager-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border: 1px solid var(--concrete);
+  border-radius: 12px;
+  background: var(--neutral-50);
+  text-decoration: none;
+  color: var(--fg, #082422);
+  font-size: 14.5px;
+  font-weight: 600;
+  max-width: 48%;
+}
+.vt-pager-link:hover {
+  border-color: var(--slate);
+}
+.vt-pager-link.next {
+  margin-left: auto;
+  text-align: right;
+}
+.vt-pager-link span {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.vt-pager-link small {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg-subtle, rgba(8, 36, 34, 0.55));
+}
+
+/* Encabezado de una sección: ya no es una sección dentro de un scroll largo,
+   es el título de su propia página. */
+.vt-sec-eyebrow {
+  margin-bottom: 12px;
+}
+.vt-page-title {
+  font-size: clamp(1.9rem, 3.6vw, 2.5rem);
+  margin-bottom: 20px;
+}
+
+/* Recursos (el pie del Notion) */
+.vt-resources {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+}
+.vt-resources li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--fg-muted, rgba(8, 36, 34, 0.72));
+  margin-bottom: 10px;
+}
+.vt-res-icon {
+  flex: none;
+}
+.vt-resources a {
+  color: var(--turquoise-800);
+  font-weight: 600;
+}
+
+@media (max-width: 720px) {
+  .vt-tbl.head-col .tbl td:first-child {
+    width: auto;
+  }
+  /* Apiladas: dos botones de 48% no entran con el texto del título. */
+  .vt-pager {
+    flex-direction: column;
+  }
+  .vt-pager-link {
+    max-width: none;
+  }
+  .vt-pager-link.next {
+    margin-left: 0;
   }
 }

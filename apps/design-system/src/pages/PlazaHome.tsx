@@ -53,7 +53,7 @@ export function PlazaHome() {
         >
           <Link to="/">{tr("Inicio", "Home", "Início")}</Link>
           <Link to="/sistema">Design System</Link>
-          <Link to="/editorial">
+          <Link to="/voz-y-tono">
             {tr("Voz y tono", "Voice and tone", "Voz e tom")}
           </Link>
           <Link to="/patrones">
@@ -150,7 +150,7 @@ export function PlazaHome() {
                 "Como o Félix soa em toda a experiência: a personalidade por trás do bot, os princípios que o mantêm claro e caloroso, e exemplos de antes e depois para escrever."
               )}
             </p>
-            <Link className="plaza-btn" to="/editorial">
+            <Link className="plaza-btn" to="/voz-y-tono">
               {tr("Leer la guía", "Read the guide", "Ler o guia")}
             </Link>
           </article>

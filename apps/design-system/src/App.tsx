@@ -1,5 +1,5 @@
 import { Routes, Route, Link, Navigate } from "react-router-dom";
-import { Layout, EditorialLayout } from "./Layout";
+import { Layout, VoiceToneLayout } from "./Layout";
 import {
   Principles,
   Colors,
@@ -13,6 +13,7 @@ import { ComponentGroupPage } from "./pages/ComponentGroupPage";
 import { PlazaHome } from "./pages/PlazaHome";
 import { PlazaSistema } from "./pages/PlazaSistema";
 import { PlazaEditorial } from "./pages/PlazaEditorial";
+import { VoiceToneOverview, VoiceToneSection } from "./pages/VoiceTone";
 import { PatternsLanding } from "./pages/PatternsLanding";
 import { PatternPage } from "./pages/PatternPage";
 import { useTr } from "./i18n";
@@ -41,11 +42,20 @@ export function App() {
       <Route path="patrones" element={<PatternsLanding />} />
       <Route path="patrones/:slug" element={<PatternPage />} />
 
-      {/* Guía editorial — sección propia, hermana del sistema de diseño:
-          misma estructura (header + barra al costado) pero su propio nav. */}
-      <Route element={<EditorialLayout />}>
-        <Route path="editorial" element={<PlazaEditorial />} />
+      {/* Voice & Tone — transcripción del Notion de Content Design. Sección
+          propia del portal, con su propio nav al costado. Cada sección de la
+          guía es su propia página: `:slug` se resuelve contra `VT_SECTIONS`,
+          así que una sección nueva del contenido no necesita ruta propia.
+          La guía editorial cuelga de acá como "Previous version". */}
+      <Route element={<VoiceToneLayout />}>
+        <Route path="voz-y-tono" element={<VoiceToneOverview />} />
+        <Route path="voz-y-tono/version-anterior" element={<PlazaEditorial />} />
+        <Route path="voz-y-tono/:slug" element={<VoiceToneSection />} />
       </Route>
+
+      {/* La guía editorial pasó a ser la versión anterior de Voice & Tone —
+          mantiene vivos los enlaces viejos. */}
+      <Route path="editorial" element={<Navigate to="/voz-y-tono/version-anterior" replace />} />
 
       <Route element={<Layout />}>
         <Route path="sistema" element={<PlazaSistema />} />
