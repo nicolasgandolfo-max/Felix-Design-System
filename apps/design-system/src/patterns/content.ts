@@ -1,4 +1,9 @@
-import type { Pattern, ResourceRow } from "./types";
+import type {
+  Pattern,
+  PatternTab,
+  ResourceRow,
+  StandardSections,
+} from "./types";
 import { standardTabs } from "./blocks";
 
 const ASSETS = "/assets/patterns";
@@ -668,6 +673,309 @@ const mixedInput: Pattern = {
   }),
 };
 
+// ─── Menu (list message) ─────────────────────────────────────────────────────
+
+/* El brazo de lista de Closed input: botones para 1 a 3, menú de 4 en adelante.
+   Misma forma estándar de tres pestañas, más una galería de casos de uso al
+   final de Specs (las tres pantallas de `user-cases-menu` en Figma).
+   Los ejemplos de copy del bot quedan en español tal cual (son de producto). */
+const menuSections: StandardSections = {
+  overview: {
+    usage: [
+      {
+        es: "Usa un menú cuando las opciones se conocen pero son más de 3, el punto donde los botones de respuesta se agotan (tienen un tope de 3). Es el brazo de lista de Closed input.",
+        en: "Use a menu when the options are known but there are more than 3, the point where reply buttons run out (buttons cap at 3). This is the list arm of Closed input.",
+      },
+      {
+        es: "Dale a cada fila un título corto que se sostenga solo. Agrega una línea de descripción solo cuando ayuda al usuario a distinguir filas o a decidir.",
+        en: "Give each row a short, self-standing title. Add a description line only when it helps the user tell rows apart or decide.",
+      },
+      {
+        es: "Las filas pueden mezclarse: algunas con descripción y otras sin ella en la misma lista. La descripción es secundaria, así que úsala donde se gana su lugar, no en todas las filas.",
+        en: "Rows can mix: some with a description, some without, in the same list. The description is secondary, so use it where it earns its place, not on every row.",
+      },
+      {
+        es: 'Cuando el conjunto real es más largo de lo que entra en una lista, pagina ("Mis envíos" 1/3, 2/3, 3/3) con "Volver" y "Ver más envíos", y mantén una fila de escape como "No encuentro mi envío".',
+        en: 'When the real set is longer than one list can hold, paginate ("Mis envíos" 1/3, 2/3, 3/3) with "Volver" and "Ver más envíos", and keep an escape row like "No encuentro mi envío".',
+      },
+      {
+        es: "Si el conjunto es de 1 a 3, usa botones de respuesta. Si no tiene límite, usa Open input.",
+        en: "If the set is 1 to 3, use reply buttons instead. If it is unbounded, use Open input.",
+      },
+    ],
+    metric: {
+      title: {
+        es: "Por qué funciona · métricas por confirmar",
+        en: "Why this works · metrics TBD",
+      },
+      body: [
+        {
+          es: "Un menú mantiene analizable un conjunto conocido más largo: cada elección devuelve un payload estructurado, así que se mantiene fuera de las fallas de texto libre donde `NOT_ASSIGNED_YET` es el 64% de todas las fallas del bot. También sostiene los flujos donde el espacio de elección es real pero finito (modificar, beneficiario, método de entrega), los mismos flujos donde el texto abierto se traba.",
+          en: "A menu keeps a longer known set parseable: every pick returns a structured payload, so it stays out of the free-text failures where `NOT_ASSIGNED_YET` is 64% of all bot failures. It also carries flows where the choice space is real but finite (modify, beneficiary, delivery method), the same flows where open text stalls.",
+        },
+      ],
+      note: {
+        es: 'Por medir: tasa de selección por fila y por posición (¿hay sesgo hacia la primera fila?), qué tan profundo paginan (proporción que llega a 2/3 y 3/3), con qué frecuencia tocan la fila de escape ("No encuentro mi envío") y el abandono dentro del menú.',
+        en: 'To pull: selection rate per row and per position (is there a top-row bias), how deep people page (share reaching 2/3 and 3/3), how often they tap the escape row ("No encuentro mi envío"), and abandonment inside the menu.',
+      },
+    },
+    resources: SHARED_RESOURCES,
+  },
+
+  specs: {
+    intro: {
+      es: "Los límites de WhatsApp que definen este patrón.",
+      en: "The WhatsApp limits that define this pattern.",
+    },
+    tables: [
+      {
+        heading: { es: "Mensaje de lista", en: "List message" },
+        columns: [
+          { es: "Componente", en: "Component" },
+          { es: "Límite", en: "Spec" },
+        ],
+        rows: [
+          [
+            {
+              es: "Filas, en total entre todas las secciones",
+              en: "Rows, total across all sections",
+            },
+            { es: "Hasta 10", en: "Up to 10" },
+          ],
+          [
+            { es: "Secciones", en: "Sections" },
+            { es: "Hasta 10", en: "Up to 10" },
+          ],
+          [
+            { es: "Título de fila", en: "Row title" },
+            { es: "Máx. 24 caracteres", en: "Max 24 characters" },
+          ],
+          [
+            {
+              es: "Descripción de fila (el texto de apoyo)",
+              en: "Row description (the support text)",
+            },
+            {
+              es: "Opcional, máx. 72 caracteres",
+              en: "Optional, max 72 characters",
+            },
+          ],
+          [
+            { es: "Título de sección", en: "Section title" },
+            { es: "Máx. 24 caracteres", en: "Max 24 characters" },
+          ],
+          [
+            {
+              es: "Botón que abre la lista",
+              en: "Button that opens the list",
+            },
+            { es: "Máx. 20 caracteres", en: "Max 20 characters" },
+          ],
+          [
+            {
+              es: "Encabezado, opcional, solo texto",
+              en: "Header, optional, text only",
+            },
+            { es: "Máx. 60 caracteres", en: "Max 60 characters" },
+          ],
+          [
+            { es: "Cuerpo", en: "Body" },
+            { es: "Máx. 4.096 caracteres", en: "Max 4,096 characters" },
+          ],
+          [
+            { es: "Pie, opcional", en: "Footer, optional" },
+            { es: "Máx. 60 caracteres", en: "Max 60 characters" },
+          ],
+          [
+            { es: "Respuesta del usuario", en: "User reply" },
+            {
+              es: "Payload estructurado (el id de la fila), no texto libre",
+              en: "Structured payload (the row id), not free text",
+            },
+          ],
+        ],
+      },
+      {
+        heading: { es: "Casos de uso", en: "Use cases" },
+        columns: [
+          { es: "Opciones", en: "Options" },
+          { es: "Componente", en: "Variable" },
+        ],
+        rows: [
+          [
+            { es: "1 a 3 opciones", en: "1 to 3 options" },
+            { es: "Botones de respuesta", en: "Reply buttons" },
+          ],
+          [
+            { es: "4 a 10 opciones", en: "4 to 10 options" },
+            { es: "Menú (mensaje de lista)", en: "Menu (list message)" },
+          ],
+          [
+            { es: "Más de 10", en: "More than 10" },
+            {
+              es: "Paginar el menú, o repensar el paso",
+              en: "Paginate the menu, or rethink the step",
+            },
+          ],
+        ],
+      },
+    ],
+    notes: [
+      {
+        es: "Regla propia: usa el menú solo cuando hay más de 3 opciones. Por debajo de eso, botones de respuesta. WhatsApp permite una lista de una sola fila, pero ese es trabajo de un botón.",
+        en: "Our own rule: use the menu only when there are more than 3 options. Below that, reply buttons. WhatsApp allows a one-row list, but that is a button's job.",
+      },
+      {
+        es: 'Paginación: 10 filas es el tope de la plataforma para una sola lista. Para conjuntos más largos (envíos recientes), divide en páginas en el título (1/3, 2/3, 3/3) y ofrece "Volver", "Ver más envíos" y una fila de escape como "No encuentro mi envío" en la última página. Máximo 3 páginas.',
+        en: 'Pagination: 10 rows is the platform cap for a single list. For longer sets (recent sends), split into pages in the title (1/3, 2/3, 3/3) and offer "Volver", "Ver más envíos", and an escape row like "No encuentro mi envío" in the last page. Max 3 pages.',
+      },
+      {
+        es: "El total es de 10 filas entre todas las secciones por página.",
+        en: "Total is 10 rows across all sections per page.",
+      },
+    ],
+    source: {
+      es: "Fuente: WhatsApp Cloud API, mensajes de lista interactivos (actualizado jul. 2026). ",
+      en: "Source: WhatsApp Cloud API, interactive list messages (updated Jul 2026). ",
+    },
+    sourceHref: WA_LIST_DOCS_URL,
+    sourceLinkText: "developers.facebook.com",
+  },
+
+  guidelines: {
+    usage: {
+      es: "Recurre a un menú cuando tienes un conjunto conocido demasiado largo para botones. El título de la fila lleva la elección; la descripción, cuando está, existe para ayudar al usuario a elegir, nada más.",
+      en: "Reach for a menu when you have a known set that is too long for buttons. The row title carries the choice; the description, when present, is there to help the user pick, nothing more.",
+    },
+    tips: {
+      es: 'Mantén los títulos de fila cortos y capaces de sostenerse solos (24 caracteres es el tope duro; apunta bien por debajo). Agrega una descripción solo cuando desambigua o lleva un estado que el usuario necesita (un número de referencia, "Listo para recoger", "No disponible por ahora"). Haz que la descripción apoye lo que dice el título. Si repite el título o se lee como decoración, quítala. Es normal tener algunas filas con descripción y otras sin ella en la misma lista. Ordena las filas como piensa el usuario (más reciente, más probable, de menor a mayor monto), y cuando una fila está presente pero no se puede usar, muéstrala deshabilitada con el motivo como descripción en lugar de ocultarla. Si una fila lleva un mensaje de alerta, puede ir en rojo para señalarlo.',
+      en: 'Keep row titles short and able to stand on their own (24 characters is the hard cap, aim well under). Add a description only when it disambiguates or carries a status the user needs (a reference number, "Listo para recoger", "No disponible por ahora"). Make the description support what the title says. If it repeats the title or reads as decoration, drop it. It is normal to have some rows with a description and some without in the same list. Order rows the way the user thinks (most recent, most likely, lowest to highest amount), and when a row is present but not usable, show it disabled with the reason as its description rather than hiding it. If a row carries an alert message, it can be shown in red to flag it.',
+    },
+    examples: [
+      {
+        tone: "do",
+        img: `${ASSETS}/menu-do-1.png`,
+        alt: {
+          es: 'Fila de menú "10 USD a Eva Mariana Ugarte" con la descripción "Listo para recoger | A234567893"',
+          en: 'Menu row "10 USD a Eva Mariana Ugarte" with the description "Listo para recoger | A234567893"',
+        },
+        caption: {
+          es: "El título es la elección; la descripción agrega el estado y la referencia que la distinguen.",
+          en: "The title is the choice, the description adds the status and reference that tell it apart.",
+        },
+      },
+      {
+        tone: "dont",
+        img: `${ASSETS}/menu-dont-1.png`,
+        alt: {
+          es: "Menú cuyas descripciones repiten el título o agregan texto sin relación",
+          en: "Menu whose descriptions repeat the title or add unrelated text",
+        },
+        caption: {
+          es: "No rellenes las filas con texto de apoyo que no ayuda al usuario a elegir.",
+          en: "Don't pad rows with support text that doesn't help the user choose.",
+        },
+      },
+      {
+        tone: "do",
+        img: `${ASSETS}/menu-do-2.png`,
+        alt: {
+          es: 'Menú que mezcla "Jose Del Mar" sin descripción con "Nuevo beneficiario" y la descripción "Alguien que no está en tu lista"',
+          en: 'Menu mixing "Jose Del Mar" with no description next to "Nuevo beneficiario" with "Alguien que no está en tu lista"',
+        },
+        caption: {
+          es: "Agrega la descripción solo donde se gana su lugar.",
+          en: "Add the description only where it earns its place.",
+        },
+      },
+      {
+        tone: "dont",
+        img: `${ASSETS}/menu-dont-2.png`,
+        alt: {
+          es: "Doce envíos amontonados en una sola lista sin paginación",
+          en: "Twelve sends crammed into one list with no pagination",
+        },
+        caption: {
+          es: 'Pasado el tope de 10 filas, pagina con "Volver" y "Ver más envíos" en lugar de desbordar.',
+          en: 'Past the 10-row cap, paginate with "Volver" and "Ver más envíos" instead of overflowing.',
+        },
+      },
+    ],
+  },
+};
+
+const menu: Pattern = {
+  slug: "menu",
+  family: "interaction",
+  name: { es: "Menu", en: "Menu" },
+  subtitle: { es: "List message", en: "List message" },
+  lede: {
+    es: "Una lista para tocar, para cuando la respuesta es una de un conjunto conocido pero más largo (envíos recientes, un método de entrega, un beneficiario). El usuario abre el menú y elige una fila, y cada elección vuelve como una respuesta limpia y estructurada.",
+    en: "A tappable list for when the answer is one of a known but longer set (recent sends, a delivery method, a beneficiary). The user opens the menu and picks a row, and every choice comes back as a clean, structured reply.",
+  },
+  cardBody: {
+    es: "Una lista para tocar, para cuando la respuesta es una de un conjunto conocido pero más largo. El usuario elige una fila y cada elección vuelve estructurada.",
+    en: "A tappable list for when the answer is one of a known but longer set. The user picks a row and every choice comes back structured.",
+  },
+  hero: `${ASSETS}/menu-hero.png`,
+  heroDetail: [`${ASSETS}/menu-hero.png`],
+  heroAlt: {
+    es: 'Menú de WhatsApp "Mis envíos" con filas que muestran estado y referencia',
+    en: 'WhatsApp "Mis envíos" menu with rows showing status and reference',
+  },
+  // Las tres pestañas estándar, con la galería de casos de uso al final de Specs.
+  tabs: standardTabs(menuSections).map(
+    (tab): PatternTab =>
+      tab.id !== "specs"
+        ? tab
+        : {
+            ...tab,
+            blocks: [
+              ...tab.blocks,
+              {
+                type: "heading",
+                text: { es: "Pantallas de ejemplo", en: "Example screens" },
+              },
+              {
+                type: "gallery",
+                items: [
+                  {
+                    img: `${ASSETS}/menu-mixed.png`,
+                    label: { es: "Menú mixto", en: "Mixed menu" },
+                    alt: {
+                      es: 'Lista "¿A quién quieres enviarle tu dinero?" que mezcla filas con y sin descripción',
+                      en: 'List "¿A quién quieres enviarle tu dinero?" mixing rows with and without descriptions',
+                    },
+                  },
+                  {
+                    img: `${ASSETS}/menu-descriptions.png`,
+                    label: {
+                      es: "Menú con descripciones",
+                      en: "Menu with descriptions",
+                    },
+                    alt: {
+                      es: 'Lista "Mis envíos", cada fila con estado y referencia',
+                      en: 'List "Mis envíos", each row with status and reference',
+                    },
+                  },
+                  {
+                    img: `${ASSETS}/menu-alerts.png`,
+                    label: {
+                      es: "Menú con mensajes de alerta",
+                      en: "Menu with alert messages",
+                    },
+                    alt: {
+                      es: 'Lista "Elige otro método de entrega" con una fila deshabilitada y "No disponible por ahora" como descripción',
+                      en: 'List "Elige otro método de entrega" with a disabled row and "No disponible por ahora" as the description',
+                    },
+                  },
+                ],
+              },
+            ],
+          }
+  ),
+};
+
 // ─── Use of emojis ───────────────────────────────────────────────────────────
 
 /* Estructura propia: solo Overview y Guidelines, sin specs ni do/don't. Los
@@ -1269,6 +1577,7 @@ export const PATTERNS: Pattern[] = [
   closedInput,
   openInput,
   mixedInput,
+  menu,
   useOfEmojis,
   useOfImages,
   textFormatting,

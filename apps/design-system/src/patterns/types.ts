@@ -31,6 +31,9 @@ export type ResourceRow = {
   status: ResourceStatus;
 };
 
+/** Pantalla de una galería de casos de uso: imagen más etiqueta debajo. */
+export type GalleryItem = { img: string; label: Localized; alt: Localized };
+
 /** Ejemplo de "sí" / "no". La imagen es la pantalla de WhatsApp sola: la barra
  *  de color la pone el template con tokens, no viene quemada en el PNG. */
 export type Example = {
@@ -49,6 +52,8 @@ export type Pattern = {
   name: Localized;
   /** Título del hero cuando es más largo que `name`. Si falta, usa `name`. */
   title?: Localized;
+  /** Línea bajo el título (p. ej. "List message" bajo "Menu"). */
+  subtitle?: Localized;
   /** Bajada del hero. */
   lede: Localized;
   /** Descripción en la tarjeta de la landing. */
@@ -90,6 +95,8 @@ export type Block =
   | { type: "metric"; title: Localized; body: Localized[]; note?: Localized }
   | { type: "resources"; rows: ResourceRow[] }
   | { type: "examples"; items: Example[] }
+  /** Fila de pantallas etiquetadas (casos de uso), sin veredicto. */
+  | { type: "gallery"; items: GalleryItem[] }
   /** Nota con borde izquierdo (aclaraciones de specs). */
   | { type: "note"; text: Localized }
   | { type: "source"; text: Localized; href?: string; linkText?: string }

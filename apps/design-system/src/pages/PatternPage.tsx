@@ -240,6 +240,28 @@ function BlockView({ block, tr }: { block: Block; tr: Tr }) {
         </ol>
       );
 
+    case "gallery":
+      return (
+        <div className="mt-8 [display:grid] gap-6 first:mt-0 md:grid-cols-3">
+          {block.items.map((item, i) => (
+            <figure key={i} className="m-0">
+              <div
+                className={`flex min-h-72 items-center justify-center rounded-3xl border ${STROKE_SOFT} bg-card p-8`}
+              >
+                <img
+                  src={item.img}
+                  alt={L(tr, item.alt)}
+                  className="h-auto w-full max-w-[300px]"
+                />
+              </div>
+              <figcaption className="mt-4 font-sans text-base font-medium tracking-[-0.01em] text-foreground">
+                {L(tr, item.label)}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      );
+
     case "table":
       return (
         <div className="mt-6 first:mt-0">
@@ -420,6 +442,11 @@ export function PatternPage() {
             <h1 className="font-heading text-60 font-black leading-[54px] tracking-[-0.01em] text-foreground">
               {heroTitle}
             </h1>
+            {pattern.subtitle && (
+              <p className="mt-2 font-sans text-lg font-medium text-foreground/70">
+                {L(tr, pattern.subtitle)}
+              </p>
+            )}
 
             <p className="mt-4 max-w-[448px] font-sans text-base leading-6 text-foreground">
               {L(tr, pattern.lede)}
