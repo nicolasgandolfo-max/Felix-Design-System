@@ -220,7 +220,7 @@ export function PlazaHome() {
             "Feito com amor pela equipe de design do Félix"
           )}
         </p>
-        <img src="/assets/plaza/heart-felix.png" alt="" />
+        <img src="/assets/plaza/heartfelix.png" alt="" />
         <p>
           © 2026 Felix Technologies Inc.{" "}
           {tr(

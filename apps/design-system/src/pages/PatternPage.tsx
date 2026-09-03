@@ -226,6 +226,15 @@ function BlockView({ block, tr }: { block: Block; tr: Tr }) {
         </ul>
       );
 
+    case "ordered":
+      return (
+        <ol className="mt-5 list-decimal space-y-2 pl-6 font-sans text-lg leading-7 text-foreground first:mt-0">
+          {block.items.map((item, i) => (
+            <li key={i}>{L(tr, item)}</li>
+          ))}
+        </ol>
+      );
+
     case "table":
       return (
         <div className="mt-6 first:mt-0">

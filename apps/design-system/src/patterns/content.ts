@@ -1107,6 +1107,166 @@ const useOfImages: Pattern = {
   ],
 };
 
+// ─── Text formatting & message length ───────────────────────────────────────
+
+/* Misma forma que los otros conversacionales: una pestaña con la tabla de
+   reglas y los dos callouts de medición. La regla de longitud sale de la tabla
+   a su propia sección: su contenido son tres párrafos más una lista numerada,
+   que en una celda de 13px quedaría ilegible.
+   Los ejemplos de copy del bot quedan en español tal cual (son de producto). */
+const textFormatting: Pattern = {
+  slug: "text-formatting",
+  family: "conversational",
+  name: {
+    es: "Text formatting & message length",
+    en: "Text formatting & message length",
+  },
+  lede: {
+    es: "Formato de texto y longitud del mensaje.",
+    en: "Text formatting and message length.",
+  },
+  cardBody: {
+    es: "Formato de texto y longitud del mensaje.",
+    en: "Text formatting and message length.",
+  },
+  hero: `${ASSETS}/length-format-hero.png`,
+  heroDetail: [`${ASSETS}/length-format-hero.png`],
+  heroAlt: {
+    es: "Mensaje de WhatsApp mostrando el largo de una burbuja de texto",
+    en: "WhatsApp message showing the length of a text bubble",
+  },
+  tabs: [
+    {
+      id: "overview",
+      label: { es: "Resumen", en: "Overview", pt: "Resumo" },
+      blocks: [
+        { type: "heading", text: { es: "Reglas", en: "Rules" } },
+        {
+          type: "table",
+          columns: [
+            { es: "Regla", en: "Rule" },
+            { es: "Estándar", en: "Standard" },
+            { es: "Ejemplo", en: "Example" },
+          ],
+          rows: [
+            [
+              {
+                es: "La negrita marca lo que hay que verificar",
+                en: "Bold marks what must be verified",
+              },
+              {
+                es: "La negrita se reserva para la variable que el usuario tiene que revisar antes de continuar: monto, nombre del destinatario, fecha de entrega. Un solo elemento en negrita por mensaje; dos solo en un resumen de transacción. Si todo está en negrita, nada lo está.",
+                en: "Bold is reserved for the variable the user has to check before continuing: amount, recipient name, delivery date. One bold element per message; two only in a transaction summary. If everything is bold, nothing is.",
+              },
+              {
+                es: '"Envías *$200* a *Ana*"',
+                en: '"Envías *$200* a *Ana*"',
+              },
+            ],
+            [
+              { es: "Itálicas: evitarlas", en: "Italics: avoid" },
+              {
+                es: "La itálica pierde legibilidad en tamaños chicos y en modo oscuro, y no agrega jerarquía que la negrita no dé ya. No se usa en copy transaccional.",
+                en: "Italic loses legibility at small sizes and in dark mode, and adds no hierarchy that bold does not already provide. Not used in transactional copy.",
+              },
+              { es: "—", en: "—" },
+            ],
+            [
+              {
+                es: "Solo sintaxis de WhatsApp",
+                en: "WhatsApp syntax only",
+              },
+              {
+                es: "WhatsApp usa *negrita* y _itálica_. El Markdown escrito en documentos (**, ##) se renderiza literalmente como caracteres y hay que convertirlo antes de publicar.",
+                en: "WhatsApp uses *bold* and _italic_. Markdown authored in docs (**, ##) renders literally as characters and must be converted before it ships.",
+              },
+              {
+                es: '"**Total**" se envía como "**Total**" ✗',
+                en: '"**Total**" ships as "**Total**" ✗',
+              },
+            ],
+            [
+              {
+                es: "No repitas la lógica de los botones",
+                en: "Do not restate button logic",
+              },
+              {
+                es: "El cuerpo enuncia el hecho; los botones llevan la acción. La lógica condicional que ya resuelven dos botones no va en el cuerpo (ver Voz y Tono §7).",
+                en: "The body states the fact; the buttons carry the action. Conditional logic already resolved by two buttons does not belong in the body (see Voice & Tone §7).",
+              },
+              {
+                es: '"si el problema continúa…" ✗',
+                en: '"si el problema continúa…" ✗',
+              },
+            ],
+          ],
+        },
+        {
+          type: "heading",
+          text: {
+            es: "La longitud es un objetivo, no el techo",
+            en: "Length is a target, not the ceiling",
+          },
+        },
+        {
+          type: "prose",
+          text: {
+            es: "1.024 caracteres es el límite de la plataforma, no una meta. Un mensaje, una idea, una pregunta.",
+            en: "1,024 characters is the platform limit, not a goal. One message, one idea, one question.",
+          },
+        },
+        {
+          type: "prose",
+          text: {
+            es: "Apuntá a menos de ~300 caracteres por burbuja, unas 4 o 5 líneas en un Android de gama media. Un mensaje de más de ~500 caracteres es una señal, no una violación: tiene que justificar por qué no puede ser una de estas opciones, en este orden:",
+            en: "Target under ~300 characters per bubble — about 4–5 lines on a mid-range Android. A message over ~500 characters is a signal, not a violation: it must justify why it can't be one of the following, in this order:",
+          },
+        },
+        {
+          type: "ordered",
+          items: [
+            {
+              es: "Dos mensajes. Cortá en el límite de la idea, no a mitad de un pensamiento.",
+              en: "Two messages. Split at the idea boundary, not mid-thought.",
+            },
+            {
+              es: "Un componente nativo. Los mensajes de lista o los botones de respuesta llevan las opciones sin agregar prosa.",
+              en: "A native component. List messages or reply buttons carry options without adding prose.",
+            },
+            {
+              es: "Un Flow (todavía no disponible en nuestra conversación). Cuando esté activo, usalo solo si el contenido es una tarea (corregir datos, elegir una cuenta), nunca una lectura. Un Flow agrega un tap y tiempo de carga, y saca al usuario del hilo de la conversación. Hasta entonces, por defecto van las opciones 1 y 2.",
+              en: "A Flow (not yet available in our conversation). Once live, use it only when the content is a task (correcting data, choosing an account), never a reading. A Flow adds a tap, load time, and pulls the user out of the conversation thread. Until then, default to options 1 and 2.",
+            },
+          ],
+        },
+        {
+          type: "prose",
+          text: {
+            es: "Nunca escribas hacia el objetivo. Escribí lo que el mensaje necesita y después contrastalo contra el objetivo.",
+            en: "Never write toward the target. Write what the message needs, then check it against the target.",
+          },
+        },
+        {
+          type: "callout",
+          title: { es: "Señal de validación:", en: "Validation signal —" },
+          body: {
+            es: "Mayormente cualitativa. El proxy débil disponible son los loops y las repreguntas en pasos verbosos: si los usuarios vuelven a preguntar algo que el mensaje ya respondía, el mensaje es demasiado largo para leerse.",
+            en: "Mostly qualitative. The weak proxy available is loops and re-asks on verbose steps: if users re-ask a question the message already answered, the message is too long to be read.",
+          },
+        },
+        {
+          type: "callout",
+          title: { es: "Pendiente:", en: "Open item —" },
+          body: {
+            es: "Objetivos de caracteres por tipo de mensaje: pregunta, confirmación, error. No se pueden fijar sin una línea base del inventario de cadenas actual. Es un entregable de contenido, no una decisión de ruteo.",
+            en: "Character targets per message type — question, confirmation, error. These cannot be set without a baseline from the current string inventory. Content deliverable, not a decision to route.",
+          },
+        },
+      ],
+    },
+  ],
+};
+
 // ─── Patrones del mapa que todavía no tienen contenido ───────────────────────
 
 /* Están en el directorio de Figma con nombre propio pero sin copy escrita, así
@@ -1159,6 +1319,7 @@ export const PATTERNS: Pattern[] = [
   mixedInput,
   useOfEmojis,
   useOfImages,
+  textFormatting,
 ];
 
 export const getPattern = (slug: string): Pattern | undefined =>

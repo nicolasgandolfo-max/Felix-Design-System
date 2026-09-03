@@ -95,6 +95,8 @@ export type Block =
   /** Párrafo 20/28. */
   | { type: "prose"; text: Localized }
   | { type: "bullets"; items: Localized[] }
+  /** Lista numerada, para pasos con orden de preferencia. */
+  | { type: "ordered"; items: Localized[] }
   | {
       type: "table";
       heading?: Localized;

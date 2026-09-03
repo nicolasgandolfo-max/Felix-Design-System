@@ -1747,34 +1747,17 @@ body {
   align-items: center;
   justify-content: center;
   gap: 24px;
-  padding: 12px 124px;
+  flex-wrap: wrap;
+  padding: 12px 45px;
 }
-/* Las dos leyendas se reparten el ancho por igual, así el corazón queda en el
-   centro exacto del footer y no desplazado por el largo del texto. */
 .plaza-footer p {
   margin: 0;
-  flex: 1 0 0;
-  min-width: 0;
-  font-size: var(--text-xxs);
+  font-size: 12px;
   letter-spacing: -0.01em;
-}
-.plaza-footer p:first-of-type {
-  text-align: right;
-}
-.plaza-footer p:last-of-type {
-  text-align: left;
-}
-.plaza-footer img {
-  flex-shrink: 0;
-  width: 45px;
-  height: 40px;
 }
 
 /* Responsive */
 @media (max-width: 1180px) {
-  .plaza-footer {
-    padding: 12px 24px;
-  }
   .plaza-hero {
     padding-right: 48%;
   }
