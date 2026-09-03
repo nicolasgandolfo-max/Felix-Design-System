@@ -695,6 +695,10 @@ const menuSections: StandardSections = {
         en: "Rows can mix: some with a description, some without, in the same list. The description is secondary, so use it where it earns its place, not on every row.",
       },
       {
+        es: "Cuando el conjunto tiene grupos naturales (por estado, por tipo), divídelo en secciones con título para que el usuario recorra por grupo en lugar de leer cada fila. Los títulos de sección son encabezados, no filas: mantenlos tan cortos como los títulos de fila.",
+        en: "When the set has natural groups (by status, by type), split it into titled sections so the user scans by group instead of reading every row. Section titles are headers, not rows: keep them as short as row titles.",
+      },
+      {
         es: 'Cuando el conjunto real es más largo de lo que entra en una lista, pagina ("Mis envíos" 1/3, 2/3, 3/3) con "Volver" y "Ver más envíos", y mantén una fila de escape como "No encuentro mi envío".',
         en: 'When the real set is longer than one list can hold, paginate ("Mis envíos" 1/3, 2/3, 3/3) with "Volver" and "Ver más envíos", and keep an escape row like "No encuentro mi envío".',
       },
@@ -833,6 +837,10 @@ const menuSections: StandardSections = {
         es: "El total es de 10 filas entre todas las secciones por página.",
         en: "Total is 10 rows across all sections per page.",
       },
+      {
+        es: "Secciones: el título de sección es un encabezado, no una fila tocable, así que no cuenta para el total de 10 filas. Hasta 10 secciones por lista, con títulos de máx. 24 caracteres.",
+        en: "Sections: a section title is a header, not a tappable row, so it does not count toward the 10-row total. Up to 10 sections per list, titles max 24 characters.",
+      },
     ],
     source: {
       es: "Fuente: WhatsApp Cloud API, mensajes de lista interactivos (actualizado jul. 2026). ",
@@ -848,8 +856,8 @@ const menuSections: StandardSections = {
       en: "Reach for a menu when you have a known set that is too long for buttons. The row title carries the choice; the description, when present, is there to help the user pick, nothing more.",
     },
     tips: {
-      es: 'Mantén los títulos de fila cortos y capaces de sostenerse solos (24 caracteres es el tope duro; apunta bien por debajo). Agrega una descripción solo cuando desambigua o lleva un estado que el usuario necesita (un número de referencia, "Listo para recoger", "No disponible por ahora"). Haz que la descripción apoye lo que dice el título. Si repite el título o se lee como decoración, quítala. Es normal tener algunas filas con descripción y otras sin ella en la misma lista. Ordena las filas como piensa el usuario (más reciente, más probable, de menor a mayor monto), y cuando una fila está presente pero no se puede usar, muéstrala deshabilitada con el motivo como descripción en lugar de ocultarla. Si una fila lleva un mensaje de alerta, puede ir en rojo para señalarlo.',
-      en: 'Keep row titles short and able to stand on their own (24 characters is the hard cap, aim well under). Add a description only when it disambiguates or carries a status the user needs (a reference number, "Listo para recoger", "No disponible por ahora"). Make the description support what the title says. If it repeats the title or reads as decoration, drop it. It is normal to have some rows with a description and some without in the same list. Order rows the way the user thinks (most recent, most likely, lowest to highest amount), and when a row is present but not usable, show it disabled with the reason as its description rather than hiding it. If a row carries an alert message, it can be shown in red to flag it.',
+      es: 'Mantén los títulos de fila cortos y capaces de sostenerse solos (24 caracteres es el tope duro; apunta bien por debajo). Agrega una descripción solo cuando desambigua o lleva un estado que el usuario necesita (un número de referencia, "Listo para recoger", "No disponible por ahora"). Haz que la descripción apoye lo que dice el título. Si repite el título o se lee como decoración, quítala. Es normal tener algunas filas con descripción y otras sin ella en la misma lista. Ordena las filas como piensa el usuario (más reciente, más probable, de menor a mayor monto), y cuando una fila está presente pero no se puede usar, muéstrala deshabilitada con el motivo como descripción en lugar de ocultarla. Si una fila lleva un mensaje de alerta, puede ir en rojo para señalarlo. Las secciones con título funcionan igual: úsalas cuando las filas caen en grupos que el usuario ya reconoce, nunca como decoración.',
+      en: 'Keep row titles short and able to stand on their own (24 characters is the hard cap, aim well under). Add a description only when it disambiguates or carries a status the user needs (a reference number, "Listo para recoger", "No disponible por ahora"). Make the description support what the title says. If it repeats the title or reads as decoration, drop it. It is normal to have some rows with a description and some without in the same list. Order rows the way the user thinks (most recent, most likely, lowest to highest amount), and when a row is present but not usable, show it disabled with the reason as its description rather than hiding it. If a row carries an alert message, it can be shown in red to flag it. Titled sections work the same way: use them when the rows fall into groups the user already recognizes, never as decoration.',
     },
     examples: [
       {
@@ -967,6 +975,39 @@ const menu: Pattern = {
                     alt: {
                       es: 'Lista "Elige otro método de entrega" con una fila deshabilitada y "No disponible por ahora" como descripción',
                       en: 'List "Elige otro método de entrega" with a disabled row and "No disponible por ahora" as the description',
+                    },
+                  },
+                  {
+                    img: `${ASSETS}/menu-sections.png`,
+                    label: {
+                      es: "Menú con títulos de sección",
+                      en: "Menu with section titles",
+                    },
+                    alt: {
+                      es: "Lista dividida en secciones con título, cada grupo con sus filas",
+                      en: "List split into titled sections, each group with its rows",
+                    },
+                  },
+                  {
+                    img: `${ASSETS}/menu-pagination.png`,
+                    label: {
+                      es: "Menú con paginación",
+                      en: "Menu with pagination",
+                    },
+                    alt: {
+                      es: 'Lista "Mis envíos" paginada, con el número de página en el título y filas para volver y ver más',
+                      en: 'Paginated "Mis envíos" list, with the page number in the title and rows to go back and see more',
+                    },
+                  },
+                  {
+                    img: `${ASSETS}/menu-button.png`,
+                    label: {
+                      es: "Menú con botón activo",
+                      en: "Menu with button active",
+                    },
+                    alt: {
+                      es: "Lista con un botón de acción activo en el pie",
+                      en: "List with an active call-to-action button in the footer",
                     },
                   },
                 ],
