@@ -1,11 +1,95 @@
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import { ArrowRightIcon } from "@phosphor-icons/react";
 import { PlazaChrome } from "../components/PlazaChrome";
-import { PATTERNS } from "../patterns/content";
+import { DIRECTORY } from "../patterns/content";
+import {
+  isPublished,
+  type DirectoryEntry,
+  type PatternFamily,
+} from "../patterns/types";
 import { useTr } from "../i18n";
+
+/* Trazo `stroke/soft` de Figma, igual que en .plaza-hero y las páginas de
+   patrón. El token --border del DS es #cfcabf y no corresponde aquí. */
+const STROKE_SOFT = "border-[rgba(8,36,34,0.12)]";
+
+type Filter = "all" | PatternFamily;
+
+const FAMILY_LABELS: Record<PatternFamily, { es: string; en: string }> = {
+  conversational: { es: "Conversational", en: "Conversational" },
+  interaction: { es: "Interaction", en: "Interaction" },
+};
+
+/** Tarjeta del directorio. Sin contenido escrito todavía, va sin enlace. */
+function DirectoryCard({ entry }: { entry: DirectoryEntry }) {
+  const tr = useTr();
+  const published = isPublished(entry);
+
+  const card = (
+    <article
+      className={`flex h-full flex-col gap-4 rounded-2xl border ${STROKE_SOFT} bg-card p-5 transition-shadow ${
+        published ? "group-hover:shadow-md" : ""
+      }`}
+    >
+      <div className="flex w-full items-center gap-4">
+        <div className="flex size-20 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-muted">
+          {published && (
+            <img
+              src={entry.hero}
+              alt=""
+              className="size-[54px] object-contain"
+            />
+          )}
+        </div>
+        <div className="flex min-w-0 flex-1 flex-col gap-1">
+          <p className="font-sans text-[10px] font-bold uppercase text-foreground/60">
+            FÉLIX · PATTERNS
+          </p>
+          <h3 className="font-heading text-[20px] font-black leading-tight text-foreground">
+            {tr(entry.name.es, entry.name.en)}
+          </h3>
+        </div>
+      </div>
+
+      <p className="flex-1 font-sans text-[13px] leading-5 text-foreground">
+        {published
+          ? tr(entry.cardBody.es, entry.cardBody.en)
+          : tr(
+              "Este patrón todavía no tiene contenido escrito.",
+              "This pattern doesn't have its content written yet."
+            )}
+      </p>
+
+      {published ? (
+        <span className="flex items-center gap-1 font-sans text-xs font-bold text-foreground">
+          {tr(
+            "Ver las guías del patrón",
+            "Go to pattern guidelines",
+            "Ver as diretrizes do padrão"
+          )}
+          <ArrowRightIcon size={14} aria-hidden="true" />
+        </span>
+      ) : (
+        <span className="font-sans text-xs font-bold text-foreground/40">
+          {tr("Próximamente", "Coming soon", "Em breve")}
+        </span>
+      )}
+    </article>
+  );
+
+  return published ? (
+    <Link to={`/patrones/${entry.slug}`} className="group block">
+      {card}
+    </Link>
+  ) : (
+    card
+  );
+}
 
 export function PatternsLanding() {
   const tr = useTr();
+  const [filter, setFilter] = useState<Filter>("all");
 
   useEffect(() => {
     const prev = document.title;
@@ -15,13 +99,46 @@ export function PatternsLanding() {
     };
   }, [tr]);
 
+  const counts = useMemo(
+    () => ({
+      all: DIRECTORY.length,
+      interaction: DIRECTORY.filter((e) => e.family === "interaction").length,
+      conversational: DIRECTORY.filter((e) => e.family === "conversational")
+        .length,
+    }),
+    []
+  );
+
+  const visible = useMemo(
+    () =>
+      filter === "all"
+        ? DIRECTORY
+        : DIRECTORY.filter((e) => e.family === filter),
+    [filter]
+  );
+
+  const filters: Array<{ key: Filter; label: string }> = [
+    {
+      key: "all",
+      label: `${tr("Todos los patrones", "All Patterns", "Todos os padrões")} (${counts.all})`,
+    },
+    {
+      key: "conversational",
+      label: `${tr(FAMILY_LABELS.conversational.es, FAMILY_LABELS.conversational.en)} (${counts.conversational})`,
+    },
+    {
+      key: "interaction",
+      label: `${tr(FAMILY_LABELS.interaction.es, FAMILY_LABELS.interaction.en)} (${counts.interaction})`,
+    },
+  ];
+
   return (
     <PlazaChrome>
       <main className="plaza-main">
         {/* ── Hero ──────────────────────────────────────────────────────────
             El mismo hero del home, clases incluidas — el diseño reusa el
-            frame tal cual. Aquí el botón baja a la grilla en lugar de navegar,
-            porque ya estamos en la página que ese botón abre desde el home. */}
+            frame tal cual. Aquí el botón baja al directorio en lugar de
+            navegar, porque ya estamos en la página que ese botón abre. */}
         <section className="plaza-hero">
           <div className="plaza-hero-copy">
             <p className="plaza-eyebrow">FÉLIX · PATTERNS</p>
@@ -48,47 +165,65 @@ export function PatternsLanding() {
           />
         </section>
 
-        {/* ── Grilla de patrones ────────────────────────────────────────────
-            Se deriva del registro en `patterns/content.ts`: agregar un patrón
-            ahí lo suma aquí, en las rutas y en los links cruzados. Dentro de
-            `.plaza-main`, la grilla ocupa todo el ancho (80px de margen por
-            lado a 1440). */}
-        <h2 id="browse" className="plaza-links-title">
-          {tr("Explorar patrones", "Browse patterns", "Explorar padrões")}
+        {/* ── Directorio ────────────────────────────────────────────────────
+            Sidebar de familias + grilla de dos columnas. Todo se deriva del
+            registro en `patterns/content.ts`: sumar un patrón ahí lo agrega a
+            la grilla y actualiza los contadores del filtro. */}
+        <h2
+          id="browse"
+          className="mb-8 mt-20 scroll-mt-8 font-heading text-[32px] font-black tracking-[-0.01em] text-foreground"
+        >
+          {tr(
+            "Explorar el directorio de Félix",
+            "Explore Félix Directory",
+            "Explorar o diretório do Félix"
+          )}
         </h2>
 
-        <div className="mb-24 [display:grid] gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {PATTERNS.map((p) => (
-            <article key={p.slug} className="plaza-card">
-              <div className="plaza-card-media">
-                {/* La regla `.plaza-card-media img` fija width 79% (pensada
-                    para las artes anchas del home); estas son verticales, así
-                    que se dimensionan por altura para no desbordar la caja. */}
-                <img
-                  src={p.hero}
-                  alt=""
-                  style={{ width: "auto", height: "86%" }}
-                />
-              </div>
-              <p className="plaza-eyebrow">FÉLIX · PATTERNS</p>
-              {/* h3 con el tamaño de tarjeta del diseño (31px) — la regla
-                  `.plaza-card h2` (48px) está pensada para las cards de a dos
-                  del home y queda enorme de a tres. */}
-              <h3 className="-mt-2 font-heading text-[31px] font-black leading-[35px] tracking-[-0.01em]">
-                {tr(p.name.es, p.name.en)}
-              </h3>
-              <p className="plaza-body flex-1">
-                {tr(p.cardBody.es, p.cardBody.en)}
-              </p>
-              <Link className="plaza-btn self-start" to={`/patrones/${p.slug}`}>
-                {tr(
-                  "Ver las guías del patrón",
-                  "Go to pattern guidelines",
-                  "Ver as diretrizes do padrão"
-                )}
-              </Link>
-            </article>
-          ))}
+        <div className="mb-24 flex flex-col gap-8 lg:flex-row lg:items-start">
+          <nav
+            className={`shrink-0 rounded-3xl border ${STROKE_SOFT} bg-card p-6 lg:w-[280px]`}
+            aria-label={tr(
+              "Familias de patrones",
+              "Pattern families",
+              "Famílias de padrões"
+            )}
+          >
+            <p className="mb-3 font-sans text-sm font-extrabold uppercase text-foreground/50">
+              {tr(
+                "Familias de patrones",
+                "Pattern Families",
+                "Famílias de padrões"
+              )}
+            </p>
+            <ul className="flex flex-col">
+              {filters.map((f) => {
+                const active = filter === f.key;
+                return (
+                  <li key={f.key}>
+                    <button
+                      type="button"
+                      onClick={() => setFilter(f.key)}
+                      aria-current={active ? "true" : undefined}
+                      className={`w-full cursor-pointer py-1.5 text-left font-sans text-sm transition-colors ${
+                        active
+                          ? "font-extrabold text-foreground"
+                          : "font-medium text-foreground/70 hover:text-foreground"
+                      }`}
+                    >
+                      {f.label}
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
+
+          <div className="[display:grid] flex-1 gap-5 md:grid-cols-2">
+            {visible.map((entry) => (
+              <DirectoryCard key={entry.slug} entry={entry} />
+            ))}
+          </div>
         </div>
       </main>
     </PlazaChrome>

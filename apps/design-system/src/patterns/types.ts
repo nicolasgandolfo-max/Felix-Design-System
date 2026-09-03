@@ -10,6 +10,9 @@
 /** Texto localizado. El portugués cae a inglés vía `useTr`. */
 export type Localized = { es: string; en: string };
 
+/** Familia con la que filtra el sidebar del directorio. */
+export type PatternFamily = "interaction" | "conversational";
+
 /** Tabla de especificaciones: dos columnas, N filas. */
 export type SpecTable = {
   heading?: Localized;
@@ -40,6 +43,8 @@ export type Example = {
 export type Pattern = {
   /** Segmento de URL: /patrones/<slug>. */
   slug: string;
+  /** Familia con la que agrupa el directorio. */
+  family: PatternFamily;
   /** Nombre corto — tarjetas, breadcrumb, links cruzados. */
   name: Localized;
   /** Título del hero cuando es más largo que `name`. Si falta, usa `name`. */
@@ -77,3 +82,22 @@ export type Pattern = {
     examples: Example[];
   };
 };
+
+/**
+ * Patrón que ya está en el directorio pero todavía no tiene contenido escrito.
+ * Aparece en la grilla sin enlace hasta que se convierta en un `Pattern`
+ * completo; así el directorio refleja el mapa real de patrones sin publicar
+ * descripciones de relleno.
+ */
+export type PatternStub = {
+  slug: string;
+  name: Localized;
+  family: PatternFamily;
+  comingSoon: true;
+};
+
+/** Lo que renderiza una tarjeta del directorio: patrón completo o pendiente. */
+export type DirectoryEntry = Pattern | PatternStub;
+
+export const isPublished = (e: DirectoryEntry): e is Pattern =>
+  !("comingSoon" in e);

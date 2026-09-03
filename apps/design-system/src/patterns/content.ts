@@ -1,4 +1,9 @@
-import type { Pattern, ResourceRow } from "./types";
+import type {
+  DirectoryEntry,
+  Pattern,
+  PatternStub,
+  ResourceRow,
+} from "./types";
 
 const ASSETS = "/assets/patterns";
 
@@ -36,6 +41,7 @@ const SHARED_RESOURCES: ResourceRow[] = [
 
 const closedInput: Pattern = {
   slug: "closed-input",
+  family: "interaction",
   name: { es: "Closed Input", en: "Closed Input" },
   lede: {
     es: "Botones o una lista cuando el conjunto de respuestas posibles se conoce. El usuario elige; nunca tiene que adivinar cómo escribirlo.",
@@ -261,6 +267,7 @@ const closedInput: Pattern = {
 
 const openInput: Pattern = {
   slug: "open-input",
+  family: "interaction",
   name: { es: "Open Input", en: "Open Input" },
   lede: {
     es: "Una pregunta que se responde con texto libre, para cuando la respuesta no se puede listar de antemano (un nombre, un monto a medida, una ciudad). El usuario escribe, y el bot tiene que leer lo que venga.",
@@ -462,6 +469,7 @@ const openInput: Pattern = {
 
 const mixedInput: Pattern = {
   slug: "mixed-input",
+  family: "interaction",
   name: { es: "Mixed input", en: "Mixed input" },
   title: {
     es: "Mixed input (buttons and open question)",
@@ -655,6 +663,51 @@ const mixedInput: Pattern = {
   },
 };
 
+// ─── Patrones del mapa que todavía no tienen contenido ───────────────────────
+
+/* Están en el directorio de Figma con nombre propio pero sin copy escrita, así
+   que se listan sin enlace en lugar de publicar descripciones de relleno.
+   El reparto de familias es provisional: Michelle va a ir indicando a cuál
+   pertenece cada uno a medida que los escriba. */
+const UPCOMING: PatternStub[] = [
+  {
+    slug: "confirmation-step",
+    name: { es: "Confirmation Step", en: "Confirmation Step" },
+    family: "interaction",
+    comingSoon: true,
+  },
+  {
+    slug: "error-recovery",
+    name: { es: "Error Recovery", en: "Error Recovery" },
+    family: "interaction",
+    comingSoon: true,
+  },
+  {
+    slug: "system-feedback",
+    name: { es: "System Feedback", en: "System Feedback" },
+    family: "interaction",
+    comingSoon: true,
+  },
+  {
+    slug: "contextual-routing",
+    name: { es: "Contextual Routing", en: "Contextual Routing" },
+    family: "conversational",
+    comingSoon: true,
+  },
+  {
+    slug: "escalation-path",
+    name: { es: "Escalation Path", en: "Escalation Path" },
+    family: "conversational",
+    comingSoon: true,
+  },
+  {
+    slug: "session-handoff",
+    name: { es: "Session Handoff", en: "Session Handoff" },
+    family: "conversational",
+    comingSoon: true,
+  },
+];
+
 /** Registro. El orden aquí es el orden de la grilla en la landing. */
 export const PATTERNS: Pattern[] = [closedInput, openInput, mixedInput];
 
@@ -664,3 +717,6 @@ export const getPattern = (slug: string): Pattern | undefined =>
 /** Los otros patrones, para la sección "Explorar patrones" de cada página. */
 export const otherPatterns = (slug: string): Pattern[] =>
   PATTERNS.filter((p) => p.slug !== slug);
+
+/** Todo lo que muestra la grilla del directorio, publicado y pendiente. */
+export const DIRECTORY: DirectoryEntry[] = [...PATTERNS, ...UPCOMING];
