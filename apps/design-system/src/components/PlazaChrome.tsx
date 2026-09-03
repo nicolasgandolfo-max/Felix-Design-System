@@ -68,7 +68,7 @@ export function PlazaChrome({ children }: { children: ReactNode }) {
             "Feito com amor pela equipe de design do Félix"
           )}
         </p>
-        <img src="../assets/plaza/heartfelix.png" alt="" />
+        <img src="/assets/plaza/heart-felix.png" alt="" />
         <p>
           © 2026 Felix Technologies Inc.{" "}
           {tr(

@@ -213,15 +213,15 @@ export function PlazaHome() {
       </main>
 
       <footer className="plaza-footer">
-        <p className="align-left">
+        <p>
           {tr(
             "Hecho con amor por el equipo de diseño de Félix",
             "Made with love by Félix Design Team",
             "Feito com amor pela equipe de design do Félix"
           )}
         </p>
-        <img src="../assets/plaza/heartfelix.png" alt="" />
-        <p className="align-right">
+        <img src="/assets/plaza/heart-felix.png" alt="" />
+        <p>
           © 2026 Felix Technologies Inc.{" "}
           {tr(
             "Todos los derechos reservados.",

@@ -42,7 +42,7 @@ const STROKE_SOFT = "border-[rgba(8,36,34,0.12)]";
 
 /* Título de sección según Figma: Saans/Inter Medium 30px, no display. */
 const SECTION_H =
-  "font-sans text-[30px] font-medium tracking-[-0.01em] text-foreground";
+  "font-sans text-30 font-medium tracking-[-0.01em] text-foreground";
 
 const TH = "font-sans text-base font-medium uppercase text-foreground/50";
 
@@ -66,7 +66,7 @@ function withInlineCode(text: string): ReactNode[] {
     i % 2 === 1 ? (
       <code
         key={i}
-        className="rounded-xs bg-foreground/10 px-1.5 py-0.5 font-mono text-sm"
+        className="rounded-sm bg-foreground/10 px-2 py-1 font-mono text-sm"
       >
         {part}
       </code>
@@ -172,9 +172,9 @@ function ExampleFigure({ example, tr }: { example: Example; tr: Tr }) {
   return (
     <div>
       <div
-        className={`flex flex-col overflow-hidden rounded-[31px] border ${STROKE_SOFT} bg-card`}
+        className={`flex flex-col overflow-hidden rounded-3xl border ${STROKE_SOFT} bg-card`}
       >
-        <div className="flex min-h-[283px] flex-1 items-center justify-center p-8">
+        <div className="flex min-h-72 flex-1 items-center justify-center p-8">
           <img
             src={example.img}
             alt={L(tr, example.alt)}
@@ -182,7 +182,7 @@ function ExampleFigure({ example, tr }: { example: Example; tr: Tr }) {
           />
         </div>
         <div
-          className={`flex h-[59px] shrink-0 items-center gap-3 border-t ${STROKE_SOFT} px-6 ${
+          className={`flex h-15 shrink-0 items-center gap-3 border-t ${STROKE_SOFT} px-6 ${
             isDo ? "bg-(--cactus)" : "bg-(--papaya)"
           }`}
         >
@@ -212,14 +212,14 @@ function BlockView({ block, tr }: { block: Block; tr: Tr }) {
 
     case "prose":
       return (
-        <p className="mt-3 font-sans text-[20px] leading-7 text-foreground first:mt-0">
+        <p className="mt-3 font-sans text-lg leading-7 text-foreground first:mt-0">
           {L(tr, block.text)}
         </p>
       );
 
     case "bullets":
       return (
-        <ul className="mt-5 list-disc space-y-1 pl-6 font-sans text-[20px] leading-7 text-foreground first:mt-0">
+        <ul className="mt-5 list-disc space-y-1 pl-6 font-sans text-lg leading-7 text-foreground first:mt-0">
           {block.items.map((item, i) => (
             <li key={i}>{L(tr, item)}</li>
           ))}
@@ -242,7 +242,7 @@ function BlockView({ block, tr }: { block: Block; tr: Tr }) {
     case "callout":
       return (
         <div
-          className={`mt-8 rounded-[20px] border ${STROKE_SOFT} bg-(--light-sky) px-7 py-8 font-sans text-[20px] leading-7 text-foreground first:mt-0`}
+          className={`mt-8 rounded-xl border ${STROKE_SOFT} bg-(--light-sky) px-7 py-8 font-sans text-lg leading-7 text-foreground first:mt-0`}
         >
           {block.title && (
             <strong className="font-semibold">{L(tr, block.title)} </strong>
@@ -255,9 +255,9 @@ function BlockView({ block, tr }: { block: Block; tr: Tr }) {
     case "metric":
       return (
         <div
-          className={`rounded-[31px] border ${STROKE_SOFT} bg-(--sky) p-8 text-(--slate)`}
+          className={`rounded-3xl border ${STROKE_SOFT} bg-(--sky) p-8 text-(--slate)`}
         >
-          <h2 className="font-sans text-[30px] font-medium tracking-[-0.01em]">
+          <h2 className="font-sans text-30 font-medium tracking-[-0.01em]">
             {L(tr, block.title)}
           </h2>
           {block.body.map((p, i) => (
@@ -380,10 +380,10 @@ export function PatternPage() {
             Panel linen 463px con borde stroke/soft; título Plain Black 60/54
             y bajada 16/24 en slate, como el hero del home. */}
         <section
-          className={`mt-4 [display:grid] min-h-[463px] items-center gap-10 rounded-[31px] border ${STROKE_SOFT} bg-card p-8 md:grid-cols-2 md:px-24 md:py-12`}
+          className={`mt-4 [display:grid] min-h-[464px] items-center gap-10 rounded-3xl border ${STROKE_SOFT} bg-card p-8 md:grid-cols-2 md:px-24 md:py-12`}
         >
           <div>
-            <Breadcrumb className="mb-1.5">
+            <Breadcrumb className="mb-2">
               <BreadcrumbList className="uppercase">
                 <BreadcrumbItem>
                   <BreadcrumbLink asChild>
@@ -403,7 +403,7 @@ export function PatternPage() {
               </BreadcrumbList>
             </Breadcrumb>
 
-            <h1 className="font-heading text-[60px] font-black leading-[54px] tracking-[-0.01em] text-foreground">
+            <h1 className="font-heading text-60 font-black leading-[54px] tracking-[-0.01em] text-foreground">
               {heroTitle}
             </h1>
 
@@ -440,7 +440,7 @@ export function PatternPage() {
           {/* Con una sola pestaña la barra no aporta: el patrón se lee como
               una página corrida. */}
           <TabsList
-            className={`w-full gap-1.5 rounded-full border ${STROKE_SOFT} bg-card p-[9px] ${
+            className={`w-full gap-2 rounded-full border ${STROKE_SOFT} bg-card p-2 ${
               pattern.tabs.length < 2 ? "hidden" : ""
             }`}
           >
@@ -448,7 +448,7 @@ export function PatternPage() {
               <TabsTrigger
                 key={tab.id}
                 value={tab.id}
-                className="h-[59px] justify-center rounded-full px-10 font-heading text-[24px] font-black tracking-[-0.01em] text-foreground data-[state=active]:bg-(--slate) data-[state=active]:text-(--linen) data-[state=active]:shadow-none"
+                className="h-15 justify-center rounded-full px-10 font-heading text-xl font-black tracking-[-0.01em] text-foreground data-[state=active]:bg-(--slate) data-[state=active]:text-(--linen) data-[state=active]:shadow-none"
               >
                 {L(tr, tab.label)}
               </TabsTrigger>

@@ -283,7 +283,7 @@ const openInput: Pattern = {
     es: "Una pregunta que se responde con texto libre, para cuando la respuesta no se puede listar de antemano (un nombre, un monto a medida, una ciudad). El usuario escribe, y el bot tiene que leer lo que venga.",
     en: "A question answered with free text, for when the answer can't be listed in advance (a name, a custom amount, a city). The user types, and the bot has to read whatever comes back.",
   },
-  hero: `${ASSETS}/open-input-hero.png`,
+  hero: `${ASSETS}/open-input-hero-a.png`,
   heroDetail: [
     `${ASSETS}/open-input-hero-a.png`,
     `${ASSETS}/open-input-hero-b.png`,
@@ -491,7 +491,7 @@ const mixedInput: Pattern = {
     es: "Una pregunta que ofrece las respuestas más comunes como botones y todavía deja escribir la propia. Un camino rápido para la mayoría, una puerta abierta para la cola larga.",
     en: "A question that offers the most common answers as buttons and still lets the user type their own. A fast path for the majority, an open door for the long tail.",
   },
-  hero: `${ASSETS}/mixed-input-hero.png`,
+  hero: `${ASSETS}/mixed-input-hero-a.png`,
   heroDetail: [
     `${ASSETS}/mixed-input-hero-a.png`,
     `${ASSETS}/mixed-input-hero-b.png`,
