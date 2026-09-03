@@ -28,7 +28,12 @@ export type VtBlock =
   | { k: "h"; id: string; t: string }
   | { k: "table"; table: VtTable }
   | { k: "code"; t: string; label?: string }
-  | { k: "callout"; icon: string; tone: "info" | "warn" | "ok" | "alert"; t: string }
+  | {
+      k: "callout";
+      icon: string;
+      tone: "info" | "warn" | "ok" | "alert";
+      t: string;
+    }
   | { k: "ul"; items: string[] }
   | { k: "link"; href: string; t: string };
 
@@ -51,7 +56,7 @@ export const shortTitle = (title: string) => title.split(" — ")[0];
  * Agrupación temática de las secciones para el menú lateral. El Notion es una
  * lista plana numerada; 17 ítems seguidos no se navegan. La numeración del
  * original no se muestra en ningún lado: las referencias cruzadas que en el
- * Notion decían "§4" son acá enlaces con el nombre de la sección.
+ * Notion decían "§4" son aquí enlaces con el nombre de la sección.
  */
 export const VT_GROUPS: {
   id: string;
@@ -76,7 +81,12 @@ export const VT_GROUPS: {
     es: "Idioma",
     en: "Language",
     pt: "Idioma",
-    ids: ["language-mechanics", "number-formatting", "dates-times", "inclusive-language"],
+    ids: [
+      "language-mechanics",
+      "number-formatting",
+      "dates-times",
+      "inclusive-language",
+    ],
   },
   {
     id: "messages",
@@ -84,7 +94,12 @@ export const VT_GROUPS: {
     es: "Mensajes",
     en: "Messages",
     pt: "Mensagens",
-    ids: ["message-structure", "error-messages", "confirmation-messages", "escalation"],
+    ids: [
+      "message-structure",
+      "error-messages",
+      "confirmation-messages",
+      "escalation",
+    ],
   },
   {
     id: "interface",
@@ -158,13 +173,22 @@ export const VT_SECTIONS: VtSection[] = [
           ],
         },
       },
-      { k: "h", id: "currency-conventions", t: "Currency conventions at a glance" },
+      {
+        k: "h",
+        id: "currency-conventions",
+        t: "Currency conventions at a glance",
+      },
       {
         k: "table",
         table: {
           cols: ["Currency", "Thousands", "Decimal", "Formatted example"],
           rows: [
-            ["USD — US Dollar · MXN — Mexican Peso", "`,` comma", "`.` period", "$1,500.50"],
+            [
+              "USD — US Dollar · MXN — Mexican Peso",
+              "`,` comma",
+              "`.` period",
+              "$1,500.50",
+            ],
             ["BRL — Brazilian Real", "`.` period", "`,` comma", "R$1.500,50"],
             ["COP · ARS · CRC", "`.` period", "`,` comma", "$1.500,50"],
           ],
@@ -192,8 +216,14 @@ export const VT_SECTIONS: VtSection[] = [
         table: {
           headerColumn: true,
           rows: [
-            ["Character limit", "20 characters maximum per label, including spaces."],
-            ["Case", "Sentence case always. Never ALL CAPS or Title Case For Every Word."],
+            [
+              "Character limit",
+              "20 characters maximum per label, including spaces.",
+            ],
+            [
+              "Case",
+              "Sentence case always. Never ALL CAPS or Title Case For Every Word.",
+            ],
             [
               "Register",
               "Infinitive when the item performs an action; noun when it opens a place the user browses. The same criterion applies to every item in the menu. What is prohibited is mixing without a rule, not mixing. Examples: Modificar, Rastrear (actions) · Historial, Configuración (destinations).",
@@ -225,8 +255,14 @@ export const VT_SECTIONS: VtSection[] = [
         table: {
           headerColumn: true,
           rows: [
-            ["Length", "Maximum 2 lines of body text per card. One sentence per line is the ideal."],
-            ["Tone", "Functional, not promotional. Tell the user what the form does, not why it is great."],
+            [
+              "Length",
+              "Maximum 2 lines of body text per card. One sentence per line is the ideal.",
+            ],
+            [
+              "Tone",
+              "Functional, not promotional. Tell the user what the form does, not why it is great.",
+            ],
             ["Case", "Sentence case. No ALL CAPS, no title case."],
             [
               "Jargon",
@@ -313,7 +349,11 @@ export const VT_SECTIONS: VtSection[] = [
           ],
         },
       },
-      { k: "h", id: "empty-states", t: "Empty states & cross-corridor consistency" },
+      {
+        k: "h",
+        id: "empty-states",
+        t: "Empty states & cross-corridor consistency",
+      },
       {
         k: "table",
         table: {
@@ -435,7 +475,10 @@ export const VT_SECTIONS: VtSection[] = [
               "Never blame the user",
               "The error is never framed as the user's fault in the copy, even when it technically is.",
             ],
-            ["Plain, human language", "Explain what happened without technical or internal terms."],
+            [
+              "Plain, human language",
+              "Explain what happened without technical or internal terms.",
+            ],
             ["One next step", "Give exactly one clear action to take next."],
             [
               "Match the moment",
@@ -634,7 +677,11 @@ export const VT_SECTIONS: VtSection[] = [
               "A time without a zone is unusable in a cross-border transaction. The sender and the recipient are rarely in the same one.",
               "“a las 6:00 p.m. (hora de Ciudad de México)”",
             ],
-            ["Day before hour", "State the day first, then the hour.", "“el martes a las 5:00 p.m.”"],
+            [
+              "Day before hour",
+              "State the day first, then the hour.",
+              "“el martes a las 5:00 p.m.”",
+            ],
             [
               "Omit “:00” only in running prose",
               "In a data row or a summary, keep the minutes. In a sentence, the shorter form reads better.",
@@ -892,7 +939,11 @@ export const VT_SECTIONS: VtSection[] = [
               "Name the goal instead.",
               "“Para retirar tu dinero, sigue estos pasos:”",
             ],
-            ["One action per step", "A step containing two actions is two steps.", "—"],
+            [
+              "One action per step",
+              "A step containing two actions is two steps.",
+              "—",
+            ],
           ],
         },
       },
@@ -1095,7 +1146,11 @@ export const VT_SECTIONS: VtSection[] = [
               "Never a surname, never a courtesy title.",
               "“Hola, Angélica” — not “Hola, señora Guevara”",
             ],
-            ["No courtesy formulas", "Never “estimado”, “señor”, “señora”.", "—"],
+            [
+              "No courtesy formulas",
+              "Never “estimado”, “señor”, “señora”.",
+              "—",
+            ],
             [
               "Frame positively, not by absence",
               "A negation invites the reader to picture the negative state. See also the empty-states rule in [[language-mechanics#empty-states|Empty states & cross-corridor consistency]].",
@@ -1123,7 +1178,12 @@ export const VT_SECTIONS: VtSection[] = [
       {
         k: "table",
         table: {
-          cols: ["Attribute", "What it means", "Sounds like", "Never sounds like"],
+          cols: [
+            "Attribute",
+            "What it means",
+            "Sounds like",
+            "Never sounds like",
+          ],
           rows: [
             [
               "**1 · Clear** — plain before precise",
@@ -1288,7 +1348,11 @@ export const VT_SECTIONS: VtSection[] = [
               "“nosotros” — per [[bot-personality#who-felix-is|Who Félix is]]",
               "“yo” — the agent speaks for themselves",
             ],
-            ["**Name**", "One name, always Félix", "Introduces themselves by first name"],
+            [
+              "**Name**",
+              "One name, always Félix",
+              "Introduces themselves by first name",
+            ],
           ],
         },
       },
@@ -1332,7 +1396,11 @@ export const VT_SECTIONS: VtSection[] = [
               "Per [[error-messages]]. The escalation is not framed as the user's mistake, and “un error del sistema” explains nothing.",
               "—",
             ],
-            ["Never a dead end", "Every escalation message carries a next step or a way back.", "—"],
+            [
+              "Never a dead end",
+              "Every escalation message carries a next step or a way back.",
+              "—",
+            ],
             [
               "Sensitive cases skip the retry loop",
               "Fraud, a missing transfer, and bereavement-driven sends go to a person without being cycled through self-service options first. 🟡 Trigger list [ TO BE DEFINED ] — owned by CX.",
@@ -1431,7 +1499,12 @@ export const VT_SECTIONS: VtSection[] = [
 ];
 
 /** Pie del Notion: fuentes y quién mantiene la guía. */
-export const VT_RESOURCES: { icon: string; label: string; href?: string; note: string }[] = [
+export const VT_RESOURCES: {
+  icon: string;
+  label: string;
+  href?: string;
+  note: string;
+}[] = [
   {
     icon: "📄",
     label: "Archived source — Google Doc v0.2",

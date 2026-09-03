@@ -1,41 +1,16 @@
-import type { Pattern, ResourceRow } from "./types";
+import type { Pattern, PatternTab, StandardSections } from "./types";
+import { standardTabs } from "./blocks";
 
 const ASSETS = "/assets/patterns";
 
-const FIGMA_WA_LIBRARY_URL =
-  "https://www.figma.com/design/N9dG8uXXR7FkLkuSZT5oex/DRAFT-Conversational-Guidelines";
-
 const WA_LIST_DOCS_URL =
   "https://developers.facebook.com/documentation/business-messaging/whatsapp/messages/interactive-list-messages";
-
-/* Los tres patrones comparten la misma grilla de recursos por ahora. Cuando
-   alguno se desvíe, copiá el array en su entrada y editalo ahí. */
-const SHARED_RESOURCES: ResourceRow[] = [
-  {
-    type: { es: "Diseño", en: "Design" },
-    resource: {
-      es: "Librería de WhatsApp (Figma)",
-      en: "WhatsApp Library (Figma)",
-    },
-    href: FIGMA_WA_LIBRARY_URL,
-    status: "ok",
-  },
-  {
-    type: { es: "Copy", en: "Copy" },
-    resource: { es: "Documento de contenido", en: "Content doc" },
-    status: "draft",
-  },
-  {
-    type: { es: "Datos", en: "Data" },
-    resource: { es: "Cruce con Amplitude", en: "Amplitude cross-check" },
-    status: "tbd",
-  },
-];
 
 // ─── Entrada cerrada ─────────────────────────────────────────────────────────
 
 const closedInput: Pattern = {
   slug: "closed-input",
+  family: "interaction",
   name: { es: "Closed Input", en: "Closed Input" },
   lede: {
     es: "Botones o una lista cuando el conjunto de respuestas posibles se conoce. El usuario elige; nunca tiene que adivinar cómo escribirlo.",
@@ -52,124 +27,744 @@ const closedInput: Pattern = {
     en: "WhatsApp screen showing a question with reply buttons",
   },
 
+  tabs: standardTabs({
+    overview: {
+      usage: [
+        {
+          es: "Usa botones cuando hay de 1 a 3 opciones conocidas.",
+          en: "Use buttons when there are 1 to 3 known options.",
+        },
+        {
+          es: "Usa una lista cuando hay de 4 a 10 opciones conocidas.",
+          en: "Use a list when there are 4 to 10 known options.",
+        },
+        {
+          es: "Más de 10 opciones: repiensa la pregunta, es demasiado amplia para un solo paso.",
+          en: "Beyond 10 options, rethink the question, it is too broad for a single step.",
+        },
+        {
+          es: "Nunca hagas que el usuario adivine cómo escribir algo de un conjunto que ya conoces.",
+          en: "Never make the user guess the wording for a set you already know.",
+        },
+      ],
+      metric: {
+        title: {
+          es: "Por qué funciona",
+          en: "Why this works",
+        },
+        body: [
+          {
+            es: "La entrada cerrada mantiene las respuestas no clasificables cerca de cero, mientras que el texto libre genera la mayoría de las fallas del bot (`NOT_ASSIGNED_YET` = 64% del total de fallas). Los botones sostienen el flujo de modificación: ahí el texto libre es apenas 1,6%.",
+            en: "Closed input keeps unclassifiable answers near zero, where open text drives the majority of bot failures (`NOT_ASSIGNED_YET` = 64% of failures overall). Buttons carry the modify flow: free text there is only 1.6%.",
+          },
+        ],
+        note: {
+          es: "Por medir: ratio de taps en botón vs. escritura, y abandono en este paso. Ver el mapa de cruce con Amplitude.",
+          en: "To pull: button-tap vs typed ratio and abandonment at this step. See the Amplitude cross-check map.",
+        },
+      },
+    },
+
+    specs: {
+      intro: {
+        es: "Los límites de WhatsApp que definen este patrón. Diseña dentro de ellos.",
+        en: "The WhatsApp limits that define this pattern. Design within them.",
+      },
+      tables: [
+        {
+          heading: { es: "Botones de respuesta", en: "Reply buttons" },
+          columns: [
+            { es: "Componente", en: "Component" },
+            { es: "Límite", en: "Spec" },
+          ],
+          rows: [
+            [
+              { es: "Botones por mensaje", en: "Buttons per message" },
+              { es: "Hasta 3", en: "Up to 3" },
+            ],
+            [
+              { es: "Etiqueta del botón", en: "Button label" },
+              { es: "Máx. 20 caracteres", en: "Max 20 characters" },
+            ],
+          ],
+        },
+        {
+          heading: { es: "Mensaje de lista", en: "List message" },
+          columns: [
+            { es: "Elemento", en: "Element" },
+            { es: "Límite", en: "Spec" },
+          ],
+          rows: [
+            [
+              { es: "Secciones", en: "Sections" },
+              {
+                es: "Hasta 10 secciones, hasta 10 filas en total entre todas las secciones",
+                en: "Up to 10 sections, up to 10 rows total across all sections combined",
+              },
+            ],
+            [
+              { es: "Botón (abre la lista)", en: "Button (opens the list)" },
+              {
+                es: "Un botón, etiqueta máx. 20 caracteres",
+                en: "One button, label max 20 characters",
+              },
+            ],
+            [
+              { es: "Encabezado", en: "Header" },
+              {
+                es: "Opcional, solo texto, máx. 60 caracteres",
+                en: "Optional, text only, max 60 characters",
+              },
+            ],
+            [
+              { es: "Cuerpo", en: "Body" },
+              { es: "Máx. 4.096 caracteres", en: "Max 4,096 characters" },
+            ],
+            [
+              { es: "Pie", en: "Footer" },
+              {
+                es: "Opcional, máx. 60 caracteres",
+                en: "Optional, max 60 characters",
+              },
+            ],
+            [
+              { es: "Título de fila", en: "Row title" },
+              { es: "Máx. 24 caracteres", en: "Max 24 characters" },
+            ],
+            [
+              { es: "Descripción de fila", en: "Row description" },
+              {
+                es: "Opcional, máx. 72 caracteres",
+                en: "Optional, max 72 characters",
+              },
+            ],
+          ],
+        },
+        {
+          heading: {
+            es: "Decisión: cómo preguntar",
+            en: "Decision: how to ask",
+          },
+          columns: [
+            { es: "Opciones", en: "Options" },
+            { es: "Patrón", en: "Pattern" },
+          ],
+          rows: [
+            [
+              { es: "1 a 3 opciones", en: "1 to 3 options" },
+              { es: "Botones de respuesta", en: "Reply buttons" },
+            ],
+            [
+              { es: "4 a 10 opciones", en: "4 to 10 options" },
+              { es: "Mensaje de lista", en: "List message" },
+            ],
+            [
+              { es: "Más de 10", en: "More than 10" },
+              { es: "Repensar el flujo", en: "Rethink the flow" },
+            ],
+          ],
+        },
+      ],
+      source: {
+        es: "Fuente: WhatsApp Cloud API, mensajes de lista interactivos (actualizado jul. 2026). ",
+        en: "Source: WhatsApp Cloud API, interactive list messages (updated Jul 2026). ",
+      },
+      sourceHref: WA_LIST_DOCS_URL,
+      sourceLinkText: "developers.facebook.com",
+    },
+
+    guidelines: {
+      usage: {
+        es: "Recurre a la entrada cerrada siempre que el conjunto de respuestas se conozca de antemano. Mantiene a la gente en un camino que el bot puede leer, y le saca la adivinanza a un paso que si no se trabaría.",
+        en: "Reach for closed input whenever the set of answers is known in advance. It keeps people on a path the bot can read, and it takes the guesswork out of a step that would otherwise stall.",
+      },
+      tips: {
+        es: "Escribe cada opción como la diría el usuario, no como la guarda el sistema. Mantén las etiquetas cortas, asegúrate de que ninguna se solape con otra, y ordénalas por frecuencia de uso o en una secuencia que ya tenga sentido (de menor a mayor monto, del destino más al menos común).",
+        en: "Write each option the way the user would say it, not the way the system stores it. Keep the labels short, make sure no two overlap, and order them by how often they get picked or in a sequence that already makes sense (lowest to highest amount, most to least common destination).",
+      },
+      examples: [
+        {
+          tone: "do",
+          img: `${ASSETS}/closed-input-do-1.png`,
+          alt: {
+            es: "Pregunta de WhatsApp con las opciones conocidas como botones",
+            en: "WhatsApp question offering the known options as reply buttons",
+          },
+          caption: {
+            es: "Ofrece las opciones conocidas como botones. Un tap, sin escribir.",
+            en: "Offer the known options as buttons. One tap, no typing.",
+          },
+        },
+        {
+          tone: "dont",
+          img: `${ASSETS}/closed-input-dont-1.png`,
+          alt: {
+            es: "Pregunta de WhatsApp dejando un conjunto conocido como texto abierto",
+            en: "WhatsApp question leaving a known set as open text",
+          },
+          caption: {
+            es: "No dejes un conjunto conocido como texto abierto. La respuesta se vuelve difícil de interpretar.",
+            en: "Don't leave a known set as open text. The reply gets hard to parse.",
+          },
+        },
+        {
+          tone: "do",
+          img: `${ASSETS}/closed-input-do-2.png`,
+          alt: {
+            es: "Pregunta de WhatsApp usando un mensaje de lista para más de tres opciones",
+            en: "WhatsApp question using a list message for more than three options",
+          },
+          caption: {
+            es: "Usa una lista cuando hay más de 3 opciones.",
+            en: "Use a list when there are more than 3 options.",
+          },
+        },
+        {
+          tone: "dont",
+          img: `${ASSETS}/closed-input-dont-2.png`,
+          alt: {
+            es: "Pregunta de WhatsApp amontonando muchas opciones en un solo mensaje",
+            en: "WhatsApp question cramming many options into a single message",
+          },
+          caption: {
+            es: "No amontones muchas opciones en un mensaje ni en botones.",
+            en: "Don't cram many options into one message or into buttons.",
+          },
+        },
+      ],
+    },
+  }),
+};
+
+// ─── Entrada abierta ─────────────────────────────────────────────────────────
+
+const openInput: Pattern = {
+  slug: "open-input",
+  family: "interaction",
+  name: { es: "Open Input", en: "Open Input" },
+  lede: {
+    es: "Una pregunta que se responde con texto libre, para cuando la respuesta no se puede listar de antemano (un nombre, un monto a medida, una ciudad). El usuario escribe, y el bot tiene que leer lo que venga.",
+    en: "A question answered with free text, for when the answer can't be listed in advance (a name, a custom amount, a city). The user types, and the bot has to read whatever comes back.",
+  },
+  cardBody: {
+    es: "Una pregunta que se responde con texto libre, para cuando la respuesta no se puede listar de antemano (un nombre, un monto a medida, una ciudad). El usuario escribe, y el bot tiene que leer lo que venga.",
+    en: "A question answered with free text, for when the answer can't be listed in advance (a name, a custom amount, a city). The user types, and the bot has to read whatever comes back.",
+  },
+  hero: `${ASSETS}/open-input-hero-a.png`,
+  heroDetail: [
+    `${ASSETS}/open-input-hero-a.png`,
+    `${ASSETS}/open-input-hero-b.png`,
+  ],
+  heroAlt: {
+    es: "Pantalla de WhatsApp preguntando a quién enviar dinero, con una pista de formato y un ejemplo",
+    en: "WhatsApp screen asking who to send money to, with a format hint and a worked example",
+  },
+
+  tabs: standardTabs({
+    overview: {
+      usage: [
+        {
+          es: "Usa entrada abierta solo cuando el conjunto de respuestas es genuinamente impredecible (un nombre completo, un monto a medida, una ciudad libre).",
+          en: "Use open input only when the set of answers is genuinely unpredictable (a full name, a custom amount, a free city).",
+        },
+        {
+          es: "Si las respuestas se conocen, usa entrada cerrada (botones para 1 a 3, una lista para 4 a 10).",
+          en: "If the answers are known, use Closed input instead (buttons for 1 to 3, a list for 4 to 10).",
+        },
+        {
+          es: "Acompaña siempre la pregunta con una pista de formato, para que el usuario sepa cómo responder.",
+          en: "Always pair the question with a format hint, so the user knows how to answer.",
+        },
+        {
+          es: "Pregunta una sola cosa por mensaje. Dos preguntas en una burbuja duplican las formas de malinterpretar la respuesta.",
+          en: "Ask one thing per message. Two questions in one bubble double the ways a reply can be misread.",
+        },
+        {
+          es: 'Muestra un ejemplo resuelto ("Ejemplo: Juan Pérez López") las primeras una o dos veces que el usuario llega a este paso, y retíralo cuando el patrón ya se aprendió. Cuándo dejar de mostrarlo está por definirse.',
+          en: 'Show a worked example ("Ejemplo: Juan Pérez López") the first one or two times a user reaches this step, then retire it once the pattern is learned. When exactly to stop showing it is TBD.',
+        },
+      ],
+      metric: {
+        title: {
+          es: "Por qué funciona",
+          en: "Why this works",
+        },
+        body: [
+          {
+            es: "El texto abierto es inevitable cuando el espacio de respuestas no tiene límite, pero también es donde el bot falla más. Las respuestas sin clasificar (`NOT_ASSIGNED_YET`) son el 64% de todas las fallas del bot, y el paso de mayor fricción que tenemos (cuenta bancaria) está en 129s de mediana, ambos empujados por la entrada libre. La pista de formato y el ejemplo de la primera vez existen para bajar esos números.",
+            en: "Open text is unavoidable when the answer space is unbounded, but it is also where the bot fails most. Unclassified replies (`NOT_ASSIGNED_YET`) are 64% of all bot failures, and the highest-friction step we have (bank account) sits at a 129s median, both driven by free-form entry. The format hint and the first-run example exist to pull those numbers down.",
+          },
+        ],
+        note: {
+          es: "Por medir: tasa de parseo exitoso en el paso, mediana de tiempo en el paso (comparada contra los 129s del paso de cuenta bancaria), y tasa de loop o abandono. Para la variante con ejemplo, comparar parseo y tiempo con la pista visible vs. oculta, para decidir cuánto tiempo seguir mostrándola.",
+          en: "To pull: parse-success rate at the step, median time at step (benchmark against the 129s bank-account step), and loop or abandon rate. For the example variant, compare parse-success and time at step with the hint shown vs hidden, to decide how long to keep showing it.",
+        },
+      },
+    },
+
+    specs: {
+      intro: {
+        es: "Los límites de WhatsApp que definen este patrón.",
+        en: "The WhatsApp limits that define this pattern.",
+      },
+      tables: [
+        {
+          heading: { es: "Mensaje de texto", en: "Text message" },
+          columns: [
+            { es: "Componente", en: "Component" },
+            { es: "Límite", en: "Spec" },
+          ],
+          rows: [
+            [
+              { es: "Cuerpo del mensaje", en: "Prompt message body" },
+              { es: "Hasta 4.096 caracteres", en: "Up to 4,096 characters" },
+            ],
+            [
+              { es: "Componente interactivo", en: "Interactive component" },
+              {
+                es: "Ninguno (mensaje de texto plano)",
+                en: "None (plain text message)",
+              },
+            ],
+            [
+              { es: "Respuesta del usuario", en: "User reply" },
+              {
+                es: "Texto libre, sin payload estructurado",
+                en: "Free-form text, no structured payload",
+              },
+            ],
+            [
+              { es: "Validación", en: "Validation" },
+              {
+                es: "Ninguna del lado de WhatsApp; el bot parsea el texto crudo",
+                en: "None on WhatsApp's side; the bot parses the raw text",
+              },
+            ],
+            [
+              {
+                es: "Ventana de respuesta libre",
+                en: "Free-form reply window",
+              },
+              {
+                es: "Solo dentro de la ventana de atención de 24 horas; fuera de ella se reabre con una plantilla",
+                en: "Only inside the 24-hour customer service window; outside it you reopen with a template",
+              },
+            ],
+          ],
+        },
+        {
+          heading: { es: "Casos de uso", en: "Use cases" },
+          columns: [
+            { es: "Respuesta", en: "Answer" },
+            { es: "Patrón", en: "Pattern" },
+          ],
+          rows: [
+            [
+              {
+                es: "Sin límite (nombre como en el documento, monto a medida, ciudad libre)",
+                en: "Unbounded (name as on document, custom amount, free city)",
+              },
+              {
+                es: "Entrada abierta (texto libre)",
+                en: "Open input (free text)",
+              },
+            ],
+            [
+              { es: "Conjunto conocido, 1 a 3", en: "Known set, 1 to 3" },
+              {
+                es: "Botones de respuesta (ver entrada cerrada)",
+                en: "Reply buttons (see Closed input)",
+              },
+            ],
+            [
+              { es: "Conjunto conocido, 4 a 10", en: "Known set, 4 to 10" },
+              {
+                es: "Mensaje de lista (ver entrada cerrada)",
+                en: "List message (see Closed input)",
+              },
+            ],
+          ],
+        },
+      ],
+      notes: [
+        {
+          es: 'Sobre la línea de ejemplo: los mensajes de texto de WhatsApp no tienen campo de placeholder ni de ejemplo. La pista "Ejemplo:" es copy dentro del cuerpo del mensaje, así que mostrarla solo en la primera o segunda vez es lógica del bot, no una función de la plataforma.',
+          en: 'Note on the example line: WhatsApp text messages have no placeholder or example field. The "Ejemplo:" hint is copy inside the message body, so showing it only on the first or second run is bot logic, not a platform feature.',
+        },
+      ],
+      source: {
+        es: "Fuente: WhatsApp Cloud API, mensajes de texto y la ventana de atención de 24 horas. Confirmar en ",
+        en: "Source: WhatsApp Cloud API, text messages and the 24-hour customer service window. Confirm on ",
+      },
+      sourceHref: "https://developers.facebook.com",
+      sourceLinkText: "developers.facebook.com",
+    },
+
+    guidelines: {
+      usage: {
+        es: "Recurre a la entrada abierta solo cuando realmente no puedes enumerar las respuestas. Cada paso abierto es un lugar donde el bot puede malinterpretar, entrar en loop o perder al usuario, así que la vara para usarlo debería ser alta.",
+        en: "Reach for open input only when you truly can't enumerate the answers. Every open step is a place the bot can misread, loop, or lose the user, so the bar for using it should be high.",
+      },
+      tips: {
+        es: "Empieza con la pregunta, después la pista de formato en su propia línea, y después el ejemplo. Mantén la pista concreta y en las palabras del usuario. Si te encuentras escribiendo una pista que lista las respuestas válidas, es señal de que el paso debería ser entrada cerrada, no abierta.",
+        en: "Lead with the question, then the format hint on its own line, then the example. Keep the hint concrete and in the user's own words. If you find yourself writing a hint that lists the valid answers, that is a sign the step should be closed input, not open.",
+      },
+      examples: [
+        {
+          tone: "do",
+          img: `${ASSETS}/open-input-do-1.png`,
+          alt: {
+            es: "Pregunta de WhatsApp con una pista de formato clara y un ejemplo resuelto",
+            en: "WhatsApp question with a clear format hint and a worked example",
+          },
+          caption: {
+            es: "Una sola pregunta, una pista clara y un ejemplo para la primera vez.",
+            en: "One question, a clear hint, and a first-run example.",
+          },
+        },
+        {
+          tone: "dont",
+          img: `${ASSETS}/open-input-dont-1.png`,
+          alt: {
+            es: "Mensaje de WhatsApp con dos preguntas apiladas en una sola burbuja",
+            en: "WhatsApp message with two questions stacked in one bubble",
+          },
+          caption: {
+            es: "No pidas texto abierto para algo que podrías ofrecer como opciones.",
+            en: "Don't ask open text for something you could offer as options.",
+          },
+        },
+      ],
+    },
+  }),
+};
+
+// ─── Entrada mixta ───────────────────────────────────────────────────────────
+
+const mixedInput: Pattern = {
+  slug: "mixed-input",
+  family: "interaction",
+  name: { es: "Mixed input", en: "Mixed input" },
+  subtitle: { es: "Closed and open", en: "Closed and open" },
+  lede: {
+    es: "Una pregunta que ofrece las respuestas más comunes como botones y todavía deja escribir la propia. Un camino rápido para la mayoría, una puerta abierta para la cola larga.",
+    en: "A question that offers the most common answers as buttons and still lets the user type their own. A fast path for the majority, an open door for the long tail.",
+  },
+  cardBody: {
+    es: "Una pregunta que ofrece las respuestas más comunes como botones y todavía deja escribir la propia. Un camino rápido para la mayoría, una puerta abierta para la cola larga.",
+    en: "A question that offers the most common answers as buttons and still lets the user type their own. A fast path for the majority, an open door for the long tail.",
+  },
+  hero: `${ASSETS}/mixed-input-hero-a.png`,
+  heroDetail: [
+    `${ASSETS}/mixed-input-hero-a.png`,
+    `${ASSETS}/mixed-input-hero-b.png`,
+  ],
+  heroAlt: {
+    es: "Pantalla de WhatsApp con botones de montos comunes y la opción de escribir un monto propio",
+    en: "WhatsApp screen with common amount buttons plus the option to type a custom amount",
+  },
+
+  tabs: standardTabs({
+    overview: {
+      usage: [
+        {
+          es: "Usa entrada mixta cuando unos pocos valores cubren a la mayoría pero no a todos (montos frecuentes de envío, ciudades habituales), y todavía quieres aceptar cualquier cosa fuera de los presets.",
+          en: "Use mixed input when a few values cover most people but not everyone (common send amounts, frequent cities), and you still want to accept anything outside the presets.",
+        },
+        {
+          es: "Pon las 2 o 3 respuestas más comunes en botones. Deja el camino abierto para el resto.",
+          en: "Put the 2 to 3 most common answers on buttons. Keep the open path for the rest.",
+        },
+        {
+          es: 'Di los dos caminos en voz alta en el copy, por ejemplo "Puedes elegir una opción o escribir el monto que prefieras".',
+          en: 'Say both paths out loud in the copy, for example "Puedes elegir una opción o escribir el monto que prefieras".',
+        },
+        {
+          es: "WhatsApp siempre deja escribir, así que incluso un mensaje de solo botones es en realidad mixto. Diseña la respuesta escrita a propósito, no por accidente.",
+          en: "WhatsApp always lets people type, so even a buttons-only message is really mixed. Design for the typed reply on purpose, not by accident.",
+        },
+      ],
+      metric: {
+        title: {
+          es: "Por qué funciona",
+          en: "Why this works",
+        },
+        body: [
+          {
+            es: "Cuando se ofrecen botones, casi todos los usan: en el flujo de modificación, el texto libre se usó solo el 1,6% de las veces. La entrada mixta le da ese camino rápido a la mayoría y mantiene la puerta abierta para valores que no puedes predecir, sin forzar a todos a pasar por texto abierto propenso a errores.",
+            en: "When buttons are offered, almost everyone takes them: in the modify flow, free text was used only 1.6% of the time. Mixed input gives that fast path to the majority while keeping the door open for values you can't predict, without forcing everyone through error-prone open text.",
+          },
+        ],
+        note: {
+          es: "Por medir: ratio de taps en botón vs. escritura en el paso, y completado vs. abandono por camino. Si el uso escrito se mantiene mínimo, los presets están bien; si sube, a los botones les falta una respuesta común.",
+          en: "To pull: button-tap vs typed ratio at the step, and completion vs abandon per path. If typed usage stays tiny, the presets are right; if it climbs, the buttons are missing a common answer.",
+        },
+      },
+    },
+
+    specs: {
+      intro: {
+        es: "Los límites de WhatsApp que definen este patrón.",
+        en: "The WhatsApp limits that define this pattern.",
+      },
+      tables: [
+        {
+          heading: { es: "Botones de respuesta", en: "Reply buttons" },
+          columns: [
+            { es: "Componente", en: "Component" },
+            { es: "Límite", en: "Spec" },
+          ],
+          rows: [
+            [
+              { es: "Botones por mensaje", en: "Buttons per message" },
+              { es: "Hasta 3", en: "Up to 3" },
+            ],
+            [
+              { es: "Etiqueta del botón", en: "Button label" },
+              { es: "Máx. 20 caracteres", en: "Max 20 characters" },
+            ],
+          ],
+        },
+        {
+          heading: { es: "Camino abierto", en: "Open path" },
+          columns: [
+            { es: "Componente", en: "Component" },
+            { es: "Límite", en: "Spec" },
+          ],
+          rows: [
+            [
+              { es: "Respuesta del usuario", en: "User reply" },
+              {
+                es: "Texto libre (hasta 4.096 caracteres), sin payload estructurado",
+                en: "Free-form text (up to 4,096 characters), no structured payload",
+              },
+            ],
+            [
+              { es: "Validación", en: "Validation" },
+              {
+                es: "Ninguna; el bot parsea las respuestas escritas",
+                en: "None; the bot parses typed replies",
+              },
+            ],
+          ],
+        },
+        {
+          heading: { es: "Casos de uso", en: "Use cases" },
+          columns: [
+            { es: "Camino", en: "Path" },
+            { es: "Cuándo", en: "When" },
+          ],
+          rows: [
+            [
+              { es: "Botones", en: "Buttons" },
+              {
+                es: "Las 2 o 3 respuestas más frecuentes (camino rápido)",
+                en: "The 2 to 3 most frequent answers (fast path)",
+              },
+            ],
+            [
+              { es: "Pregunta abierta", en: "Open question" },
+              {
+                es: "Cualquier valor fuera de los presets (cola larga)",
+                en: "Any value outside the presets (long tail)",
+              },
+            ],
+            [
+              {
+                es: "Más de 3 presets comunes",
+                en: "More than 3 common presets",
+              },
+              {
+                es: "Pasar la parte cerrada a un mensaje de lista",
+                en: "Switch the closed part to a list message",
+              },
+            ],
+          ],
+        },
+      ],
+      notes: [
+        {
+          es: "WhatsApp no tiene un solo componente que combine botones con un campo de texto. La entrada mixta es un mensaje de botones de respuesta (o de lista) más el parseo deliberado de cualquier respuesta escrita.",
+          en: "WhatsApp has no single component that combines buttons with a text field. Mixed input is a reply-buttons (or list) message plus deliberate parsing of any typed reply.",
+        },
+      ],
+      source: {
+        es: "Fuente: WhatsApp Cloud API, botones de respuesta interactivos y mensajes. Confirmar en ",
+        en: "Source: WhatsApp Cloud API, interactive reply buttons and messages. Confirm on ",
+      },
+      sourceHref: "https://developers.facebook.com",
+      sourceLinkText: "developers.facebook.com",
+    },
+
+    guidelines: {
+      usage: {
+        es: "Recurre a la entrada mixta cuando las respuestas comunes merecen un atajo de un tap pero la cola larga es real. Es el punto medio entre la entrada cerrada (todas las respuestas conocidas) y la abierta (ninguna conocida).",
+        en: "Reach for mixed input when the common answers are worth a one-tap shortcut but the tail is real. It is the middle ground between closed input (all answers known) and open input (nothing known).",
+      },
+      tips: {
+        es: "Nombra los presets que la gente realmente elige, en sus propias palabras, y ordénalos por frecuencia. Haz explícita la opción abierta en el copy, así escribir no se siente como romper el flujo. Mantén los botones en las respuestas top de verdad; si necesitas más de 3, pasa la parte cerrada a una lista.",
+        en: "Name the presets people actually pick, in their own words, and order them by frequency. Make the open option explicit in the copy so typing doesn't feel like breaking the flow. Keep buttons to the true top answers; if you need more than 3, switch the closed part to a list.",
+      },
+      examples: [
+        {
+          tone: "do",
+          img: `${ASSETS}/mixed-input-do-1.png`,
+          alt: {
+            es: "Pantalla de WhatsApp con botones de montos comunes y la invitación a escribir un monto propio",
+            en: "WhatsApp screen with common amount buttons and an invitation to type a custom amount",
+          },
+          caption: {
+            es: "Los montos comunes a un tap, y el monto a medida igual de bienvenido.",
+            en: "Common amounts one tap away, a custom amount still welcome.",
+          },
+        },
+        {
+          tone: "dont",
+          img: `${ASSETS}/mixed-input-dont-1.png`,
+          alt: {
+            es: "Pantalla de WhatsApp con seis botones de monto y la opción abierta escondida",
+            en: "WhatsApp screen with six amount buttons and the open option buried",
+          },
+          caption: {
+            es: "No escondas el camino abierto, y no sobrecargues los botones.",
+            en: "Don't hide the open path, and don't overload the buttons.",
+          },
+        },
+      ],
+    },
+  }),
+};
+
+// ─── Menu (list message) ─────────────────────────────────────────────────────
+
+/* El brazo de lista de Closed input: botones para 1 a 3, menú de 4 en adelante.
+   Misma forma estándar de tres pestañas, más una galería de casos de uso al
+   final de Specs (las tres pantallas de `user-cases-menu` en Figma).
+   Los ejemplos de copy del bot quedan en español tal cual (son de producto). */
+const menuSections: StandardSections = {
   overview: {
     usage: [
       {
-        es: "Usá botones cuando hay de 1 a 3 opciones conocidas.",
-        en: "Use buttons when there are 1 to 3 known options.",
+        es: "Usa un menú cuando las opciones se conocen pero son más de 3, el punto donde los botones de respuesta se agotan (tienen un tope de 3). Es el brazo de lista de Closed input.",
+        en: "Use a menu when the options are known but there are more than 3, the point where reply buttons run out (buttons cap at 3). This is the list arm of Closed input.",
       },
       {
-        es: "Usá una lista cuando hay de 4 a 10 opciones conocidas.",
-        en: "Use a list when there are 4 to 10 known options.",
+        es: "Dale a cada fila un título corto que se sostenga solo. Agrega una línea de descripción solo cuando ayuda al usuario a distinguir filas o a decidir.",
+        en: "Give each row a short, self-standing title. Add a description line only when it helps the user tell rows apart or decide.",
       },
       {
-        es: "Más de 10 opciones: repensá la pregunta, es demasiado amplia para un solo paso.",
-        en: "Beyond 10 options, rethink the question, it is too broad for a single step.",
+        es: "Las filas pueden mezclarse: algunas con descripción y otras sin ella en la misma lista. La descripción es secundaria, así que úsala donde se gana su lugar, no en todas las filas.",
+        en: "Rows can mix: some with a description, some without, in the same list. The description is secondary, so use it where it earns its place, not on every row.",
       },
       {
-        es: "Nunca hagas que el usuario adivine cómo escribir algo de un conjunto que ya conocés.",
-        en: "Never make the user guess the wording for a set you already know.",
+        es: "Cuando el conjunto tiene grupos naturales (por estado, por tipo), divídelo en secciones con título para que el usuario recorra por grupo en lugar de leer cada fila. Los títulos de sección son encabezados, no filas: mantenlos tan cortos como los títulos de fila.",
+        en: "When the set has natural groups (by status, by type), split it into titled sections so the user scans by group instead of reading every row. Section titles are headers, not rows: keep them as short as row titles.",
+      },
+      {
+        es: 'Cuando el conjunto real es más largo de lo que entra en una lista, pagina ("Mis envíos" 1/3, 2/3, 3/3) con "Volver" y "Ver más envíos", y mantén una fila de escape como "No encuentro mi envío".',
+        en: 'When the real set is longer than one list can hold, paginate ("Mis envíos" 1/3, 2/3, 3/3) with "Volver" and "Ver más envíos", and keep an escape row like "No encuentro mi envío".',
+      },
+      {
+        es: "Si el conjunto es de 1 a 3, usa botones de respuesta. Si no tiene límite, usa Open input.",
+        en: "If the set is 1 to 3, use reply buttons instead. If it is unbounded, use Open input.",
       },
     ],
     metric: {
       title: {
-        es: "Por qué funciona · métricas por confirmar",
-        en: "Why this works · metrics TBD",
+        es: "Por qué funciona",
+        en: "Why this works",
       },
       body: [
         {
-          es: "La entrada cerrada mantiene las respuestas no clasificables cerca de cero, mientras que el texto libre genera la mayoría de las fallas del bot (`NOT_ASSIGNED_YET` = 64% del total de fallas). Los botones sostienen el flujo de modificación: ahí el texto libre es apenas 1,6%.",
-          en: "Closed input keeps unclassifiable answers near zero, where open text drives the majority of bot failures (`NOT_ASSIGNED_YET` = 64% of failures overall). Buttons carry the modify flow: free text there is only 1.6%.",
+          es: "Un menú mantiene analizable un conjunto conocido más largo: cada elección devuelve un payload estructurado, así que se mantiene fuera de las fallas de texto libre donde `NOT_ASSIGNED_YET` es el 64% de todas las fallas del bot. También sostiene los flujos donde el espacio de elección es real pero finito (modificar, beneficiario, método de entrega), los mismos flujos donde el texto abierto se traba.",
+          en: "A menu keeps a longer known set parseable: every pick returns a structured payload, so it stays out of the free-text failures where `NOT_ASSIGNED_YET` is 64% of all bot failures. It also carries flows where the choice space is real but finite (modify, beneficiary, delivery method), the same flows where open text stalls.",
         },
       ],
       note: {
-        es: "Por medir: ratio de taps en botón vs. tipeo, y abandono en este paso. Ver el mapa de cruce con Amplitude.",
-        en: "To pull: button-tap vs typed ratio and abandonment at this step. See the Amplitude cross-check map.",
+        es: 'Por medir: tasa de selección por fila y por posición (¿hay sesgo hacia la primera fila?), qué tan profundo paginan (proporción que llega a 2/3 y 3/3), con qué frecuencia tocan la fila de escape ("No encuentro mi envío") y el abandono dentro del menú.',
+        en: 'To pull: selection rate per row and per position (is there a top-row bias), how deep people page (share reaching 2/3 and 3/3), how often they tap the escape row ("No encuentro mi envío"), and abandonment inside the menu.',
       },
     },
-    resources: SHARED_RESOURCES,
   },
 
   specs: {
     intro: {
-      es: "Los límites de WhatsApp que definen este patrón. Diseñá dentro de ellos.",
-      en: "The WhatsApp limits that define this pattern. Design within them.",
+      es: "Los límites de WhatsApp que definen este patrón.",
+      en: "The WhatsApp limits that define this pattern.",
     },
     tables: [
       {
-        heading: { es: "Botones de respuesta", en: "Reply buttons" },
+        heading: { es: "Mensaje de lista", en: "List message" },
         columns: [
           { es: "Componente", en: "Component" },
           { es: "Límite", en: "Spec" },
         ],
         rows: [
           [
-            { es: "Botones por mensaje", en: "Buttons per message" },
-            { es: "Hasta 3", en: "Up to 3" },
+            {
+              es: "Filas, en total entre todas las secciones",
+              en: "Rows, total across all sections",
+            },
+            { es: "Hasta 10", en: "Up to 10" },
           ],
-          [
-            { es: "Etiqueta del botón", en: "Button label" },
-            { es: "Máx. 20 caracteres", en: "Max 20 characters" },
-          ],
-        ],
-      },
-      {
-        heading: { es: "Mensaje de lista", en: "List message" },
-        columns: [
-          { es: "Elemento", en: "Element" },
-          { es: "Límite", en: "Limit" },
-        ],
-        rows: [
           [
             { es: "Secciones", en: "Sections" },
-            {
-              es: "Hasta 10 secciones, hasta 10 filas en total entre todas las secciones",
-              en: "Up to 10 sections, up to 10 rows total across all sections combined",
-            },
-          ],
-          [
-            { es: "Botón (abre la lista)", en: "Button (opens the list)" },
-            {
-              es: "Un botón, etiqueta máx. 20 caracteres",
-              en: "One button, label max 20 characters",
-            },
-          ],
-          [
-            { es: "Encabezado", en: "Header" },
-            {
-              es: "Opcional, solo texto, máx. 60 caracteres",
-              en: "Optional, text only, max 60 characters",
-            },
-          ],
-          [
-            { es: "Cuerpo", en: "Body" },
-            { es: "Máx. 4.096 caracteres", en: "Max 4,096 characters" },
-          ],
-          [
-            { es: "Pie", en: "Footer" },
-            {
-              es: "Opcional, máx. 60 caracteres",
-              en: "Optional, max 60 characters",
-            },
+            { es: "Hasta 10", en: "Up to 10" },
           ],
           [
             { es: "Título de fila", en: "Row title" },
             { es: "Máx. 24 caracteres", en: "Max 24 characters" },
           ],
           [
-            { es: "Descripción de fila", en: "Row description" },
+            {
+              es: "Descripción de fila (el texto de apoyo)",
+              en: "Row description (the support text)",
+            },
             {
               es: "Opcional, máx. 72 caracteres",
               en: "Optional, max 72 characters",
             },
           ],
+          [
+            { es: "Título de sección", en: "Section title" },
+            { es: "Máx. 24 caracteres", en: "Max 24 characters" },
+          ],
+          [
+            {
+              es: "Botón que abre la lista",
+              en: "Button that opens the list",
+            },
+            { es: "Máx. 20 caracteres", en: "Max 20 characters" },
+          ],
+          [
+            {
+              es: "Encabezado, opcional, solo texto",
+              en: "Header, optional, text only",
+            },
+            { es: "Máx. 60 caracteres", en: "Max 60 characters" },
+          ],
+          [
+            { es: "Cuerpo", en: "Body" },
+            { es: "Máx. 4.096 caracteres", en: "Max 4,096 characters" },
+          ],
+          [
+            { es: "Pie, opcional", en: "Footer, optional" },
+            { es: "Máx. 60 caracteres", en: "Max 60 characters" },
+          ],
+          [
+            { es: "Respuesta del usuario", en: "User reply" },
+            {
+              es: "Payload estructurado (el id de la fila), no texto libre",
+              en: "Structured payload (the row id), not free text",
+            },
+          ],
         ],
       },
       {
-        heading: { es: "Decisión: cómo preguntar", en: "Decision: how to ask" },
+        heading: { es: "Casos de uso", en: "Use cases" },
         columns: [
           { es: "Opciones", en: "Options" },
-          { es: "Componente", en: "Pattern" },
+          { es: "Patrón", en: "Pattern" },
         ],
         rows: [
           [
@@ -178,13 +773,34 @@ const closedInput: Pattern = {
           ],
           [
             { es: "4 a 10 opciones", en: "4 to 10 options" },
-            { es: "Mensaje de lista", en: "List message" },
+            { es: "Menú (mensaje de lista)", en: "Menu (list message)" },
           ],
           [
             { es: "Más de 10", en: "More than 10" },
-            { es: "Repensar el flujo", en: "Rethink the flow" },
+            {
+              es: "Paginar el menú, o repensar el paso",
+              en: "Paginate the menu, or rethink the step",
+            },
           ],
         ],
+      },
+    ],
+    notes: [
+      {
+        es: "Regla propia: usa el menú solo cuando hay más de 3 opciones. Por debajo de eso, botones de respuesta. WhatsApp permite una lista de una sola fila, pero ese es trabajo de un botón.",
+        en: "Our own rule: use the menu only when there are more than 3 options. Below that, reply buttons. WhatsApp allows a one-row list, but that is a button's job.",
+      },
+      {
+        es: 'Paginación: 10 filas es el tope de la plataforma para una sola lista. Para conjuntos más largos (envíos recientes), divide en páginas en el título (1/3, 2/3, 3/3) y ofrece "Volver", "Ver más envíos" y una fila de escape como "No encuentro mi envío" en la última página. Máximo 3 páginas.',
+        en: 'Pagination: 10 rows is the platform cap for a single list. For longer sets (recent sends), split into pages in the title (1/3, 2/3, 3/3) and offer "Volver", "Ver más envíos", and an escape row like "No encuentro mi envío" in the last page. Max 3 pages.',
+      },
+      {
+        es: "El total es de 10 filas entre todas las secciones por página.",
+        en: "Total is 10 rows across all sections per page.",
+      },
+      {
+        es: "Secciones: el título de sección es un encabezado, no una fila tocable, así que no cuenta para el total de 10 filas. Hasta 10 secciones por lista, con títulos de máx. 24 caracteres.",
+        en: "Sections: a section title is a header, not a tappable row, so it does not count toward the 10-row total. Up to 10 sections per list, titles max 24 characters.",
       },
     ],
     source: {
@@ -197,466 +813,777 @@ const closedInput: Pattern = {
 
   guidelines: {
     usage: {
-      es: "Recurrí a la entrada cerrada siempre que el conjunto de respuestas se conozca de antemano. Mantiene a la gente en un camino que el bot puede leer, y le saca la adivinanza a un paso que si no se trabaría.",
-      en: "Reach for closed input whenever the set of answers is known in advance. It keeps people on a path the bot can read, and it takes the guesswork out of a step that would otherwise stall.",
+      es: "Recurre a un menú cuando tienes un conjunto conocido demasiado largo para botones. El título de la fila lleva la elección; la descripción, cuando está, existe para ayudar al usuario a elegir, nada más.",
+      en: "Reach for a menu when you have a known set that is too long for buttons. The row title carries the choice; the description, when present, is there to help the user pick, nothing more.",
     },
     tips: {
-      es: "Escribí cada opción como la diría el usuario, no como la guarda el sistema. Mantené las etiquetas cortas, asegurate de que ninguna se solape con otra, y ordenalas por frecuencia de uso o en una secuencia que ya tenga sentido (de menor a mayor monto, del destino más al menos común).",
-      en: "Write each option the way the user would say it, not the way the system stores it. Keep the labels short, make sure no two overlap, and order them by how often they get picked or in a sequence that already makes sense (lowest to highest amount, most to least common destination).",
+      es: 'Mantén los títulos de fila cortos y capaces de sostenerse solos (24 caracteres es el tope duro; apunta bien por debajo). Agrega una descripción solo cuando desambigua o lleva un estado que el usuario necesita (un número de referencia, "Listo para recoger", "No disponible por ahora"). Haz que la descripción apoye lo que dice el título. Si repite el título o se lee como decoración, quítala. Es normal tener algunas filas con descripción y otras sin ella en la misma lista. Ordena las filas como piensa el usuario (más reciente, más probable, de menor a mayor monto), y cuando una fila está presente pero no se puede usar, muéstrala deshabilitada con el motivo como descripción en lugar de ocultarla. Si una fila lleva un mensaje de alerta, puede ir en rojo para señalarlo. Las secciones con título funcionan igual: úsalas cuando las filas caen en grupos que el usuario ya reconoce, nunca como decoración.',
+      en: 'Keep row titles short and able to stand on their own (24 characters is the hard cap, aim well under). Add a description only when it disambiguates or carries a status the user needs (a reference number, "Listo para recoger", "No disponible por ahora"). Make the description support what the title says. If it repeats the title or reads as decoration, drop it. It is normal to have some rows with a description and some without in the same list. Order rows the way the user thinks (most recent, most likely, lowest to highest amount), and when a row is present but not usable, show it disabled with the reason as its description rather than hiding it. If a row carries an alert message, it can be shown in red to flag it. Titled sections work the same way: use them when the rows fall into groups the user already recognizes, never as decoration.',
     },
     examples: [
       {
         tone: "do",
-        img: `${ASSETS}/closed-input-do-1.png`,
+        img: `${ASSETS}/menu-do-1.png`,
         alt: {
-          es: "Pregunta de WhatsApp con las opciones conocidas como botones",
-          en: "WhatsApp question offering the known options as reply buttons",
+          es: 'Fila de menú "10 USD a Eva Mariana Ugarte" con la descripción "Listo para recoger | A234567893"',
+          en: 'Menu row "10 USD a Eva Mariana Ugarte" with the description "Listo para recoger | A234567893"',
         },
         caption: {
-          es: "Ofrecé las opciones conocidas como botones. Un tap, sin tipear.",
-          en: "Offer the known options as buttons. One tap, no typing.",
+          es: "El título es la elección; la descripción agrega el estado y la referencia que la distinguen.",
+          en: "The title is the choice, the description adds the status and reference that tell it apart.",
         },
       },
       {
         tone: "dont",
-        img: `${ASSETS}/closed-input-dont-1.png`,
+        img: `${ASSETS}/menu-dont-1.png`,
         alt: {
-          es: "Pregunta de WhatsApp dejando un conjunto conocido como texto abierto",
-          en: "WhatsApp question leaving a known set as open text",
+          es: "Menú cuyas descripciones repiten el título o agregan texto sin relación",
+          en: "Menu whose descriptions repeat the title or add unrelated text",
         },
         caption: {
-          es: "No dejes un conjunto conocido como texto abierto. La respuesta se vuelve difícil de interpretar.",
-          en: "Don't leave a known set as open text. The reply gets hard to parse.",
+          es: "No rellenes las filas con texto de apoyo que no ayuda al usuario a elegir.",
+          en: "Don't pad rows with support text that doesn't help the user choose.",
         },
       },
       {
         tone: "do",
-        img: `${ASSETS}/closed-input-do-2.png`,
+        img: `${ASSETS}/menu-do-2.png`,
         alt: {
-          es: "Pregunta de WhatsApp usando un mensaje de lista para más de tres opciones",
-          en: "WhatsApp question using a list message for more than three options",
+          es: 'Menú que mezcla "Jose Del Mar" sin descripción con "Nuevo beneficiario" y la descripción "Alguien que no está en tu lista"',
+          en: 'Menu mixing "Jose Del Mar" with no description next to "Nuevo beneficiario" with "Alguien que no está en tu lista"',
         },
         caption: {
-          es: "Usá una lista cuando hay más de 3 opciones.",
-          en: "Use a list when there are more than 3 options.",
+          es: "Agrega la descripción solo donde se gana su lugar.",
+          en: "Add the description only where it earns its place.",
         },
       },
       {
         tone: "dont",
-        img: `${ASSETS}/closed-input-dont-2.png`,
+        img: `${ASSETS}/menu-dont-2.png`,
         alt: {
-          es: "Pregunta de WhatsApp amontonando muchas opciones en un solo mensaje",
-          en: "WhatsApp question cramming many options into a single message",
+          es: "Doce envíos amontonados en una sola lista sin paginación",
+          en: "Twelve sends crammed into one list with no pagination",
         },
         caption: {
-          es: "No amontones muchas opciones en un mensaje ni en botones.",
-          en: "Don't cram many options into one message or into buttons.",
+          es: 'Pasado el tope de 10 filas, pagina con "Volver" y "Ver más envíos" en lugar de desbordar.',
+          en: 'Past the 10-row cap, paginate with "Volver" and "Ver más envíos" instead of overflowing.',
         },
       },
     ],
   },
 };
 
-// ─── Entrada abierta ─────────────────────────────────────────────────────────
-
-const openInput: Pattern = {
-  slug: "open-input",
-  name: { es: "Open Input", en: "Open Input" },
+const menu: Pattern = {
+  slug: "menu",
+  family: "interaction",
+  name: { es: "Menu", en: "Menu" },
+  subtitle: { es: "List message", en: "List message" },
   lede: {
-    es: "Una pregunta que se responde con texto libre, para cuando la respuesta no se puede listar de antemano (un nombre, un monto a medida, una ciudad). El usuario escribe, y el bot tiene que leer lo que venga.",
-    en: "A question answered with free text, for when the answer can't be listed in advance (a name, a custom amount, a city). The user types, and the bot has to read whatever comes back.",
+    es: "Una lista para tocar, para cuando la respuesta es una de un conjunto conocido pero más largo (envíos recientes, un método de entrega, un beneficiario). El usuario abre el menú y elige una fila, y cada elección vuelve como una respuesta limpia y estructurada.",
+    en: "A tappable list for when the answer is one of a known but longer set (recent sends, a delivery method, a beneficiary). The user opens the menu and picks a row, and every choice comes back as a clean, structured reply.",
   },
   cardBody: {
-    es: "Una pregunta que se responde con texto libre, para cuando la respuesta no se puede listar de antemano (un nombre, un monto a medida, una ciudad). El usuario escribe, y el bot tiene que leer lo que venga.",
-    en: "A question answered with free text, for when the answer can't be listed in advance (a name, a custom amount, a city). The user types, and the bot has to read whatever comes back.",
+    es: "Una lista para tocar, para cuando la respuesta es una de un conjunto conocido pero más largo. El usuario elige una fila y cada elección vuelve estructurada.",
+    en: "A tappable list for when the answer is one of a known but longer set. The user picks a row and every choice comes back structured.",
   },
-  hero: `${ASSETS}/open-input-hero.png`,
-  heroDetail: [
-    `${ASSETS}/open-input-hero-a.png`,
-    `${ASSETS}/open-input-hero-b.png`,
-  ],
+  hero: `${ASSETS}/menu-hero.png`,
+  heroDetail: [`${ASSETS}/menu-hero.png`],
   heroAlt: {
-    es: "Pantalla de WhatsApp preguntando a quién enviar dinero, con una pista de formato y un ejemplo",
-    en: "WhatsApp screen asking who to send money to, with a format hint and a worked example",
+    es: 'Menú de WhatsApp "Mis envíos" con filas que muestran estado y referencia',
+    en: 'WhatsApp "Mis envíos" menu with rows showing status and reference',
   },
-
-  overview: {
-    usage: [
-      {
-        es: "Usá entrada abierta solo cuando el conjunto de respuestas es genuinamente impredecible (un nombre completo, un monto a medida, una ciudad libre).",
-        en: "Use open input only when the set of answers is genuinely unpredictable (a full name, a custom amount, a free city).",
-      },
-      {
-        es: "Si las respuestas se conocen, usá entrada cerrada (botones para 1 a 3, una lista para 4 a 10).",
-        en: "If the answers are known, use Closed input instead (buttons for 1 to 3, a list for 4 to 10).",
-      },
-      {
-        es: "Acompañá siempre la pregunta con una pista de formato, para que el usuario sepa cómo responder.",
-        en: "Always pair the question with a format hint, so the user knows how to answer.",
-      },
-      {
-        es: "Preguntá una sola cosa por mensaje. Dos preguntas en una burbuja duplican las formas de malinterpretar la respuesta.",
-        en: "Ask one thing per message. Two questions in one bubble double the ways a reply can be misread.",
-      },
-      {
-        es: 'Mostrá un ejemplo resuelto ("Ejemplo: Juan Pérez López") las primeras una o dos veces que el usuario llega a este paso, y retiralo cuando el patrón ya se aprendió. Cuándo dejar de mostrarlo está por definirse.',
-        en: 'Show a worked example ("Ejemplo: Juan Pérez López") the first one or two times a user reaches this step, then retire it once the pattern is learned. When exactly to stop showing it is TBD.',
-      },
-    ],
-    metric: {
-      title: {
-        es: "Por qué funciona · métricas por confirmar",
-        en: "Why this works · metrics TBD",
-      },
-      body: [
-        {
-          es: "El texto abierto es inevitable cuando el espacio de respuestas no tiene límite, pero también es donde el bot falla más. Las respuestas sin clasificar (`NOT_ASSIGNED_YET`) son el 64% de todas las fallas del bot, y el paso de mayor fricción que tenemos (cuenta bancaria) está en 129s de mediana, ambos empujados por la entrada libre. La pista de formato y el ejemplo de la primera vez existen para bajar esos números.",
-          en: "Open text is unavoidable when the answer space is unbounded, but it is also where the bot fails most. Unclassified replies (`NOT_ASSIGNED_YET`) are 64% of all bot failures, and the highest-friction step we have (bank account) sits at a 129s median, both driven by free-form entry. The format hint and the first-run example exist to pull those numbers down.",
-        },
-      ],
-      note: {
-        es: "Por medir: tasa de parseo exitoso en el paso, mediana de tiempo en el paso (comparada contra los 129s del paso de cuenta bancaria), y tasa de loop o abandono. Para la variante con ejemplo, comparar parseo y tiempo con la pista visible vs. oculta, para decidir cuánto tiempo seguir mostrándola.",
-        en: "To pull: parse-success rate at the step, median time at step (benchmark against the 129s bank-account step), and loop or abandon rate. For the example variant, compare parse-success and time at step with the hint shown vs hidden, to decide how long to keep showing it.",
-      },
-    },
-    resources: SHARED_RESOURCES,
-  },
-
-  specs: {
-    intro: {
-      es: "Los límites de WhatsApp que definen este patrón.",
-      en: "The WhatsApp limits that define this pattern.",
-    },
-    tables: [
-      {
-        heading: { es: "Mensaje de texto", en: "Text message" },
-        columns: [
-          { es: "Componente", en: "Component" },
-          { es: "Límite", en: "Spec" },
-        ],
-        rows: [
-          [
-            { es: "Cuerpo del mensaje", en: "Prompt message body" },
-            { es: "Hasta 4.096 caracteres", en: "Up to 4,096 characters" },
-          ],
-          [
-            { es: "Componente interactivo", en: "Interactive component" },
-            {
-              es: "Ninguno (mensaje de texto plano)",
-              en: "None (plain text message)",
-            },
-          ],
-          [
-            { es: "Respuesta del usuario", en: "User reply" },
-            {
-              es: "Texto libre, sin payload estructurado",
-              en: "Free-form text, no structured payload",
-            },
-          ],
-          [
-            { es: "Validación", en: "Validation" },
-            {
-              es: "Ninguna del lado de WhatsApp; el bot parsea el texto crudo",
-              en: "None on WhatsApp's side; the bot parses the raw text",
-            },
-          ],
-          [
-            {
-              es: "Ventana de respuesta libre",
-              en: "Free-form reply window",
-            },
-            {
-              es: "Solo dentro de la ventana de atención de 24 horas; fuera de ella se reabre con una plantilla",
-              en: "Only inside the 24-hour customer service window; outside it you reopen with a template",
-            },
-          ],
-        ],
-      },
-      {
-        heading: { es: "Casos de uso", en: "Use cases" },
-        columns: [
-          { es: "Respuesta", en: "Answer" },
-          { es: "Patrón", en: "Pattern" },
-        ],
-        rows: [
-          [
-            {
-              es: "Sin límite (nombre como en el documento, monto a medida, ciudad libre)",
-              en: "Unbounded (name as on document, custom amount, free city)",
-            },
-            {
-              es: "Entrada abierta (texto libre)",
-              en: "Open input (free text)",
-            },
-          ],
-          [
-            { es: "Conjunto conocido, 1 a 3", en: "Known set, 1 to 3" },
-            {
-              es: "Botones de respuesta (ver entrada cerrada)",
-              en: "Reply buttons (see Closed input)",
-            },
-          ],
-          [
-            { es: "Conjunto conocido, 4 a 10", en: "Known set, 4 to 10" },
-            {
-              es: "Mensaje de lista (ver entrada cerrada)",
-              en: "List message (see Closed input)",
-            },
-          ],
-        ],
-      },
-    ],
-    notes: [
-      {
-        es: 'Sobre la línea de ejemplo: los mensajes de texto de WhatsApp no tienen campo de placeholder ni de ejemplo. La pista "Ejemplo:" es copy dentro del cuerpo del mensaje, así que mostrarla solo en la primera o segunda vez es lógica del bot, no una función de la plataforma.',
-        en: 'Note on the example line: WhatsApp text messages have no placeholder or example field. The "Ejemplo:" hint is copy inside the message body, so showing it only on the first or second run is bot logic, not a platform feature.',
-      },
-    ],
-    source: {
-      es: "Fuente: WhatsApp Cloud API, mensajes de texto y la ventana de atención de 24 horas. Confirmar en ",
-      en: "Source: WhatsApp Cloud API, text messages and the 24-hour customer service window. Confirm on ",
-    },
-    sourceHref: "https://developers.facebook.com",
-    sourceLinkText: "developers.facebook.com",
-  },
-
-  guidelines: {
-    usage: {
-      es: "Recurrí a la entrada abierta solo cuando realmente no podés enumerar las respuestas. Cada paso abierto es un lugar donde el bot puede malinterpretar, entrar en loop o perder al usuario, así que la vara para usarlo debería ser alta.",
-      en: "Reach for open input only when you truly can't enumerate the answers. Every open step is a place the bot can misread, loop, or lose the user, so the bar for using it should be high.",
-    },
-    tips: {
-      es: "Arrancá con la pregunta, después la pista de formato en su propia línea, y después el ejemplo. Mantené la pista concreta y en las palabras del usuario. Si te encontrás escribiendo una pista que lista las respuestas válidas, es señal de que el paso debería ser entrada cerrada, no abierta.",
-      en: "Lead with the question, then the format hint on its own line, then the example. Keep the hint concrete and in the user's own words. If you find yourself writing a hint that lists the valid answers, that is a sign the step should be closed input, not open.",
-    },
-    examples: [
-      {
-        tone: "do",
-        img: `${ASSETS}/open-input-do-1.png`,
-        alt: {
-          es: "Pregunta de WhatsApp con una pista de formato clara y un ejemplo resuelto",
-          en: "WhatsApp question with a clear format hint and a worked example",
-        },
-        caption: {
-          es: "Una sola pregunta, una pista clara y un ejemplo para la primera vez.",
-          en: "One question, a clear hint, and a first-run example.",
-        },
-      },
-      {
-        tone: "dont",
-        img: `${ASSETS}/open-input-dont-1.png`,
-        alt: {
-          es: "Mensaje de WhatsApp con dos preguntas apiladas en una sola burbuja",
-          en: "WhatsApp message with two questions stacked in one bubble",
-        },
-        caption: {
-          es: "No pidas texto abierto para algo que podrías ofrecer como opciones.",
-          en: "Don't ask open text for something you could offer as options.",
-        },
-      },
-    ],
-  },
+  // Las tres pestañas estándar, con la galería de casos de uso al final de Specs.
+  tabs: standardTabs(menuSections).map(
+    (tab): PatternTab =>
+      tab.id !== "specs"
+        ? tab
+        : {
+            ...tab,
+            blocks: [
+              ...tab.blocks,
+              {
+                type: "heading",
+                text: { es: "Pantallas de ejemplo", en: "Example screens" },
+              },
+              {
+                type: "gallery",
+                items: [
+                  {
+                    img: `${ASSETS}/menu-mixed.png`,
+                    label: { es: "Menú mixto", en: "Mixed menu" },
+                    alt: {
+                      es: 'Lista "¿A quién quieres enviarle tu dinero?" que mezcla filas con y sin descripción',
+                      en: 'List "¿A quién quieres enviarle tu dinero?" mixing rows with and without descriptions',
+                    },
+                  },
+                  {
+                    img: `${ASSETS}/menu-descriptions.png`,
+                    label: {
+                      es: "Menú con descripciones",
+                      en: "Menu with descriptions",
+                    },
+                    alt: {
+                      es: 'Lista "Mis envíos", cada fila con estado y referencia',
+                      en: 'List "Mis envíos", each row with status and reference',
+                    },
+                  },
+                  {
+                    img: `${ASSETS}/menu-alerts.png`,
+                    label: {
+                      es: "Menú con mensajes de alerta",
+                      en: "Menu with alert messages",
+                    },
+                    alt: {
+                      es: 'Lista "Elige otro método de entrega" con una fila deshabilitada y "No disponible por ahora" como descripción',
+                      en: 'List "Elige otro método de entrega" with a disabled row and "No disponible por ahora" as the description',
+                    },
+                  },
+                  {
+                    img: `${ASSETS}/menu-sections.png`,
+                    label: {
+                      es: "Menú con títulos de sección",
+                      en: "Menu with section titles",
+                    },
+                    alt: {
+                      es: "Lista dividida en secciones con título, cada grupo con sus filas",
+                      en: "List split into titled sections, each group with its rows",
+                    },
+                  },
+                  {
+                    img: `${ASSETS}/menu-pagination.png`,
+                    label: {
+                      es: "Menú con paginación",
+                      en: "Menu with pagination",
+                    },
+                    alt: {
+                      es: 'Lista "Mis envíos" paginada, con el número de página en el título y filas para volver y ver más',
+                      en: 'Paginated "Mis envíos" list, with the page number in the title and rows to go back and see more',
+                    },
+                  },
+                  {
+                    img: `${ASSETS}/menu-button.png`,
+                    label: {
+                      es: "Menú con botón activo",
+                      en: "Menu with button active",
+                    },
+                    alt: {
+                      es: "Lista con un botón de acción activo en el pie",
+                      en: "List with an active call-to-action button in the footer",
+                    },
+                  },
+                ],
+              },
+            ],
+          }
+  ),
 };
 
-// ─── Entrada mixta ───────────────────────────────────────────────────────────
+// ─── Use of emojis ───────────────────────────────────────────────────────────
 
-const mixedInput: Pattern = {
-  slug: "mixed-input",
-  name: { es: "Mixed input", en: "Mixed input" },
-  title: {
-    es: "Mixed input (buttons and open question)",
-    en: "Mixed input (buttons and open question)",
+/* Estructura propia: solo Overview y Guidelines, sin specs ni do/don't. Los
+   ejemplos de copy del bot ("Tu envío está en camino") quedan en español tal
+   cual porque son texto de producto, no de la guía. */
+const useOfEmojis: Pattern = {
+  slug: "use-of-emojis",
+  family: "conversational",
+  name: { es: "Use of emojis", en: "Use of emojis" },
+  lede: { es: "Cuándo y cuántos usar.", en: "When and how many to use." },
+  cardBody: { es: "Cuándo y cuántos usar.", en: "When and how many to use." },
+  hero: `${ASSETS}/emojis-hero.png`,
+  heroDetail: [`${ASSETS}/emojis-hero.png`],
+  heroAlt: {
+    es: "Conjunto de emojis ilustrados: caras, manos, dinero y un banco",
+    en: "A cluster of illustrated emoji: faces, hands, money and a bank",
   },
+  tabs: [
+    {
+      id: "overview",
+      label: { es: "Resumen", en: "Overview", pt: "Resumo" },
+      blocks: [
+        { type: "heading", text: { es: "Reglas", en: "Rules" } },
+        {
+          type: "table",
+          columns: [
+            { es: "Regla", en: "Rule" },
+            { es: "Estándar", en: "Standard" },
+            { es: "Ejemplo", en: "Example" },
+          ],
+          rows: [
+            [
+              { es: "Marca estado, no ánimo", en: "Marks state, not mood" },
+              {
+                es: "Un emoji señala el estado de un mensaje: hecho, en curso, requiere atención. La calidez la lleva la oración, no el ícono.",
+                en: "An emoji signals the state of a message — done, in progress, needs attention. Warmth is carried by the sentence, not by the icon.",
+              },
+              {
+                es: 'Un emoji de estado abriendo "Tu envío está en camino" ✓',
+                en: 'A state emoji opening "Tu envío está en camino" ✓',
+              },
+            ],
+            [
+              {
+                es: "Uno por mensaje, al inicio",
+                en: "One per message, at the start",
+              },
+              {
+                es: "Máximo un emoji, anclado al inicio de la línea que califica. Nunca disperso a mitad de oración ni junto a un monto, donde compite con la cifra que el usuario vino a verificar.",
+                en: "Maximum one emoji, anchored at the start of the line it qualifies. Never scattered mid-sentence and never adjacent to an amount, where it competes with the figure the user came to verify.",
+              },
+              {
+                es: "Un emoji a cada lado del monto ✗",
+                en: "An emoji on either side of the amount ✗",
+              },
+            ],
+            [
+              { es: "Nunca carga el significado", en: "Never load-bearing" },
+              {
+                es: "Un emoji nunca lleva un significado que el texto no lleve también. El renderizado varía entre dispositivos y los lectores de pantalla los anuncian literalmente.",
+                en: "An emoji never carries meaning the text does not also carry. Rendering differs across devices and screen readers announce them literally.",
+              },
+              {
+                es: "Un emoji en lugar de la palabra de estado ✗",
+                en: "An emoji in place of the status word ✗",
+              },
+            ],
+            [
+              { es: "Contextos prohibidos", en: "Prohibited contexts" },
+              {
+                es: "Sin emojis en transacciones fallidas, copy de KYC o compliance, avisos legales, derivación a un agente humano o estados de falla parcial. Junto a dinero demorado o retenido, un emoji se lee como minimizar el problema.",
+                en: "No emoji in failed transactions, KYC or compliance copy, legal disclosures, handoff to a human agent, or partial-failure states. Next to money that is late or held, an emoji reads as minimizing the problem.",
+              },
+              {
+                es: "Error que involucra fondos ✗",
+                en: "Error involving funds ✗",
+              },
+            ],
+            [
+              { es: "No en etiquetas de botón", en: "Not in button labels" },
+              {
+                es: "Las etiquetas tienen un tope de 20 caracteres con espacios (ver guías de Voz y Tono). Un emoji gasta caracteres y se renderiza de forma inconsistente entre clientes.",
+                en: "Labels are capped at 20 characters including spaces (see Voice & Tone guidelines). An emoji spends characters and renders inconsistently across clients.",
+              },
+              { es: "—", en: "—" },
+            ],
+          ],
+        },
+      ],
+    },
+    {
+      id: "guidelines",
+      label: { es: "Guías", en: "Guidelines", pt: "Diretrizes" },
+      blocks: [
+        {
+          type: "heading",
+          text: { es: "Conjunto aprobado de emojis", en: "Approved emoji set" },
+        },
+        {
+          type: "prose",
+          text: {
+            es: "Un conjunto cerrado mapeado a tipos de mensaje. Las reglas de la tabla anterior valen sin importar qué emojis estén en el conjunto; esta sección define el conjunto y su mapeo.",
+            en: "A closed set mapped to message types. The rules in the table above hold regardless of which emoji are in the set; this section defines the set and its mapping.",
+          },
+        },
+        {
+          type: "callout",
+          title: { es: "Criterios de selección.", en: "Selection criteria." },
+          body: {
+            es: "Cada emoji del conjunto es un solo codepoint con presentación de emoji por defecto: sin selector de variación (U+FE0F), sin tono de piel, sin género, sin secuencia ZWJ.",
+            en: "Every emoji in the set is a single codepoint with default emoji presentation — no variation selector (U+FE0F), no skin tone, no gender, no ZWJ sequence.",
+          },
+        },
+        {
+          type: "table",
+          columns: [
+            { es: "Tipo de mensaje", en: "Message type" },
+            { es: "Emoji", en: "Emoji" },
+            { es: "Codepoint", en: "Codepoint" },
+            { es: "Aplica a", en: "Applies to" },
+            { es: "Por qué este", en: "Why this one" },
+          ],
+          rows: [
+            [
+              { es: "Éxito / completado", en: "Success / completed" },
+              { es: "✅", en: "✅" },
+              { es: "U+2705", en: "U+2705" },
+              {
+                es: "Transferencia entregada, identidad verificada, pago recibido",
+                en: "Transfer delivered, identity verified, payment received",
+              },
+              {
+                es: "Presentación nativa de emoji, sin selector de variación. Forma autocontenida, legible en tamaños pequeños, independiente del color de fondo",
+                en: "Native emoji presentation, no variation selector. Self-contained shape, legible at small sizes, independent of background color",
+              },
+            ],
+            [
+              { es: "En curso", en: "In progress" },
+              { es: "⏳", en: "⏳" },
+              { es: "U+23F3", en: "U+23F3" },
+              {
+                es: "Transferencia en proceso, verificación en marcha",
+                en: "Transfer processing, verification underway",
+              },
+              {
+                es: "Marca el paso del tiempo, no la demora. ⌛ (U+231B) se lee como terminado; ⏰ se lee como una operación del sistema y no como un estado de la transferencia",
+                en: "Marks time elapsing rather than delay. ⌛ (U+231B) reads as finished; ⏰ reads as a system operation rather than a transfer state",
+              },
+            ],
+            [
+              { es: "Requiere atención", en: "Needs attention" },
+              { es: "🔔", en: "🔔" },
+              { es: "U+1F514", en: "U+1F514" },
+              {
+                es: "Campo faltante, tasa por vencer, documento pendiente",
+                en: "Missing field, rate about to expire, document pending",
+              },
+              {
+                es: "Se lee como un recordatorio, no como una alarma. Reservado solo para estados accionables por el usuario, nunca para fallas: esas caen en contextos prohibidos",
+                en: "Reads as a reminder, not an alarm. Reserved for user-actionable states only, never for failures — those fall under prohibited contexts",
+              },
+            ],
+            [
+              { es: "Información", en: "Information" },
+              { es: "(ninguno)", en: "(none)" },
+              { es: "—", en: "—" },
+              {
+                es: "Tasas, límites, detalles de corredor, copy de cómo funciona",
+                en: "Rates, limits, corridor details, how-it-works copy",
+              },
+              {
+                es: "La información es una categoría de contenido, no un estado de transacción. Un marcador en cada mensaje informativo deja de señalar y se vuelve decoración del párrafo",
+                en: "Information is a content category, not a transaction state. A marker on every informational message stops signalling and becomes paragraph decoration",
+              },
+            ],
+          ],
+        },
+        {
+          type: "heading",
+          text: { es: "Banderas de países", en: "Country flags" },
+        },
+        {
+          type: "prose",
+          text: {
+            es: "Las banderas están permitidas, pero no son emojis de estado y no participan del mapeo anterior.",
+            en: "Flags are permitted, but they are not state emoji and do not participate in the mapping above.",
+          },
+        },
+        {
+          type: "table",
+          columns: [
+            { es: "Regla", en: "Rule" },
+            { es: "Estándar", en: "Standard" },
+          ],
+          rows: [
+            [
+              {
+                es: "Etiqueta un destino, no un estado",
+                en: "Labels a destination, not a state",
+              },
+              {
+                es: "Una bandera identifica un corredor o un país. Nunca sustituye a un emoji de estado ni aparece junto a uno en el mismo mensaje",
+                en: "A flag identifies a corridor or country. It never substitutes for, or appears alongside, a state emoji in the same message",
+              },
+            ],
+            [
+              {
+                es: "Una por línea, en contextos de lista",
+                en: "One per line, in list contexts",
+              },
+              {
+                es: "Permitida en listas de selección de corredor y en etiquetas de país, donde cada bandera va en su propia línea. No permitida a mitad de oración en prosa",
+                en: "Permitted in corridor selection lists and country labels, where each flag sits on its own line. Not permitted mid-sentence in prose",
+              },
+            ],
+            [
+              {
+                es: "Nunca junto a un monto",
+                en: "Never adjacent to an amount",
+              },
+              {
+                es: "Misma restricción que los emojis de estado. Una bandera junto a una cifra compite con el número que el usuario vino a verificar",
+                en: "Same constraint as state emoji. A flag next to a figure competes with the number the user came to verify",
+              },
+            ],
+            [
+              {
+                es: "Nunca una señal de idioma",
+                en: "Never a language signal",
+              },
+              {
+                es: "Una bandera marca a dónde va el dinero. No marca qué idioma lee el usuario, dónde vive ni la nacionalidad del destinatario",
+                en: "A flag marks where the money is going. It does not mark what language the user reads, where the user lives, or the recipient's nationality",
+              },
+            ],
+          ],
+        },
+        {
+          type: "prose",
+          text: {
+            es: "Corredores soportados: 🇲🇽 MX · 🇨🇴 CO · 🇬🇹 GT · 🇻🇪 VE · 🇧🇷 BR · 🇨🇷 CR",
+            en: "Supported corridors: 🇲🇽 MX · 🇨🇴 CO · 🇬🇹 GT · 🇻🇪 VE · 🇧🇷 BR · 🇨🇷 CR",
+          },
+        },
+        {
+          type: "prose",
+          text: {
+            es: "Las banderas son dos símbolos indicadores regionales y no un solo codepoint (MX = U+1F1F2 U+1F1FD). Se renderizan como la bandera esperada en los clientes móviles de WhatsApp y caen a un código de dos letras en algunas superficies de escritorio y web. Confirma el renderizado en las superficies objetivo antes de lanzar un flujo que dependa de ellas.",
+            en: "Flags are two regional indicator symbols rather than a single codepoint (MX = U+1F1F2 U+1F1FD). They render as the intended flag on mobile WhatsApp clients and fall back to a two-letter code on some desktop and web surfaces. Confirm rendering on target surfaces before shipping a flow that depends on them.",
+          },
+        },
+        {
+          type: "table",
+          columns: [
+            { es: "Excluidos", en: "Excluded" },
+            { es: "Motivo", en: "Reason" },
+          ],
+          rows: [
+            [
+              { es: "⚠️  ❗️  ❌", en: "⚠️  ❗️  ❌" },
+              {
+                es: "Escalan a alarma. Donde la advertencia sería precisa, los emojis ya están prohibidos",
+                en: "Escalate to alarm. Where the warning would be accurate, emoji are already prohibited",
+              },
+            ],
+            [
+              { es: "💰  💵  💸  🤑", en: "💰  💵  💸  🤑" },
+              {
+                es: "Prohibidos junto a montos por la regla anterior. El registro además celebra el dinero en un producto donde enviar suele ser una obligación, no un logro",
+                en: "Prohibited next to amounts by the rule above. The register also celebrates money in a product where sending is usually an obligation, not an achievement",
+              },
+            ],
+            [
+              { es: "🎉  🥳  🙌  👏", en: "🎉  🥳  🙌  👏" },
+              {
+                es: "Celebrar una transferencia completada enmarca un deber cumplido como una victoria",
+                en: "Celebration on a completed transfer frames a duty fulfilled as a win",
+              },
+            ],
+            [
+              { es: "👍  👉  🤷", en: "👍  👉  🤷" },
+              {
+                es: "Variantes de tono de piel y género; secuencias de varios codepoints",
+                en: "Skin tone and gender variants; multi-codepoint sequences",
+              },
+            ],
+            [
+              { es: "❤️  💚  🏡  👥", en: "❤️  💚  🏡  👥" },
+              {
+                es: "Ánimo, no estado. Instrumentaliza la relación familiar",
+                en: "Mood, not state. Instrumentalizes the family relationship",
+              },
+            ],
+          ],
+        },
+        {
+          type: "heading",
+          text: { es: "Implementación", en: "Implementation" },
+        },
+        {
+          type: "prose",
+          text: {
+            es: "El emoji pertenece al estado del mensaje, no al idioma. Se guarda como un token (global.icon.success, global.icon.pending, global.icon.action) y se concatena en la capa de plantilla, nunca embebido dentro de una cadena traducible. Embeberlo implica que el carácter puede alterarse o perderse por locale, y se duplica en cada cadena que lleve ese estado.",
+            en: "The emoji belongs to the message state, not to the language. It is stored as a token — global.icon.success, global.icon.pending, global.icon.action — and concatenated at the template layer, never embedded inside a translatable string. Embedding it means the character can be altered or dropped per locale, and duplicates across every string carrying that state.",
+          },
+        },
+        {
+          type: "callout",
+          title: { es: "Señal de validación:", en: "Validation signal —" },
+          body: {
+            es: "Mayormente cualitativa. No hay un evento limpio para el uso de emojis: las grabaciones de sesión y los tickets de CX son la evidencia disponible, no una métrica.",
+            en: "Mostly qualitative. There is no clean event for emoji use — session recordings and CX tickets are the available evidence, not a metric.",
+          },
+        },
+      ],
+    },
+  ],
+};
+
+// ─── Use of images ──────────────────────────────────────────────────────────
+
+/* Una sola pestaña: el contenido son las reglas más las dos notas de medición.
+   El hero se recortó del cluster de `hero-home.png`, donde la burbuja vive
+   aplanada — cuando haya un export propio del nodo, reemplazar el archivo.
+   El ejemplo "como ves en la imagen" queda en español porque es copy de
+   producto, no de la guía. */
+const useOfImages: Pattern = {
+  slug: "use-of-images",
+  family: "conversational",
+  name: { es: "Use of images", en: "Use of images" },
   lede: {
-    es: "Una pregunta que ofrece las respuestas más comunes como botones y todavía deja escribir la propia. Un camino rápido para la mayoría, una puerta abierta para la cola larga.",
-    en: "A question that offers the most common answers as buttons and still lets the user type their own. A fast path for the majority, an open door for the long tail.",
+    es: "Cuándo una imagen ayuda y cuándo distrae en un mensaje.",
+    en: "When an image helps vs distracts in a message.",
   },
   cardBody: {
-    es: "Una pregunta que ofrece las respuestas más comunes como botones y todavía deja escribir la propia. Un camino rápido para la mayoría, una puerta abierta para la cola larga.",
-    en: "A question that offers the most common answers as buttons and still lets the user type their own. A fast path for the majority, an open door for the long tail.",
+    es: "Cuándo una imagen ayuda y cuándo distrae en un mensaje.",
+    en: "When an image helps vs distracts in a message.",
   },
-  hero: `${ASSETS}/mixed-input-hero.png`,
-  heroDetail: [
-    `${ASSETS}/mixed-input-hero-a.png`,
-    `${ASSETS}/mixed-input-hero-b.png`,
-  ],
+  hero: `${ASSETS}/images-hero.png`,
+  heroDetail: [`${ASSETS}/images-hero.png`],
   heroAlt: {
-    es: "Pantalla de WhatsApp con botones de montos comunes y la opción de escribir un monto propio",
-    en: "WhatsApp screen with common amount buttons plus the option to type a custom amount",
+    es: "Mensaje de WhatsApp con una ilustración de tarjetas sobre el texto de pago y un botón para completar el pago",
+    en: "WhatsApp message with a card illustration above the payment copy and a button to complete the payment",
   },
-
-  overview: {
-    usage: [
-      {
-        es: "Usá entrada mixta cuando unos pocos valores cubren a la mayoría pero no a todos (montos frecuentes de envío, ciudades habituales), y todavía querés aceptar cualquier cosa fuera de los presets.",
-        en: "Use mixed input when a few values cover most people but not everyone (common send amounts, frequent cities), and you still want to accept anything outside the presets.",
-      },
-      {
-        es: "Poné las 2 o 3 respuestas más comunes en botones. Dejá el camino abierto para el resto.",
-        en: "Put the 2 to 3 most common answers on buttons. Keep the open path for the rest.",
-      },
-      {
-        es: 'Decí los dos caminos en voz alta en el copy, por ejemplo "Puedes elegir una opción o escribir el monto que prefieras".',
-        en: 'Say both paths out loud in the copy, for example "Puedes elegir una opción o escribir el monto que prefieras".',
-      },
-      {
-        es: "WhatsApp siempre deja escribir, así que incluso un mensaje de solo botones es en realidad mixto. Diseñá la respuesta escrita a propósito, no por accidente.",
-        en: "WhatsApp always lets people type, so even a buttons-only message is really mixed. Design for the typed reply on purpose, not by accident.",
-      },
-    ],
-    metric: {
-      title: {
-        es: "Por qué funciona · métricas por confirmar",
-        en: "Why this works · metrics TBD",
-      },
-      body: [
+  tabs: [
+    {
+      id: "overview",
+      label: { es: "Resumen", en: "Overview", pt: "Resumo" },
+      blocks: [
+        { type: "heading", text: { es: "Reglas", en: "Rules" } },
         {
-          es: "Cuando se ofrecen botones, casi todos los usan: en el flujo de modificación, el texto libre se usó solo el 1,6% de las veces. La entrada mixta le da ese camino rápido a la mayoría y mantiene la puerta abierta para valores que no podés predecir, sin forzar a todos a pasar por texto abierto propenso a errores.",
-          en: "When buttons are offered, almost everyone takes them: in the modify flow, free text was used only 1.6% of the time. Mixed input gives that fast path to the majority while keeping the door open for values you can't predict, without forcing everyone through error-prone open text.",
+          type: "table",
+          columns: [
+            { es: "Regla", en: "Rule" },
+            { es: "Estándar", en: "Standard" },
+            { es: "Ejemplo", en: "Example" },
+          ],
+          rows: [
+            [
+              {
+                es: "Función, no decoración",
+                en: "Function, not decoration",
+              },
+              {
+                es: "Una imagen se envía solo cuando lleva información que el texto no puede dar: dónde aparece un campo en un estado de cuenta, cómo se ve un comprobante de pago válido. Una imagen decorativa agrega un paso de carga y un scroll a un flujo donde el usuario ya está ansioso.",
+                en: "An image ships only when it carries information the text cannot: where a field appears on a bank statement, what a valid proof of payment looks like. A decorative image adds a load step and a scroll to a flow where the user is already anxious.",
+              },
+              {
+                es: "Dónde aparece el número de cuenta en un estado ✓ · Una ilustración de saludo ✗",
+                en: "Where the account number appears on a statement ✓ · A greeting illustration ✗",
+              },
+            ],
+            [
+              { es: "El texto se sostiene solo", en: "The text stands alone" },
+              {
+                es: "El mensaje debe estar completo sin la imagen. Las imágenes fallan en conexiones de bajo ancho de banda y los lectores de pantalla no las leen en voz alta.",
+                en: "The message must be complete without the image. Images fail on low-bandwidth connections and are not read aloud by screen readers.",
+              },
+              {
+                es: 'Nunca "como ves en la imagen"',
+                en: 'Never "como ves en la imagen"',
+              },
+            ],
+            [
+              {
+                es: "Nunca el único portador",
+                en: "Never the only carrier",
+              },
+              {
+                es: "Los montos, las comisiones, las fechas límite y las instrucciones nunca viven solo dentro de una imagen. El texto en una imagen no se puede seleccionar, corregir, tokenizar ni localizar: es una cadena fuera del pipeline.",
+                en: "Amounts, fees, deadlines and instructions never live only inside an image. Text in an image cannot be selected, corrected, tokenized or localized — it is a string outside the pipeline.",
+              },
+              {
+                es: "Un monto renderizado dentro de una imagen ✗",
+                en: "An amount rendered inside an image ✗",
+              },
+            ],
+            [
+              {
+                es: "Una burbuja, una decisión",
+                en: "One bubble, one decision",
+              },
+              {
+                es: "Una imagen nunca comparte mensaje con una pregunta. Primero muestra, después pregunta.",
+                en: "An image never shares a message with a question. Show first, ask after.",
+              },
+              {
+                es: "Imagen → después la pregunta, en un mensaje aparte",
+                en: "Image → then the question, in a separate message",
+              },
+            ],
+          ],
+        },
+        {
+          type: "callout",
+          title: { es: "Señal de validación:", en: "Validation signal —" },
+          body: {
+            es: "¿Los usuarios continúan o abandonan en los pasos que incluyen una imagen? Comparación de embudo a nivel de paso contra pasos equivalentes sin una.",
+            en: "Do users continue or drop at steps that include an image? Step-level funnel comparison against equivalent steps without one.",
+          },
+        },
+        {
+          type: "callout",
+          title: { es: "Pendiente:", en: "Open item —" },
+          body: {
+            es: "Confirmar si hoy existe un evento a nivel de paso que distinga los pasos que incluyen una imagen (Jose / analytics). Sin ese evento, el patrón queda como una convención y no se puede medir.",
+            en: "Confirm whether a step-level event today distinguishes steps that include an image (Jose / analytics). Without that event the pattern stays a convention and cannot be measured.",
+          },
         },
       ],
-      note: {
-        es: "Por medir: ratio de taps en botón vs. tipeo en el paso, y completado vs. abandono por camino. Si el uso escrito se mantiene mínimo, los presets están bien; si sube, a los botones les falta una respuesta común.",
-        en: "To pull: button-tap vs typed ratio at the step, and completion vs abandon per path. If typed usage stays tiny, the presets are right; if it climbs, the buttons are missing a common answer.",
-      },
     },
-    resources: SHARED_RESOURCES,
-  },
-
-  specs: {
-    intro: {
-      es: "Los límites de WhatsApp que definen este patrón.",
-      en: "The WhatsApp limits that define this pattern.",
-    },
-    tables: [
-      {
-        heading: { es: "Botones de respuesta", en: "Reply buttons" },
-        columns: [
-          { es: "Componente", en: "Component" },
-          { es: "Límite", en: "Spec" },
-        ],
-        rows: [
-          [
-            { es: "Botones por mensaje", en: "Buttons per message" },
-            { es: "Hasta 3", en: "Up to 3" },
-          ],
-          [
-            { es: "Etiqueta del botón", en: "Button label" },
-            { es: "Máx. 20 caracteres", en: "Max 20 characters" },
-          ],
-        ],
-      },
-      {
-        heading: { es: "Camino abierto", en: "Open path" },
-        columns: [
-          { es: "Componente", en: "Component" },
-          { es: "Límite", en: "Spec" },
-        ],
-        rows: [
-          [
-            { es: "Respuesta del usuario", en: "User reply" },
-            {
-              es: "Texto libre (hasta 4.096 caracteres), sin payload estructurado",
-              en: "Free-form text (up to 4,096 characters), no structured payload",
-            },
-          ],
-          [
-            { es: "Validación", en: "Validation" },
-            {
-              es: "Ninguna; el bot parsea las respuestas escritas",
-              en: "None; the bot parses typed replies",
-            },
-          ],
-        ],
-      },
-      {
-        heading: { es: "Casos de uso", en: "Use cases" },
-        columns: [
-          { es: "Camino", en: "Path" },
-          { es: "Cuándo", en: "When" },
-        ],
-        rows: [
-          [
-            { es: "Botones", en: "Buttons" },
-            {
-              es: "Las 2 o 3 respuestas más frecuentes (camino rápido)",
-              en: "The 2 to 3 most frequent answers (fast path)",
-            },
-          ],
-          [
-            { es: "Pregunta abierta", en: "Open question" },
-            {
-              es: "Cualquier valor fuera de los presets (cola larga)",
-              en: "Any value outside the presets (long tail)",
-            },
-          ],
-          [
-            {
-              es: "Más de 3 presets comunes",
-              en: "More than 3 common presets",
-            },
-            {
-              es: "Pasar la parte cerrada a un mensaje de lista",
-              en: "Switch the closed part to a list message",
-            },
-          ],
-        ],
-      },
-    ],
-    notes: [
-      {
-        es: "WhatsApp no tiene un solo componente que combine botones con un campo de texto. La entrada mixta es un mensaje de botones de respuesta (o de lista) más el parseo deliberado de cualquier respuesta escrita.",
-        en: "WhatsApp has no single component that combines buttons with a text field. Mixed input is a reply-buttons (or list) message plus deliberate parsing of any typed reply.",
-      },
-    ],
-    source: {
-      es: "Fuente: WhatsApp Cloud API, botones de respuesta interactivos y mensajes. Confirmar en ",
-      en: "Source: WhatsApp Cloud API, interactive reply buttons and messages. Confirm on ",
-    },
-    sourceHref: "https://developers.facebook.com",
-    sourceLinkText: "developers.facebook.com",
-  },
-
-  guidelines: {
-    usage: {
-      es: "Recurrí a la entrada mixta cuando las respuestas comunes merecen un atajo de un tap pero la cola larga es real. Es el punto medio entre la entrada cerrada (todas las respuestas conocidas) y la abierta (ninguna conocida).",
-      en: "Reach for mixed input when the common answers are worth a one-tap shortcut but the tail is real. It is the middle ground between closed input (all answers known) and open input (nothing known).",
-    },
-    tips: {
-      es: "Nombrá los presets que la gente realmente elige, en sus propias palabras, y ordenalos por frecuencia. Hacé explícita la opción abierta en el copy, así escribir no se siente como romper el flujo. Mantené los botones en las respuestas top de verdad; si necesitás más de 3, pasá la parte cerrada a una lista.",
-      en: "Name the presets people actually pick, in their own words, and order them by frequency. Make the open option explicit in the copy so typing doesn't feel like breaking the flow. Keep buttons to the true top answers; if you need more than 3, switch the closed part to a list.",
-    },
-    examples: [
-      {
-        tone: "do",
-        img: `${ASSETS}/mixed-input-do-1.png`,
-        alt: {
-          es: "Pantalla de WhatsApp con botones de montos comunes y la invitación a escribir un monto propio",
-          en: "WhatsApp screen with common amount buttons and an invitation to type a custom amount",
-        },
-        caption: {
-          es: "Los montos comunes a un tap, y el monto a medida igual de bienvenido.",
-          en: "Common amounts one tap away, a custom amount still welcome.",
-        },
-      },
-      {
-        tone: "dont",
-        img: `${ASSETS}/mixed-input-dont-1.png`,
-        alt: {
-          es: "Pantalla de WhatsApp con seis botones de monto y la opción abierta escondida",
-          en: "WhatsApp screen with six amount buttons and the open option buried",
-        },
-        caption: {
-          es: "No escondas el camino abierto, y no sobrecargues los botones.",
-          en: "Don't hide the open path, and don't overload the buttons.",
-        },
-      },
-    ],
-  },
+  ],
 };
 
-/** Registro. El orden acá es el orden de la grilla en la landing. */
-export const PATTERNS: Pattern[] = [closedInput, openInput, mixedInput];
+// ─── Text formatting & message length ───────────────────────────────────────
+
+/* Misma forma que los otros conversacionales: una pestaña con la tabla de
+   reglas y los dos callouts de medición. La regla de longitud sale de la tabla
+   a su propia sección: su contenido son tres párrafos más una lista numerada,
+   que en una celda de 13px quedaría ilegible.
+   Los ejemplos de copy del bot quedan en español tal cual (son de producto). */
+const textFormatting: Pattern = {
+  slug: "text-formatting",
+  family: "conversational",
+  name: {
+    es: "Text formatting & message length",
+    en: "Text formatting & message length",
+  },
+  lede: {
+    es: "Formato de texto y longitud del mensaje.",
+    en: "Text formatting and message length.",
+  },
+  cardBody: {
+    es: "Formato de texto y longitud del mensaje.",
+    en: "Text formatting and message length.",
+  },
+  hero: `${ASSETS}/length-format-hero.png`,
+  heroDetail: [`${ASSETS}/length-format-hero.png`],
+  heroAlt: {
+    es: "Mensaje de WhatsApp mostrando el largo de una burbuja de texto",
+    en: "WhatsApp message showing the length of a text bubble",
+  },
+  tabs: [
+    {
+      id: "overview",
+      label: { es: "Resumen", en: "Overview", pt: "Resumo" },
+      blocks: [
+        { type: "heading", text: { es: "Reglas", en: "Rules" } },
+        {
+          type: "table",
+          columns: [
+            { es: "Regla", en: "Rule" },
+            { es: "Estándar", en: "Standard" },
+            { es: "Ejemplo", en: "Example" },
+          ],
+          rows: [
+            [
+              {
+                es: "La negrita marca lo que hay que verificar",
+                en: "Bold marks what must be verified",
+              },
+              {
+                es: "La negrita se reserva para la variable que el usuario tiene que revisar antes de continuar: monto, nombre del destinatario, fecha de entrega. Un solo elemento en negrita por mensaje; dos solo en un resumen de transacción. Si todo está en negrita, nada lo está.",
+                en: "Bold is reserved for the variable the user has to check before continuing: amount, recipient name, delivery date. One bold element per message; two only in a transaction summary. If everything is bold, nothing is.",
+              },
+              {
+                es: '"Envías *$200* a *Ana*"',
+                en: '"Envías *$200* a *Ana*"',
+              },
+            ],
+            [
+              { es: "Itálicas: evitarlas", en: "Italics: avoid" },
+              {
+                es: "La itálica pierde legibilidad en tamaños chicos y en modo oscuro, y no agrega jerarquía que la negrita no dé ya. No se usa en copy transaccional.",
+                en: "Italic loses legibility at small sizes and in dark mode, and adds no hierarchy that bold does not already provide. Not used in transactional copy.",
+              },
+              { es: "—", en: "—" },
+            ],
+            [
+              {
+                es: "Solo sintaxis de WhatsApp",
+                en: "WhatsApp syntax only",
+              },
+              {
+                es: "WhatsApp usa *negrita* y _itálica_. El Markdown escrito en documentos (**, ##) se renderiza literalmente como caracteres y hay que convertirlo antes de publicar.",
+                en: "WhatsApp uses *bold* and _italic_. Markdown authored in docs (**, ##) renders literally as characters and must be converted before it ships.",
+              },
+              {
+                es: '"**Total**" se envía como "**Total**" ✗',
+                en: '"**Total**" ships as "**Total**" ✗',
+              },
+            ],
+            [
+              {
+                es: "La longitud es un objetivo, no el techo",
+                en: "Length is a target, not the ceiling",
+              },
+              [
+                {
+                  type: "prose",
+                  text: {
+                    es: "1.024 caracteres es el límite de la plataforma para un mensaje con botones (4.096 en texto plano o lista), no una meta. Un mensaje, una idea, una pregunta.",
+                    en: "1,024 characters is the platform limit for a message with buttons (4,096 for plain text or a list), not a goal. One message, one idea, one question.",
+                  },
+                },
+                {
+                  type: "prose",
+                  text: {
+                    es: "Apunta a menos de ~300 caracteres por burbuja, unas 4 o 5 líneas en un Android de gama media. Un mensaje de más de ~500 caracteres es una señal, no una violación: tiene que justificar por qué no puede ser una de estas opciones, en este orden:",
+                    en: "Target under ~300 characters per bubble — about 4–5 lines on a mid-range Android. A message over ~500 characters is a signal, not a violation: it must justify why it can't be one of the following, in this order:",
+                  },
+                },
+                {
+                  type: "ordered",
+                  items: [
+                    {
+                      es: "Dos mensajes. Corta en el límite de la idea, no a mitad de un pensamiento.",
+                      en: "Two messages. Split at the idea boundary, not mid-thought.",
+                    },
+                    {
+                      es: "Un componente nativo. Los mensajes de lista o los botones de respuesta llevan las opciones sin agregar prosa.",
+                      en: "A native component. List messages or reply buttons carry options without adding prose.",
+                    },
+                    {
+                      es: "Un Flow (todavía no disponible en nuestra conversación). Cuando esté activo, úsalo solo si el contenido es una tarea (corregir datos, elegir una cuenta), nunca una lectura. Un Flow agrega un tap y tiempo de carga, y saca al usuario del hilo de la conversación. Hasta entonces, por defecto van las opciones 1 y 2.",
+                      en: "A Flow (not yet available in our conversation). Once live, use it only when the content is a task (correcting data, choosing an account), never a reading. A Flow adds a tap, load time, and pulls the user out of the conversation thread. Until then, default to options 1 and 2.",
+                    },
+                  ],
+                },
+                {
+                  type: "prose",
+                  text: {
+                    es: "Nunca escribas hacia el objetivo. Escribe lo que el mensaje necesita y después contrástalo contra el objetivo.",
+                    en: "Never write toward the target. Write what the message needs, then check it against the target.",
+                  },
+                },
+              ],
+              { es: "—", en: "—" },
+            ],
+            [
+              {
+                es: "No repitas la lógica de los botones",
+                en: "Do not restate button logic",
+              },
+              {
+                es: "El cuerpo enuncia el hecho; los botones llevan la acción. La lógica condicional que ya resuelven dos botones no va en el cuerpo (ver Voz y Tono §7).",
+                en: "The body states the fact; the buttons carry the action. Conditional logic already resolved by two buttons does not belong in the body (see Voice & Tone §7).",
+              },
+              {
+                es: '"si el problema continúa…" ✗',
+                en: '"si el problema continúa…" ✗',
+              },
+            ],
+          ],
+        },
+        {
+          type: "callout",
+          title: { es: "Señal de validación:", en: "Validation signal —" },
+          body: {
+            es: "Mayormente cualitativa. El proxy débil disponible son los loops y las repreguntas en pasos verbosos: si los usuarios vuelven a preguntar algo que el mensaje ya respondía, el mensaje es demasiado largo para leerse.",
+            en: "Mostly qualitative. The weak proxy available is loops and re-asks on verbose steps: if users re-ask a question the message already answered, the message is too long to be read.",
+          },
+        },
+        {
+          type: "callout",
+          title: { es: "Pendiente:", en: "Open item —" },
+          body: {
+            es: "Objetivos de caracteres por tipo de mensaje: pregunta, confirmación, error. No se pueden fijar sin una línea base del inventario de cadenas actual. Es un entregable de contenido, no una decisión de ruteo.",
+            en: "Character targets per message type — question, confirmation, error. These cannot be set without a baseline from the current string inventory. Content deliverable, not a decision to route.",
+          },
+        },
+      ],
+    },
+  ],
+};
+
+/** Registro. El orden aquí es el orden de la grilla en la landing. */
+export const PATTERNS: Pattern[] = [
+  closedInput,
+  openInput,
+  mixedInput,
+  menu,
+  useOfEmojis,
+  useOfImages,
+  textFormatting,
+];
 
 export const getPattern = (slug: string): Pattern | undefined =>
   PATTERNS.find((p) => p.slug === slug);

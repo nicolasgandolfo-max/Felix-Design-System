@@ -1,4 +1,4 @@
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useMemo } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import {
   Breadcrumb,
@@ -7,7 +7,6 @@ import {
   BreadcrumbLink,
   BreadcrumbPage,
   BreadcrumbSeparator,
-  Button,
   Table,
   TableBody,
   TableCell,
@@ -23,86 +22,71 @@ import { CheckCircleIcon, XCircleIcon } from "@phosphor-icons/react";
 import { PlazaChrome } from "../components/PlazaChrome";
 import { getPattern, otherPatterns } from "../patterns/content";
 import type {
+  Block,
   Example,
   Localized,
-  ResourceStatus,
-  SpecTable,
+  TableCell as Cell,
 } from "../patterns/types";
 import { useTr } from "../i18n";
 
 type Tr = (es: string, en: string, pt?: string) => string;
 
-/** Resuelve un texto localizado con el traductor activo. PT cae a EN. */
-const L = (tr: Tr, l: Localized) => tr(l.es, l.en);
+/** Resuelve un texto localizado con el traductor activo. Sin `pt`, cae a EN. */
+const L = (tr: Tr, l: Localized) => tr(l.es, l.en, l.pt);
 
 /* Trazo `stroke/soft` de Figma — el mismo que usan .plaza-hero y .plaza-card.
-   El token --border del DS es #cfcabf y no corresponde acá. */
+   El token --border del DS es #cfcabf y no corresponde aquí. */
 const STROKE_SOFT = "border-[rgba(8,36,34,0.12)]";
 
 /* Título de sección según Figma: Saans/Inter Medium 30px, no display. */
-const SECTION_H = "font-sans text-[30px] font-medium tracking-[-0.01em] text-foreground";
+const SECTION_H =
+  "font-sans text-30 font-medium tracking-[-0.01em] text-foreground";
 
-const STATUS_CLASSES: Record<ResourceStatus, string> = {
-  ok: "bg-status-success-bg text-status-success-text",
-  /* `muted-foreground` es demasiado claro sobre `muted`; `foreground` invierte
-     bien con el tema y mantiene el contraste. */
-  draft: "bg-muted text-foreground",
-  tbd: "bg-status-warning-bg text-status-warning-text",
-};
+const TH = "font-sans text-base font-medium uppercase text-foreground/50";
 
-const STATUS_LABELS: Record<ResourceStatus, Localized> = {
-  ok: { es: "Disponible", en: "Available" },
-  draft: { es: "Borrador", en: "Draft" },
-  tbd: { es: "Por confirmar", en: "TBD" },
-};
+// ─── Bloques ─────────────────────────────────────────────────────────────────
+// Cada pestaña es una lista de bloques (ver `patterns/types.ts`). Los márgenes
+// superiores llevan `first:mt-0` para que el primer bloque de una pestaña o de
+// una columna quede al ras.
 
-/** Renderiza los tramos entre backticks como `<code>`. */
-function withInlineCode(text: string): ReactNode[] {
-  return text.split("`").map((part, i) =>
-    i % 2 === 1 ? (
-      <code
-        key={i}
-        className="rounded-xs bg-foreground/10 px-1.5 py-0.5 font-mono text-sm"
-      >
-        {part}
-      </code>
-    ) : (
-      part
-    )
-  );
-}
-
-function SpecTableBlock({ table, tr }: { table: SpecTable; tr: Tr }) {
+function DataTable({
+  columns,
+  rows,
+  tr,
+}: {
+  columns: Localized[];
+  rows: Cell[][];
+  tr: Tr;
+}) {
   return (
-    <>
-      {table.heading && (
-        <h3 className={`mt-12 ${SECTION_H}`}>{L(tr, table.heading)}</h3>
-      )}
-      <div className="mt-4 overflow-x-auto">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              {table.columns.map((col, i) => (
-                <TableHead
-                  key={i}
-                  className="font-sans text-base font-medium uppercase text-foreground/50"
-                >
-                  {L(tr, col)}
-                </TableHead>
+    <div className="overflow-x-auto">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            {columns.map((c, i) => (
+              <TableHead key={i} className={TH}>
+                {L(tr, c)}
+              </TableHead>
+            ))}
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {rows.map((row, r) => (
+            <TableRow key={r}>
+              {row.map((cell, c) => (
+                <TableCell key={c} className="align-top text-base tabular-nums">
+                  {Array.isArray(cell) ? (
+                    <Blocks blocks={cell} tr={tr} />
+                  ) : (
+                    L(tr, cell)
+                  )}
+                </TableCell>
               ))}
             </TableRow>
-          </TableHeader>
-          <TableBody>
-            {table.rows.map(([a, b], i) => (
-              <TableRow key={i}>
-                <TableCell className="text-base">{L(tr, a)}</TableCell>
-                <TableCell className="text-base">{L(tr, b)}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
-    </>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
   );
 }
 
@@ -110,21 +94,21 @@ function SpecTableBlock({ table, tr }: { table: SpecTable; tr: Tr }) {
  *  veredicto abajo (cactus / papaya) y el caption afuera, debajo. */
 function ExampleFigure({ example, tr }: { example: Example; tr: Tr }) {
   const isDo = example.tone === "do";
-
   return (
     <div>
       <div
-        className={`flex flex-col overflow-hidden rounded-[31px] border ${STROKE_SOFT} bg-card`}
+        className={`flex flex-col overflow-hidden rounded-3xl border ${STROKE_SOFT} bg-card`}
       >
-        <div className="flex min-h-[283px] flex-1 items-center justify-center p-8">
+        <div className="flex min-h-72 flex-1 items-center justify-center p-8">
           <img
+            loading="lazy"
             src={example.img}
             alt={L(tr, example.alt)}
             className="h-auto w-full max-w-[300px]"
           />
         </div>
         <div
-          className={`flex h-[59px] shrink-0 items-center gap-3 border-t ${STROKE_SOFT} px-6 ${
+          className={`flex h-15 shrink-0 items-center gap-3 border-t ${STROKE_SOFT} px-6 ${
             isDo ? "bg-(--cactus)" : "bg-(--papaya)"
           }`}
         >
@@ -138,18 +122,191 @@ function ExampleFigure({ example, tr }: { example: Example; tr: Tr }) {
           </span>
         </div>
       </div>
-      <p className="mt-4 font-sans text-base font-medium tracking-[-0.01em] text-foreground">
+      <p className="mt-4 font-sans text-base font-medium tracking-[-0.01em] text-pretty text-foreground">
         {L(tr, example.caption)}
       </p>
     </div>
   );
 }
 
+function BlockView({ block, tr }: { block: Block; tr: Tr }) {
+  switch (block.type) {
+    case "heading":
+      return (
+        <h2 className={`mt-12 text-balance first:mt-0 ${SECTION_H}`}>
+          {L(tr, block.text)}
+        </h2>
+      );
+
+    case "prose":
+      return (
+        <p className="mt-3 font-sans text-lg leading-7 text-pretty text-foreground first:mt-0">
+          {L(tr, block.text)}
+        </p>
+      );
+
+    case "bullets":
+      return (
+        <ul className="mt-5 list-disc space-y-1 pl-6 font-sans text-lg leading-7 text-pretty text-foreground first:mt-0">
+          {block.items.map((item, i) => (
+            <li key={i}>{L(tr, item)}</li>
+          ))}
+        </ul>
+      );
+
+    case "ordered":
+      return (
+        <ol className="mt-5 list-decimal space-y-2 pl-6 font-sans text-lg leading-7 text-pretty text-foreground first:mt-0">
+          {block.items.map((item, i) => (
+            <li key={i}>{L(tr, item)}</li>
+          ))}
+        </ol>
+      );
+
+    case "gallery":
+      return (
+        <div className="mt-8 [display:grid] gap-6 first:mt-0 md:grid-cols-3">
+          {block.items.map((item, i) => (
+            <figure key={i} className="m-0">
+              <div
+                className={`flex min-h-72 items-center justify-center rounded-3xl border ${STROKE_SOFT} bg-card p-8`}
+              >
+                <img
+                  loading="lazy"
+                  src={item.img}
+                  alt={L(tr, item.alt)}
+                  className="h-auto w-full max-w-[300px]"
+                />
+              </div>
+              <figcaption className="mt-4 font-sans text-base font-medium tracking-[-0.01em] text-pretty text-foreground">
+                {L(tr, item.label)}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      );
+
+    case "table":
+      return (
+        <div className="mt-6 first:mt-0">
+          {block.heading && (
+            <h3 className={`mb-4 mt-12 text-balance ${SECTION_H}`}>
+              {L(tr, block.heading)}
+            </h3>
+          )}
+          <DataTable columns={block.columns} rows={block.rows} tr={tr} />
+        </div>
+      );
+
+    /* Light Sky (--light-sky #d4fffe) con borde stroke/soft, radio 20. */
+    case "callout":
+      return (
+        <div
+          className={`mt-8 rounded-xl border ${STROKE_SOFT} bg-(--light-sky) px-7 py-8 font-sans text-lg leading-7 text-foreground first:mt-0`}
+        >
+          {block.title && (
+            <strong className="font-semibold">{L(tr, block.title)} </strong>
+          )}
+          {L(tr, block.body)}
+        </div>
+      );
+
+    /* "Secondary Sky" (--sky #8dfdfa), radio 31 como los paneles de la Plaza. */
+    /* "Secondary Sky" (--sky #8dfdfa). El cuerpo y la nota siguen en
+       content.ts pero no se muestran: las métricas todavía no existen, así que
+       el box queda en "Coming Soon" hasta que haya datos. */
+    case "metric":
+      return (
+        <div
+          className={`rounded-3xl border ${STROKE_SOFT} bg-(--sky) p-8 text-(--slate)`}
+        >
+          <h2 className="font-sans text-xl font-semibold tracking-[-0.01em] text-balance">
+            {L(tr, block.title)}
+          </h2>
+          <p className="mt-3 font-sans text-lg leading-7">
+            {tr("Próximamente", "Coming Soon", "Em breve")}
+          </p>
+        </div>
+      );
+
+    case "examples":
+      return (
+        <div className="mt-10 [display:grid] items-start gap-x-12 gap-y-10 first:mt-0 md:grid-cols-2">
+          {block.items.map((ex, i) => (
+            <ExampleFigure key={i} example={ex} tr={tr} />
+          ))}
+        </div>
+      );
+
+    case "note":
+      return (
+        <p className="mt-8 border-l-2 border-primary pl-4 font-sans text-base leading-6 text-pretty text-foreground first:mt-0">
+          {L(tr, block.text)}
+        </p>
+      );
+
+    case "source":
+      return (
+        <p className="mt-8 font-sans text-xs font-medium leading-7 text-foreground/50 first:mt-0">
+          {L(tr, block.text)}
+          {block.href && (
+            <a
+              href={block.href}
+              target="_blank"
+              rel="noreferrer"
+              className="underline"
+            >
+              {block.linkText ?? block.href}
+            </a>
+          )}
+        </p>
+      );
+
+    case "columns":
+      return (
+        <div className="mt-10 [display:grid] items-start gap-11 first:mt-0 md:grid-cols-2">
+          <div>
+            <Blocks blocks={block.left} tr={tr} />
+          </div>
+          <div>
+            <Blocks blocks={block.right} tr={tr} />
+          </div>
+        </div>
+      );
+  }
+}
+
+function Blocks({ blocks, tr }: { blocks: Block[]; tr: Tr }) {
+  return (
+    <>
+      {blocks.map((b, i) => (
+        <BlockView key={i} block={b} tr={tr} />
+      ))}
+    </>
+  );
+}
+
+/** Dos patrones al azar para "Explorar patrones" (Fisher-Yates sobre copia). */
+function pickTwo<T>(items: T[]): T[] {
+  const a = [...items];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a.slice(0, 2);
+}
+
+// ─── Página ──────────────────────────────────────────────────────────────────
+
 export function PatternPage() {
   const { slug = "" } = useParams();
   const tr = useTr();
   const pattern = getPattern(slug);
   const heroTitle = pattern && L(tr, pattern.title ?? pattern.name);
+
+  /* Se barajan una vez por visita (clave: slug), así un cambio de idioma o
+     de pestaña no reordena las tarjetas debajo del lector. */
+  const explore = useMemo(() => pickTwo(otherPatterns(slug)), [slug]);
 
   useEffect(() => {
     if (!heroTitle) return;
@@ -163,7 +320,6 @@ export function PatternPage() {
   /* Slug desconocido: de vuelta a la landing en lugar de un 404 sin salida. */
   if (!pattern) return <Navigate to="/patrones" replace />;
 
-  const { overview, specs, guidelines } = pattern;
   const heroImgs = pattern.heroDetail ?? [pattern.hero];
 
   return (
@@ -173,10 +329,10 @@ export function PatternPage() {
             Panel linen 463px con borde stroke/soft; título Plain Black 60/54
             y bajada 16/24 en slate, como el hero del home. */}
         <section
-          className={`mt-4 [display:grid] min-h-[463px] items-center gap-10 rounded-[31px] border ${STROKE_SOFT} bg-card p-8 md:grid-cols-2 md:px-24 md:py-12`}
+          className={`mt-4 [display:grid] min-h-[464px] items-center gap-10 rounded-3xl border ${STROKE_SOFT} bg-card p-8 md:grid-cols-2 md:px-24 md:py-12`}
         >
           <div>
-            <Breadcrumb className="mb-1.5">
+            <Breadcrumb className="mb-2">
               <BreadcrumbList className="uppercase">
                 <BreadcrumbItem>
                   <BreadcrumbLink asChild>
@@ -196,11 +352,16 @@ export function PatternPage() {
               </BreadcrumbList>
             </Breadcrumb>
 
-            <h1 className="font-heading text-[60px] font-black leading-[54px] tracking-[-0.01em] text-foreground">
+            <h1 className="font-heading text-60 font-black leading-[54px] tracking-[-0.01em] text-balance text-foreground">
               {heroTitle}
             </h1>
+            {pattern.subtitle && (
+              <p className="mt-2 font-sans text-lg font-medium text-foreground/70">
+                {L(tr, pattern.subtitle)}
+              </p>
+            )}
 
-            <p className="mt-4 max-w-[448px] font-sans text-base leading-6 text-foreground">
+            <p className="mt-4 max-w-[448px] font-sans text-md leading-7 text-pretty text-foreground">
               {L(tr, pattern.lede)}
             </p>
           </div>
@@ -221,188 +382,39 @@ export function PatternPage() {
         {/* ── Tabs ─────────────────────────────────────────────────────────
             Segmentado según Figma: track linen full-width con borde
             stroke/soft (alto 79), pill activo slate de 59 con texto linen,
-            labels display 24px. */}
-        <Tabs key={pattern.slug} defaultValue="overview" className="mt-12">
+            labels display 24px. Las pestañas salen del contenido, así que un
+            patrón puede tener dos o tres. `key` por slug: al navegar entre
+            patrones el componente no se remonta, y sin esto el tab elegido
+            persistiría. */}
+        <Tabs
+          key={pattern.slug}
+          defaultValue={pattern.tabs[0]?.id}
+          className="mt-12"
+        >
+          {/* Mismo estilo que el header (.plaza-nav: blanco, pill) y sticky
+              a 16px del borde para que las pestañas acompañen el scroll.
+              Con una sola pestaña la barra no aporta y se oculta. */}
           <TabsList
-            className={`w-full gap-1.5 rounded-full border ${STROKE_SOFT} bg-card p-[9px]`}
+            className={`sticky top-4 z-30 w-full gap-2 rounded-full border ${STROKE_SOFT} bg-white p-3 ${
+              pattern.tabs.length < 2 ? "hidden" : ""
+            }`}
           >
-            {(
-              [
-                ["overview", tr("Resumen", "Overview", "Resumo")],
-                ["specs", tr("Especificaciones", "Specs", "Especificações")],
-                ["guidelines", tr("Guías", "Guidelines", "Diretrizes")],
-              ] as const
-            ).map(([value, label]) => (
+            {pattern.tabs.map((tab) => (
               <TabsTrigger
-                key={value}
-                value={value}
-                className="h-[59px] justify-center rounded-full px-10 font-heading text-[24px] font-black tracking-[-0.01em] text-foreground data-[state=active]:bg-(--slate) data-[state=active]:text-(--linen) data-[state=active]:shadow-none"
+                key={tab.id}
+                value={tab.id}
+                className="h-15 justify-center rounded-full px-10 font-heading text-xl font-black tracking-[-0.01em] text-foreground data-[state=active]:bg-(--slate) data-[state=active]:text-(--linen) data-[state=active]:shadow-none"
               >
-                {label}
+                {L(tr, tab.label)}
               </TabsTrigger>
             ))}
           </TabsList>
 
-          {/* ── Resumen ──────────────────────────────────────────────── */}
-          <TabsContent value="overview" className="pt-10">
-            <div className="[display:grid] items-start gap-11 md:grid-cols-2">
-              <div>
-                <h2 className={SECTION_H}>
-                  {tr("Cuándo usarlo", "Usage", "Quando usar")}
-                </h2>
-                <ul className="mt-5 list-disc space-y-1 pl-6 font-sans text-[20px] leading-7 text-foreground">
-                  {overview.usage.map((item, i) => (
-                    <li key={i}>{L(tr, item)}</li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* "Secondary Sky" de la paleta Félix (--sky #8dfdfa). */}
-              <div
-                className={`rounded-[31px] border ${STROKE_SOFT} bg-(--sky) p-8 text-(--slate)`}
-              >
-                <h2 className="font-sans text-[30px] font-medium tracking-[-0.01em]">
-                  {L(tr, overview.metric.title)}
-                </h2>
-                {overview.metric.body.map((p, i) => (
-                  <p key={i} className="mt-4 font-sans text-base leading-6">
-                    {withInlineCode(L(tr, p))}
-                  </p>
-                ))}
-                {overview.metric.note && (
-                  <p className="mt-4 font-sans text-base leading-6">
-                    {L(tr, overview.metric.note)}
-                  </p>
-                )}
-              </div>
-            </div>
-
-            <section className="mt-16">
-              <h2 className={SECTION_H}>
-                {tr(
-                  "Recursos y disponibilidad",
-                  "Resources & availability",
-                  "Recursos e disponibilidade"
-                )}
-              </h2>
-              <div className="mt-4 overflow-x-auto">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      {(
-                        [
-                          tr("Tipo", "Type", "Tipo"),
-                          tr("Recurso", "Resource", "Recurso"),
-                          tr("Estado", "Status", "Estado"),
-                        ] as const
-                      ).map((h) => (
-                        <TableHead
-                          key={h}
-                          className="font-sans text-base font-medium uppercase text-foreground/50"
-                        >
-                          {h}
-                        </TableHead>
-                      ))}
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {overview.resources.map((r, i) => (
-                      <TableRow key={i}>
-                        <TableCell className="text-base">
-                          {L(tr, r.type)}
-                        </TableCell>
-                        <TableCell className="text-base">
-                          {r.href ? (
-                            <Button asChild variant="primary" size="sm">
-                              <a
-                                href={r.href}
-                                target="_blank"
-                                rel="noreferrer"
-                              >
-                                {L(tr, r.resource)}
-                              </a>
-                            </Button>
-                          ) : (
-                            L(tr, r.resource)
-                          )}
-                        </TableCell>
-                        <TableCell className="text-base">
-                          <span
-                            className={`inline-flex items-center rounded-full px-3 py-1 font-sans text-xs font-semibold ${STATUS_CLASSES[r.status]}`}
-                          >
-                            {L(tr, STATUS_LABELS[r.status])}
-                          </span>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
-            </section>
-          </TabsContent>
-
-          {/* ── Especificaciones ─────────────────────────────────────── */}
-          <TabsContent value="specs" className="pt-10">
-            <h2 className={SECTION_H}>
-              {tr("Especificaciones", "Specs", "Especificações")}
-            </h2>
-            <p className="mt-3 font-sans text-[20px] leading-7 text-foreground">
-              {L(tr, specs.intro)}
-            </p>
-
-            {specs.tables.map((table, i) => (
-              <SpecTableBlock key={i} table={table} tr={tr} />
-            ))}
-
-            {specs.notes?.map((note, i) => (
-              <p
-                key={i}
-                className="mt-8 border-l-2 border-primary pl-4 font-sans text-base leading-6 text-foreground"
-              >
-                {L(tr, note)}
-              </p>
-            ))}
-
-            <p className="mt-8 font-sans text-xs font-medium leading-7 text-foreground/50">
-              {L(tr, specs.source)}
-              {specs.sourceHref && (
-                <a
-                  href={specs.sourceHref}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="underline"
-                >
-                  {specs.sourceLinkText ?? specs.sourceHref}
-                </a>
-              )}
-            </p>
-          </TabsContent>
-
-          {/* ── Guías ────────────────────────────────────────────────── */}
-          <TabsContent value="guidelines" className="pt-10">
-            <div className="[display:grid] gap-11 md:grid-cols-2">
-              <div>
-                <h2 className={SECTION_H}>
-                  {tr("Cuándo usarlo", "Usage", "Quando usar")}
-                </h2>
-                <p className="mt-3 font-sans text-[20px] leading-7 text-foreground">
-                  {L(tr, guidelines.usage)}
-                </p>
-              </div>
-              <div>
-                <h2 className={SECTION_H}>{tr("Tips", "Tips", "Dicas")}</h2>
-                <p className="mt-3 font-sans text-[20px] leading-7 text-foreground">
-                  {L(tr, guidelines.tips)}
-                </p>
-              </div>
-            </div>
-
-            <div className="mt-10 [display:grid] items-start gap-x-12 gap-y-10 md:grid-cols-2">
-              {guidelines.examples.map((ex, i) => (
-                <ExampleFigure key={i} example={ex} tr={tr} />
-              ))}
-            </div>
-          </TabsContent>
+          {pattern.tabs.map((tab) => (
+            <TabsContent key={tab.id} value={tab.id} className="pt-10">
+              <Blocks blocks={tab.blocks} tr={tr} />
+            </TabsContent>
+          ))}
         </Tabs>
 
         {/* ── Explorar patrones ────────────────────────────────────────────
@@ -411,7 +423,7 @@ export function PatternPage() {
           {tr("Explorar patrones", "Explore patterns", "Explorar padrões")}
         </h2>
         <div className="[display:grid] gap-6 md:grid-cols-2">
-          {otherPatterns(pattern.slug).map((p) => (
+          {explore.map((p) => (
             <article key={p.slug} className="plaza-link-card">
               <h3>{L(tr, p.name)}</h3>
               <p className="plaza-body">{L(tr, p.cardBody)}</p>

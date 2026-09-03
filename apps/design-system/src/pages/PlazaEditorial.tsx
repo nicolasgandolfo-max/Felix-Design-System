@@ -64,20 +64,28 @@ export function PlazaEditorial() {
       {/* Specs / Meta Strip */}
       <div className="sys-meta-strip">
         <div className="meta-col">
-          <span className="lbl">{tr("TRATAMIENTO", "FORMALITY", "TRATAMENTO")}</span>
+          <span className="lbl">
+            {tr("TRATAMIENTO", "FORMALITY", "TRATAMENTO")}
+          </span>
           <span className="val">Tú (informal)</span>
         </div>
         <div className="meta-col">
-          <span className="lbl">{tr("PRINCIPIOS UX", "UX PRINCIPLES", "PRINCÍPIOS UX")}</span>
+          <span className="lbl">
+            {tr("PRINCIPIOS UX", "UX PRINCIPLES", "PRINCÍPIOS UX")}
+          </span>
           <span className="val">{tr("8 reglas", "8 rules", "8 regras")}</span>
         </div>
         <div className="meta-col">
-          <span className="lbl">{tr("CASO DE ESTUDIO", "CASE STUDY", "ESTUDO DE CASO")}</span>
+          <span className="lbl">
+            {tr("CASO DE ESTUDIO", "CASE STUDY", "ESTUDO DE CASO")}
+          </span>
           <span className="val">Checkout & Payment</span>
         </div>
         <div className="meta-col">
           <span className="lbl">{tr("GLOSARIO", "GLOSSARY", "GLOSSÁRIO")}</span>
-          <span className="val">{tr("24 términos", "24 terms", "24 termos")}</span>
+          <span className="val">
+            {tr("24 términos", "24 terms", "24 termos")}
+          </span>
         </div>
       </div>
 
@@ -102,10 +110,15 @@ export function PlazaEditorial() {
                 "Calma, direta, calorosa e transparente. Como manter uma voz pessoal sem soar corporativa."
               )}
             </p>
-            <span className="tile-link">{tr("Ver guía", "View guide", "Ver guia")} →</span>
+            <span className="tile-link">
+              {tr("Ver guía", "View guide", "Ver guia")} →
+            </span>
           </Link>
 
-          <Link to="/voz-y-tono/version-anterior#ux-writing" className="sys-card-tile">
+          <Link
+            to="/voz-y-tono/version-anterior#ux-writing"
+            className="sys-card-tile"
+          >
             <div className="tile-icon-badge">
               <BookOpenIcon size={22} weight="regular" />
             </div>
@@ -119,15 +132,24 @@ export function PlazaEditorial() {
                 "As 8 regras de conteúdo que guiam do checkout às microcópias do bot."
               )}
             </p>
-            <span className="tile-link">{tr("Explorar", "Explore", "Explorar")} →</span>
+            <span className="tile-link">
+              {tr("Explorar", "Explore", "Explorar")} →
+            </span>
           </Link>
 
-          <Link to="/voz-y-tono/version-anterior#glosario" className="sys-card-tile">
+          <Link
+            to="/voz-y-tono/version-anterior#glosario"
+            className="sys-card-tile"
+          >
             <div className="tile-icon-badge">
               <BookmarksIcon size={22} weight="regular" />
             </div>
             <h3 className="tile-title">
-              {tr("Glosario de producto", "Product glossary", "Glossário de produto")}
+              {tr(
+                "Glosario de producto",
+                "Product glossary",
+                "Glossário de produto"
+              )}
             </h3>
             <p className="tile-desc">
               {tr(
@@ -136,7 +158,9 @@ export function PlazaEditorial() {
                 "Termos-chave em inglês, espanhol e português alinhados entre design, produto e engenharia."
               )}
             </p>
-            <span className="tile-link">{tr("Ver términos", "View terms", "Ver termos")} →</span>
+            <span className="tile-link">
+              {tr("Ver términos", "View terms", "Ver termos")} →
+            </span>
           </Link>
         </div>
       </section>

@@ -5,7 +5,21 @@ import { GROUP_LABELS, GROUP_SLUGS, INVENTORY, slugify } from "../data";
 import { SHOWCASES } from "../components-registry";
 import { useTr } from "../i18n";
 
-const VOID_TAGS = new Set(["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "track", "wbr"]);
+const VOID_TAGS = new Set([
+  "area",
+  "base",
+  "br",
+  "col",
+  "embed",
+  "hr",
+  "img",
+  "input",
+  "link",
+  "meta",
+  "source",
+  "track",
+  "wbr",
+]);
 
 /** Pretty-print a live DOM node as indented HTML. SVG internals are collapsed to keep the snippet readable. */
 function formatNode(node: Node, indent: string, out: string[]) {
@@ -17,7 +31,9 @@ function formatNode(node: Node, indent: string, out: string[]) {
   if (node.nodeType !== Node.ELEMENT_NODE) return;
   const el = node as Element;
   const tag = el.tagName.toLowerCase();
-  const attrs = [...el.attributes].map((a) => (a.value === "" ? a.name : `${a.name}="${a.value}"`)).join(" ");
+  const attrs = [...el.attributes]
+    .map((a) => (a.value === "" ? a.name : `${a.name}="${a.value}"`))
+    .join(" ");
   const openTag = attrs ? `<${tag} ${attrs}>` : `<${tag}>`;
   if (VOID_TAGS.has(tag)) {
     out.push(indent + openTag);
@@ -28,7 +44,9 @@ function formatNode(node: Node, indent: string, out: string[]) {
     return;
   }
   const kids = [...el.childNodes].filter(
-    (n) => n.nodeType === Node.ELEMENT_NODE || (n.nodeType === Node.TEXT_NODE && n.textContent?.trim())
+    (n) =>
+      n.nodeType === Node.ELEMENT_NODE ||
+      (n.nodeType === Node.TEXT_NODE && n.textContent?.trim())
   );
   if (kids.length === 0) {
     out.push(indent + openTag + `</${tag}>`);
@@ -104,11 +122,20 @@ function ComponentBlock({ name, slug }: { name: string; slug: string }) {
       {entry && Showcase ? (
         <>
           <p className="comp-desc">{tr(entry.es, entry.en, entry.pt)}</p>
-          {entry.usage && <p className="comp-usage">{tr(entry.usage.es, entry.usage.en, entry.usage.pt)}</p>}
+          {entry.usage && (
+            <p className="comp-usage">
+              {tr(entry.usage.es, entry.usage.en, entry.usage.pt)}
+            </p>
+          )}
           <div ref={showcaseRef}>
             <Showcase />
           </div>
-          <button type="button" className="code-toggle" aria-expanded={open} onClick={toggle}>
+          <button
+            type="button"
+            className="code-toggle"
+            aria-expanded={open}
+            onClick={toggle}
+          >
             <CaretRightIcon />
             {open
               ? tr("Ocultar código", "Hide code", "Ocultar código")
@@ -117,7 +144,9 @@ function ComponentBlock({ name, slug }: { name: string; slug: string }) {
           {open && (
             <div className="code-block">
               <button type="button" className="code-copy" onClick={copy}>
-                {copied ? tr("¡Copiado!", "Copied!", "Copiado!") : tr("Copiar", "Copy", "Copiar")}
+                {copied
+                  ? tr("¡Copiado!", "Copied!", "Copiado!")
+                  : tr("Copiar", "Copy", "Copiar")}
               </button>
               <pre>
                 <code>{html}</code>
@@ -129,7 +158,7 @@ function ComponentBlock({ name, slug }: { name: string; slug: string }) {
         <div className="holder" style={{ marginTop: 8 }}>
           <p>
             {tr(
-              "El showcase en vivo de este componente está en progreso. Por ahora podés verlo en el Storybook del repositorio.",
+              "El showcase en vivo de este componente está en progreso. Por ahora puedes verlo en el Storybook del repositorio.",
               "This component's live showcase is in progress. For now you can see it in the repo's Storybook.",
               "O showcase ao vivo deste componente está em andamento. Por enquanto você pode vê-lo no Storybook do repositório."
             )}
@@ -156,37 +185,73 @@ export function ComponentGroupPage() {
 
   if (!group) {
     // Support old per-component links (e.g. /componentes/avatar) by redirecting into the group page.
-    const legacyGroup = INVENTORY.find((g) => g.items.some((n) => slugify(n) === groupSlug));
+    const legacyGroup = INVENTORY.find((g) =>
+      g.items.some((n) => slugify(n) === groupSlug)
+    );
     if (legacyGroup) {
-      return <Navigate to={`/componentes/${GROUP_SLUGS[legacyGroup.group]}#${groupSlug}`} replace />;
+      return (
+        <Navigate
+          to={`/componentes/${GROUP_SLUGS[legacyGroup.group]}#${groupSlug}`}
+          replace
+        />
+      );
     }
     return (
       <section className="sec flush">
-        <Link to="/componentes" className="back-link">← {tr("Componentes", "Components", "Componentes")}</Link>
-        <h2 className="h2">{tr("Grupo no encontrado", "Group not found", "Grupo não encontrado")}</h2>
-        <p className="lead">{tr("Ese grupo no existe en el sistema.", "That group doesn't exist in the system.", "Esse grupo não existe no sistema.")}</p>
+        <Link to="/componentes" className="back-link">
+          ← {tr("Componentes", "Components", "Componentes")}
+        </Link>
+        <h2 className="h2">
+          {tr("Grupo no encontrado", "Group not found", "Grupo não encontrado")}
+        </h2>
+        <p className="lead">
+          {tr(
+            "Ese grupo no existe en el sistema.",
+            "That group doesn't exist in the system.",
+            "Esse grupo não existe no sistema."
+          )}
+        </p>
       </section>
     );
   }
 
-  const label = GROUP_LABELS[group.group] ?? { es: group.group, en: group.group, pt: group.group };
+  const label = GROUP_LABELS[group.group] ?? {
+    es: group.group,
+    en: group.group,
+    pt: group.group,
+  };
 
   return (
     <section className="sec flush">
-      <Link to="/componentes" className="back-link">← {tr("Componentes", "Components", "Componentes")}</Link>
-      <div className="eyebrow"><span>{tr(label.es, label.en, label.pt)}</span></div>
-      <h2 className="h2">{tr(label.es, label.en, label.pt)} · {group.items.length}</h2>
+      <Link to="/componentes" className="back-link">
+        ← {tr("Componentes", "Components", "Componentes")}
+      </Link>
+      <div className="eyebrow">
+        <span>{tr(label.es, label.en, label.pt)}</span>
+      </div>
+      <h2 className="h2">
+        {tr(label.es, label.en, label.pt)} · {group.items.length}
+      </h2>
       <p className="lead">
         {tr(
           `Todos los componentes de ${label.es.toLowerCase()} del sistema, en una sola página.`,
           `Every ${label.en.toLowerCase()} component in the system, on one page.`,
-          `Todos os componentes de ${label.pt.toLowerCase()} do sistema, em uma só página.`,
+          `Todos os componentes de ${label.pt.toLowerCase()} do sistema, em uma só página.`
         )}
       </p>
 
-      <nav className="comp-jump" aria-label={tr("Ir a componente", "Jump to component", "Ir para o componente")}>
+      <nav
+        className="comp-jump"
+        aria-label={tr(
+          "Ir a componente",
+          "Jump to component",
+          "Ir para o componente"
+        )}
+      >
         {group.items.map((name) => (
-          <a key={name} href={`#${slugify(name)}`} className="comp-jump-link">{name}</a>
+          <a key={name} href={`#${slugify(name)}`} className="comp-jump-link">
+            {name}
+          </a>
         ))}
       </nav>
 

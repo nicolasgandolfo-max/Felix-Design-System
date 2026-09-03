@@ -66,7 +66,7 @@ export function PlazaHome() {
         </nav>
         <div className="header-right">
           <div className="lang-dropdown">
-            <GlobeIcon size={18} />
+            <GlobeIcon size={18} aria-hidden="true" />
             <select
               value={lang}
               onChange={(e) => setLang(e.target.value as "es" | "en" | "pt")}
@@ -80,7 +80,7 @@ export function PlazaHome() {
               <option value="en">EN</option>
               <option value="pt">PT</option>
             </select>
-            <CaretDownIcon size={14} className="caret" />
+            <CaretDownIcon size={14} className="caret" aria-hidden="true" />
           </div>
         </div>
       </header>
@@ -213,15 +213,15 @@ export function PlazaHome() {
       </main>
 
       <footer className="plaza-footer">
-        <p className="align-left">
+        <p>
           {tr(
             "Hecho con amor por el equipo de diseño de Félix",
             "Made with love by Félix Design Team",
             "Feito com amor pela equipe de design do Félix"
           )}
         </p>
-        <img src="../assets/plaza/heartfelix.png" alt="" />
-        <p className="align-right">
+        <img src="/assets/plaza/heartfelix.png" alt="" />
+        <p>
           © 2026 Felix Technologies Inc.{" "}
           {tr(
             "Todos los derechos reservados.",

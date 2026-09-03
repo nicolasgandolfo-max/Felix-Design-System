@@ -7,23 +7,40 @@ export function ComponentsIndex() {
   const tr = useTr();
   return (
     <section className="sec flush">
-      <div className="eyebrow"><span className="n">05</span><span>{tr("Componentes", "Components", "Componentes")}</span></div>
-      <h2 className="h2">{tr("43 piezas, una sola estética", "43 pieces, one aesthetic", "43 peças, uma só estética")}</h2>
+      <div className="eyebrow">
+        <span className="n">05</span>
+        <span>{tr("Componentes", "Components", "Componentes")}</span>
+      </div>
+      <h2 className="h2">
+        {tr(
+          "43 piezas, una sola estética",
+          "43 pieces, one aesthetic",
+          "43 peças, uma só estética"
+        )}
+      </h2>
       <p className="lead">
         {tr(
-          "Construidas en React 19 sobre primitivas Radix, pill en lo interactivo y foco turquesa siempre. Elegí un componente para ver su showcase en vivo.",
+          "Construidas en React 19 sobre primitivas Radix, pill en lo interactivo y foco turquesa siempre. Elige un componente para ver su showcase en vivo.",
           "Built in React 19 on Radix primitives, pill interactive elements, turquoise focus always. Pick a component to see its live showcase.",
-          "Construídos em React 19 sobre primitivas Radix, pill no interativo e foco turquesa sempre. Escolha um componente para ver seu showcase ao vivo.",
+          "Construídos em React 19 sobre primitivas Radix, pill no interativo e foco turquesa sempre. Escolha um componente para ver seu showcase ao vivo."
         )}
       </p>
       {INVENTORY.map((g) => {
         const groupSlug = GROUP_SLUGS[g.group];
-        const label = GROUP_LABELS[g.group] ?? { es: g.group, en: g.group, pt: g.group };
+        const label = GROUP_LABELS[g.group] ?? {
+          es: g.group,
+          en: g.group,
+          pt: g.group,
+        };
         return (
           <div key={g.group}>
             <div className="comp-group-head">
-              <h3 className="h3">{tr(label.es, label.en, label.pt)} · {g.items.length}</h3>
-              <Link to={`/componentes/${groupSlug}`} className="btn-link">{tr("Ver todos", "View all", "Ver todos")} →</Link>
+              <h3 className="h3">
+                {tr(label.es, label.en, label.pt)} · {g.items.length}
+              </h3>
+              <Link to={`/componentes/${groupSlug}`} className="btn-link">
+                {tr("Ver todos", "View all", "Ver todos")} →
+              </Link>
             </div>
             <div className="comp-grid">
               {g.items.map((name) => {
@@ -34,16 +51,30 @@ export function ComponentsIndex() {
                   <div key={name} className="comp-card">
                     {/* Full-card hit area. A plain overlay (not wrapping the preview) avoids
                         nesting <a> tags when a component's own preview renders links. */}
-                    <Link to={`/componentes/${groupSlug}#${slug}`} className="comp-card-hit" aria-label={name} />
-                    <div className={"comp-preview" + (entry?.previewTall ? " tall" : "")}>
+                    <Link
+                      to={`/componentes/${groupSlug}#${slug}`}
+                      className="comp-card-hit"
+                      aria-label={name}
+                    />
+                    <div
+                      className={
+                        "comp-preview" + (entry?.previewTall ? " tall" : "")
+                      }
+                    >
                       <div className="comp-preview-inner">
-                        {ready ? entry.preview() : <span className="comp-preview-empty">{name}</span>}
+                        {ready ? (
+                          entry.preview()
+                        ) : (
+                          <span className="comp-preview-empty">{name}</span>
+                        )}
                       </div>
                     </div>
                     <div className="comp-card-meta">
                       <span className="comp-name">{name}</span>
                       <span className={"comp-status" + (ready ? " ready" : "")}>
-                        {ready ? tr("Listo", "Ready", "Pronto") : tr("Pronto", "Soon", "Em breve")}
+                        {ready
+                          ? tr("Listo", "Ready", "Pronto")
+                          : tr("Pronto", "Soon", "Em breve")}
                       </span>
                     </div>
                   </div>

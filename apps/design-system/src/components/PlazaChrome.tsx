@@ -39,7 +39,7 @@ export function PlazaChrome({ children }: { children: ReactNode }) {
         </nav>
         <div className="header-right">
           <div className="lang-dropdown">
-            <GlobeIcon size={18} />
+            <GlobeIcon size={18} aria-hidden="true" />
             <select
               value={lang}
               onChange={(e) => setLang(e.target.value as "es" | "en" | "pt")}
@@ -53,7 +53,7 @@ export function PlazaChrome({ children }: { children: ReactNode }) {
               <option value="en">EN</option>
               <option value="pt">PT</option>
             </select>
-            <CaretDownIcon size={14} className="caret" />
+            <CaretDownIcon size={14} className="caret" aria-hidden="true" />
           </div>
         </div>
       </header>
@@ -68,7 +68,7 @@ export function PlazaChrome({ children }: { children: ReactNode }) {
             "Feito com amor pela equipe de design do Félix"
           )}
         </p>
-        <img src="../assets/plaza/heartfelix.png" alt="" />
+        <img src="/assets/plaza/heartfelix.png" alt="" loading="lazy" />
         <p>
           © 2026 Felix Technologies Inc.{" "}
           {tr(

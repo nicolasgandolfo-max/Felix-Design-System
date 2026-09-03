@@ -29,14 +29,26 @@ export interface GlossaryGroup {
   entries: GlossaryEntry[];
 }
 
-const REG_NEUTRAL: LocalizedText = { es: "Neutro", en: "Neutral", pt: "Neutro" };
+const REG_NEUTRAL: LocalizedText = {
+  es: "Neutro",
+  en: "Neutral",
+  pt: "Neutro",
+};
 const REG_FORMAL: LocalizedText = { es: "Formal", en: "Formal", pt: "Formal" };
-const REG_FORMAL_INFORMAL: LocalizedText = { es: "Formal / Informal", en: "Formal / Informal", pt: "Formal / Informal" };
+const REG_FORMAL_INFORMAL: LocalizedText = {
+  es: "Formal / Informal",
+  en: "Formal / Informal",
+  pt: "Formal / Informal",
+};
 
 export const GLOSSARY: GlossaryGroup[] = [
   {
     id: "original",
-    label: { es: "Entradas originales", en: "Original entries", pt: "Entradas originais" },
+    label: {
+      es: "Entradas originales",
+      en: "Original entries",
+      pt: "Entradas originais",
+    },
     entries: [
       {
         term: "Transfer",
@@ -48,7 +60,7 @@ export const GLOSSARY: GlossaryGroup[] = [
           pt: "Contextos técnicos.",
         },
         avoid: {
-          es: "Con usuarios — preferí “envío”.",
+          es: "Con usuarios — prefiere “envío”.",
           en: "With users — prefer “envío”.",
           pt: "Com usuários — prefira “envío”.",
         },
@@ -80,12 +92,12 @@ export const GLOSSARY: GlossaryGroup[] = [
         termEs: "Destinatario",
         termPt: "Destinatário",
         use: {
-          es: "Copy legal / de compliance y etiquetas de UI. Con usuarios usá “tu destinatario” para dar calidez.",
+          es: "Copy legal / de compliance y etiquetas de UI. Con usuarios usa “tu destinatario” para dar calidez.",
           en: "Legal / compliance copy and UI labels. Use “tu destinatario” with users for warmth.",
           pt: "Copy legal / de compliance e rótulos de UI. Com usuários, use “tu destinatario” para dar acolhimento.",
         },
         avoid: {
-          es: "“Beneficiario” — registro bancario; evitalo en copy conversacional de WhatsApp.",
+          es: "“Beneficiario” — registro bancario; evítalo en copy conversacional de WhatsApp.",
           en: "“Beneficiario” — banking register, avoid in conversational WhatsApp copy.",
           pt: "“Beneficiario” — registro bancário; evite em copy conversacional no WhatsApp.",
         },
@@ -106,7 +118,7 @@ export const GLOSSARY: GlossaryGroup[] = [
           pt: "Somente contextos legais / de compliance.",
         },
         avoid: {
-          es: "Con usuarios — usá “tú” o “quién envía” en copy conversacional.",
+          es: "Con usuarios — usa “tú” o “quién envía” en copy conversacional.",
           en: "With users — use “tú” or “quién envía” in conversational copy.",
           pt: "Com usuários — use “tú” ou “quién envía” em copy conversacional.",
         },
@@ -149,7 +161,7 @@ export const GLOSSARY: GlossaryGroup[] = [
         termEs: "Cuenta",
         termPt: "Conta",
         use: {
-          es: "La cuenta Félix de quien envía (saldo, perfil). Multiproducto: especificá “cuenta de Crédito Félix”, etc.",
+          es: "La cuenta Félix de quien envía (saldo, perfil). Multiproducto: especifica “cuenta de Crédito Félix”, etc.",
           en: "The sender's Félix account (balance, profile). Multi-product: specify “cuenta de Crédito Félix”, etc.",
           pt: "A conta Félix de quem envia (saldo, perfil). Multiproduto: especifique “cuenta de Crédito Félix” etc.",
         },
@@ -170,7 +182,7 @@ export const GLOSSARY: GlossaryGroup[] = [
           pt: "Como rótulo no comprovante para a conta bancária onde o dinheiro é recebido (“Depósito: BBVA ···· 4412”).",
         },
         avoid: {
-          es: "Como CTA de método de entrega — usá “Depósito en cuenta” (ver entrada en P2).",
+          es: "Como CTA de método de entrega — usa “Depósito en cuenta” (ver entrada en P2).",
           en: "As a delivery method CTA — use “Depósito en cuenta” (see P2 entry).",
           pt: "Como CTA de método de entrega — use “Depósito en cuenta” (veja a entrada em P2).",
         },
@@ -181,7 +193,7 @@ export const GLOSSARY: GlossaryGroup[] = [
         termEs: "Verificación de identidad",
         termPt: "Verificação de identidade",
         use: {
-          es: "Flujos de KYC / compliance y onboarding. Con usuarios usá siempre la frase completa.",
+          es: "Flujos de KYC / compliance y onboarding. Con usuarios usa siempre la frase completa.",
           en: "KYC / compliance and onboarding flows. Always use the full phrase with users.",
           pt: "Fluxos de KYC / compliance e onboarding. Com usuários, use sempre a frase completa.",
         },
@@ -202,7 +214,7 @@ export const GLOSSARY: GlossaryGroup[] = [
           pt: "Produto e recursos do Crédito Félix.",
         },
         avoid: {
-          es: "Para reembolsos usá “saldo a favor”, no “crédito”.",
+          es: "Para reembolsos usa “saldo a favor”, no “crédito”.",
           en: "“Saldo a favor” for refunds — not “crédito”.",
           pt: "Para reembolsos, use “saldo a favor”, não “crédito”.",
         },
@@ -234,7 +246,7 @@ export const GLOSSARY: GlossaryGroup[] = [
           pt: "Rótulo da seção ou feature (no app).",
         },
         avoid: {
-          es: "Encabezando un CTA — probá “invita a tu familia/amigos”.",
+          es: "Encabezando un CTA — prueba “invita a tu familia/amigos”.",
           en: "Leading a CTA — try “invita a tu familia/amigos”.",
           pt: "Iniciando um CTA — prefira “invita a tu familia/amigos”.",
         },
@@ -255,7 +267,7 @@ export const GLOSSARY: GlossaryGroup[] = [
         termEs: "Billetera / Billetera digital",
         termPt: "Carteira digital",
         use: {
-          es: "Al referirse a apps de pago digitales (Nequi, Daviplata) como método de entrega. Usalo como botón de método de entrega (“Billetera digital”) y en la etiqueta del RESUMEN (“Billetera: Nequi”).",
+          es: "Al referirse a apps de pago digitales (Nequi, Daviplata) como método de entrega. Úsalo como botón de método de entrega (“Billetera digital”) y en la etiqueta del RESUMEN (“Billetera: Nequi”).",
           en: "When referring to digital payment apps (Nequi, Daviplata) as a delivery method. Use as a delivery method button (“Billetera digital”) and in the RESUMEN label (“Billetera: Nequi”).",
           pt: "Ao se referir a apps de pagamento digitais (Nequi, Daviplata) como método de entrega. Use como botão de método de entrega (“Billetera digital”) e no rótulo do RESUMEN (“Billetera: Nequi”).",
         },
@@ -264,7 +276,11 @@ export const GLOSSARY: GlossaryGroup[] = [
           en: "As a synonym for the sender's Félix account. Not interchangeable with “cuenta bancaria”.",
           pt: "Como sinônimo da conta Félix de quem envia. Não é intercambiável com “cuenta bancaria”.",
         },
-        register: { es: "Informal / Neutro", en: "Informal / Neutral", pt: "Informal / Neutro" },
+        register: {
+          es: "Informal / Neutro",
+          en: "Informal / Neutral",
+          pt: "Informal / Neutro",
+        },
       },
       {
         term: "Amount",
@@ -287,7 +303,7 @@ export const GLOSSARY: GlossaryGroup[] = [
         termEs: "Número de referencia",
         termPt: "Número de referência",
         use: {
-          es: "En recibos, comprobantes y contextos de soporte. Siempre la forma completa. Abreviá “Ref” solo en espacios de UI muy justos (ej. la burbuja de confirmación de WhatsApp).",
+          es: "En recibos, comprobantes y contextos de soporte. Siempre la forma completa. Abrevia “Ref” solo en espacios de UI muy justos (ej. la burbuja de confirmación de WhatsApp).",
           en: "In receipts, comprobantes, and customer support contexts. Always the full form. Abbreviated “Ref” only in extremely tight UI spaces (e.g., WhatsApp confirmation bubble).",
           pt: "Em recibos, comprovantes e contextos de suporte. Sempre a forma completa. Abrevie “Ref” apenas em espaços de UI muito apertados (ex.: o balão de confirmação do WhatsApp).",
         },
@@ -355,7 +371,7 @@ export const GLOSSARY: GlossaryGroup[] = [
         termEs: "Método de pago",
         termPt: "Forma de pagamento",
         use: {
-          es: "Cómo le paga a Félix quien envía: tarjeta de crédito/débito, cuenta bancaria, efectivo en tienda o BNPL. Usalo en el checkout de Fintech Office.",
+          es: "Cómo le paga a Félix quien envía: tarjeta de crédito/débito, cuenta bancaria, efectivo en tienda o BNPL. Úsalo en el checkout de Fintech Office.",
           en: "How the sender pays Félix: credit/debit card, bank account, cash at store, or BNPL. Use in Fintech Office checkout.",
           pt: "Como quem envia paga a Félix: cartão de crédito/débito, conta bancária, dinheiro na loja ou BNPL. Use no checkout do Fintech Office.",
         },
@@ -364,13 +380,21 @@ export const GLOSSARY: GlossaryGroup[] = [
           en: "Don't confuse with delivery method (how money reaches the recipient).",
           pt: "Não confunda com o método de entrega (como o dinheiro chega ao destinatário).",
         },
-        register: { es: "Informal / Neutro", en: "Informal / Neutral", pt: "Informal / Neutro" },
+        register: {
+          es: "Informal / Neutro",
+          en: "Informal / Neutral",
+          pt: "Informal / Neutro",
+        },
       },
     ],
   },
   {
     id: "p2",
-    label: { es: "P2 — Próximamente", en: "P2 — Coming soon", pt: "P2 — Em breve" },
+    label: {
+      es: "P2 — Próximamente",
+      en: "P2 — Coming soon",
+      pt: "P2 — Em breve",
+    },
     entries: [
       {
         term: "Cash pickup location",
@@ -409,7 +433,7 @@ export const GLOSSARY: GlossaryGroup[] = [
         termEs: "Cuenta bancaria",
         termPt: "Conta bancária",
         use: {
-          es: "La cuenta bancaria externa del destinatario. Especificá siempre “cuenta bancaria” o “cuenta en [banco]” para distinguirla de la cuenta Félix de quien envía. Ejemplo: “¿Cuál es el número de cuenta de Carlos en BCR?”.",
+          es: "La cuenta bancaria externa del destinatario. Especifica siempre “cuenta bancaria” o “cuenta en [banco]” para distinguirla de la cuenta Félix de quien envía. Ejemplo: “¿Cuál es el número de cuenta de Carlos en BCR?”.",
           en: "The recipient's external bank account. Always specify “cuenta bancaria” or “cuenta en [banco]” to distinguish from the sender's Félix account. Example: “¿Cuál es el número de cuenta de Carlos en BCR?”.",
           pt: "A conta bancária externa do destinatário. Sempre especifique “cuenta bancaria” ou “cuenta en [banco]” para distinguir da conta Félix de quem envia. Exemplo: “¿Cuál es el número de cuenta de Carlos en BCR?”.",
         },
@@ -441,7 +465,7 @@ export const GLOSSARY: GlossaryGroup[] = [
         termEs: "CLABE",
         termPt: "CLABE",
         use: {
-          es: "Al pedir el número de cuenta bancaria mexicana del destinatario (18 dígitos). En la primera mención, explicalo como “número de cuenta bancaria de 18 dígitos (CLABE)” para quien no reconozca el término.",
+          es: "Al pedir el número de cuenta bancaria mexicana del destinatario (18 dígitos). En la primera mención, explícalo como “número de cuenta bancaria de 18 dígitos (CLABE)” para quien no reconozca el término.",
           en: "When collecting the recipient's Mexican bank account number (18 digits). On first mention, explain as “número de cuenta bancaria de 18 dígitos (CLABE)” for users who may not recognize the term.",
           pt: "Ao coletar o número da conta bancária mexicana do destinatário (18 dígitos). Na primeira menção, explique como “número de cuenta bancaria de 18 dígitos (CLABE)” para quem não reconhecer o termo.",
         },
@@ -450,14 +474,18 @@ export const GLOSSARY: GlossaryGroup[] = [
           en: "Without explanation or format hint — CLABE is not universally recognized by remittance senders.",
           pt: "Sem explicação nem dica de formato — CLABE não é um termo que todos os remetentes reconhecem.",
         },
-        register: { es: "Neutro / Técnico", en: "Neutral / Technical", pt: "Neutro / Técnico" },
+        register: {
+          es: "Neutro / Técnico",
+          en: "Neutral / Technical",
+          pt: "Neutro / Técnico",
+        },
       },
       {
         term: "IBAN",
         termEs: "IBAN",
         termPt: "IBAN",
         use: {
-          es: "Al pedir el número de cuenta bancaria costarricense del destinatario. Formato: CR + 20 dígitos. En la primera mención, explicalo como “número de cuenta bancaria” y mostrá el formato (ej. “Ejemplo: CR21015201001026284066”).",
+          es: "Al pedir el número de cuenta bancaria costarricense del destinatario. Formato: CR + 20 dígitos. En la primera mención, explícalo como “número de cuenta bancaria” y muestra el formato (ej. “Ejemplo: CR21015201001026284066”).",
           en: "When collecting the recipient's Costa Rican bank account number. Format: CR + 20 digits. On first mention, explain as “número de cuenta bancaria” and show the format (e.g., “Ejemplo: CR21015201001026284066”).",
           pt: "Ao coletar o número da conta bancária costarriquenha do destinatário. Formato: CR + 20 dígitos. Na primeira menção, explique como “número de cuenta bancaria” e mostre o formato (ex.: “Ejemplo: CR21015201001026284066”).",
         },
@@ -466,13 +494,21 @@ export const GLOSSARY: GlossaryGroup[] = [
           en: "Without the format hint — users need the structure to complete it correctly.",
           pt: "Sem a dica de formato — os usuários precisam da estrutura para preencher corretamente.",
         },
-        register: { es: "Neutro / Técnico", en: "Neutral / Technical", pt: "Neutro / Técnico" },
+        register: {
+          es: "Neutro / Técnico",
+          en: "Neutral / Technical",
+          pt: "Neutro / Técnico",
+        },
       },
     ],
   },
   {
     id: "p3",
-    label: { es: "P3 — A considerar", en: "P3 — To consider", pt: "P3 — A considerar" },
+    label: {
+      es: "P3 — A considerar",
+      en: "P3 — To consider",
+      pt: "P3 — A considerar",
+    },
     entries: [
       {
         term: "Business days",
