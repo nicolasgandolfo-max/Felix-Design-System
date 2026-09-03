@@ -1,4 +1,4 @@
-import { useEffect, useMemo, type ReactNode } from "react";
+import { useEffect, useMemo } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import {
   Breadcrumb,
@@ -7,7 +7,6 @@ import {
   BreadcrumbLink,
   BreadcrumbPage,
   BreadcrumbSeparator,
-  Button,
   Table,
   TableBody,
   TableCell,
@@ -26,8 +25,6 @@ import type {
   Block,
   Example,
   Localized,
-  ResourceRow,
-  ResourceStatus,
   TableCell as Cell,
 } from "../patterns/types";
 import { useTr } from "../i18n";
@@ -46,36 +43,6 @@ const SECTION_H =
   "font-sans text-30 font-medium tracking-[-0.01em] text-foreground";
 
 const TH = "font-sans text-base font-medium uppercase text-foreground/50";
-
-const STATUS_CLASSES: Record<ResourceStatus, string> = {
-  ok: "bg-status-success-bg text-status-success-text",
-  /* `muted-foreground` es demasiado claro sobre `muted`; `foreground` invierte
-     bien con el tema y mantiene el contraste. */
-  draft: "bg-muted text-foreground",
-  tbd: "bg-status-warning-bg text-status-warning-text",
-};
-
-const STATUS_LABELS: Record<ResourceStatus, Localized> = {
-  ok: { es: "Disponible", en: "Available" },
-  draft: { es: "Borrador", en: "Draft" },
-  tbd: { es: "Por confirmar", en: "TBD" },
-};
-
-/** Renderiza los tramos entre backticks como `<code>`. */
-function withInlineCode(text: string): ReactNode[] {
-  return text.split("`").map((part, i) =>
-    i % 2 === 1 ? (
-      <code
-        key={i}
-        className="rounded-sm bg-foreground/10 px-2 py-1 font-mono text-sm"
-      >
-        {part}
-      </code>
-    ) : (
-      part
-    )
-  );
-}
 
 // ─── Bloques ─────────────────────────────────────────────────────────────────
 // Cada pestaña es una lista de bloques (ver `patterns/types.ts`). Los márgenes
@@ -107,7 +74,7 @@ function DataTable({
           {rows.map((row, r) => (
             <TableRow key={r}>
               {row.map((cell, c) => (
-                <TableCell key={c} className="align-top text-base">
+                <TableCell key={c} className="align-top text-base tabular-nums">
                   {Array.isArray(cell) ? (
                     <Blocks blocks={cell} tr={tr} />
                   ) : (
@@ -115,53 +82,6 @@ function DataTable({
                   )}
                 </TableCell>
               ))}
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </div>
-  );
-}
-
-function ResourcesTable({ rows, tr }: { rows: ResourceRow[]; tr: Tr }) {
-  return (
-    <div className="overflow-x-auto">
-      <Table>
-        <TableHeader>
-          <TableRow>
-            {[
-              tr("Tipo", "Type", "Tipo"),
-              tr("Recurso", "Resource", "Recurso"),
-              tr("Estado", "Status", "Estado"),
-            ].map((h) => (
-              <TableHead key={h} className={TH}>
-                {h}
-              </TableHead>
-            ))}
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {rows.map((r, i) => (
-            <TableRow key={i}>
-              <TableCell className="text-base">{L(tr, r.type)}</TableCell>
-              <TableCell className="text-base">
-                {r.href ? (
-                  <Button asChild variant="primary" size="sm">
-                    <a href={r.href} target="_blank" rel="noreferrer">
-                      {L(tr, r.resource)}
-                    </a>
-                  </Button>
-                ) : (
-                  L(tr, r.resource)
-                )}
-              </TableCell>
-              <TableCell className="text-base">
-                <span
-                  className={`inline-flex items-center rounded-full px-3 py-1 font-sans text-xs font-semibold ${STATUS_CLASSES[r.status]}`}
-                >
-                  {L(tr, STATUS_LABELS[r.status])}
-                </span>
-              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -181,6 +101,7 @@ function ExampleFigure({ example, tr }: { example: Example; tr: Tr }) {
       >
         <div className="flex min-h-72 flex-1 items-center justify-center p-8">
           <img
+            loading="lazy"
             src={example.img}
             alt={L(tr, example.alt)}
             className="h-auto w-full max-w-[300px]"
@@ -201,7 +122,7 @@ function ExampleFigure({ example, tr }: { example: Example; tr: Tr }) {
           </span>
         </div>
       </div>
-      <p className="mt-4 font-sans text-base font-medium tracking-[-0.01em] text-foreground">
+      <p className="mt-4 font-sans text-base font-medium tracking-[-0.01em] text-pretty text-foreground">
         {L(tr, example.caption)}
       </p>
     </div>
@@ -212,19 +133,21 @@ function BlockView({ block, tr }: { block: Block; tr: Tr }) {
   switch (block.type) {
     case "heading":
       return (
-        <h2 className={`mt-12 first:mt-0 ${SECTION_H}`}>{L(tr, block.text)}</h2>
+        <h2 className={`mt-12 text-balance first:mt-0 ${SECTION_H}`}>
+          {L(tr, block.text)}
+        </h2>
       );
 
     case "prose":
       return (
-        <p className="mt-3 font-sans text-lg leading-7 text-foreground first:mt-0">
+        <p className="mt-3 font-sans text-lg leading-7 text-pretty text-foreground first:mt-0">
           {L(tr, block.text)}
         </p>
       );
 
     case "bullets":
       return (
-        <ul className="mt-5 list-disc space-y-1 pl-6 font-sans text-lg leading-7 text-foreground first:mt-0">
+        <ul className="mt-5 list-disc space-y-1 pl-6 font-sans text-lg leading-7 text-pretty text-foreground first:mt-0">
           {block.items.map((item, i) => (
             <li key={i}>{L(tr, item)}</li>
           ))}
@@ -233,7 +156,7 @@ function BlockView({ block, tr }: { block: Block; tr: Tr }) {
 
     case "ordered":
       return (
-        <ol className="mt-5 list-decimal space-y-2 pl-6 font-sans text-lg leading-7 text-foreground first:mt-0">
+        <ol className="mt-5 list-decimal space-y-2 pl-6 font-sans text-lg leading-7 text-pretty text-foreground first:mt-0">
           {block.items.map((item, i) => (
             <li key={i}>{L(tr, item)}</li>
           ))}
@@ -249,12 +172,13 @@ function BlockView({ block, tr }: { block: Block; tr: Tr }) {
                 className={`flex min-h-72 items-center justify-center rounded-3xl border ${STROKE_SOFT} bg-card p-8`}
               >
                 <img
+                  loading="lazy"
                   src={item.img}
                   alt={L(tr, item.alt)}
                   className="h-auto w-full max-w-[300px]"
                 />
               </div>
-              <figcaption className="mt-4 font-sans text-base font-medium tracking-[-0.01em] text-foreground">
+              <figcaption className="mt-4 font-sans text-base font-medium tracking-[-0.01em] text-pretty text-foreground">
                 {L(tr, item.label)}
               </figcaption>
             </figure>
@@ -266,7 +190,7 @@ function BlockView({ block, tr }: { block: Block; tr: Tr }) {
       return (
         <div className="mt-6 first:mt-0">
           {block.heading && (
-            <h3 className={`mb-4 mt-12 ${SECTION_H}`}>
+            <h3 className={`mb-4 mt-12 text-balance ${SECTION_H}`}>
               {L(tr, block.heading)}
             </h3>
           )}
@@ -288,31 +212,20 @@ function BlockView({ block, tr }: { block: Block; tr: Tr }) {
       );
 
     /* "Secondary Sky" (--sky #8dfdfa), radio 31 como los paneles de la Plaza. */
+    /* "Secondary Sky" (--sky #8dfdfa). El cuerpo y la nota siguen en
+       content.ts pero no se muestran: las métricas todavía no existen, así que
+       el box queda en "Coming Soon" hasta que haya datos. */
     case "metric":
       return (
         <div
           className={`rounded-3xl border ${STROKE_SOFT} bg-(--sky) p-8 text-(--slate)`}
         >
-          <h2 className="font-sans text-30 font-medium tracking-[-0.01em]">
+          <h2 className="font-sans text-xl font-semibold tracking-[-0.01em] text-balance">
             {L(tr, block.title)}
           </h2>
-          {block.body.map((p, i) => (
-            <p key={i} className="mt-4 font-sans text-base leading-6">
-              {withInlineCode(L(tr, p))}
-            </p>
-          ))}
-          {block.note && (
-            <p className="mt-4 font-sans text-base leading-6">
-              {L(tr, block.note)}
-            </p>
-          )}
-        </div>
-      );
-
-    case "resources":
-      return (
-        <div className="mt-4 first:mt-0">
-          <ResourcesTable rows={block.rows} tr={tr} />
+          <p className="mt-3 font-sans text-lg leading-7">
+            {tr("Próximamente", "Coming Soon", "Em breve")}
+          </p>
         </div>
       );
 
@@ -327,7 +240,7 @@ function BlockView({ block, tr }: { block: Block; tr: Tr }) {
 
     case "note":
       return (
-        <p className="mt-8 border-l-2 border-primary pl-4 font-sans text-base leading-6 text-foreground first:mt-0">
+        <p className="mt-8 border-l-2 border-primary pl-4 font-sans text-base leading-6 text-pretty text-foreground first:mt-0">
           {L(tr, block.text)}
         </p>
       );
@@ -439,7 +352,7 @@ export function PatternPage() {
               </BreadcrumbList>
             </Breadcrumb>
 
-            <h1 className="font-heading text-60 font-black leading-[54px] tracking-[-0.01em] text-foreground">
+            <h1 className="font-heading text-60 font-black leading-[54px] tracking-[-0.01em] text-balance text-foreground">
               {heroTitle}
             </h1>
             {pattern.subtitle && (
@@ -448,7 +361,7 @@ export function PatternPage() {
               </p>
             )}
 
-            <p className="mt-4 max-w-[448px] font-sans text-base leading-6 text-foreground">
+            <p className="mt-4 max-w-[448px] font-sans text-md leading-7 text-pretty text-foreground">
               {L(tr, pattern.lede)}
             </p>
           </div>

@@ -25,12 +25,16 @@ function DirectoryCard({ entry }: { entry: Pattern }) {
   const tr = useTr();
 
   return (
-    <Link to={`/patrones/${entry.slug}`} className="group block">
+    <Link
+      to={`/patrones/${entry.slug}`}
+      className="group block rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+    >
       <article
         className={`flex h-full min-h-44 gap-4 rounded-xl border ${STROKE_SOFT} bg-card p-5 transition-shadow group-hover:shadow-md`}
       >
         <div className="flex w-32 shrink-0 items-center justify-center self-stretch overflow-hidden rounded-lg bg-(--stone)">
           <img
+            loading="lazy"
             src={entry.hero}
             alt=""
             className="size-full object-contain p-2"
@@ -42,12 +46,12 @@ function DirectoryCard({ entry }: { entry: Pattern }) {
             <p className="font-sans text-xxs font-bold uppercase text-foreground/60">
               FÉLIX · PATTERNS
             </p>
-            <h3 className="font-heading text-lg font-black leading-tight text-foreground">
+            <h3 className="font-heading text-lg font-black leading-tight text-balance text-foreground">
               {tr(entry.name.es, entry.name.en)}
             </h3>
           </div>
 
-          <p className="flex-1 font-sans text-sm leading-5 text-foreground">
+          <p className="flex-1 font-sans text-sm leading-5 text-pretty text-foreground">
             {tr(entry.cardBody.es, entry.cardBody.en)}
           </p>
 
@@ -147,7 +151,7 @@ export function PatternsLanding() {
             la grilla y actualiza los contadores del filtro. */}
         <h2
           id="browse"
-          className="mb-8 mt-20 scroll-mt-8 font-heading text-[32px] font-black tracking-[-0.01em] text-foreground"
+          className="mb-8 mt-20 scroll-mt-8 font-heading text-[32px] font-black tracking-[-0.01em] text-balance text-foreground"
         >
           {tr(
             "Explorar el directorio de Félix",
@@ -181,7 +185,7 @@ export function PatternsLanding() {
                       type="button"
                       onClick={() => setFilter(f.key)}
                       aria-current={active ? "true" : undefined}
-                      className={`w-full cursor-pointer py-3 text-left font-sans text-base text-foreground transition-opacity ${
+                      className={`w-full cursor-pointer rounded-md py-3 text-left font-sans text-base text-foreground transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
                         active ? "font-black" : "font-normal hover:opacity-70"
                       }`}
                     >

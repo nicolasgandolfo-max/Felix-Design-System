@@ -20,17 +20,6 @@ export type SpecTable = {
   rows: Array<[Localized, Localized]>;
 };
 
-/** Estado de disponibilidad de un recurso. */
-export type ResourceStatus = "ok" | "draft" | "tbd";
-
-export type ResourceRow = {
-  type: Localized;
-  resource: Localized;
-  /** Con `href`, el recurso se renderiza como botón; sin él, como texto. */
-  href?: string;
-  status: ResourceStatus;
-};
-
 /** Pantalla de una galería de casos de uso: imagen más etiqueta debajo. */
 export type GalleryItem = { img: string; label: Localized; alt: Localized };
 
@@ -93,7 +82,6 @@ export type Block =
   | { type: "callout"; title?: Localized; body: Localized }
   /** Panel "por qué funciona" en Secondary Sky. */
   | { type: "metric"; title: Localized; body: Localized[]; note?: Localized }
-  | { type: "resources"; rows: ResourceRow[] }
   | { type: "examples"; items: Example[] }
   /** Fila de pantallas etiquetadas (casos de uso), sin veredicto. */
   | { type: "gallery"; items: GalleryItem[] }
@@ -121,7 +109,6 @@ export type StandardSections = {
     usage: Localized[];
     /** Los backticks en `body` se renderizan como `<code>`. */
     metric: { title: Localized; body: Localized[]; note?: Localized };
-    resources: ResourceRow[];
   };
 
   specs: {

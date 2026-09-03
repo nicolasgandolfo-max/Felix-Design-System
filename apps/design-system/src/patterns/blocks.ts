@@ -6,11 +6,6 @@ const T = {
   guidelines: { es: "Guías", en: "Guidelines", pt: "Diretrizes" },
   usage: { es: "Cuándo usarlo", en: "Usage", pt: "Quando usar" },
   tips: { es: "Tips", en: "Tips", pt: "Dicas" },
-  resources: {
-    es: "Recursos y disponibilidad",
-    en: "Resources & availability",
-    pt: "Recursos e disponibilidade",
-  },
 };
 
 /**
@@ -28,8 +23,6 @@ export function standardTabs(s: StandardSections): PatternTab[] {
       ],
       right: [{ type: "metric", ...s.overview.metric }],
     },
-    { type: "heading", text: T.resources },
-    { type: "resources", rows: s.overview.resources },
   ];
 
   const specs: Block[] = [

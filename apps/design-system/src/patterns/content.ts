@@ -1,42 +1,10 @@
-import type {
-  Pattern,
-  PatternTab,
-  ResourceRow,
-  StandardSections,
-} from "./types";
+import type { Pattern, PatternTab, StandardSections } from "./types";
 import { standardTabs } from "./blocks";
 
 const ASSETS = "/assets/patterns";
 
-const FIGMA_WA_LIBRARY_URL =
-  "https://www.figma.com/design/N9dG8uXXR7FkLkuSZT5oex/DRAFT-Conversational-Guidelines";
-
 const WA_LIST_DOCS_URL =
   "https://developers.facebook.com/documentation/business-messaging/whatsapp/messages/interactive-list-messages";
-
-/* Los tres patrones comparten la misma grilla de recursos por ahora. Cuando
-   alguno se desvíe, copia el array en su entrada y edítalo ahí. */
-const SHARED_RESOURCES: ResourceRow[] = [
-  {
-    type: { es: "Diseño", en: "Design" },
-    resource: {
-      es: "Librería de WhatsApp (Figma)",
-      en: "WhatsApp Library (Figma)",
-    },
-    href: FIGMA_WA_LIBRARY_URL,
-    status: "ok",
-  },
-  {
-    type: { es: "Copy", en: "Copy" },
-    resource: { es: "Documento de contenido", en: "Content doc" },
-    status: "draft",
-  },
-  {
-    type: { es: "Datos", en: "Data" },
-    resource: { es: "Cruce con Amplitude", en: "Amplitude cross-check" },
-    status: "tbd",
-  },
-];
 
 // ─── Entrada cerrada ─────────────────────────────────────────────────────────
 
@@ -81,8 +49,8 @@ const closedInput: Pattern = {
       ],
       metric: {
         title: {
-          es: "Por qué funciona · métricas por confirmar",
-          en: "Why this works · metrics TBD",
+          es: "Por qué funciona",
+          en: "Why this works",
         },
         body: [
           {
@@ -95,7 +63,6 @@ const closedInput: Pattern = {
           en: "To pull: button-tap vs typed ratio and abandonment at this step. See the Amplitude cross-check map.",
         },
       },
-      resources: SHARED_RESOURCES,
     },
 
     specs: {
@@ -319,8 +286,8 @@ const openInput: Pattern = {
       ],
       metric: {
         title: {
-          es: "Por qué funciona · métricas por confirmar",
-          en: "Why this works · metrics TBD",
+          es: "Por qué funciona",
+          en: "Why this works",
         },
         body: [
           {
@@ -333,7 +300,6 @@ const openInput: Pattern = {
           en: "To pull: parse-success rate at the step, median time at step (benchmark against the 129s bank-account step), and loop or abandon rate. For the example variant, compare parse-success and time at step with the hint shown vs hidden, to decide how long to keep showing it.",
         },
       },
-      resources: SHARED_RESOURCES,
     },
 
     specs: {
@@ -479,10 +445,7 @@ const mixedInput: Pattern = {
   slug: "mixed-input",
   family: "interaction",
   name: { es: "Mixed input", en: "Mixed input" },
-  title: {
-    es: "Mixed input (buttons and open question)",
-    en: "Mixed input (buttons and open question)",
-  },
+  subtitle: { es: "Closed and open", en: "Closed and open" },
   lede: {
     es: "Una pregunta que ofrece las respuestas más comunes como botones y todavía deja escribir la propia. Un camino rápido para la mayoría, una puerta abierta para la cola larga.",
     en: "A question that offers the most common answers as buttons and still lets the user type their own. A fast path for the majority, an open door for the long tail.",
@@ -523,8 +486,8 @@ const mixedInput: Pattern = {
       ],
       metric: {
         title: {
-          es: "Por qué funciona · métricas por confirmar",
-          en: "Why this works · metrics TBD",
+          es: "Por qué funciona",
+          en: "Why this works",
         },
         body: [
           {
@@ -537,7 +500,6 @@ const mixedInput: Pattern = {
           en: "To pull: button-tap vs typed ratio at the step, and completion vs abandon per path. If typed usage stays tiny, the presets are right; if it climbs, the buttons are missing a common answer.",
         },
       },
-      resources: SHARED_RESOURCES,
     },
 
     specs: {
@@ -709,8 +671,8 @@ const menuSections: StandardSections = {
     ],
     metric: {
       title: {
-        es: "Por qué funciona · métricas por confirmar",
-        en: "Why this works · metrics TBD",
+        es: "Por qué funciona",
+        en: "Why this works",
       },
       body: [
         {
@@ -723,7 +685,6 @@ const menuSections: StandardSections = {
         en: 'To pull: selection rate per row and per position (is there a top-row bias), how deep people page (share reaching 2/3 and 3/3), how often they tap the escape row ("No encuentro mi envío"), and abandonment inside the menu.',
       },
     },
-    resources: SHARED_RESOURCES,
   },
 
   specs: {
