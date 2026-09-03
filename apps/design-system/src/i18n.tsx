@@ -6,15 +6,17 @@ import {
   type ReactNode,
 } from "react";
 
+/** El portal abre en inglés; el visitante cambia de idioma con el selector
+ *  del header, que es estado global (no hay default por página). */
 export type Lang = "es" | "en" | "pt";
 
 const LangContext = createContext<{ lang: Lang; setLang: (l: Lang) => void }>({
-  lang: "es",
+  lang: "en",
   setLang: () => {},
 });
 
 export function LangProvider({ children }: { children: ReactNode }) {
-  const [lang, setLang] = useState<Lang>("es");
+  const [lang, setLang] = useState<Lang>("en");
   useEffect(() => {
     document.documentElement.lang = lang;
   }, [lang]);

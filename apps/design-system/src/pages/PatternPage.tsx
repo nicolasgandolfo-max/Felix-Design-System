@@ -28,6 +28,7 @@ import type {
   Localized,
   ResourceRow,
   ResourceStatus,
+  TableCell as Cell,
 } from "../patterns/types";
 import { useTr } from "../i18n";
 
@@ -87,7 +88,7 @@ function DataTable({
   tr,
 }: {
   columns: Localized[];
-  rows: Localized[][];
+  rows: Cell[][];
   tr: Tr;
 }) {
   return (
@@ -106,8 +107,12 @@ function DataTable({
           {rows.map((row, r) => (
             <TableRow key={r}>
               {row.map((cell, c) => (
-                <TableCell key={c} className="text-base align-top">
-                  {L(tr, cell)}
+                <TableCell key={c} className="align-top text-base">
+                  {Array.isArray(cell) ? (
+                    <Blocks blocks={cell} tr={tr} />
+                  ) : (
+                    L(tr, cell)
+                  )}
                 </TableCell>
               ))}
             </TableRow>

@@ -1,9 +1,4 @@
-import type {
-  DirectoryEntry,
-  Pattern,
-  PatternStub,
-  ResourceRow,
-} from "./types";
+import type { Pattern, ResourceRow } from "./types";
 import { standardTabs } from "./blocks";
 
 const ASSETS = "/assets/patterns";
@@ -1187,6 +1182,53 @@ const textFormatting: Pattern = {
             ],
             [
               {
+                es: "La longitud es un objetivo, no el techo",
+                en: "Length is a target, not the ceiling",
+              },
+              [
+                {
+                  type: "prose",
+                  text: {
+                    es: "1.024 caracteres es el límite de la plataforma, no una meta. Un mensaje, una idea, una pregunta.",
+                    en: "1,024 characters is the platform limit, not a goal. One message, one idea, one question.",
+                  },
+                },
+                {
+                  type: "prose",
+                  text: {
+                    es: "Apunta a menos de ~300 caracteres por burbuja, unas 4 o 5 líneas en un Android de gama media. Un mensaje de más de ~500 caracteres es una señal, no una violación: tiene que justificar por qué no puede ser una de estas opciones, en este orden:",
+                    en: "Target under ~300 characters per bubble — about 4–5 lines on a mid-range Android. A message over ~500 characters is a signal, not a violation: it must justify why it can't be one of the following, in this order:",
+                  },
+                },
+                {
+                  type: "ordered",
+                  items: [
+                    {
+                      es: "Dos mensajes. Corta en el límite de la idea, no a mitad de un pensamiento.",
+                      en: "Two messages. Split at the idea boundary, not mid-thought.",
+                    },
+                    {
+                      es: "Un componente nativo. Los mensajes de lista o los botones de respuesta llevan las opciones sin agregar prosa.",
+                      en: "A native component. List messages or reply buttons carry options without adding prose.",
+                    },
+                    {
+                      es: "Un Flow (todavía no disponible en nuestra conversación). Cuando esté activo, úsalo solo si el contenido es una tarea (corregir datos, elegir una cuenta), nunca una lectura. Un Flow agrega un tap y tiempo de carga, y saca al usuario del hilo de la conversación. Hasta entonces, por defecto van las opciones 1 y 2.",
+                      en: "A Flow (not yet available in our conversation). Once live, use it only when the content is a task (correcting data, choosing an account), never a reading. A Flow adds a tap, load time, and pulls the user out of the conversation thread. Until then, default to options 1 and 2.",
+                    },
+                  ],
+                },
+                {
+                  type: "prose",
+                  text: {
+                    es: "Nunca escribas hacia el objetivo. Escribe lo que el mensaje necesita y después contrástalo contra el objetivo.",
+                    en: "Never write toward the target. Write what the message needs, then check it against the target.",
+                  },
+                },
+              ],
+              { es: "—", en: "—" },
+            ],
+            [
+              {
                 es: "No repitas la lógica de los botones",
                 en: "Do not restate button logic",
               },
@@ -1200,51 +1242,6 @@ const textFormatting: Pattern = {
               },
             ],
           ],
-        },
-        {
-          type: "heading",
-          text: {
-            es: "La longitud es un objetivo, no el techo",
-            en: "Length is a target, not the ceiling",
-          },
-        },
-        {
-          type: "prose",
-          text: {
-            es: "1.024 caracteres es el límite de la plataforma, no una meta. Un mensaje, una idea, una pregunta.",
-            en: "1,024 characters is the platform limit, not a goal. One message, one idea, one question.",
-          },
-        },
-        {
-          type: "prose",
-          text: {
-            es: "Apuntá a menos de ~300 caracteres por burbuja, unas 4 o 5 líneas en un Android de gama media. Un mensaje de más de ~500 caracteres es una señal, no una violación: tiene que justificar por qué no puede ser una de estas opciones, en este orden:",
-            en: "Target under ~300 characters per bubble — about 4–5 lines on a mid-range Android. A message over ~500 characters is a signal, not a violation: it must justify why it can't be one of the following, in this order:",
-          },
-        },
-        {
-          type: "ordered",
-          items: [
-            {
-              es: "Dos mensajes. Cortá en el límite de la idea, no a mitad de un pensamiento.",
-              en: "Two messages. Split at the idea boundary, not mid-thought.",
-            },
-            {
-              es: "Un componente nativo. Los mensajes de lista o los botones de respuesta llevan las opciones sin agregar prosa.",
-              en: "A native component. List messages or reply buttons carry options without adding prose.",
-            },
-            {
-              es: "Un Flow (todavía no disponible en nuestra conversación). Cuando esté activo, usalo solo si el contenido es una tarea (corregir datos, elegir una cuenta), nunca una lectura. Un Flow agrega un tap y tiempo de carga, y saca al usuario del hilo de la conversación. Hasta entonces, por defecto van las opciones 1 y 2.",
-              en: "A Flow (not yet available in our conversation). Once live, use it only when the content is a task (correcting data, choosing an account), never a reading. A Flow adds a tap, load time, and pulls the user out of the conversation thread. Until then, default to options 1 and 2.",
-            },
-          ],
-        },
-        {
-          type: "prose",
-          text: {
-            es: "Nunca escribas hacia el objetivo. Escribí lo que el mensaje necesita y después contrastalo contra el objetivo.",
-            en: "Never write toward the target. Write what the message needs, then check it against the target.",
-          },
         },
         {
           type: "callout",
@@ -1267,51 +1264,6 @@ const textFormatting: Pattern = {
   ],
 };
 
-// ─── Patrones del mapa que todavía no tienen contenido ───────────────────────
-
-/* Están en el directorio de Figma con nombre propio pero sin copy escrita, así
-   que se listan sin enlace en lugar de publicar descripciones de relleno.
-   El reparto de familias es provisional: Michelle va a ir indicando a cuál
-   pertenece cada uno a medida que los escriba. */
-const UPCOMING: PatternStub[] = [
-  {
-    slug: "confirmation-step",
-    name: { es: "Confirmation Step", en: "Confirmation Step" },
-    family: "interaction",
-    comingSoon: true,
-  },
-  {
-    slug: "error-recovery",
-    name: { es: "Error Recovery", en: "Error Recovery" },
-    family: "interaction",
-    comingSoon: true,
-  },
-  {
-    slug: "system-feedback",
-    name: { es: "System Feedback", en: "System Feedback" },
-    family: "interaction",
-    comingSoon: true,
-  },
-  {
-    slug: "contextual-routing",
-    name: { es: "Contextual Routing", en: "Contextual Routing" },
-    family: "conversational",
-    comingSoon: true,
-  },
-  {
-    slug: "escalation-path",
-    name: { es: "Escalation Path", en: "Escalation Path" },
-    family: "conversational",
-    comingSoon: true,
-  },
-  {
-    slug: "session-handoff",
-    name: { es: "Session Handoff", en: "Session Handoff" },
-    family: "conversational",
-    comingSoon: true,
-  },
-];
-
 /** Registro. El orden aquí es el orden de la grilla en la landing. */
 export const PATTERNS: Pattern[] = [
   closedInput,
@@ -1328,6 +1280,3 @@ export const getPattern = (slug: string): Pattern | undefined =>
 /** Los otros patrones, para la sección "Explorar patrones" de cada página. */
 export const otherPatterns = (slug: string): Pattern[] =>
   PATTERNS.filter((p) => p.slug !== slug);
-
-/** Todo lo que muestra la grilla del directorio, publicado y pendiente. */
-export const DIRECTORY: DirectoryEntry[] = [...PATTERNS, ...UPCOMING];

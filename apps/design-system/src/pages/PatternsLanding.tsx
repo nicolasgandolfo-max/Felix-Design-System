@@ -2,12 +2,8 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRightIcon } from "@phosphor-icons/react";
 import { PlazaChrome } from "../components/PlazaChrome";
-import { DIRECTORY } from "../patterns/content";
-import {
-  isPublished,
-  type DirectoryEntry,
-  type PatternFamily,
-} from "../patterns/types";
+import { PATTERNS } from "../patterns/content";
+import type { Pattern, PatternFamily } from "../patterns/types";
 import { useTr } from "../i18n";
 
 /* Trazo `stroke/soft` de Figma, el mismo de todos los paneles del portal. */
@@ -24,48 +20,37 @@ const FAMILY_LABELS: Record<PatternFamily, { es: string; en: string }> = {
  * Tarjeta del directorio, en el layout horizontal del diseño: la miniatura
  * ocupa una columna de 128px a la izquierda y el contenido va a la derecha.
  * La miniatura es la misma imagen que el hero de la página del patrón.
- * Sin contenido escrito todavía, la tarjeta va sin enlace.
  */
-function DirectoryCard({ entry }: { entry: DirectoryEntry }) {
+function DirectoryCard({ entry }: { entry: Pattern }) {
   const tr = useTr();
-  const published = isPublished(entry);
 
-  const card = (
-    <article
-      className={`flex h-full min-h-44 gap-4 rounded-xl border ${STROKE_SOFT} bg-card p-5 transition-shadow ${
-        published ? "group-hover:shadow-md" : ""
-      }`}
-    >
-      <div className="flex w-32 shrink-0 items-center justify-center self-stretch overflow-hidden rounded-lg bg-(--stone)">
-        {published && (
+  return (
+    <Link to={`/patrones/${entry.slug}`} className="group block">
+      <article
+        className={`flex h-full min-h-44 gap-4 rounded-xl border ${STROKE_SOFT} bg-card p-5 transition-shadow group-hover:shadow-md`}
+      >
+        <div className="flex w-32 shrink-0 items-center justify-center self-stretch overflow-hidden rounded-lg bg-(--stone)">
           <img
             src={entry.hero}
             alt=""
             className="size-full object-contain p-2"
           />
-        )}
-      </div>
-
-      <div className="flex min-w-0 flex-1 flex-col gap-3">
-        <div className="flex flex-col gap-1">
-          <p className="font-sans text-xxs font-bold uppercase text-foreground/60">
-            FÉLIX · PATTERNS
-          </p>
-          <h3 className="font-heading text-lg font-black leading-tight text-foreground">
-            {tr(entry.name.es, entry.name.en)}
-          </h3>
         </div>
 
-        <p className="flex-1 font-sans text-sm leading-5 text-foreground">
-          {published
-            ? tr(entry.cardBody.es, entry.cardBody.en)
-            : tr(
-                "Este patrón todavía no tiene contenido escrito.",
-                "This pattern doesn't have its content written yet."
-              )}
-        </p>
+        <div className="flex min-w-0 flex-1 flex-col gap-3">
+          <div className="flex flex-col gap-1">
+            <p className="font-sans text-xxs font-bold uppercase text-foreground/60">
+              FÉLIX · PATTERNS
+            </p>
+            <h3 className="font-heading text-lg font-black leading-tight text-foreground">
+              {tr(entry.name.es, entry.name.en)}
+            </h3>
+          </div>
 
-        {published ? (
+          <p className="flex-1 font-sans text-sm leading-5 text-foreground">
+            {tr(entry.cardBody.es, entry.cardBody.en)}
+          </p>
+
           <span className="flex items-center gap-1 font-sans text-xs font-bold text-foreground">
             {tr(
               "Ver las guías del patrón",
@@ -74,21 +59,9 @@ function DirectoryCard({ entry }: { entry: DirectoryEntry }) {
             )}
             <ArrowRightIcon size={16} aria-hidden="true" />
           </span>
-        ) : (
-          <span className="font-sans text-xs font-bold text-foreground/40">
-            {tr("Próximamente", "Coming soon", "Em breve")}
-          </span>
-        )}
-      </div>
-    </article>
-  );
-
-  return published ? (
-    <Link to={`/patrones/${entry.slug}`} className="group block">
-      {card}
+        </div>
+      </article>
     </Link>
-  ) : (
-    card
   );
 }
 
@@ -106,9 +79,9 @@ export function PatternsLanding() {
 
   const counts = useMemo(
     () => ({
-      all: DIRECTORY.length,
-      interaction: DIRECTORY.filter((e) => e.family === "interaction").length,
-      conversational: DIRECTORY.filter((e) => e.family === "conversational")
+      all: PATTERNS.length,
+      interaction: PATTERNS.filter((e) => e.family === "interaction").length,
+      conversational: PATTERNS.filter((e) => e.family === "conversational")
         .length,
     }),
     []
@@ -116,9 +89,7 @@ export function PatternsLanding() {
 
   const visible = useMemo(
     () =>
-      filter === "all"
-        ? DIRECTORY
-        : DIRECTORY.filter((e) => e.family === filter),
+      filter === "all" ? PATTERNS : PATTERNS.filter((e) => e.family === filter),
     [filter]
   );
 
@@ -194,7 +165,7 @@ export function PatternsLanding() {
               "Famílias de padrões"
             )}
           >
-            <p className="mb-3 font-sans text-sm font-extrabold uppercase text-foreground/50">
+            <p className="mb-4 font-sans text-sm font-bold uppercase tracking-wide text-foreground/50">
               {tr(
                 "Familias de patrones",
                 "Pattern Families",
@@ -210,10 +181,8 @@ export function PatternsLanding() {
                       type="button"
                       onClick={() => setFilter(f.key)}
                       aria-current={active ? "true" : undefined}
-                      className={`w-full cursor-pointer py-2 text-left font-sans text-sm transition-colors ${
-                        active
-                          ? "font-extrabold text-foreground"
-                          : "font-medium text-foreground/70 hover:text-foreground"
+                      className={`w-full cursor-pointer py-3 text-left font-sans text-base text-foreground transition-opacity ${
+                        active ? "font-black" : "font-normal hover:opacity-70"
                       }`}
                     >
                       {f.label}

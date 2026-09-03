@@ -64,25 +64,6 @@ export type Pattern = {
   tabs: PatternTab[];
 };
 
-/**
- * Patrón que ya está en el directorio pero todavía no tiene contenido escrito.
- * Aparece en la grilla sin enlace hasta que se convierta en un `Pattern`
- * completo; así el directorio refleja el mapa real de patrones sin publicar
- * descripciones de relleno.
- */
-export type PatternStub = {
-  slug: string;
-  name: Localized;
-  family: PatternFamily;
-  comingSoon: true;
-};
-
-/** Lo que renderiza una tarjeta del directorio: patrón completo o pendiente. */
-export type DirectoryEntry = Pattern | PatternStub;
-
-export const isPublished = (e: DirectoryEntry): e is Pattern =>
-  !("comingSoon" in e);
-
 // ─── Contenido por bloques ────────────────────────────────────────────────────
 
 /**
@@ -101,7 +82,7 @@ export type Block =
       type: "table";
       heading?: Localized;
       columns: Localized[];
-      rows: Localized[][];
+      rows: TableCell[][];
     }
   /** Caja light-sky con título opcional en negrita seguido del cuerpo. */
   | { type: "callout"; title?: Localized; body: Localized }
@@ -114,6 +95,12 @@ export type Block =
   | { type: "source"; text: Localized; href?: string; linkText?: string }
   /** Dos columnas lado a lado (Usage | Metric, Usage | Tips). */
   | { type: "columns"; left: Block[]; right: Block[] };
+
+/**
+ * Celda de tabla: texto suelto, o una lista de bloques cuando la regla no
+ * entra en una línea (párrafos más una lista numerada, por ejemplo).
+ */
+export type TableCell = Localized | Block[];
 
 export type PatternTab = { id: string; label: Localized; blocks: Block[] };
 
