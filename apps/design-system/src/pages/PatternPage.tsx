@@ -391,10 +391,11 @@ export function PatternPage() {
           defaultValue={pattern.tabs[0]?.id}
           className="mt-12"
         >
-          {/* Con una sola pestaña la barra no aporta: el patrón se lee como
-              una página corrida. */}
+          {/* Mismo estilo que el header (.plaza-nav: blanco, pill) y sticky
+              a 16px del borde para que las pestañas acompañen el scroll.
+              Con una sola pestaña la barra no aporta y se oculta. */}
           <TabsList
-            className={`w-full gap-2 rounded-full border ${STROKE_SOFT} bg-card p-2 ${
+            className={`sticky top-4 z-30 w-full gap-2 rounded-full border ${STROKE_SOFT} bg-white p-3 ${
               pattern.tabs.length < 2 ? "hidden" : ""
             }`}
           >

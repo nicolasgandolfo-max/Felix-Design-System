@@ -92,7 +92,7 @@ const closedInput: Pattern = {
           heading: { es: "Mensaje de lista", en: "List message" },
           columns: [
             { es: "Elemento", en: "Element" },
-            { es: "Límite", en: "Limit" },
+            { es: "Límite", en: "Spec" },
           ],
           rows: [
             [
@@ -147,7 +147,7 @@ const closedInput: Pattern = {
           },
           columns: [
             { es: "Opciones", en: "Options" },
-            { es: "Componente", en: "Pattern" },
+            { es: "Patrón", en: "Pattern" },
           ],
           rows: [
             [
@@ -764,7 +764,7 @@ const menuSections: StandardSections = {
         heading: { es: "Casos de uso", en: "Use cases" },
         columns: [
           { es: "Opciones", en: "Options" },
-          { es: "Componente", en: "Variable" },
+          { es: "Patrón", en: "Pattern" },
         ],
         rows: [
           [
@@ -1062,7 +1062,7 @@ const useOfEmojis: Pattern = {
                 es: "Las etiquetas tienen un tope de 20 caracteres con espacios (ver guías de Voz y Tono). Un emoji gasta caracteres y se renderiza de forma inconsistente entre clientes.",
                 en: "Labels are capped at 20 characters including spaces (see Voice & Tone guidelines). An emoji spends characters and renders inconsistently across clients.",
               },
-              { es: "-", en: "-" },
+              { es: "—", en: "—" },
             ],
           ],
         },
@@ -1123,13 +1123,13 @@ const useOfEmojis: Pattern = {
                 en: "Transfer processing, verification underway",
               },
               {
-                es: "Marca el paso del tiempo, no la demora. ⏛ (U+231B) se lee como terminado; ⏰ se lee como una operación del sistema y no como un estado de la transferencia",
-                en: "Marks time elapsing rather than delay. ⏛ (U+231B) reads as finished; ⏰ reads as a system operation rather than a transfer state",
+                es: "Marca el paso del tiempo, no la demora. ⌛ (U+231B) se lee como terminado; ⏰ se lee como una operación del sistema y no como un estado de la transferencia",
+                en: "Marks time elapsing rather than delay. ⌛ (U+231B) reads as finished; ⏰ reads as a system operation rather than a transfer state",
               },
             ],
             [
               { es: "Requiere atención", en: "Needs attention" },
-              { es: "⚠️", en: "⚠️" },
+              { es: "🔔", en: "🔔" },
               { es: "U+1F514", en: "U+1F514" },
               {
                 es: "Campo faltante, tasa por vencer, documento pendiente",
@@ -1499,8 +1499,8 @@ const textFormatting: Pattern = {
                 {
                   type: "prose",
                   text: {
-                    es: "1.024 caracteres es el límite de la plataforma, no una meta. Un mensaje, una idea, una pregunta.",
-                    en: "1,024 characters is the platform limit, not a goal. One message, one idea, one question.",
+                    es: "1.024 caracteres es el límite de la plataforma para un mensaje con botones (4.096 en texto plano o lista), no una meta. Un mensaje, una idea, una pregunta.",
+                    en: "1,024 characters is the platform limit for a message with buttons (4,096 for plain text or a list), not a goal. One message, one idea, one question.",
                   },
                 },
                 {

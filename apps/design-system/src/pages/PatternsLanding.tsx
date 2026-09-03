@@ -165,7 +165,7 @@ export function PatternsLanding() {
             className={`shrink-0 rounded-2xl border ${STROKE_SOFT} bg-card p-6 lg:w-[280px]`}
             aria-label={tr(
               "Familias de patrones",
-              "Pattern families",
+              "Pattern Families",
               "Famílias de padrões"
             )}
           >
