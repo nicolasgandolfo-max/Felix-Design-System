@@ -437,8 +437,12 @@ export function PatternPage() {
           defaultValue={pattern.tabs[0]?.id}
           className="mt-12"
         >
+          {/* Con una sola pestaña la barra no aporta: el patrón se lee como
+              una página corrida. */}
           <TabsList
-            className={`w-full gap-1.5 rounded-full border ${STROKE_SOFT} bg-card p-[9px]`}
+            className={`w-full gap-1.5 rounded-full border ${STROKE_SOFT} bg-card p-[9px] ${
+              pattern.tabs.length < 2 ? "hidden" : ""
+            }`}
           >
             {pattern.tabs.map((tab) => (
               <TabsTrigger

@@ -992,6 +992,121 @@ const useOfEmojis: Pattern = {
   ],
 };
 
+// ─── Use of images ──────────────────────────────────────────────────────────
+
+/* Una sola pestaña: el contenido son las reglas más las dos notas de medición.
+   El hero se recortó del cluster de `hero-home.png`, donde la burbuja vive
+   aplanada — cuando haya un export propio del nodo, reemplazar el archivo.
+   El ejemplo "como ves en la imagen" queda en español porque es copy de
+   producto, no de la guía. */
+const useOfImages: Pattern = {
+  slug: "use-of-images",
+  family: "conversational",
+  name: { es: "Use of images", en: "Use of images" },
+  lede: {
+    es: "Cuándo una imagen ayuda y cuándo distrae en un mensaje.",
+    en: "When an image helps vs distracts in a message.",
+  },
+  cardBody: {
+    es: "Cuándo una imagen ayuda y cuándo distrae en un mensaje.",
+    en: "When an image helps vs distracts in a message.",
+  },
+  hero: `${ASSETS}/images-hero.png`,
+  heroDetail: [`${ASSETS}/images-hero.png`],
+  heroAlt: {
+    es: "Mensaje de WhatsApp con una ilustración de tarjetas sobre el texto de pago y un botón para completar el pago",
+    en: "WhatsApp message with a card illustration above the payment copy and a button to complete the payment",
+  },
+  tabs: [
+    {
+      id: "overview",
+      label: { es: "Resumen", en: "Overview", pt: "Resumo" },
+      blocks: [
+        { type: "heading", text: { es: "Reglas", en: "Rules" } },
+        {
+          type: "table",
+          columns: [
+            { es: "Regla", en: "Rule" },
+            { es: "Estándar", en: "Standard" },
+            { es: "Ejemplo", en: "Example" },
+          ],
+          rows: [
+            [
+              {
+                es: "Función, no decoración",
+                en: "Function, not decoration",
+              },
+              {
+                es: "Una imagen se envía solo cuando lleva información que el texto no puede dar: dónde aparece un campo en un estado de cuenta, cómo se ve un comprobante de pago válido. Una imagen decorativa agrega un paso de carga y un scroll a un flujo donde el usuario ya está ansioso.",
+                en: "An image ships only when it carries information the text cannot: where a field appears on a bank statement, what a valid proof of payment looks like. A decorative image adds a load step and a scroll to a flow where the user is already anxious.",
+              },
+              {
+                es: "Dónde aparece el número de cuenta en un estado ✓ · Una ilustración de saludo ✗",
+                en: "Where the account number appears on a statement ✓ · A greeting illustration ✗",
+              },
+            ],
+            [
+              { es: "El texto se sostiene solo", en: "The text stands alone" },
+              {
+                es: "El mensaje debe estar completo sin la imagen. Las imágenes fallan en conexiones de bajo ancho de banda y los lectores de pantalla no las leen en voz alta.",
+                en: "The message must be complete without the image. Images fail on low-bandwidth connections and are not read aloud by screen readers.",
+              },
+              {
+                es: 'Nunca "como ves en la imagen"',
+                en: 'Never "como ves en la imagen"',
+              },
+            ],
+            [
+              {
+                es: "Nunca el único portador",
+                en: "Never the only carrier",
+              },
+              {
+                es: "Los montos, las comisiones, las fechas límite y las instrucciones nunca viven solo dentro de una imagen. El texto en una imagen no se puede seleccionar, corregir, tokenizar ni localizar: es una cadena fuera del pipeline.",
+                en: "Amounts, fees, deadlines and instructions never live only inside an image. Text in an image cannot be selected, corrected, tokenized or localized — it is a string outside the pipeline.",
+              },
+              {
+                es: "Un monto renderizado dentro de una imagen ✗",
+                en: "An amount rendered inside an image ✗",
+              },
+            ],
+            [
+              {
+                es: "Una burbuja, una decisión",
+                en: "One bubble, one decision",
+              },
+              {
+                es: "Una imagen nunca comparte mensaje con una pregunta. Primero muestra, después pregunta.",
+                en: "An image never shares a message with a question. Show first, ask after.",
+              },
+              {
+                es: "Imagen → después la pregunta, en un mensaje aparte",
+                en: "Image → then the question, in a separate message",
+              },
+            ],
+          ],
+        },
+        {
+          type: "callout",
+          title: { es: "Señal de validación:", en: "Validation signal —" },
+          body: {
+            es: "¿Los usuarios continúan o abandonan en los pasos que incluyen una imagen? Comparación de embudo a nivel de paso contra pasos equivalentes sin una.",
+            en: "Do users continue or drop at steps that include an image? Step-level funnel comparison against equivalent steps without one.",
+          },
+        },
+        {
+          type: "callout",
+          title: { es: "Pendiente:", en: "Open item —" },
+          body: {
+            es: "Confirmar si hoy existe un evento a nivel de paso que distinga los pasos que incluyen una imagen (Jose / analytics). Sin ese evento, el patrón queda como una convención y no se puede medir.",
+            en: "Confirm whether a step-level event today distinguishes steps that include an image (Jose / analytics). Without that event the pattern stays a convention and cannot be measured.",
+          },
+        },
+      ],
+    },
+  ],
+};
+
 // ─── Patrones del mapa que todavía no tienen contenido ───────────────────────
 
 /* Están en el directorio de Figma con nombre propio pero sin copy escrita, así
@@ -1043,6 +1158,7 @@ export const PATTERNS: Pattern[] = [
   openInput,
   mixedInput,
   useOfEmojis,
+  useOfImages,
 ];
 
 export const getPattern = (slug: string): Pattern | undefined =>
