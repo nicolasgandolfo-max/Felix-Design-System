@@ -1,41 +1,15 @@
 import { useState, type ReactNode } from "react";
 import {
   // Atoms
-  Avatar,
-  AvatarFallback,
-  Badge,
-  Button,
-  Checkbox,
-  CoinLoader,
-  Dots,
-  IconButton,
-  Input,
-  Label,
-  Logo,
-  Progress,
-  RadioGroup,
-  RadioGroupItem,
-  Separator,
-  Skeleton,
-  Slider,
-  Spinner,
-  Switch,
-  Text,
-  Textarea,
+  Avatar, AvatarFallback,
+  Badge, Bubble, Button, Checkbox, CoinLoader, Dots, IconButton,
+  Input, Label, Logo, Marker, Progress, RadioGroup, RadioGroupItem, Separator,
+  Skeleton, Slider, Spinner, Switch, Text, Textarea,
   // Molecules
-  Accordion,
-  AccordionItem,
-  AccordionTrigger,
-  AccordionContent,
-  Alert,
-  AlertTitle,
-  AlertDescription,
-  Breadcrumb,
-  BreadcrumbList,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
+  Accordion, AccordionItem, AccordionTrigger, AccordionContent,
+  Alert, AlertTitle, AlertDescription,
+  Attachment,
+  Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator,
   Calendar,
   Card,
   CardHeader,
@@ -49,61 +23,16 @@ import {
   CollapseTrigger,
   CollapseContent,
   DatePicker,
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
-  DialogClose,
-  Drawer,
-  DrawerTrigger,
-  DrawerContent,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerClose,
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  HoverCard,
-  HoverCardTrigger,
-  HoverCardContent,
-  NavigationMenu,
-  NavigationMenuList,
-  NavigationMenuItem,
-  NavigationMenuTrigger,
-  NavigationMenuContent,
-  NavigationMenuLink,
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationPrevious,
-  PaginationNext,
-  PaginationEllipsis,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-  Sheet,
-  SheetTrigger,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
-  SheetBody,
-  SheetFooter,
-  SheetClose,
+  Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose,
+  Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerFooter, DrawerClose,
+  DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator,
+  HoverCard, HoverCardTrigger, HoverCardContent,
+  Message, MessageAvatar, MessageContent, MessageHeader, MessageFooter,
+  NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuTrigger, NavigationMenuContent, NavigationMenuLink,
+  Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationPrevious, PaginationNext, PaginationEllipsis,
+  Popover, PopoverTrigger, PopoverContent,
+  Select, SelectTrigger, SelectValue, SelectContent, SelectItem,
+  Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetBody, SheetFooter, SheetClose,
   SidebarFooter,
   Stepper,
   Table,
@@ -123,11 +52,8 @@ import {
   TooltipTrigger,
   TooltipContent,
   // Organisms
-  Sidebar,
-  SidebarHeader,
-  SidebarBody,
-  SidebarSection,
-  SidebarNavItem,
+  MessageScroller, MessageScrollerHeader, MessageScrollerEmpty, MessageScrollerMessages, MessageScrollerInput,
+  Sidebar, SidebarHeader, SidebarBody, SidebarSection, SidebarNavItem,
 } from "@felix/ui";
 import {
   PencilSimpleIcon,
@@ -259,6 +185,35 @@ export const SHOWCASES: Record<string, Showcase> = {
         <Badge variant="outline">Borrador</Badge>
         <Badge variant="ghost">Etiqueta</Badge>
         <Badge variant="dark">Beta</Badge>
+      </Demo>
+    ),
+  },
+  bubble: {
+    es: "Cuerpo de un mensaje de chat. 7 variantes; radio 24 px.",
+    en: "Body of a chat message. 7 variants; 24 px radius.",
+    pt: "Corpo de uma mensagem de chat. 7 variantes; raio de 24 px.",
+    usage: {
+      es: "El globo que envuelve el texto de un mensaje en una conversación. Impórtalo desde @felix/ui y elige el tono con variant: default (turquesa, tus mensajes), secondary, muted (la otra persona), tinted, outline, ghost (sin marco, ideal para respuestas de IA o markdown) o destructive (error). Se ajusta al contenido: limitá el ancho desde el contenedor o deja que Message lo haga.",
+      en: "The balloon that wraps a message's text in a conversation. Import it from @felix/ui and pick the tone with variant: default (turquoise, your messages), secondary, muted (the other party), tinted, outline, ghost (no frame, ideal for AI replies or markdown) or destructive (error). It hugs its content: constrain the width from the container or let Message handle it.",
+      pt: "O balão que envolve o texto de uma mensagem em uma conversa. Importe de @felix/ui e escolha o tom com variant: default (turquesa, suas mensagens), secondary, muted (a outra pessoa), tinted, outline, ghost (sem moldura, ideal para respostas de IA ou markdown) ou destructive (erro). Ajusta-se ao conteúdo: limite a largura pelo contêiner ou deixe o Message cuidar disso.",
+    },
+    preview: () => (
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 8, width: 200 }}>
+        <Bubble variant="muted">¿Cómo va tu envío?</Bubble>
+        <div style={{ alignSelf: "flex-end" }}><Bubble>¡Ya llegó, gracias!</Bubble></div>
+      </div>
+    ),
+    render: () => (
+      <Demo label="Variantes" col>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 16, width: 284 }}>
+          <Bubble variant="default">¡Hola! ¿Cómo va tu envío?</Bubble>
+          <Bubble variant="secondary">¡Va muy bien, gracias por preguntar!</Bubble>
+          <Bubble variant="muted">Déjame revisarlo por ti.</Bubble>
+          <Bubble variant="tinted">Aquí está la información que pediste.</Bubble>
+          <Bubble variant="outline">Tengo una duda sobre la comisión.</Bubble>
+          <Bubble variant="ghost">Este es contenido sin marco, como una respuesta de IA o un bloque de markdown.</Bubble>
+          <Bubble variant="destructive">Error: algo salió mal con la solicitud.</Bubble>
+        </div>
       </Demo>
     ),
   },
@@ -492,6 +447,30 @@ export const SHOWCASES: Record<string, Showcase> = {
         <Logo type="logotype" style={{ height: 32 }} />
         <Logo type="symbol" style={{ height: 32 }} />
         <Logo type="symbol-circular" style={{ height: 36 }} />
+      </Demo>
+    ),
+  },
+  marker: {
+    es: "Anotación de hilo: evento del sistema o separador de fecha.",
+    en: "Thread annotation: system event or date divider.",
+    pt: "Anotação de conversa: evento do sistema ou separador de data.",
+    usage: {
+      es: "Una línea de baja jerarquía dentro de una conversación que no es un mensaje: un evento del sistema o un separador de fecha. Impórtalo desde @felix/ui y elige variant: default (ícono + texto), separator (texto centrado entre dos líneas, ideal para 'Hoy') o border (ícono + texto con una línea inferior). El ícono por defecto es GitBranch de Phosphor; reemplazalo con icon o pasa null para omitirlo.",
+      en: "A low-emphasis line inside a conversation that is not a message: a system event or a date divider. Import it from @felix/ui and pick variant: default (icon + text), separator (centered text between two hairlines, ideal for 'Today') or border (icon + text with a bottom hairline). The default icon is Phosphor's GitBranch; replace it with icon or pass null to omit it.",
+      pt: "Uma linha de baixa hierarquia dentro de uma conversa que não é uma mensagem: um evento do sistema ou um separador de data. Importe de @felix/ui e escolha variant: default (ícone + texto), separator (texto centralizado entre duas linhas, ideal para 'Hoje') ou border (ícone + texto com uma linha inferior). O ícone padrão é o GitBranch do Phosphor; substitua com icon ou passe null para omiti-lo.",
+    },
+    preview: () => (
+      <div style={{ width: 220 }}>
+        <Marker variant="separator">Hoy</Marker>
+      </div>
+    ),
+    render: () => (
+      <Demo label="Variantes" col>
+        <div style={{ display: "flex", flexDirection: "column", gap: 16, width: 360 }}>
+          <Marker>Cambió a una nueva conversación</Marker>
+          <Marker variant="separator">Hoy</Marker>
+          <Marker variant="border">Cambió a soporte prioritario</Marker>
+        </div>
       </Demo>
     ),
   },
@@ -848,6 +827,39 @@ export const SHOWCASES: Record<string, Showcase> = {
           </AlertDescription>
         </Alert>
       </Demo>
+    ),
+  },
+  attachment: {
+    es: "Chip de archivo o imagen adjunta. 3 tamaños × 3 estados × 2 tipos.",
+    en: "Attached file or image chip. 3 sizes × 3 states × 2 types.",
+    pt: "Chip de arquivo ou imagem anexada. 3 tamanhos × 3 estados × 2 tipos.",
+    usage: {
+      es: "El adjunto que acompaña un mensaje o el compositor del chat: un comprobante en PDF, una foto del ticket. Impórtalo desde @felix/ui y pásale name y meta (formato · peso). Elige size (sm, md o lg), state (default, error o loading, que muestra spinner y barra de progreso con progress) y type (file o image; con image y lg se vuelve una tarjeta vertical con miniatura). El botón de cerrar dispara onRemove; etiquetalo con removeLabel.",
+      en: "The attachment that travels with a message or the chat composer: a PDF receipt, a photo of the ticket. Import it from @felix/ui and pass name and meta (format · size). Pick size (sm, md, or lg), state (default, error, or loading, which shows a spinner and a progress bar driven by progress) and type (file or image; image + lg becomes a vertical card with a thumbnail). The close button fires onRemove; label it with removeLabel.",
+      pt: "O anexo que acompanha uma mensagem ou o compositor do chat: um comprovante em PDF, uma foto do ticket. Importe de @felix/ui e passe name e meta (formato · tamanho). Escolha size (sm, md ou lg), state (default, error ou loading, que mostra spinner e barra de progresso controlada por progress) e type (file ou image; image + lg vira um cartão vertical com miniatura). O botão de fechar dispara onRemove; rotule-o com removeLabel.",
+    },
+    preview: () => (
+      <Attachment size="md" name="comprobante.pdf" meta="PDF · 2.4 MB" removeLabel="Quitar adjunto" />
+    ),
+    render: () => (
+      <>
+        <Demo label="Archivos · sm / md / lg">
+          <Attachment size="sm" name="comprobante.pdf" meta="PDF · 2.4 MB" removeLabel="Quitar adjunto" />
+          <Attachment size="md" name="comprobante.pdf" meta="PDF · 2.4 MB" removeLabel="Quitar adjunto" />
+          <Attachment size="lg" name="comprobante.pdf" meta="PDF · 2.4 MB" removeLabel="Quitar adjunto" />
+        </Demo>
+        <Demo label="Imágenes · sm / md / lg">
+          <Attachment type="image" size="sm" name="foto-ticket.jpg" meta="JPG · 3.8 MB" removeLabel="Quitar adjunto" />
+          <Attachment type="image" size="md" name="foto-ticket.jpg" meta="JPG · 3.8 MB" removeLabel="Quitar adjunto" />
+          <Attachment type="image" size="lg" name="foto-ticket.jpg" meta="JPG · 3.8 MB" removeLabel="Quitar adjunto" />
+        </Demo>
+        <Demo label="Estados · error / loading">
+          <Attachment size="md" state="error" name="comprobante.pdf" meta="PDF · 2.4 MB" removeLabel="Quitar adjunto" />
+          <Attachment type="image" size="md" state="error" name="foto-ticket.jpg" meta="JPG · 3.8 MB" removeLabel="Quitar adjunto" />
+          <Attachment size="md" state="loading" progress={45} name="comprobante.pdf" meta="Subiendo... 45%" removeLabel="Quitar adjunto" />
+          <Attachment type="image" size="lg" state="loading" progress={45} name="foto-ticket.jpg" meta="Subiendo... 45%" removeLabel="Quitar adjunto" />
+        </Demo>
+      </>
     ),
   },
   breadcrumb: {
@@ -1242,6 +1254,49 @@ export const SHOWCASES: Record<string, Showcase> = {
             María González · recibió 12 envíos este año.
           </HoverCardContent>
         </HoverCard>
+      </Demo>
+    ),
+  },
+  message: {
+    es: "Un mensaje del hilo: avatar, remitente, Bubble y hora.",
+    en: "One thread entry: avatar, sender, Bubble, and time.",
+    pt: "Uma mensagem da conversa: avatar, remetente, Bubble e hora.",
+    usage: {
+      es: "Una entrada de la conversación: un avatar opcional más una columna con encabezado (quién escribe), un Bubble y un pie (hora o estado de lectura). Importa Message, MessageAvatar, MessageContent, MessageHeader y MessageFooter desde @felix/ui. Con align='start' el avatar va a la izquierda y el contenido se alinea al inicio (la otra persona); con align='end' se invierte (tus mensajes). Escribe siempre el avatar primero en el JSX: align se encarga del orden visual.",
+      en: "One entry in the conversation: an optional avatar plus a column with a header (who's writing), a Bubble, and a footer (time or read state). Import Message, MessageAvatar, MessageContent, MessageHeader, and MessageFooter from @felix/ui. With align='start' the avatar sits on the left and content aligns to the start (the other party); align='end' mirrors it (your messages). Always write the avatar first in JSX: align handles the visual order.",
+      pt: "Uma entrada da conversa: um avatar opcional mais uma coluna com cabeçalho (quem escreve), um Bubble e um rodapé (hora ou estado de leitura). Importe Message, MessageAvatar, MessageContent, MessageHeader e MessageFooter de @felix/ui. Com align='start' o avatar fica à esquerda e o conteúdo alinha ao início (a outra pessoa); align='end' inverte (suas mensagens). Escreva sempre o avatar primeiro no JSX: align cuida da ordem visual.",
+    },
+    preview: () => (
+      <div style={{ width: 240 }}>
+        <Message align="start">
+          <MessageAvatar><Avatar size="sm" initials="MG" status="success" statusLabel="En línea" /></MessageAvatar>
+          <MessageContent>
+            <MessageHeader>María</MessageHeader>
+            <Bubble variant="muted">Déjame revisarlo por ti.</Bubble>
+          </MessageContent>
+        </Message>
+      </div>
+    ),
+    render: () => (
+      <Demo label="Alineación · start / end" col>
+        <div style={{ display: "flex", flexDirection: "column", gap: 20, width: 420 }}>
+          <Message align="start">
+            <MessageAvatar><Avatar size="sm" initials="MG" status="success" statusLabel="En línea" /></MessageAvatar>
+            <MessageContent>
+              <MessageHeader>María</MessageHeader>
+              <Bubble variant="muted">Déjame revisarlo por ti.</Bubble>
+              <MessageFooter>2:32 PM</MessageFooter>
+            </MessageContent>
+          </Message>
+          <Message align="end">
+            <MessageAvatar><Avatar size="sm" initials="TÚ" status="success" statusLabel="En línea" /></MessageAvatar>
+            <MessageContent>
+              <MessageHeader>Tú</MessageHeader>
+              <Bubble>¡Hola! ¿Cómo va tu envío?</Bubble>
+              <MessageFooter>Leído · 2:34 PM</MessageFooter>
+            </MessageContent>
+          </Message>
+        </div>
       </Demo>
     ),
   },
@@ -1706,6 +1761,108 @@ export const SHOWCASES: Record<string, Showcase> = {
   },
 
   /* ── Organisms ──────────────────────────────────────────────────────── */
+  messagescroller: {
+    es: "Superficie de chat: header, hilo o estado vacío, e input.",
+    en: "Chat surface: header, thread or empty state, and input.",
+    pt: "Superfície de chat: header, conversa ou estado vazio, e input.",
+    usage: {
+      es: "El marco completo de una conversación: un header con título y botón de refrescar, el hilo de mensajes con scroll (o un estado vacío mientras no hay nada) y el bloque de entrada con adjuntar y enviar. Importa MessageScroller, MessageScrollerHeader, MessageScrollerEmpty, MessageScrollerMessages y MessageScrollerInput desde @felix/ui. El estado Empty/Scrolled de Figma se resuelve por composición: renderizá MessageScrollerEmpty o MessageScrollerMessages como hijo del medio. Dale tamaño al marco (Figma usa 380 × 600) y activá showScrollToBottom para la píldora 'Scroll to bottom'.",
+      en: "The complete frame of a conversation: a header with title and refresh button, the scrollable message thread (or an empty state while there's nothing yet), and the input block with attach and send. Import MessageScroller, MessageScrollerHeader, MessageScrollerEmpty, MessageScrollerMessages, and MessageScrollerInput from @felix/ui. Figma's Empty/Scrolled state is resolved by composition: render MessageScrollerEmpty or MessageScrollerMessages as the middle child. Size the frame (Figma uses 380 × 600) and turn on showScrollToBottom for the 'Scroll to bottom' pill.",
+      pt: "A moldura completa de uma conversa: um header com título e botão de atualizar, a lista de mensagens com scroll (ou um estado vazio enquanto não há nada) e o bloco de entrada com anexar e enviar. Importe MessageScroller, MessageScrollerHeader, MessageScrollerEmpty, MessageScrollerMessages e MessageScrollerInput de @felix/ui. O estado Empty/Scrolled do Figma se resolve por composição: renderize MessageScrollerEmpty ou MessageScrollerMessages como filho do meio. Dê tamanho à moldura (o Figma usa 380 × 600) e ative showScrollToBottom para a pílula 'Scroll to bottom'.",
+    },
+    previewTall: true,
+    preview: () => (
+      <div style={{ transform: "scale(0.45)", transformOrigin: "top center" }}>
+        <MessageScroller style={{ width: 380, height: 420 }}>
+          <MessageScrollerHeader title="Chat con soporte" description="Te respondemos en minutos." onRefresh={() => {}} />
+          <MessageScrollerMessages>
+            <Message align="start" style={{ width: "100%" }}>
+              <MessageAvatar><Avatar size="sm" initials="MG" status="success" statusLabel="En línea" /></MessageAvatar>
+              <MessageContent>
+                <MessageHeader>María</MessageHeader>
+                <Bubble variant="muted">Déjame revisarlo por ti.</Bubble>
+              </MessageContent>
+            </Message>
+            <Message align="end" style={{ width: "100%" }}>
+              <MessageContent>
+                <Bubble>¡Hola! ¿Cómo va tu envío?</Bubble>
+              </MessageContent>
+            </Message>
+          </MessageScrollerMessages>
+          <MessageScrollerInput onAttach={() => {}} onSend={() => {}}>
+            <p>Quiero saber cuándo llega mi envío…</p>
+          </MessageScrollerInput>
+        </MessageScroller>
+      </div>
+    ),
+    render: () => (
+      <>
+        <Demo label="Estado vacío" col>
+          <MessageScroller style={{ width: 380, height: 600 }}>
+            <MessageScrollerHeader
+              title="Chat con soporte"
+              description="Te respondemos en minutos, sin filas."
+              onRefresh={() => {}}
+              refreshLabel="Actualizar"
+            />
+            <MessageScrollerEmpty title="Listo para empezar">
+              Escribe tu consulta y<br />te respondemos enseguida.
+            </MessageScrollerEmpty>
+            <MessageScrollerInput onAttach={() => {}} onSend={() => {}} attachLabel="Adjuntar" sendLabel="Enviar">
+              <p>Hola, quiero saber cuándo llega el envío que hice ayer a México…</p>
+            </MessageScrollerInput>
+          </MessageScroller>
+        </Demo>
+        <Demo label="Con mensajes" col>
+          <MessageScroller style={{ width: 380, height: 600 }}>
+            <MessageScrollerHeader
+              title="Chat con soporte"
+              description="Te respondemos en minutos, sin filas."
+              onRefresh={() => {}}
+              refreshLabel="Actualizar"
+            />
+            <MessageScrollerMessages showScrollToBottom onScrollToBottom={() => {}} scrollToBottomLabel="Ir al final">
+              <Message align="start" style={{ width: "100%" }}>
+                <MessageAvatar><Avatar size="sm" initials="MG" status="success" statusLabel="En línea" /></MessageAvatar>
+                <MessageContent>
+                  <MessageHeader>María</MessageHeader>
+                  <Bubble variant="muted">Déjame revisarlo por ti.</Bubble>
+                  <MessageFooter>2:32 PM</MessageFooter>
+                </MessageContent>
+              </Message>
+              <Message align="end" style={{ width: "100%" }}>
+                <MessageAvatar><Avatar size="sm" initials="TÚ" status="success" statusLabel="En línea" /></MessageAvatar>
+                <MessageContent>
+                  <MessageHeader>Tú</MessageHeader>
+                  <Bubble>¡Hola! ¿Cómo va tu envío?</Bubble>
+                  <MessageFooter>Leído · 2:34 PM</MessageFooter>
+                </MessageContent>
+              </Message>
+              <Message align="start" style={{ width: "100%" }}>
+                <MessageAvatar><Avatar size="sm" initials="MG" status="success" statusLabel="En línea" /></MessageAvatar>
+                <MessageContent>
+                  <MessageHeader>María</MessageHeader>
+                  <Bubble variant="muted">Déjame revisarlo por ti.</Bubble>
+                  <MessageFooter>2:32 PM</MessageFooter>
+                </MessageContent>
+              </Message>
+              <Message align="end" style={{ width: "100%" }}>
+                <MessageAvatar><Avatar size="sm" initials="TÚ" status="success" statusLabel="En línea" /></MessageAvatar>
+                <MessageContent>
+                  <MessageHeader>Tú</MessageHeader>
+                  <Bubble>¡Hola! ¿Cómo va tu envío?</Bubble>
+                  <MessageFooter>Leído · 2:34 PM</MessageFooter>
+                </MessageContent>
+              </Message>
+            </MessageScrollerMessages>
+            <MessageScrollerInput onAttach={() => {}} onSend={() => {}} attachLabel="Adjuntar" sendLabel="Enviar">
+              <p>Hola, quiero saber cuándo llega el envío que hice ayer a México…</p>
+            </MessageScrollerInput>
+          </MessageScroller>
+        </Demo>
+      </>
+    ),
+  },
   sidebar: {
     es: "Navegación lateral completa: header, secciones y footer.",
     en: "Full side navigation: header, sections, and footer.",

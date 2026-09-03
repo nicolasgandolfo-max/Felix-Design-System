@@ -21,7 +21,7 @@ import { Button, Input, Dialog, DialogTrigger, DialogContent } from "@felix/ui";
 - Icons are Phosphor (duotone at rest, fill when active) — never Lucide.
 - Copy is Spanish-first, informal _tú_; fees always visible, even when zero.
 
-## Atoms · 19
+## Atoms · 21
 
 ### Avatar
 
@@ -38,6 +38,14 @@ Pill label for status and metadata.
 **Usage.** Compact read-only label for status and metadata: promos, transfer states, beta features. Import it from @felix/ui and pick the style with variant: default, secondary, destructive, outline, ghost, or dark. It's not interactive; if you need an action, use Button or IconButton.
 
 **Exports:** `Badge`
+
+### Bubble
+
+Body of a chat message. 7 variants; 24 px radius.
+
+**Usage.** The balloon that wraps a message's text in a conversation. Import it from @felix/ui and pick the tone with variant: default (turquoise, your messages), secondary, muted (the other party), tinted, outline, ghost (no frame, ideal for AI replies or markdown) or destructive (error). It hugs its content: constrain the width from the container or let Message handle it.
+
+**Exports:** `Bubble`
 
 ### Button
 
@@ -102,6 +110,14 @@ Felix mark: logotype and symbol.
 **Usage.** The Felix mark for headers, sidebars, and loading screens. Import it from @felix/ui and pick the form with type: logotype for the full wordmark, symbol for the standalone symbol, or symbol-circular for the circular version. Control the size through the height via style or className, without distorting it.
 
 **Exports:** `Logo`
+
+### Marker
+
+Thread annotation: system event or date divider.
+
+**Usage.** A low-emphasis line inside a conversation that is not a message: a system event or a date divider. Import it from @felix/ui and pick variant: default (icon + text), separator (centered text between two hairlines, ideal for 'Today') or border (icon + text with a bottom hairline). The default icon is Phosphor's GitBranch; replace it with icon or pass null to omit it.
+
+**Exports:** `Marker`
 
 ### Progress
 
@@ -175,7 +191,7 @@ Multi-line text input with floating label.
 
 **Exports:** `Textarea`
 
-## Molecules · 23
+## Molecules · 25
 
 ### Accordion
 
@@ -192,6 +208,14 @@ Contextual status message.
 **Usage.** Status message that lives on the page without interrupting: transfer completed, on its way, or failed. Import Alert together with AlertTitle and AlertDescription from @felix/ui and pick the tone with variant: success, warning, or error. For transient notices use toast; Alert stays fixed in the layout.
 
 **Exports:** `Alert`, `AlertTitle`, `AlertDescription`
+
+### Attachment
+
+Attached file or image chip. 3 sizes × 3 states × 2 types.
+
+**Usage.** The attachment that travels with a message or the chat composer: a PDF receipt, a photo of the ticket. Import it from @felix/ui and pass name and meta (format · size). Pick size (sm, md, or lg), state (default, error, or loading, which shows a spinner and a progress bar driven by progress) and type (file or image; image + lg becomes a vertical card with a thumbnail). The close button fires onRemove; label it with removeLabel.
+
+**Exports:** `Attachment`
 
 ### Breadcrumb
 
@@ -272,6 +296,14 @@ Card that appears on hover.
 **Usage.** Card with extra context that appears on hover, like a recipient's profile. Import HoverCard, HoverCardTrigger, and HoverCardContent from @felix/ui, wrapping the element with HoverCardTrigger asChild. Since there's no hover on touch, don't put critical information in it.
 
 **Exports:** `HoverCard`, `HoverCardTrigger`, `HoverCardPortal`, `HoverCardContent`, `HoverCardArrow`, `HoverCardHeader`, `HoverCardBody`, `HoverCardFooter`, `HoverCardTitle`, `HoverCardDescription`
+
+### Message
+
+One thread entry: avatar, sender, Bubble, and time.
+
+**Usage.** One entry in the conversation: an optional avatar plus a column with a header (who's writing), a Bubble, and a footer (time or read state). Import Message, MessageAvatar, MessageContent, MessageHeader, and MessageFooter from @felix/ui. With align='start' the avatar sits on the left and content aligns to the start (the other party); align='end' mirrors it (your messages). Always write the avatar first in JSX: align handles the visual order.
+
+**Exports:** `Message`, `MessageAvatar`, `MessageContent`, `MessageHeader`, `MessageFooter`
 
 ### NavigationMenu
 
@@ -361,7 +393,15 @@ Brief label on hover or focus.
 
 **Exports:** `Tooltip`, `TooltipProvider`, `TooltipTrigger`, `TooltipPortal`, `TooltipArrow`, `TooltipContent`
 
-## Organisms · 1
+## Organisms · 2
+
+### MessageScroller
+
+Chat surface: header, thread or empty state, and input.
+
+**Usage.** The complete frame of a conversation: a header with title and refresh button, the scrollable message thread (or an empty state while there's nothing yet), and the input block with attach and send. Import MessageScroller, MessageScrollerHeader, MessageScrollerEmpty, MessageScrollerMessages, and MessageScrollerInput from @felix/ui. Figma's Empty/Scrolled state is resolved by composition: render MessageScrollerEmpty or MessageScrollerMessages as the middle child. Size the frame (Figma uses 380 × 600) and turn on showScrollToBottom for the 'Scroll to bottom' pill.
+
+**Exports:** `MessageScroller`, `MessageScrollerHeader`, `MessageScrollerEmpty`, `MessageScrollerMessages`, `MessageScrollerInput`
 
 ### Sidebar
 
@@ -373,4 +413,4 @@ Full side navigation: header, sections, and footer.
 
 ---
 
-_43 components · generated from the design-system registry. To regenerate after editing the registry, run `node scripts/generate-components-md.mjs`._
+_48 components · generated from the design-system registry. To regenerate after editing the registry, run `node scripts/generate-components-md.mjs`._

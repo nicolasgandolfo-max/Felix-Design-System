@@ -1962,7 +1962,7 @@ body {
   max-width: 1400px;
   width: 100%;
   margin: 0 auto;
-  padding: 32px 32px 64px;
+  padding: 32px 32px 120px;
   display: grid;
   grid-template-columns: 260px 1fr;
   gap: 48px;
@@ -2415,32 +2415,91 @@ body {
 }
 .vt-group-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  gap: 10px;
-  margin-top: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
 }
+/* Cada grupo resuelve su acento desde `data-accent`; las tarjetas y el punto
+   del encabezado lo heredan por variable en vez de repetir seis reglas. */
+.vt-group-sec[data-accent="turquoise"] {
+  --vt-accent-bg: var(--turquoise-100);
+  --vt-accent-fg: var(--turquoise-800);
+}
+.vt-group-sec[data-accent="blueberry"] {
+  --vt-accent-bg: var(--blueberry-100);
+  --vt-accent-fg: var(--blueberry-700);
+}
+.vt-group-sec[data-accent="green"] {
+  --vt-accent-bg: var(--green-100);
+  --vt-accent-fg: var(--green-700);
+}
+.vt-group-sec[data-accent="amber"] {
+  --vt-accent-bg: var(--amber-100);
+  --vt-accent-fg: var(--amber-700);
+}
+.vt-group-sec[data-accent="earth"] {
+  --vt-accent-bg: var(--earth-100);
+  --vt-accent-fg: var(--earth-700);
+}
+.vt-group-sec[data-accent="slate"] {
+  --vt-accent-bg: var(--slate-100);
+  --vt-accent-fg: var(--slate-800);
+}
+
+.vt-group-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.vt-group-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--vt-accent-fg);
+  flex: none;
+}
+
 .vt-group-card {
   display: flex;
-  align-items: baseline;
-  gap: 10px;
-  padding: 14px 16px;
+  flex-direction: column;
+  padding: 18px;
   border: 1px solid var(--concrete);
-  border-radius: 12px;
+  border-radius: 14px;
   background: var(--neutral-50);
   text-decoration: none;
   color: var(--fg, #082422);
   transition:
-    border-color 0.12s ease,
-    background 0.12s ease;
+    transform 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 .vt-group-card:hover {
-  border-color: var(--slate);
-  background: var(--light-sky);
+  transform: translateY(-2px);
+  border-color: var(--vt-accent-fg);
+  box-shadow: 0 8px 20px rgba(8, 36, 34, 0.07);
 }
-.vt-group-card-title {
-  font-size: 14.5px;
-  font-weight: 600;
-  line-height: 1.35;
+.vt-card-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  background: var(--vt-accent-bg);
+  color: var(--vt-accent-fg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  flex: none;
+}
+.vt-card-title {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 6px;
+}
+.vt-card-blurb {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--neutral-700);
 }
 
 /* Menú lateral: encabezado de grupo plegable. */

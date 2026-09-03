@@ -1,6 +1,7 @@
 import { useEffect, type ReactNode } from "react";
 import { Link, Navigate, useLocation, useParams } from "react-router-dom";
-import { ArrowLeftIcon, ArrowRightIcon } from "@phosphor-icons/react";
+import { ArrowLeftIcon, ArrowRightIcon, BookOpenIcon } from "@phosphor-icons/react";
+import { VT_ICONS } from "../data";
 import { useTr } from "../i18n";
 import {
   VT_GROUPS,
@@ -214,24 +215,30 @@ export function VoiceToneOverview() {
         <p>{inline(VT_INTRO.t)}</p>
       </div>
 
-      {/* Índice por grupo: el mismo orden que el menú lateral. */}
+      {/* Índice por grupo: el mismo orden que el menú lateral. Cada grupo
+          lleva su color, así se distinguen de un vistazo y no dependen sólo
+          del encabezado para separarse. */}
       {VT_GROUPS.map((g) => (
-        <section className="sec vt-group-sec" key={g.id}>
-          <h2 className="sys-section-title">
+        <section
+          className="sec vt-group-sec"
+          key={g.id}
+          data-accent={g.accent}
+        >
+          <h2 className="sys-section-title vt-group-title">
+            <span className="vt-group-dot" aria-hidden="true" />
             {tr(g.es, g.en, g.pt).toUpperCase()}
           </h2>
           <div className="vt-group-grid">
             {g.ids.map((id) => {
               const s = getSection(id)!;
+              const Icon = VT_ICONS[s.id] ?? BookOpenIcon;
               return (
-                <Link
-                  className="vt-group-card"
-                  to={`/voz-y-tono/${s.id}`}
-                  key={s.id}
-                >
-                  <span className="vt-group-card-title">
-                    {shortTitle(s.title)}
+                <Link className="vt-group-card" to={`/voz-y-tono/${s.id}`} key={s.id}>
+                  <span className="vt-card-icon">
+                    <Icon size={20} weight="regular" />
                   </span>
+                  <span className="vt-card-title">{shortTitle(s.title)}</span>
+                  <span className="vt-card-blurb">{s.blurb}</span>
                 </Link>
               );
             })}
