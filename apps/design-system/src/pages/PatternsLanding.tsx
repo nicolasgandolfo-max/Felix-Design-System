@@ -30,7 +30,7 @@ function DirectoryCard({ entry }: { entry: Pattern }) {
       className="group block rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
     >
       <article
-        className={`flex h-full min-h-44 gap-4 rounded-xl border ${STROKE_SOFT} bg-card p-5 transition-shadow group-hover:shadow-md`}
+        className={`flex h-full min-h-44 gap-6 rounded-xl border ${STROKE_SOFT} bg-card p-6 transition-shadow group-hover:shadow-md`}
       >
         <div className="flex w-32 shrink-0 items-center justify-center self-stretch overflow-hidden rounded-lg bg-(--stone)">
           <img
@@ -41,21 +41,23 @@ function DirectoryCard({ entry }: { entry: Pattern }) {
           />
         </div>
 
-        <div className="flex min-w-0 flex-1 flex-col gap-3">
-          <div className="flex flex-col gap-1">
-            <p className="font-sans text-xxs font-bold uppercase text-foreground/60">
+        {/* Misma escala que el resto del portal: eyebrow 12, título Plain
+            20/24, cuerpo 16/24, link 14. Nada por debajo de 12px. */}
+        <div className="flex min-w-0 flex-1 flex-col gap-4">
+          <div className="flex flex-col gap-2">
+            <p className="font-sans text-xs font-bold uppercase leading-4 tracking-wide text-foreground/70">
               FÉLIX · PATTERNS
             </p>
-            <h3 className="font-heading text-lg font-black leading-tight text-balance text-foreground">
+            <h3 className="font-heading text-lg font-black leading-6 tracking-heading text-balance text-foreground">
               {tr(entry.name.es, entry.name.en)}
             </h3>
           </div>
 
-          <p className="flex-1 font-sans text-sm leading-5 text-pretty text-foreground">
+          <p className="flex-1 font-sans text-base leading-6 text-pretty text-foreground">
             {tr(entry.cardBody.es, entry.cardBody.en)}
           </p>
 
-          <span className="flex items-center gap-1 font-sans text-xs font-bold text-foreground">
+          <span className="flex items-center gap-1 font-sans text-sm font-bold leading-5 text-foreground">
             {tr(
               "Ver las guías del patrón",
               "Go to pattern guidelines",
@@ -151,7 +153,7 @@ export function PatternsLanding() {
             la grilla y actualiza los contadores del filtro. */}
         <h2
           id="browse"
-          className="mb-8 mt-20 scroll-mt-8 font-heading text-[32px] font-black tracking-[-0.01em] text-balance text-foreground"
+          className="mb-8 mt-20 scroll-mt-8 font-heading text-36 font-black leading-10 tracking-heading text-balance text-foreground"
         >
           {tr(
             "Explorar el directorio de Félix",
@@ -169,7 +171,7 @@ export function PatternsLanding() {
               "Famílias de padrões"
             )}
           >
-            <p className="mb-4 font-sans text-sm font-bold uppercase tracking-wide text-foreground/50">
+            <p className="mb-4 font-sans text-sm font-bold uppercase leading-5 tracking-wide text-foreground/70">
               {tr(
                 "Familias de patrones",
                 "Pattern Families",
@@ -185,8 +187,10 @@ export function PatternsLanding() {
                       type="button"
                       onClick={() => setFilter(f.key)}
                       aria-current={active ? "true" : undefined}
-                      className={`w-full cursor-pointer rounded-md py-3 text-left font-sans text-base text-foreground transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
-                        active ? "font-black" : "font-normal hover:opacity-70"
+                      className={`w-full cursor-pointer rounded-md py-3 text-left font-sans text-base leading-6 text-foreground transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
+                        active
+                          ? "font-semibold"
+                          : "font-normal hover:opacity-70"
                       }`}
                     >
                       {f.label}
@@ -199,7 +203,7 @@ export function PatternsLanding() {
 
           {/* `[display:grid]` en lugar de `grid`: la clase `.grid` legacy del
               portal (3 columnas, 6 sobre 1440) le gana a la utility. */}
-          <div className="[display:grid] flex-1 gap-5 md:grid-cols-2">
+          <div className="[display:grid] flex-1 gap-6 md:grid-cols-2">
             {visible.map((entry) => (
               <DirectoryCard key={entry.slug} entry={entry} />
             ))}
