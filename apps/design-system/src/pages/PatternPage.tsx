@@ -1,12 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import {
-  Breadcrumb,
-  BreadcrumbList,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
   Table,
   TableBody,
   TableCell,
@@ -19,8 +13,8 @@ import {
   TabsTrigger,
 } from "@felix/ui";
 import { CheckCircleIcon, XCircleIcon } from "@phosphor-icons/react";
-import { PlazaChrome } from "../components/PlazaChrome";
 import { getPattern, otherPatterns } from "../patterns/content";
+import { PATTERN_FAMILIES, patternIcon } from "../patterns/nav";
 import type {
   Block,
   Example,
@@ -38,11 +32,17 @@ const L = (tr: Tr, l: Localized) => tr(l.es, l.en, l.pt);
    El token --border del DS es #cfcabf y no corresponde aquí. */
 const STROKE_SOFT = "border-[rgba(8,36,34,0.12)]";
 
-/* Título de sección según Figma: Saans/Inter Medium 30px, no display. */
+/* Misma escala que el resto del portal: `.h3` (1.15rem / 600) para los títulos
+   de sección dentro de una página, 15px para la prosa y 14px en tablas. */
 const SECTION_H =
-  "font-sans text-30 font-medium tracking-[-0.01em] text-foreground";
+  "font-sans text-md font-semibold tracking-[-0.01em] text-foreground";
 
-const TH = "font-sans text-base font-medium uppercase text-foreground/50";
+const TH =
+  "font-sans text-[11px] font-semibold uppercase tracking-wide text-foreground/50";
+
+/** Prosa corrida: 15px / 1.65, como `.vt-p` en Voice & Tone. */
+const PROSE =
+  "font-sans text-[15px] leading-[1.65] text-pretty text-foreground";
 
 // ─── Bloques ─────────────────────────────────────────────────────────────────
 // Cada pestaña es una lista de bloques (ver `patterns/types.ts`). Los márgenes
@@ -74,7 +74,7 @@ function DataTable({
           {rows.map((row, r) => (
             <TableRow key={r}>
               {row.map((cell, c) => (
-                <TableCell key={c} className="align-top text-base tabular-nums">
+                <TableCell key={c} className="align-top text-sm tabular-nums">
                   {Array.isArray(cell) ? (
                     <Blocks blocks={cell} tr={tr} />
                   ) : (
@@ -99,30 +99,30 @@ function ExampleFigure({ example, tr }: { example: Example; tr: Tr }) {
       <div
         className={`flex flex-col overflow-hidden rounded-3xl border ${STROKE_SOFT} bg-card`}
       >
-        <div className="flex min-h-72 flex-1 items-center justify-center p-8">
+        <div className="flex min-h-56 flex-1 items-center justify-center p-6">
           <img
             loading="lazy"
             src={example.img}
             alt={L(tr, example.alt)}
-            className="h-auto w-full max-w-[300px]"
+            className="h-auto w-full max-w-[220px]"
           />
         </div>
         <div
-          className={`flex h-15 shrink-0 items-center gap-3 border-t ${STROKE_SOFT} px-6 ${
+          className={`flex h-12 shrink-0 items-center gap-2 border-t ${STROKE_SOFT} px-5 ${
             isDo ? "bg-(--cactus)" : "bg-(--papaya)"
           }`}
         >
           {isDo ? (
-            <CheckCircleIcon size={24} color="white" aria-hidden="true" />
+            <CheckCircleIcon size={20} color="white" aria-hidden="true" />
           ) : (
-            <XCircleIcon size={24} color="white" aria-hidden="true" />
+            <XCircleIcon size={20} color="white" aria-hidden="true" />
           )}
-          <span className="font-heading text-base font-extrabold tracking-[-0.01em] text-white">
+          <span className="font-heading text-sm font-extrabold tracking-[-0.01em] text-white">
             {isDo ? tr("Sí", "Do") : tr("No", "Don't")}
           </span>
         </div>
       </div>
-      <p className="mt-4 font-sans text-base font-medium tracking-[-0.01em] text-pretty text-foreground">
+      <p className="mt-3 font-sans text-sm font-medium leading-[1.6] tracking-[-0.01em] text-pretty text-foreground">
         {L(tr, example.caption)}
       </p>
     </div>
@@ -133,21 +133,17 @@ function BlockView({ block, tr }: { block: Block; tr: Tr }) {
   switch (block.type) {
     case "heading":
       return (
-        <h2 className={`mt-12 text-balance first:mt-0 ${SECTION_H}`}>
+        <h2 className={`mt-10 text-balance first:mt-0 ${SECTION_H}`}>
           {L(tr, block.text)}
         </h2>
       );
 
     case "prose":
-      return (
-        <p className="mt-3 font-sans text-lg leading-7 text-pretty text-foreground first:mt-0">
-          {L(tr, block.text)}
-        </p>
-      );
+      return <p className={`mt-3 first:mt-0 ${PROSE}`}>{L(tr, block.text)}</p>;
 
     case "bullets":
       return (
-        <ul className="mt-5 list-disc space-y-1 pl-6 font-sans text-lg leading-7 text-pretty text-foreground first:mt-0">
+        <ul className={`mt-4 list-disc space-y-1 pl-6 first:mt-0 ${PROSE}`}>
           {block.items.map((item, i) => (
             <li key={i}>{L(tr, item)}</li>
           ))}
@@ -156,7 +152,9 @@ function BlockView({ block, tr }: { block: Block; tr: Tr }) {
 
     case "ordered":
       return (
-        <ol className="mt-5 list-decimal space-y-2 pl-6 font-sans text-lg leading-7 text-pretty text-foreground first:mt-0">
+        <ol
+          className={`mt-4 list-decimal space-y-1.5 pl-6 first:mt-0 ${PROSE}`}
+        >
           {block.items.map((item, i) => (
             <li key={i}>{L(tr, item)}</li>
           ))}
@@ -165,20 +163,20 @@ function BlockView({ block, tr }: { block: Block; tr: Tr }) {
 
     case "gallery":
       return (
-        <div className="mt-8 [display:grid] gap-6 first:mt-0 md:grid-cols-3">
+        <div className="mt-6 [display:grid] gap-5 first:mt-0 md:grid-cols-3">
           {block.items.map((item, i) => (
             <figure key={i} className="m-0">
               <div
-                className={`flex min-h-72 items-center justify-center rounded-3xl border ${STROKE_SOFT} bg-card p-8`}
+                className={`flex min-h-56 items-center justify-center rounded-3xl border ${STROKE_SOFT} bg-card p-6`}
               >
                 <img
                   loading="lazy"
                   src={item.img}
                   alt={L(tr, item.alt)}
-                  className="h-auto w-full max-w-[300px]"
+                  className="h-auto w-full max-w-[220px]"
                 />
               </div>
-              <figcaption className="mt-4 font-sans text-base font-medium tracking-[-0.01em] text-pretty text-foreground">
+              <figcaption className="mt-3 font-sans text-sm font-medium leading-[1.6] tracking-[-0.01em] text-pretty text-foreground">
                 {L(tr, item.label)}
               </figcaption>
             </figure>
@@ -190,7 +188,7 @@ function BlockView({ block, tr }: { block: Block; tr: Tr }) {
       return (
         <div className="mt-6 first:mt-0">
           {block.heading && (
-            <h3 className={`mb-4 mt-12 text-balance ${SECTION_H}`}>
+            <h3 className={`mb-3 mt-10 text-balance ${SECTION_H}`}>
               {L(tr, block.heading)}
             </h3>
           )}
@@ -198,11 +196,11 @@ function BlockView({ block, tr }: { block: Block; tr: Tr }) {
         </div>
       );
 
-    /* Light Sky (--light-sky #d4fffe) con borde stroke/soft, radio 20. */
+    /* Light Sky (--light-sky #d4fffe) con borde stroke/soft, como .vt-callout. */
     case "callout":
       return (
         <div
-          className={`mt-8 rounded-xl border ${STROKE_SOFT} bg-(--light-sky) px-7 py-8 font-sans text-lg leading-7 text-foreground first:mt-0`}
+          className={`mt-6 rounded-xl border ${STROKE_SOFT} bg-(--light-sky) px-5 py-4 font-sans text-sm leading-[1.6] text-foreground first:mt-0`}
         >
           {block.title && (
             <strong className="font-semibold">{L(tr, block.title)} </strong>
@@ -211,19 +209,18 @@ function BlockView({ block, tr }: { block: Block; tr: Tr }) {
         </div>
       );
 
-    /* "Secondary Sky" (--sky #8dfdfa), radio 31 como los paneles de la Plaza. */
     /* "Secondary Sky" (--sky #8dfdfa). El cuerpo y la nota siguen en
        content.ts pero no se muestran: las métricas todavía no existen, así que
        el box queda en "Coming Soon" hasta que haya datos. */
     case "metric":
       return (
         <div
-          className={`rounded-3xl border ${STROKE_SOFT} bg-(--sky) p-8 text-(--slate)`}
+          className={`rounded-2xl border ${STROKE_SOFT} bg-(--sky) p-6 text-(--slate)`}
         >
-          <h2 className="font-sans text-xl font-semibold tracking-[-0.01em] text-balance">
+          <h2 className="font-sans text-md font-semibold tracking-[-0.01em] text-balance">
             {L(tr, block.title)}
           </h2>
-          <p className="mt-3 font-sans text-lg leading-7">
+          <p className="mt-2 font-sans text-[15px] leading-[1.65]">
             {tr("Próximamente", "Coming Soon", "Em breve")}
           </p>
         </div>
@@ -231,7 +228,7 @@ function BlockView({ block, tr }: { block: Block; tr: Tr }) {
 
     case "examples":
       return (
-        <div className="mt-10 [display:grid] items-start gap-x-12 gap-y-10 first:mt-0 md:grid-cols-2">
+        <div className="mt-8 [display:grid] items-start gap-x-8 gap-y-8 first:mt-0 md:grid-cols-2">
           {block.items.map((ex, i) => (
             <ExampleFigure key={i} example={ex} tr={tr} />
           ))}
@@ -240,7 +237,7 @@ function BlockView({ block, tr }: { block: Block; tr: Tr }) {
 
     case "note":
       return (
-        <p className="mt-8 border-l-2 border-primary pl-4 font-sans text-base leading-6 text-pretty text-foreground first:mt-0">
+        <p className="mt-6 border-l-2 border-primary pl-4 font-sans text-sm leading-[1.6] text-pretty text-foreground first:mt-0">
           {L(tr, block.text)}
         </p>
       );
@@ -264,7 +261,7 @@ function BlockView({ block, tr }: { block: Block; tr: Tr }) {
 
     case "columns":
       return (
-        <div className="mt-10 [display:grid] items-start gap-11 first:mt-0 md:grid-cols-2">
+        <div className="mt-8 [display:grid] items-start gap-8 first:mt-0 md:grid-cols-2">
           <div>
             <Blocks blocks={block.left} tr={tr} />
           </div>
@@ -321,123 +318,121 @@ export function PatternPage() {
   if (!pattern) return <Navigate to="/patrones" replace />;
 
   const heroImgs = pattern.heroDetail ?? [pattern.hero];
+  const family = PATTERN_FAMILIES.find((f) => f.id === pattern.family);
 
+  /* La página vive dentro de `PatternsLayout` (menú, panel lateral y footer
+     compartidos), así que acá va sólo el contenido. */
   return (
-    <PlazaChrome>
-      <main className="plaza-main pb-16">
-        {/* ── Hero ─────────────────────────────────────────────────────────
-            Panel linen 463px con borde stroke/soft; título Plain Black 60/54
-            y bajada 16/24 en slate, como el hero del home. */}
-        <section
-          className={`mt-4 [display:grid] min-h-[464px] items-center gap-10 rounded-3xl border ${STROKE_SOFT} bg-card p-8 md:grid-cols-2 md:px-24 md:py-12`}
-        >
-          <div>
-            <Breadcrumb className="mb-2">
-              <BreadcrumbList className="uppercase">
-                <BreadcrumbItem>
-                  <BreadcrumbLink asChild>
-                    <Link to="/patrones">
-                      {tr(
-                        "Guías conversacionales",
-                        "Conversational guidelines",
-                        "Guias de conversa"
-                      )}
-                    </Link>
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>{L(tr, pattern.name)}</BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
+    <>
+      {/* ── Cabecera ─────────────────────────────────────────────────────
+            La misma que el resto de las internas del portal (.eyebrow, .h2,
+            .lead), con las láminas de referencia chicas a la derecha del
+            título en lugar del hero a media pantalla. */}
+      <header className="sec flush [display:grid] items-start gap-8 md:grid-cols-[minmax(0,1fr)_auto]">
+        <div>
+          <div className="eyebrow">
+            {family && <span className="n">{L(tr, family.label)}</span>}
+            <span>
+              {tr(
+                "Guías conversacionales",
+                "Conversational guidelines",
+                "Guias de conversa"
+              )}
+            </span>
+          </div>
 
-            <h1 className="font-heading text-60 font-black leading-[54px] tracking-[-0.01em] text-balance text-foreground">
-              {heroTitle}
-            </h1>
-            {pattern.subtitle && (
-              <p className="mt-2 font-sans text-lg font-medium text-foreground/70">
-                {L(tr, pattern.subtitle)}
-              </p>
-            )}
-
-            <p className="mt-4 max-w-[448px] font-sans text-md leading-7 text-pretty text-foreground">
-              {L(tr, pattern.lede)}
+          <h1 className="h2">{heroTitle}</h1>
+          {pattern.subtitle && (
+            <p className="-mt-1 mb-3 font-sans text-base font-medium text-foreground/70">
+              {L(tr, pattern.subtitle)}
             </p>
-          </div>
+          )}
+          <p className="lead">{L(tr, pattern.lede)}</p>
+        </div>
 
-          <div className="flex flex-col items-center gap-4">
-            {heroImgs.map((src, i) => (
-              <img
-                key={i}
-                /* El alt describe el conjunto; las láminas extra son decorativas. */
-                alt={i === 0 ? L(tr, pattern.heroAlt) : ""}
-                src={src}
-                className="h-auto w-full max-w-[393px]"
-              />
-            ))}
-          </div>
-        </section>
-
-        {/* ── Tabs ─────────────────────────────────────────────────────────
-            Segmentado según Figma: track linen full-width con borde
-            stroke/soft (alto 79), pill activo slate de 59 con texto linen,
-            labels display 24px. Las pestañas salen del contenido, así que un
-            patrón puede tener dos o tres. `key` por slug: al navegar entre
-            patrones el componente no se remonta, y sin esto el tab elegido
-            persistiría. */}
-        <Tabs
-          key={pattern.slug}
-          defaultValue={pattern.tabs[0]?.id}
-          className="mt-12"
-        >
-          {/* Mismo estilo que el header (.plaza-nav: blanco, pill) y sticky
-              a 16px del borde para que las pestañas acompañen el scroll.
-              Con una sola pestaña la barra no aporta y se oculta. */}
-          <TabsList
-            className={`sticky top-4 z-30 w-full gap-2 rounded-full border ${STROKE_SOFT} bg-white p-3 ${
-              pattern.tabs.length < 2 ? "hidden" : ""
-            }`}
-          >
-            {pattern.tabs.map((tab) => (
-              <TabsTrigger
-                key={tab.id}
-                value={tab.id}
-                className="h-15 justify-center rounded-full px-10 font-heading text-xl font-black tracking-[-0.01em] text-foreground data-[state=active]:bg-(--slate) data-[state=active]:text-(--linen) data-[state=active]:shadow-none"
-              >
-                {L(tr, tab.label)}
-              </TabsTrigger>
-            ))}
-          </TabsList>
-
-          {pattern.tabs.map((tab) => (
-            <TabsContent key={tab.id} value={tab.id} className="pt-10">
-              <Blocks blocks={tab.blocks} tr={tr} />
-            </TabsContent>
-          ))}
-        </Tabs>
-
-        {/* ── Explorar patrones ────────────────────────────────────────────
-            Mismas tarjetas que los "enlaces útiles" del home. */}
-        <h2 className="plaza-links-title">
-          {tr("Explorar patrones", "Explore patterns", "Explorar padrões")}
-        </h2>
-        <div className="[display:grid] gap-6 md:grid-cols-2">
-          {explore.map((p) => (
-            <article key={p.slug} className="plaza-link-card">
-              <h3>{L(tr, p.name)}</h3>
-              <p className="plaza-body">{L(tr, p.cardBody)}</p>
-              <Link className="plaza-btn" to={`/patrones/${p.slug}`}>
-                {tr(
-                  "Ver las guías del patrón",
-                  "Go to pattern guidelines",
-                  "Ver as diretrizes do padrão"
-                )}
-              </Link>
-            </article>
+        <div className="flex flex-wrap items-start gap-3 md:max-w-[340px] md:justify-end">
+          {heroImgs.map((src, i) => (
+            <img
+              key={i}
+              /* El alt describe el conjunto; las láminas extra son decorativas. */
+              alt={i === 0 ? L(tr, pattern.heroAlt) : ""}
+              src={src}
+              className="h-auto w-[160px] max-w-full"
+            />
           ))}
         </div>
-      </main>
-    </PlazaChrome>
+      </header>
+
+      {/* ── Tabs ─────────────────────────────────────────────────────────
+            Segmentado compacto: track blanco con borde stroke/soft, pill
+            activo slate con texto linen y labels de 14px, en la misma escala
+            que el resto del portal. Las pestañas salen del contenido, así que
+            un patrón puede tener dos o tres. `key` por slug: al navegar entre
+            patrones el componente no se remonta, y sin esto el tab elegido
+            persistiría. */}
+      <Tabs
+        key={pattern.slug}
+        defaultValue={pattern.tabs[0]?.id}
+        className="mt-8"
+      >
+        {/* Sticky a 16px del borde para que las pestañas acompañen el scroll.
+              Con una sola pestaña la barra no aporta y se oculta. */}
+        <TabsList
+          className={`sticky top-4 z-30 w-fit gap-1 rounded-full border ${STROKE_SOFT} bg-white p-1 ${
+            pattern.tabs.length < 2 ? "hidden" : ""
+          }`}
+        >
+          {pattern.tabs.map((tab) => (
+            <TabsTrigger
+              key={tab.id}
+              value={tab.id}
+              className="h-8 justify-center rounded-full px-4 font-sans text-sm font-semibold text-foreground data-[state=active]:bg-(--slate) data-[state=active]:text-(--linen) data-[state=active]:shadow-none"
+            >
+              {L(tr, tab.label)}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+
+        {pattern.tabs.map((tab) => (
+          <TabsContent key={tab.id} value={tab.id} className="pt-8">
+            <Blocks blocks={tab.blocks} tr={tr} />
+          </TabsContent>
+        ))}
+      </Tabs>
+
+      {/* ── Explorar patrones ────────────────────────────────────────────
+            Las mismas tarjetas que la visión general de la sección. */}
+      <section className="sys-grid-section mt-16">
+        <h2 className="sys-section-title">
+          {tr("Explorar patrones", "Explore patterns", "Explorar padrões")}
+        </h2>
+        <div className="[display:grid] gap-5 md:grid-cols-2">
+          {explore.map((p) => {
+            const Icon = patternIcon(p);
+            return (
+              <Link
+                key={p.slug}
+                to={`/patrones/${p.slug}`}
+                className="sys-card-tile"
+              >
+                <div className="tile-icon-badge">
+                  <Icon size={22} weight="regular" />
+                </div>
+                <h3 className="tile-title">{L(tr, p.name)}</h3>
+                <p className="tile-desc">{L(tr, p.cardBody)}</p>
+                <span className="tile-link">
+                  {tr(
+                    "Ver las guías del patrón",
+                    "Go to pattern guidelines",
+                    "Ver as diretrizes do padrão"
+                  )}{" "}
+                  →
+                </span>
+              </Link>
+            );
+          })}
+        </div>
+      </section>
+    </>
   );
 }

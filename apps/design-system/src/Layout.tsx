@@ -1,20 +1,22 @@
 import { useEffect, useState, type ReactNode } from "react";
-import { Outlet, useLocation, Link } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
+import { PlazaHeader } from "./components/PlazaHeader";
 import {
-  ListIcon,
-  CaretLeftIcon,
-  GlobeIcon,
-  CaretDownIcon,
-  XIcon,
-} from "@phosphor-icons/react";
-import { Sidebar, VoiceToneSidebar, Logo } from "./Sidebar";
+  PatternsSidebar,
+  Sidebar,
+  VoiceToneSidebar,
+  type SidebarProps,
+} from "./Sidebar";
 import { Footer } from "./sections";
-import { useLang, useTr } from "./i18n";
+import { PATTERNS } from "./patterns/content";
+import { useTr } from "./i18n";
 
 /**
- * Estructura compartida por las secciones con panel lateral (sistema de diseño
- * y Voice & Tone): mismo header, mismo grid y mismo footer. Cada sección
- * pasa su título, su badge y su propio panel lateral.
+ * Estructura compartida por todas las secciones internas (sistema de diseño,
+ * Voice & Tone y guías conversacionales): el mismo menú del home arriba, un
+ * panel lateral con el título y la versión de la sección más su árbol de
+ * secciones y subsecciones, y el footer. Cada sección pasa su título, su badge
+ * y su propio panel lateral.
  */
 function SectionLayout({
   title,
@@ -24,11 +26,9 @@ function SectionLayout({
 }: {
   title: string;
   badge?: ReactNode;
-  sidebar: (props: { open: boolean; onNavigate: () => void }) => ReactNode;
+  sidebar: (props: SidebarProps) => ReactNode;
   footerNote?: string;
 }) {
-  const tr = useTr();
-  const { lang, setLang } = useLang();
   const [open, setOpen] = useState(false);
   const { pathname, hash } = useLocation();
 
@@ -40,57 +40,7 @@ function SectionLayout({
 
   return (
     <div className="plaza-sys">
-      {/* ── Top Header Bar (Plaza Style) ──────────────────────────────── */}
-      <header className="plaza-sys-header">
-        <div className="header-left">
-          <button
-            className="menu-btn-plaza"
-            aria-label={tr("Abrir menú", "Open menu", "Abrir menu")}
-            onClick={() => setOpen((o) => !o)}
-          >
-            {open ? <XIcon size={20} /> : <ListIcon size={20} />}
-          </button>
-          <Link
-            to="/"
-            className="back-link"
-            aria-label={tr(
-              "Volver a Plaza Félix",
-              "Back to Plaza Félix",
-              "Voltar para Plaza Félix"
-            )}
-          >
-            <CaretLeftIcon size={18} weight="bold" />
-          </Link>
-          <Link to="/" className="brand-pill" aria-label="Plaza Félix">
-            <Logo />
-          </Link>
-        </div>
-
-        <div className="header-center">
-          <h1 className="sys-title">{title}</h1>
-          {badge}
-        </div>
-
-        <div className="header-right">
-          <div className="lang-dropdown">
-            <GlobeIcon size={18} />
-            <select
-              value={lang}
-              onChange={(e) => setLang(e.target.value as "es" | "en" | "pt")}
-              aria-label={tr(
-                "Seleccionar idioma",
-                "Select language",
-                "Selecionar idioma"
-              )}
-            >
-              <option value="es">ES</option>
-              <option value="en">EN</option>
-              <option value="pt">PT</option>
-            </select>
-            <CaretDownIcon size={14} className="caret" />
-          </div>
-        </div>
-      </header>
+      <PlazaHeader menu={{ open, onToggle: () => setOpen((o) => !o) }} />
 
       {/* ── Scrim backdrop for mobile ─────────────────────────────────── */}
       <div
@@ -101,7 +51,7 @@ function SectionLayout({
 
       {/* ── Main Layout Grid ─────────────────────────────────────────── */}
       <div className="plaza-sys-container">
-        {sidebar({ open, onNavigate: () => setOpen(false) })}
+        {sidebar({ open, onNavigate: () => setOpen(false), title, badge })}
         <main className="plaza-sys-main">
           <Outlet />
         </main>
@@ -148,6 +98,30 @@ export function VoiceToneLayout() {
         "Felix Pago · Voice & Tone Guidelines v0.4 — maintained by Content Design.",
         "Felix Pago · Voice & Tone Guidelines v0.4 — mantido por Content Design."
       )}
+    />
+  );
+}
+
+/**
+ * Guías conversacionales: los patrones del bot. El badge no lleva versión
+ * porque el registro no la tiene; muestra cuántos patrones hay publicados.
+ */
+export function PatternsLayout() {
+  const tr = useTr();
+  return (
+    <SectionLayout
+      title={tr(
+        "Guías conversacionales",
+        "Conversational guidelines",
+        "Guias de conversa"
+      )}
+      badge={
+        <span className="sys-version-badge">
+          <span className="dot" />
+          {PATTERNS.length} {tr("patrones", "patterns", "padrões")}
+        </span>
+      }
+      sidebar={(props) => <PatternsSidebar {...props} />}
     />
   );
 }
