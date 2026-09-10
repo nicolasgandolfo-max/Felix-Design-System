@@ -1,9 +1,10 @@
 # @felix/design-system-site
 
 Public documentation portal for the Felix Pago Design System — the editorial,
-brand-facing companion to the technical Storybook. Built with **Vite + React 19
-+ Tailwind v4**, consuming the real **`@felix/ui`** components and the live
-**`theme.css`** tokens. Bilingual (ES / EN).
+brand-facing companion to the technical Storybook. Built with \*\*Vite + React 19
+
+- Tailwind v4**, consuming the real **`@felix/ui`** components and the live
+  **`theme.css`\*\* tokens. Bilingual (ES / EN).
 
 It mirrors the structure of the reference site (felix-design.vercel.app):
 Overview, Principles, Colors, Typography, Illustrations, Iconography,
@@ -33,8 +34,10 @@ npm run preview -w @felix/design-system-site  # preview the production build
 - **Tokens** come from `@felix/ui/theme.css` (aliased to source in
   `vite.config.ts` for hot-reload). All colors/spacing/radius reference the
   generated CSS variables.
-- **Fonts** (Plain, Saans) live in `public/fonts/` and are registered as
-  unified families in `src/styles.css` so `font-weight` selects the right cut.
+- **Fonts** (Plain, Saans) live in `public/fonts/`. The `@font-face` rules
+  come from `@felix/ui/fonts.css` and the `--font-*` tokens from
+  `@felix/ui/theme.css` (both aliased to source in `vite.config.ts`); this app
+  does not declare any typeface of its own.
 - **Icons** are Phosphor (`@phosphor-icons/react`), per `DESIGN.md`.
 
 ## Structure

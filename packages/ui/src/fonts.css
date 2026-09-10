@@ -1,6 +1,15 @@
 /**
  * Felix UI Fonts
  *
+ * Registers the two design-system typefaces as unified families so that
+ * `font-weight` selects the right cut:
+ *
+ *   Saans  300 → Light · 400–500 → Regular · 600–700 → SemiBold
+ *   Plain  800–900 → Black
+ *
+ * Saans ships no true Medium: 500 resolves to Regular (matches production).
+ * Plain is display-only — never below 800.
+ *
  * Import this file if you've copied the Felix fonts to your public/fonts folder.
  * Fonts can be copied from: node_modules/@felix/ui/fonts/
  *
@@ -11,26 +20,33 @@
  */
 
 @font-face {
-  font-family: "Plain-500";
-  src: url("/fonts/Plain/PlainLTStd-Black.otf") format("opentype");
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Saans-300";
+  font-family: "Saans";
   src: url("/fonts/Saans/SaansLTStd-Light.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Saans-400";
+  font-family: "Saans";
   src: url("/fonts/Saans/SaansLTStd-Regular.otf") format("opentype");
+  font-weight: 400 500;
+  font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Saans-500";
+  font-family: "Saans";
   src: url("/fonts/Saans/SaansLTStd-SemiBold.otf") format("opentype");
+  font-weight: 600 700;
+  font-style: normal;
   font-display: swap;
 }
 
+@font-face {
+  font-family: "Plain";
+  src: url("/fonts/Plain/PlainLTStd-Black.otf") format("opentype");
+  font-weight: 800 900;
+  font-style: normal;
+  font-display: swap;
+}

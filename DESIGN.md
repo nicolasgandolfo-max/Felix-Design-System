@@ -314,15 +314,16 @@ components:
 
 ## Overview
 
-Felix Pago is a remittance platform for the Latin American community in the US — a *compañero financiero* that treats money transfers as acts of care between families, not cold financial transactions.
+Felix Pago is a remittance platform for the Latin American community in the US — a _compañero financiero_ that treats money transfers as acts of care between families, not cold financial transactions.
 
 The visual identity is **warm, electric, and radically transparent**. Turquoise (`#2bf2f1`) carries the brand energy — bright, alive, distinctive. Slate (`#082422`) provides weight and authority. Warm off-white (`#fefcf9`) sets a canvas that feels human, not clinical.
 
-**Personality:** Calm, direct, warm, transparent. Never corporate. Never surprising with fees. Jargon-free in both Spanish and English — informal *tú* always, *usted* never.
+**Personality:** Calm, direct, warm, transparent. Never corporate. Never surprising with fees. Jargon-free in both Spanish and English — informal _tú_ always, _usted_ never.
 
 **Primary language:** Spanish (Mexican Spanish by default). All product copy surfaces in Spanish first. English for international/B2B contexts only.
 
 **Two font families define the voice:**
+
 - **Plain** (Extrabold 800, Black 900) — for display amounts, hero numbers, and moments of celebration. Tight tracking, strong presence.
 - **Saans** (Regular 400 through SemiBold 600) — for every UI label, body copy, button, and form field. Clean, warm, legible at any size.
 
@@ -336,27 +337,27 @@ The palette is deliberately small. A handful of semantic colors cover all produc
 
 **Colors**
 
-| Doc alias | Real CSS variable | Value (light) |
-|---|---|---|
-| `primary` | `--primary` | `#2bf2f1` |
-| `foreground` | `--foreground` | `#082422` |
-| `background` | `--background` | `#fefcf9` |
-| `surface` | `--popover` (or `--neutral-50`) | `#ffffff` |
-| `muted` | `--muted` | `#efebe7` |
-| `border` | `--border` | `#cfcabf` |
-| `border-strong` | `--neutral-300` | `#ddd9cf` |
-| `fg-subtle` | `--neutral-600` | `#8a8780` |
-| `fg-muted` | `--neutral-700` | `#636158` |
-| `fg-disabled` | `--neutral-500` | `#adaa9e` |
-| `accent` | `--accent` | `#dcff00` |
+| Doc alias                   | Real CSS variable                                                    | Value (light)                     |
+| --------------------------- | -------------------------------------------------------------------- | --------------------------------- |
+| `primary`                   | `--primary`                                                          | `#2bf2f1`                         |
+| `foreground`                | `--foreground`                                                       | `#082422`                         |
+| `background`                | `--background`                                                       | `#fefcf9`                         |
+| `surface`                   | `--popover` (or `--neutral-50`)                                      | `#ffffff`                         |
+| `muted`                     | `--muted`                                                            | `#efebe7`                         |
+| `border`                    | `--border`                                                           | `#cfcabf`                         |
+| `border-strong`             | `--neutral-300`                                                      | `#ddd9cf`                         |
+| `fg-subtle`                 | `--neutral-600`                                                      | `#8a8780`                         |
+| `fg-muted`                  | `--neutral-700`                                                      | `#636158`                         |
+| `fg-disabled`               | `--neutral-500`                                                      | `#adaa9e`                         |
+| `accent`                    | `--accent`                                                           | `#dcff00`                         |
 | `success` / `-bg` / `-text` | `--status-success` / `--status-success-bg` / `--status-success-text` | `#60d06f` / `#eefbf0` / `#1b7a29` |
 | `warning` / `-bg` / `-text` | `--status-warning` / `--status-warning-bg` / `--status-warning-text` | `#ffd200` / `#fffce0` / `#665500` |
-| `error` / `-bg` / `-text` | `--status-error` / `--status-error-bg` / `--status-error-text` | `#f26629` / `#fff5ef` / `#a03808` |
-| `info` / `-bg` / `-text` | `--status-info` / `--status-info-bg` / `--status-info-text` | `#3b2e8c` / `#f2eeff` / `#1c1249` |
-| `primary-hover` / `-active` | `--interactive-primary-hover` / `--interactive-primary-active` | `#1abfbe` / `#2bf2f1` |
-| `slate-hover` / `-active` | `--interactive-slate-hover` / `--interactive-slate-active` | `#152b2a` / `#234343` |
-| `ghost-hover` | `--interactive-ghost-hover` | `#efebe7` |
-| `danger-hover` | `--interactive-danger-hover` | `#cc4d14` |
+| `error` / `-bg` / `-text`   | `--status-error` / `--status-error-bg` / `--status-error-text`       | `#f26629` / `#fff5ef` / `#a03808` |
+| `info` / `-bg` / `-text`    | `--status-info` / `--status-info-bg` / `--status-info-text`          | `#3b2e8c` / `#f2eeff` / `#1c1249` |
+| `primary-hover` / `-active` | `--interactive-primary-hover` / `--interactive-primary-active`       | `#1abfbe` / `#2bf2f1`             |
+| `slate-hover` / `-active`   | `--interactive-slate-hover` / `--interactive-slate-active`           | `#152b2a` / `#234343`             |
+| `ghost-hover`               | `--interactive-ghost-hover`                                          | `#efebe7`                         |
+| `danger-hover`              | `--interactive-danger-hover`                                         | `#cc4d14`                         |
 
 Each interactive group (`primary`, `secondary`, `ghost`, `danger`, `slate`) also ships `-disabled` variants — see `theme.css`.
 
@@ -364,15 +365,15 @@ Each interactive group (`primary`, `secondary`, `ghost`, `danger`, `slate`) also
 
 **Radius** — doc alias = real name (Tailwind v4 `--radius-*`, values in `rem`):
 
-| Doc | Real variable | Value |
-|---|---|---|
-| `xs` | `--radius-xs` | `2px` |
-| `sm` | `--radius-sm` | `4px` |
-| `md` | `--radius-md` | `8px` |
-| `lg` | `--radius-lg` | `12px` |
-| `xl` | `--radius-xl` | `16px` |
-| `2xl` | `--radius-2xl` | `24px` |
-| `3xl` | `--radius-3xl` | `32px` |
+| Doc    | Real variable   | Value    |
+| ------ | --------------- | -------- |
+| `xs`   | `--radius-xs`   | `2px`    |
+| `sm`   | `--radius-sm`   | `4px`    |
+| `md`   | `--radius-md`   | `8px`    |
+| `lg`   | `--radius-lg`   | `12px`   |
+| `xl`   | `--radius-xl`   | `16px`   |
+| `2xl`  | `--radius-2xl`  | `24px`   |
+| `3xl`  | `--radius-3xl`  | `32px`   |
 | `full` | `--radius-full` | `9999px` |
 
 Pill buttons use the dedicated `--radius-button` token (`calc(var(--radius-xl) + 999px)`), which resolves to a full pill.
@@ -405,13 +406,14 @@ Two typefaces, two registers: **Plain** for impact, **Saans** for clarity.
 
 **Saans** (UI) is the workhorse. Regular (400) for body copy, Medium (500) for secondary labels and navigation, SemiBold (600) for primary labels and buttons. It reads warmly at every size from caption (11px) to heading (32px).
 
-**Inter** is the web fallback for prototypes and contexts where custom fonts aren't loaded.
+**No other typeface is allowed.** Plain and Saans are the only families in the system — no Inter, no Roboto, no Google Fonts. If the custom fonts can't load, the stack falls back to `system-ui, sans-serif` and nothing else. Prototypes must load the real files (they ship in `@felix/ui/fonts/`).
 
-**Font-family mapping (for code):** the families `Plain` and `Saans` are the brand names; in code they resolve through CSS variables, and the `@font-face` files are weight-suffixed:
-- `Plain` (display) → `--font-heading`. Shipped face: `Plain-500` (`PlainLTStd-Black.otf`).
-- `Saans` (UI) → `--font-sans`. Shipped faces: `Saans-300` (Light), `Saans-400` (Regular), `Saans-500` (SemiBold). Note Saans does **not** ship a true Medium (500) file — `Saans-500` maps to SemiBold, so treat "Medium" and "SemiBold" as the same shipped weight.
-- Recommended stacks: `--font-heading: "Plain-500", "Inter", system-ui, sans-serif;` and `--font-sans: "Saans-400", "Inter", system-ui, sans-serif;`
-- Fonts load via `@import "@felix/ui/fonts.css"` (see [`packages/ui/src/fonts.css`](packages/ui/src/fonts.css)).
+**Font-family mapping (for code):** `Plain` and `Saans` are registered as unified families in [`packages/ui/src/fonts.css`](packages/ui/src/fonts.css), so `font-weight` picks the cut:
+
+- `Plain` (display) → `--font-heading`. One shipped face, `PlainLTStd-Black.otf`, covering weights 800–900.
+- `Saans` (UI) → `--font-sans`. Three shipped faces: Light (300), Regular (400–500), SemiBold (600–700). Saans does **not** ship a true Medium: weight 500 resolves to Regular, so "Medium" labels render as Regular and SemiBold (600) is the emphasis step.
+- Stacks (emitted by `@felix/ui/theme.css`, don't redefine them per app): `--font-heading: "Plain", "Saans", system-ui, sans-serif;` and `--font-sans: "Saans", system-ui, sans-serif;`
+- Fonts load via `@import "@felix/ui/fonts.css"` before `@import "@felix/ui/theme.css"`, with the `.otf` files copied to `/public/fonts`.
 
 - **display-2xl / display-xl:** Plain Black/Extrabold. Send amounts, success screens, marketing hero.
 - **display-lg / display-md / display-sm:** Plain Extrabold. Section heroes, large section titles.
@@ -429,6 +431,7 @@ Felix uses a **4px base grid** across all surfaces. All spacing values are multi
 **Desktop:** 1440px design width, 1200px max content width, 32px horizontal gutters.
 
 **Screen structure (mobile):**
+
 - Nav header: 48px fixed
 - Content area: flex-1, 16–24px horizontal padding
 - Sticky bottom CTA: 80px (16px padding + 56px button + 8px safe area)
@@ -462,6 +465,7 @@ Felix's shape language is **radically rounded at the interaction layer, gently r
 All interactive elements — buttons, badges, chips, avatar images, toggle thumbs — use `rounded-full` (9999px). This pill shape is non-negotiable; it carries the warmth and friendliness of the brand.
 
 Containers soften their corners without going pill:
+
 - Inputs, small cards, inline elements: `rounded-md` (8px)
 - Standard cards: `rounded-xl` (16px)
 - Hero cards, sheets, modals: `rounded-2xl` (24px)
@@ -511,9 +515,9 @@ Small pill labels for status communication. Always `rounded-full`. The system de
 Felix's focus indicator is a **turquoise selection glow**, implemented as a box-shadow token, not a solid outline:
 
 - **Focus ring:** `--shadow-selection` = `0 0 0 6px rgba(43, 242, 241, 0.1)` (a 6px turquoise halo at 10% alpha). This is the canonical focus treatment for inputs, buttons, and interactive elements. Pair it with a `--primary` (`#2bf2f1`) border on text inputs.
-- **`--ring` token:** note that the raw `--ring` variable is `#877867` (mocha) in light mode and `#cfcabf` in dark — it is the *outline color* primitive, distinct from the turquoise glow. Don't assume `--ring` is turquoise.
+- **`--ring` token:** note that the raw `--ring` variable is `#877867` (mocha) in light mode and `#cfcabf` in dark — it is the _outline color_ primitive, distinct from the turquoise glow. Don't assume `--ring` is turquoise.
 - **Interactive state tokens:** hover/active/disabled are driven by the `--interactive-*` family (e.g. `--interactive-primary-hover`, `--interactive-ghost-active`, `--interactive-danger-disabled`), not by ad-hoc opacity. Use them.
-- **Dark mode** flips hover/active relationships (e.g. primary hover goes *lighter* — `#8dfdfa` — instead of darker). See "Dark Mode".
+- **Dark mode** flips hover/active relationships (e.g. primary hover goes _lighter_ — `#8dfdfa` — instead of darker). See "Dark Mode".
 
 Never remove focus indicators.
 
@@ -546,4 +550,4 @@ The system ships a complete dark theme under the `.dark` class in [`theme.css`](
 - Don't use both border and shadow on the same card or input.
 - Don't use orange (`--error`) for warnings — use yellow (`--warning`). They are semantically distinct.
 - Don't use sharp corners on any interactive element.
-- Don't use *usted* or corporate language. Felix speaks in informal *tú*.
+- Don't use _usted_ or corporate language. Felix speaks in informal _tú_.

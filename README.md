@@ -129,8 +129,8 @@ The `@felix/ui/preset` provides Felix's complete design system:
 
 ### Typography
 
-- **Heading Font**: Plain-500 (Felix brand font)
-- **Body Font**: Saans-300/400/500
+- **Heading Font**: Plain (Felix brand display font, 800–900)
+- **Body Font**: Saans (300 / 400–500 / 600–700)
 - **Mono Font**: System monospace stack
 
 ### Design Tokens
@@ -243,9 +243,9 @@ import { Button, cn } from "@felix/ui";
 
 ### Custom Fonts
 
-The Felix preset references custom fonts (Plain-500, Saans). Make sure these fonts are available in your application.
+The design system uses exactly two typefaces: **Plain** (display, 800–900) and **Saans** (UI, 300–700). Both ship in `@felix/ui/fonts/`. The simplest setup is to copy them to `public/fonts` and `@import "@felix/ui/fonts.css"` before the theme — `theme.css` already defines `--font-sans` and `--font-heading`.
 
-**Next.js example:**
+**Next.js example (`next/font/local`):** keep the same weight ranges as `fonts.css` so 500 resolves to Regular and 600 to SemiBold.
 
 ```tsx
 // app/layout.tsx
@@ -254,14 +254,15 @@ import "@/app/globals.css";
 
 const plain = localFont({
   src: "./fonts/PlainLTStd-Black.otf",
+  weight: "800 900",
   variable: "--font-heading",
 });
 
 const saans = localFont({
   src: [
     { path: "./fonts/SaansLTStd-Light.otf", weight: "300" },
-    { path: "./fonts/SaansLTStd-Regular.otf", weight: "400" },
-    { path: "./fonts/SaansLTStd-SemiBold.otf", weight: "500" },
+    { path: "./fonts/SaansLTStd-Regular.otf", weight: "400 500" },
+    { path: "./fonts/SaansLTStd-SemiBold.otf", weight: "600 700" },
   ],
   variable: "--font-sans",
 });

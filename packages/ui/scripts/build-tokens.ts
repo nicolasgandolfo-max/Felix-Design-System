@@ -137,6 +137,13 @@ function buildRoot(): string {
     )
   );
 
+  // Typography — font families (the @font-face rules live in fonts.css)
+  lines.push(
+    ...Object.entries(typography.fonts).map(([key, value]) =>
+      indent(`--font-${key}: ${value};`)
+    )
+  );
+
   // Shadows
   lines.push(...vars(shadows, "shadow"));
 
