@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 393 560" width="393" height="560" role="img">
+  <!-- Marcador temporal para los heros de patrón que todavía no tienen export
+       de Figma. Mismos colores que los tokens del DS (linen, stone, slate) y
+       borde punteado para que se lea como pendiente, no como arte final. -->
+  <rect x="1" y="1" width="391" height="558" rx="31" fill="#fefcf9"
+        stroke="#082422" stroke-opacity="0.12" stroke-width="2" stroke-dasharray="10 8" />
+  <g transform="translate(136.5 214)" fill="#082422" fill-opacity="0.18">
+    <path d="M8 0h104a8 8 0 0 1 8 8v84a8 8 0 0 1-8 8H8a8 8 0 0 1-8-8V8a8 8 0 0 1 8-8Zm0 12v66l30-28 22 20 30-30 22 20V12H8Z" />
+    <circle cx="36" cy="32" r="9" />
+  </g>
+  <text x="196.5" y="352" text-anchor="middle" fill="#082422" fill-opacity="0.5"
+        font-family="system-ui, -apple-system, Segoe UI, sans-serif"
+        font-size="15" font-weight="600" letter-spacing="1.6">PLACEHOLDER</text>
+</svg>

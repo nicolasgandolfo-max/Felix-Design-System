@@ -1156,6 +1156,119 @@ const useOfEmojis: Pattern = {
           ],
         },
         {
+          type: "table",
+          heading: { es: "Iconos de menú", en: "Menu icons" },
+          columns: [
+            { es: "Opción de menú", en: "Menu option" },
+            { es: "Emoji", en: "Emoji" },
+            { es: "Codepoint", en: "Codepoint" },
+            { es: "Por qué este", en: "Why this one" },
+          ],
+          rows: [
+            [
+              { es: "Enviar dinero", en: "Enviar dinero" },
+              { es: "💸", en: "💸" },
+              { es: "U+1F4B8", en: "U+1F4B8" },
+              {
+                es: "Dinero en movimiento, igual que la acción. Excepción solo para el menú: la regla de los montos lo excluye del copy de los mensajes",
+                en: "Money in motion, matching the action. Menu-only exception: excluded from message copy by the amounts rule",
+              },
+            ],
+            [
+              { es: "Revisar estado", en: "Revisar estado" },
+              { es: "🔎", en: "🔎" },
+              { es: "U+1F50E", en: "U+1F50E" },
+              {
+                es: 'Se lee como "buscar / consultar". Un solo codepoint, presentación de emoji por defecto',
+                en: 'Reads as "look up / check". Single codepoint, default emoji presentation',
+              },
+            ],
+            [
+              { es: "Modificar", en: "Modificar" },
+              { es: "✏️", en: "✏️" },
+              { es: "U+270F U+FE0F", en: "U+270F U+FE0F" },
+              {
+                es: "Afordancia universal de edición. Requiere U+FE0F: excepción solo para el menú al criterio de un solo codepoint",
+                en: "Universal edit affordance. Requires U+FE0F — menu-only exception to the single-codepoint criterion",
+              },
+            ],
+            [
+              { es: "Cancelar", en: "Cancelar" },
+              { es: "❌", en: "❌" },
+              { es: "U+274C", en: "U+274C" },
+              {
+                es: "El registro de alarma que lo descalifica en el copy es justo el que corresponde a una acción destructiva de menú. Excepción solo para el menú a la tabla de excluidos",
+                en: "The alarm register that disqualifies it in copy is exactly right for a destructive menu action. Menu-only exception to Excluded",
+              },
+            ],
+            [
+              { es: "Enviar a otro país", en: "Enviar a otro país" },
+              { es: "🌎", en: "🌎" },
+              { es: "U+1F30E", en: "U+1F30E" },
+              {
+                es: "El globo orientado a América coincide con los corredores que atendemos. Un solo codepoint",
+                en: "Americas-facing globe matches the corridors served. Single codepoint",
+              },
+            ],
+            [
+              { es: "Configuración", en: "Configuración" },
+              { es: "⚙️", en: "⚙️" },
+              { es: "U+2699 U+FE0F", en: "U+2699 U+FE0F" },
+              {
+                es: "Afordancia estándar de ajustes. Requiere U+FE0F: excepción solo para el menú al criterio de un solo codepoint",
+                en: "Standard settings affordance. Requires U+FE0F — menu-only exception to the single-codepoint criterion",
+              },
+            ],
+            [
+              { es: "Verificar identidad", en: "Verificar identidad" },
+              { es: "🪪", en: "🪪" },
+              { es: "U+1FAAA", en: "U+1FAAA" },
+              {
+                es: "Credencial literal, un solo codepoint. Unicode 14.0: confirma el renderizado en clientes de WhatsApp para Android más viejos antes de publicar",
+                en: "Literal ID card, single codepoint. Unicode 14.0 — verify rendering on older Android WhatsApp clients before shipping",
+              },
+            ],
+            [
+              { es: "Referidos y promos", en: "Referidos y promos" },
+              { es: "🤩", en: "🤩" },
+              { es: "U+1F929", en: "U+1F929" },
+              {
+                es: "Acá el registro promocional es aceptable: el menú es el único lugar donde celebrar vende en lugar de minimizar. Un solo codepoint",
+                en: "Promotional register is acceptable here: the menu is the one place where celebration sells rather than minimizes. Single codepoint",
+              },
+            ],
+            [
+              { es: "Preguntas frecuentes", en: "Preguntas frecuentes" },
+              { es: "❓", en: "❓" },
+              { es: "U+2753", en: "U+2753" },
+              {
+                es: "Literal y autoexplicativo. Un solo codepoint, presentación de emoji por defecto",
+                en: "Literal, self-explanatory. Single codepoint, default emoji presentation",
+              },
+            ],
+            [
+              { es: "Chatear con un agente", en: "Chatear con un agente" },
+              { es: "💬", en: "💬" },
+              { es: "U+1F4AC", en: "U+1F4AC" },
+              {
+                es: "El globo de diálogo se lee como conversación humana. Un solo codepoint",
+                en: "Speech balloon reads as human conversation. Single codepoint",
+              },
+            ],
+          ],
+        },
+        {
+          type: "callout",
+          title: {
+            es: "Iconos de menú (excepción).",
+            en: "Menu icons (exception).",
+          },
+          body: {
+            es: "Las diez entradas de arriba son iconos de navegación del menú secundario, no emojis de estado. Etiquetan opciones de menú, nunca estados de mensaje, y quedan exentas de la tabla de excluidos y del criterio de un solo codepoint. La cruz (U+274C) y el dinero con alas (U+1F4B8) siguen prohibidos en el copy de los mensajes; el lápiz (U+270F U+FE0F) y el engranaje (U+2699 U+FE0F), que requieren un selector de variación, existen solo en este contexto de menú.",
+            en: "The ten entries above are navigation icons in the secondary menu, not state emoji. They label menu options, never message states, and are exempt from the Excluded table and from the single-codepoint criterion. The cross mark (U+274C) and the money-with-wings (U+1F4B8) remain prohibited in message copy; the pencil (U+270F U+FE0F) and gear (U+2699 U+FE0F), which require a variation selector, exist only in this menu context.",
+          },
+        },
+        {
           type: "heading",
           text: { es: "Banderas de países", en: "Country flags" },
         },
@@ -1265,7 +1378,7 @@ const useOfEmojis: Pattern = {
               },
             ],
             [
-              { es: "❤️  💚  🏡  👥", en: "❤️  💚  🏡  👥" },
+              { es: "❤️  💚  🏡  👨‍👩‍👧", en: "❤️  💚  🏡  👨‍👩‍👧" },
               {
                 es: "Ánimo, no estado. Instrumentaliza la relación familiar",
                 en: "Mood, not state. Instrumentalizes the family relationship",
@@ -1574,6 +1687,130 @@ const textFormatting: Pattern = {
   ],
 };
 
+// ─── Format hints as examples ───────────────────────────────────────────────
+
+/* Misma forma que Use of images: una pestaña con la tabla de reglas y los dos
+   callouts de medición. El hero todavía no tiene export de Figma y usa el
+   marcador compartido — al llegar el PNG, cambiar `hero` y `heroDetail` por
+   `${ASSETS}/format-hints-hero.png`.
+   El marcador "Ej.:" y el ejemplo de cuenta quedan en español tal cual porque
+   son copy de producto, no de la guía. */
+const formatHints: Pattern = {
+  slug: "format-hints",
+  family: "conversational",
+  name: {
+    es: "Format hints as examples",
+    en: "Format hints as examples",
+  },
+  lede: {
+    es: "Muestra el formato esperado con un ejemplo en línea.",
+    en: "Show the expected format with an inline example.",
+  },
+  cardBody: {
+    es: "Muestra el formato esperado con un ejemplo en línea.",
+    en: "Show the expected format with an inline example.",
+  },
+  hero: `${ASSETS}/placeholder-hero.svg`,
+  heroDetail: [`${ASSETS}/placeholder-hero.svg`],
+  heroAlt: {
+    es: "Mensaje de WhatsApp que pide un número de cuenta con una línea de ejemplo del formato debajo de la pregunta",
+    en: "WhatsApp message asking for an account number with a format example line below the question",
+  },
+  tabs: [
+    {
+      id: "overview",
+      label: { es: "Resumen", en: "Overview", pt: "Resumo" },
+      blocks: [
+        { type: "heading", text: { es: "Reglas", en: "Rules" } },
+        {
+          type: "table",
+          columns: [
+            { es: "Regla", en: "Rule" },
+            { es: "Estándar", en: "Standard" },
+            { es: "Ejemplo", en: "Example" },
+          ],
+          rows: [
+            [
+              {
+                es: "Muestra la forma, no la describas",
+                en: "Show the shape, do not describe it",
+              },
+              {
+                es: "Da el formato como un ejemplo en lugar de como una regla sobre el formato. Un usuario iguala un patrón que ve más rápido de lo que interpreta la descripción de ese patrón.",
+                en: "Give the format as an example rather than as a rule about the format. A user matches a visible pattern faster than they parse a description of one.",
+              },
+              {
+                es: '"18 dígitos" → "Ej.: 0021 8000 1234 5678 90"',
+                en: '"18 dígitos" → "Ej.: 0021 8000 1234 5678 90"',
+              },
+            ],
+            [
+              {
+                es: "Un solo marcador, en su propia línea",
+                en: "One marker, on its own line",
+              },
+              {
+                es: 'La pista va en su propia línea, después de la pregunta y antes de los botones; nunca dentro de la oración de la pregunta. Marcador propuesto: el prefijo "Ej.:". Las comillas se leen como caracteres que hay que escribir, y las itálicas quedan descartadas en Text formatting & message length.',
+                en: 'The hint sits on its own line after the question and before the buttons — never inside the question sentence. Proposed marker: an "Ej.:" prefix. Quotation marks read as characters to be typed; italics are ruled out in Text formatting & message length.',
+              },
+              { es: "—", en: "—" },
+            ],
+            [
+              {
+                es: "Datos falsos, estructura válida",
+                en: "Fake data, valid structure",
+              },
+              {
+                es: "Nunca un número de cuenta o un teléfono real. Estructuralmente válido para que el formato se enseñe de verdad: la cantidad de dígitos y la agrupación tienen que coincidir con lo que acepta el campo.",
+                en: "Never a real account number or phone. Structurally valid so the format is actually taught: digit count and grouping must match what the field accepts.",
+              },
+              { es: "—", en: "—" },
+            ],
+            [
+              {
+                es: "Atada al corredor, siempre tokenizada",
+                en: "Corridor-bound, always tokenized",
+              },
+              {
+                es: "Una pista de formato es específica del corredor y del método de pago por definición. Es el lugar de mayor riesgo para la clase de error que apareció en la revisión del envío principal: un formato de identificación bancaria mexicana pegado a una billetera colombiana (ver Voz y Tono §5). Las pistas son tokens, nunca cadenas copiadas entre celdas.",
+                en: "A format hint is corridor- and payment-method-specific by definition. This is the highest-risk place for the class of error found in the core send review — a Mexican bank ID format attached to a Colombian wallet (see Voice & Tone §5). Hints are tokens, never strings copied between cells.",
+              },
+              { es: "—", en: "—" },
+            ],
+            [
+              {
+                es: "Nunca más larga que la pregunta",
+                en: "Never longer than the question",
+              },
+              {
+                es: "Si la pista necesita más espacio que la pregunta a la que acompaña, el campo está pidiendo demasiado a la vez.",
+                en: "If the hint needs more room than the question it supports, the field is asking for too much at once.",
+              },
+              { es: "—", en: "—" },
+            ],
+          ],
+        },
+        {
+          type: "callout",
+          title: { es: "Señal de validación:", en: "Validation signal —" },
+          body: {
+            es: "El único patrón de este conjunto con una señal cuantitativa limpia: con y sin un ejemplo en línea, ¿el dato se valida en el primer intento y qué pasa con el tiempo para completar el paso? El paso de la cuenta bancaria es el caso de prueba natural.",
+            en: "The only pattern in this set with a clean quantitative signal: with vs without an inline example, does the input parse on the first attempt, and what happens to time-to-complete at the step? The bank account step is the natural test case.",
+          },
+        },
+        {
+          type: "callout",
+          title: { es: "Pendiente:", en: "Open item —" },
+          body: {
+            es: "Aprobación del marcador con diseño (archivos de WhatsApp) y del nombre del token de la pista con Ingeniería, para que la pista viaje con el corredor y el método de pago en lugar de con la cadena.",
+            en: "Sign-off on the marker convention with a designer (WhatsApp files), and on hint token naming with Engineering so the hint travels with the corridor and payment method rather than the string.",
+          },
+        },
+      ],
+    },
+  ],
+};
+
 /** Registro. El orden aquí es el orden de la grilla en la landing. */
 export const PATTERNS: Pattern[] = [
   closedInput,
@@ -1583,6 +1820,7 @@ export const PATTERNS: Pattern[] = [
   useOfEmojis,
   useOfImages,
   textFormatting,
+  formatHints,
 ];
 
 export const getPattern = (slug: string): Pattern | undefined =>
