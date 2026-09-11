@@ -1830,19 +1830,25 @@ const PENDING = `${ASSETS}/placeholder-hero.svg`;
 const FLOWS_FORM_IMG = {
   survey: PENDING, // flows-form-survey.png
   data: PENDING, // flows-form-data.png
-  do1: PENDING, // flows-form-do-1.png
-  dont1: PENDING, // flows-form-dont-1.png
-  do2: PENDING, // flows-form-do-2.png
-  dont2: PENDING, // flows-form-dont-2.png
+  launchDo: PENDING, // flows-form-launch-do.png
+  launchDont: PENDING, // flows-form-launch-dont.png
+  branchDo: PENDING, // flows-form-branch-do.png
+  branchDont: PENDING, // flows-form-branch-dont.png
+  validateDo: PENDING, // flows-form-validate-do.png
+  validateDont: PENDING, // flows-form-validate-dont.png
+  prefillDo: PENDING, // flows-form-prefill-do.png
+  prefillDont: PENDING, // flows-form-prefill-dont.png
 };
 
 const FLOWS_VISUAL_IMG = {
   onboarding: PENDING, // flows-visual-onboarding.png
   feature: PENDING, // flows-visual-feature.png
-  do1: PENDING, // flows-visual-do-1.png
-  dont1: PENDING, // flows-visual-dont-1.png
-  do2: PENDING, // flows-visual-do-2.png
-  dont2: PENDING, // flows-visual-dont-2.png
+  launchDo: PENDING, // flows-visual-launch-do.png
+  launchDont: PENDING, // flows-visual-launch-dont.png
+  hierarchyDo: PENDING, // flows-visual-hierarchy-do.png
+  hierarchyDont: PENDING, // flows-visual-hierarchy-dont.png
+  lengthDo: PENDING, // flows-visual-length-do.png
+  lengthDont: PENDING, // flows-visual-length-dont.png
 };
 
 /* Los límites salen de la documentación de Flows y están resumidos, no
@@ -1861,6 +1867,10 @@ const flowsFormSections: StandardSections = {
       {
         es: "Elige tipos de input nativos (Dropdown, DatePicker, radio, checkbox, número) para que las respuestas sean válidas por construcción.",
         en: "Pick native input types (Dropdown, DatePicker, radio, checkbox, number) so answers are valid by construction.",
+      },
+      {
+        es: "Ramifica según la respuesta: con If o Switch, lo que el usuario contesta en el primer input decide qué campos o qué pantalla vienen después, sin pasar por el servidor.",
+        en: "Branch on the answer: with If or Switch, what the user picks in the first input decides which fields or which screen come next, with no server round-trip.",
       },
       {
         es: "Mantenlo corto: pide solo lo que necesitas en ese momento y separa las preguntas compuestas pantalla por pantalla.",
@@ -1923,6 +1933,20 @@ const flowsFormSections: StandardSections = {
               en: "Screens can be prefilled with data you already have",
             },
           ],
+          [
+            { es: "Ramificación", en: "Branching" },
+            {
+              es: "If (condition, then, else) y Switch (value, cases) leen la respuesta con ${form.campo} y cambian los campos de la misma pantalla, sin pasar por el servidor. El Footer puede ir dentro de una rama, así cada camino navega a una pantalla distinta",
+              en: "If (condition, then, else) and Switch (value, cases) read the answer with ${form.field} and swap the fields on the same screen, with no server round-trip. A Footer can sit inside a branch, so each path navigates to a different screen",
+            },
+          ],
+          [
+            { es: "Datos entre pantallas", en: "Data across screens" },
+            {
+              es: "El navigate del Footer lleva un payload armado con ${form.*}, así la pantalla siguiente recibe las respuestas anteriores y puede volver a ramificar. Qué pantalla puede seguir a cuál se declara en el routing_model",
+              en: "The Footer's navigate action carries a payload built from ${form.*}, so the next screen receives the earlier answers and can branch again. Which screen may follow which is declared in the routing_model",
+            },
+          ],
         ],
       },
       {
@@ -1958,13 +1982,17 @@ const flowsFormSections: StandardSections = {
     ],
     notes: [
       {
-        es: "Pendiente de confirmar en developers.facebook.com: el máximo de pantallas por Flow, de componentes por pantalla, los límites de caracteres y de opciones por campo, y la versión actual del Flow JSON.",
-        en: "Notes to confirm on developers.facebook.com: max screens per flow, components per screen, per-field character and option limits, and the current Flow JSON version.",
+        es: "Confirmado en la documentación: If existe desde la versión 4.0 del Flow JSON y anida hasta 3 niveles; open_url y update_data desde la 6.0; ChipSelector dentro de una rama desde la 7.1. Los ejemplos vigentes usan la 7.3.",
+        en: "Confirmed in the docs: If has existed since Flow JSON 4.0 and nests up to 3 levels deep; open_url and update_data since 6.0; ChipSelector inside a branch since 7.1. The current examples use 7.3.",
+      },
+      {
+        es: "Pendiente de confirmar en developers.facebook.com: el máximo de pantallas por Flow y de componentes por pantalla, y los límites de caracteres y de opciones por campo.",
+        en: "Still to confirm on developers.facebook.com: max screens per flow and components per screen, and per-field character and option limits.",
       },
     ],
     source: {
-      es: "Fuente: documentación de WhatsApp Flows para desarrolladores. Es un resumen y no está verificado en vivo, así que confirma los límites antes de construir. Confirma en ",
-      en: "Source: WhatsApp Flows developer docs. Summarized, not re-verified live, so confirm the caps before build. Confirm on ",
+      es: "Fuente: documentación de WhatsApp Flows para desarrolladores. Los límites que quedan abiertos no están verificados en vivo, así que confírmalos antes de construir. Confirma en ",
+      en: "Source: WhatsApp Flows developer docs. The caps still left open are not verified live, so confirm them before build. Confirm on ",
     },
     sourceHref: WA_FLOWS_DOCS_URL,
     sourceLinkText: "developers.facebook.com",
@@ -1976,37 +2004,61 @@ const flowsFormSections: StandardSections = {
       en: "Reach for a form only when a single message can't do the job: several inputs, validation, or a short structured form. It is powerful but heavier, so keep the bar high.",
     },
     tips: {
-      es: "Agrupa los datos relacionados en una pantalla y dale a cada pantalla una sola acción clara en su Footer. Elige el tipo de input que se valida solo: un Dropdown para un conjunto conocido, un DatePicker para fechas, un input numérico para montos. Precarga con lo que ya tienes. Mantenlo corto. Y que el mensaje de lanzamiento diga con claridad qué abre el botón y para qué.",
-      en: "Group related inputs on one screen and give each screen a single clear action in its Footer. Choose the input type that validates itself: a Dropdown for a known set, a DatePicker for dates, a number input for amounts. Prefill from what you already have. Keep it short. Make the launch message say plainly what the button opens and why.",
+      es: "Agrupa los datos relacionados en una pantalla y dale a cada pantalla una sola acción clara en su Footer. Elige el tipo de input que se valida solo: un Dropdown para un conjunto conocido, un DatePicker para fechas, un input numérico para montos. Ramifica con If o Switch en lugar de pedir todo junto. Precarga con lo que ya tienes. Y que el mensaje de lanzamiento diga con claridad qué abre el botón y para qué.",
+      en: "Group related inputs on one screen and give each screen a single clear action in its Footer. Choose the input type that validates itself: a Dropdown for a known set, a DatePicker for dates, a number input for amounts. Branch with If or Switch instead of asking for everything at once. Prefill from what you already have. Make the launch message say plainly what the button opens and why.",
     },
     examples: [
       {
         tone: "do",
-        img: FLOWS_FORM_IMG.do1,
+        img: FLOWS_FORM_IMG.launchDo,
         alt: {
-          es: "Un NPS o CSAT como un solo formulario validado: calificación, comentario y una pregunta de seguimiento",
-          en: "NPS or CSAT as one validated form: rating, comment and a follow-up question",
+          es: "Mensaje de lanzamiento en el chat que dice qué abre el botón y para qué, con el botón debajo",
+          en: "Launch message in the chat saying what the button opens and why, with the button below it",
         },
         caption: {
-          es: "Varios datos de una vez y estructurados desde el arranque.",
-          en: "Several inputs at once, clean structured data.",
+          es: "El mensaje dice qué se abre antes de que se abra.",
+          en: "The message says what opens before it opens.",
         },
       },
       {
         tone: "dont",
-        img: FLOWS_FORM_IMG.dont1,
+        img: FLOWS_FORM_IMG.launchDont,
         alt: {
-          es: "Un Flow que se abre solo para preguntar un sí o un no",
-          en: "A Flow that opens just to ask a single yes or no",
+          es: 'Mensaje de lanzamiento con un botón que solo dice "Toca aquí", sin contexto',
+          en: 'Launch message with a button that just says "Toca aquí", with no context',
         },
         caption: {
-          es: "Una sola pregunta es un botón o un menú, no un formulario.",
-          en: "One question is a button or a menu, not a form.",
+          es: "Un botón sin contexto se toca menos y sorprende más.",
+          en: "A button with no context gets fewer taps and more surprise.",
         },
       },
       {
         tone: "do",
-        img: FLOWS_FORM_IMG.do2,
+        img: FLOWS_FORM_IMG.branchDo,
+        alt: {
+          es: "Formulario que según la primera respuesta muestra solo los campos que corresponden a ese caso",
+          en: "A form that, based on the first answer, shows only the fields that apply to that case",
+        },
+        caption: {
+          es: "La primera respuesta decide qué se pregunta después.",
+          en: "The first answer decides what gets asked next.",
+        },
+      },
+      {
+        tone: "dont",
+        img: FLOWS_FORM_IMG.branchDont,
+        alt: {
+          es: "Formulario que pide todos los campos de todos los casos y aclara en el texto cuáles ignorar",
+          en: "A form asking for every case's fields at once, with copy telling the user which ones to ignore",
+        },
+        caption: {
+          es: "Si hay que explicar qué campos ignorar, esa rama la tenía que hacer el Flow.",
+          en: "If you have to explain which fields to skip, that branch was the Flow's job.",
+        },
+      },
+      {
+        tone: "do",
+        img: FLOWS_FORM_IMG.validateDo,
         alt: {
           es: "Un formulario que usa DatePicker, Dropdown y un input numérico",
           en: "A form using a DatePicker, a Dropdown and a number input",
@@ -2018,7 +2070,7 @@ const flowsFormSections: StandardSections = {
       },
       {
         tone: "dont",
-        img: FLOWS_FORM_IMG.dont2,
+        img: FLOWS_FORM_IMG.validateDont,
         alt: {
           es: "Una caja de texto libre grande para algo que un input estructurado podría capturar",
           en: "A big free-text box for what a structured input could capture",
@@ -2026,6 +2078,30 @@ const flowsFormSections: StandardSections = {
         caption: {
           es: "El mismo problema de interpretación que el chat, con más fricción.",
           en: "Same parsing problem as the chat, with more friction.",
+        },
+      },
+      {
+        tone: "do",
+        img: FLOWS_FORM_IMG.prefillDo,
+        alt: {
+          es: "Formulario con el nombre y el teléfono ya cargados y solo el campo nuevo vacío",
+          en: "A form with the name and phone already filled in and only the new field empty",
+        },
+        caption: {
+          es: "Precargado: pregunta solo lo que falta.",
+          en: "Prefilled: it only asks for what's missing.",
+        },
+      },
+      {
+        tone: "dont",
+        img: FLOWS_FORM_IMG.prefillDont,
+        alt: {
+          es: "Formulario que vuelve a pedir el nombre y el teléfono que el usuario ya había dado",
+          en: "A form asking again for the name and phone the user had already given",
+        },
+        caption: {
+          es: "Pedir de nuevo lo que ya tenemos es el paso más fácil de abandonar.",
+          en: "Asking again for what we already have is the easiest step to abandon.",
         },
       },
     ],
@@ -2041,8 +2117,8 @@ const flowsForm: Pattern = {
     en: "Collect information and surveys",
   },
   lede: {
-    es: "Un formulario guiado que se abre sobre el chat para recolectar varios datos a la vez. Úsalo para reunir información del usuario o hacer una encuesta, con validación incluida, en lugar de un ida y vuelta largo en el chat.",
-    en: "A guided form that opens over the chat to collect several inputs at once. Use it to gather user information or run a survey, with validation built in, instead of a long chat back-and-forth.",
+    es: "Un formulario guiado que se abre sobre el chat para recolectar varios datos a la vez. Úsalo para reunir información del usuario o hacer una encuesta, con validación incluida y ramas condicionales según lo que responda el usuario, en lugar de un ida y vuelta largo en el chat.",
+    en: "A guided form that opens over the chat to collect several inputs at once. Use it to gather user information or run a survey, with validation built in and conditional branches based on what the user answers, instead of a long chat back-and-forth.",
   },
   cardBody: {
     es: "Un formulario guiado que se abre sobre el chat para recolectar varios datos a la vez, con validación incluida.",
@@ -2220,7 +2296,55 @@ const flowsVisualSections: StandardSections = {
     examples: [
       {
         tone: "do",
-        img: FLOWS_VISUAL_IMG.do1,
+        img: FLOWS_VISUAL_IMG.launchDo,
+        alt: {
+          es: "Mensaje de lanzamiento en el chat que anticipa qué se va a abrir, con el botón debajo",
+          en: "Launch message in the chat setting up what is about to open, with the button below it",
+        },
+        caption: {
+          es: "El mensaje deja claro qué se abre antes de abrirlo.",
+          en: "The message makes clear what opens before it opens.",
+        },
+      },
+      {
+        tone: "dont",
+        img: FLOWS_VISUAL_IMG.launchDont,
+        alt: {
+          es: 'Mensaje de lanzamiento con un botón que solo dice "Toca aquí", sin contexto',
+          en: 'Launch message with a button that just says "Toca aquí", with no context',
+        },
+        caption: {
+          es: "Un botón sin contexto se toca menos y sorprende más.",
+          en: "A button with no context gets fewer taps and more surprise.",
+        },
+      },
+      {
+        tone: "do",
+        img: FLOWS_VISUAL_IMG.hierarchyDo,
+        alt: {
+          es: "Pantalla con la imagen arriba, dos líneas de texto y un solo botón de acción",
+          en: "Screen with the image on top, two lines of copy and a single call-to-action button",
+        },
+        caption: {
+          es: "La imagen encabeza y hay una sola acción.",
+          en: "The image leads and there is one action.",
+        },
+      },
+      {
+        tone: "dont",
+        img: FLOWS_VISUAL_IMG.hierarchyDont,
+        alt: {
+          es: "Pantalla con la imagen enterrada bajo un párrafo largo y dos botones que compiten",
+          en: "Screen with the image buried under a long paragraph and two competing buttons",
+        },
+        caption: {
+          es: "Dos acciones compiten y la imagen deja de encabezar.",
+          en: "Two actions compete and the image stops leading.",
+        },
+      },
+      {
+        tone: "do",
+        img: FLOWS_VISUAL_IMG.lengthDo,
         alt: {
           es: 'Un onboarding de dos o tres pantallas para un producto nuevo, guiado por imágenes y cerrando en "Empezar"',
           en: 'A two or three screen onboarding for a new product, image-led, ending on "Empezar"',
@@ -2232,7 +2356,7 @@ const flowsVisualSections: StandardSections = {
       },
       {
         tone: "dont",
-        img: FLOWS_VISUAL_IMG.dont1,
+        img: FLOWS_VISUAL_IMG.lengthDont,
         alt: {
           es: "Un muro de diez pantallas de texto que se presenta como un destaque",
           en: "A ten-screen wall of text pretending to be a highlight",
@@ -2240,30 +2364,6 @@ const flowsVisualSections: StandardSections = {
         caption: {
           es: "Si necesita un manual, no es un destaque.",
           en: "If it needs a manual, it isn't a highlight.",
-        },
-      },
-      {
-        tone: "do",
-        img: FLOWS_VISUAL_IMG.do2,
-        alt: {
-          es: "Una función nueva destacada con una imagen y un botón de acción",
-          en: "One new feature spotlighted with an image and a call to action",
-        },
-        caption: {
-          es: "Una función, una acción.",
-          en: "One feature, one action.",
-        },
-      },
-      {
-        tone: "dont",
-        img: FLOWS_VISUAL_IMG.dont2,
-        alt: {
-          es: "Un Flow visual usado para recolectar datos",
-          en: "A visual Flow used to collect data",
-        },
-        caption: {
-          es: "Recolectar datos es el patrón de formulario, no este.",
-          en: "Collecting inputs is the form pattern, not this one.",
         },
       },
     ],
