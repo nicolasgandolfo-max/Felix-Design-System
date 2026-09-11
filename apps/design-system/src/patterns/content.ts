@@ -6,6 +6,9 @@ const ASSETS = "/assets/patterns";
 const WA_LIST_DOCS_URL =
   "https://developers.facebook.com/documentation/business-messaging/whatsapp/messages/interactive-list-messages";
 
+const WA_FLOWS_DOCS_URL =
+  "https://developers.facebook.com/documentation/business-messaging/whatsapp/flows";
+
 // ─── Entrada cerrada ─────────────────────────────────────────────────────────
 
 const closedInput: Pattern = {
@@ -1811,12 +1814,537 @@ const formatHints: Pattern = {
   ],
 };
 
+// ─── Flows ──────────────────────────────────────────────────────────────────
+
+/* Flows no es un patrón sino una familia: acá están los dos casos claros y más
+   adelante se suman otros. Los dos abren una experiencia nativa sobre el chat
+   desde un mensaje de lanzamiento con botón de acción.
+
+   Pantallas pendientes de export de Figma: cada constante apunta al marcador
+   compartido y el comentario nombra el archivo que va en su lugar. Al llegar
+   los PNG, reemplazar el valor de la constante y no hace falta tocar nada más.
+   El mismo par de pantallas se usa en el hero y en la galería de Specs, que es
+   lo que pide el doc en los dos lugares. */
+const PENDING = `${ASSETS}/placeholder-hero.svg`;
+
+const FLOWS_FORM_IMG = {
+  survey: PENDING, // flows-form-survey.png
+  data: PENDING, // flows-form-data.png
+  do1: PENDING, // flows-form-do-1.png
+  dont1: PENDING, // flows-form-dont-1.png
+  do2: PENDING, // flows-form-do-2.png
+  dont2: PENDING, // flows-form-dont-2.png
+};
+
+const FLOWS_VISUAL_IMG = {
+  onboarding: PENDING, // flows-visual-onboarding.png
+  feature: PENDING, // flows-visual-feature.png
+  do1: PENDING, // flows-visual-do-1.png
+  dont1: PENDING, // flows-visual-dont-1.png
+  do2: PENDING, // flows-visual-do-2.png
+  dont2: PENDING, // flows-visual-dont-2.png
+};
+
+/* Los límites salen de la documentación de Flows y están resumidos, no
+   verificados en vivo: de ahí la nota y la fuente al pie de Specs. */
+const flowsFormSections: StandardSections = {
+  overview: {
+    usage: [
+      {
+        es: "Usa un Flow de formulario cuando necesites recolectar varios datos estructurados o hacer una encuesta (NPS, CSAT, datos del beneficiario, información de onboarding).",
+        en: "Use a Flow form when you need to collect several structured inputs or run a survey (NPS, CSAT, beneficiary details, onboarding data).",
+      },
+      {
+        es: "Si es una sola opción o un solo valor abierto, primero recurre a los patrones de un mensaje (Closed input, Menu, Open input). El formulario es la herramienta más pesada.",
+        en: "If it is one choice or one open value, use the single-message patterns first (Closed input, Menu, Open input). A form is the heavier tool.",
+      },
+      {
+        es: "Elige tipos de input nativos (Dropdown, DatePicker, radio, checkbox, número) para que las respuestas sean válidas por construcción.",
+        en: "Pick native input types (Dropdown, DatePicker, radio, checkbox, number) so answers are valid by construction.",
+      },
+      {
+        es: "Mantenlo corto: pide solo lo que necesitas en ese momento y separa las preguntas compuestas pantalla por pantalla.",
+        en: "Keep it short. Only ask what you need at that moment, and split compound questions screen by screen.",
+      },
+      {
+        es: "Precarga lo que ya sabes para no preguntar dos veces.",
+        en: "Prefill what you already know so you don't ask twice.",
+      },
+    ],
+    metric: {
+      title: { es: "Por qué funciona", en: "Why this works" },
+      body: [
+        {
+          es: "Recolecta datos estructurados directo del usuario, así no hay que interpretar nada de un texto libre.",
+          en: "Collecting structured data straight from the user, so nothing has to be parsed from free text.",
+        },
+      ],
+    },
+  },
+
+  specs: {
+    intro: {
+      es: "Lo que te da un Flow de formulario.",
+      en: "What a Flow form gives you.",
+    },
+    tables: [
+      {
+        heading: { es: "Cómo funciona", en: "How it works" },
+        columns: [
+          { es: "Elemento", en: "Item" },
+          { es: "Detalle", en: "Detail" },
+        ],
+        rows: [
+          [
+            { es: "Lanzamiento", en: "Launch" },
+            {
+              es: "Un mensaje interactivo con un botón de acción que abre el Flow",
+              en: "An interactive message with a call-to-action button that opens the Flow",
+            },
+          ],
+          [
+            { es: "Estructura", en: "Structure" },
+            {
+              es: "El Flow JSON define las pantallas; una pantalla es terminal y cierra el formulario",
+              en: "Flow JSON defines the screens; one screen is terminal and ends the form",
+            },
+          ],
+          [
+            { es: "Resultado", en: "Result" },
+            {
+              es: "Los datos recolectados vuelven estructurados, no como texto libre",
+              en: "Collected inputs come back as structured data, not free text",
+            },
+          ],
+          [
+            { es: "Precarga", en: "Prefill" },
+            {
+              es: "Las pantallas se pueden precargar con datos que ya tienes",
+              en: "Screens can be prefilled with data you already have",
+            },
+          ],
+        ],
+      },
+      {
+        heading: { es: "Componentes de entrada", en: "Input components" },
+        columns: [
+          { es: "Tipo", en: "Type" },
+          { es: "Ejemplos", en: "Examples" },
+        ],
+        rows: [
+          [
+            { es: "Texto", en: "Text" },
+            {
+              es: "TextHeading, TextSubheading, TextBody, TextCaption, RichText",
+              en: "TextHeading, TextSubheading, TextBody, TextCaption, RichText",
+            },
+          ],
+          [
+            { es: "Entradas", en: "Inputs" },
+            {
+              es: "TextInput (texto, número, email, teléfono), TextArea, Dropdown, RadioButtonsGroup, CheckboxGroup, ChipsSelector, DatePicker, CalendarPicker, PhotoPicker, DocumentPicker, OptIn",
+              en: "TextInput (text, number, email, phone), TextArea, Dropdown, RadioButtonsGroup, CheckboxGroup, ChipsSelector, DatePicker, CalendarPicker, PhotoPicker, DocumentPicker, OptIn",
+            },
+          ],
+          [
+            { es: "Acción", en: "Action" },
+            {
+              es: "Botón del Footer (una acción principal por pantalla)",
+              en: "Footer button (one primary action per screen)",
+            },
+          ],
+        ],
+      },
+    ],
+    notes: [
+      {
+        es: "Pendiente de confirmar en developers.facebook.com: el máximo de pantallas por Flow, de componentes por pantalla, los límites de caracteres y de opciones por campo, y la versión actual del Flow JSON.",
+        en: "Notes to confirm on developers.facebook.com: max screens per flow, components per screen, per-field character and option limits, and the current Flow JSON version.",
+      },
+    ],
+    source: {
+      es: "Fuente: documentación de WhatsApp Flows para desarrolladores. Es un resumen y no está verificado en vivo, así que confirma los límites antes de construir. Confirma en ",
+      en: "Source: WhatsApp Flows developer docs. Summarized, not re-verified live, so confirm the caps before build. Confirm on ",
+    },
+    sourceHref: WA_FLOWS_DOCS_URL,
+    sourceLinkText: "developers.facebook.com",
+  },
+
+  guidelines: {
+    usage: {
+      es: "Recurre a un formulario solo cuando un mensaje suelto no alcanza: varios datos, validación o un formulario estructurado corto. Es potente pero más pesado, así que mantén la vara alta.",
+      en: "Reach for a form only when a single message can't do the job: several inputs, validation, or a short structured form. It is powerful but heavier, so keep the bar high.",
+    },
+    tips: {
+      es: "Agrupa los datos relacionados en una pantalla y dale a cada pantalla una sola acción clara en su Footer. Elige el tipo de input que se valida solo: un Dropdown para un conjunto conocido, un DatePicker para fechas, un input numérico para montos. Precarga con lo que ya tienes. Mantenlo corto. Y que el mensaje de lanzamiento diga con claridad qué abre el botón y para qué.",
+      en: "Group related inputs on one screen and give each screen a single clear action in its Footer. Choose the input type that validates itself: a Dropdown for a known set, a DatePicker for dates, a number input for amounts. Prefill from what you already have. Keep it short. Make the launch message say plainly what the button opens and why.",
+    },
+    examples: [
+      {
+        tone: "do",
+        img: FLOWS_FORM_IMG.do1,
+        alt: {
+          es: "Un NPS o CSAT como un solo formulario validado: calificación, comentario y una pregunta de seguimiento",
+          en: "NPS or CSAT as one validated form: rating, comment and a follow-up question",
+        },
+        caption: {
+          es: "Varios datos de una vez y estructurados desde el arranque.",
+          en: "Several inputs at once, clean structured data.",
+        },
+      },
+      {
+        tone: "dont",
+        img: FLOWS_FORM_IMG.dont1,
+        alt: {
+          es: "Un Flow que se abre solo para preguntar un sí o un no",
+          en: "A Flow that opens just to ask a single yes or no",
+        },
+        caption: {
+          es: "Una sola pregunta es un botón o un menú, no un formulario.",
+          en: "One question is a button or a menu, not a form.",
+        },
+      },
+      {
+        tone: "do",
+        img: FLOWS_FORM_IMG.do2,
+        alt: {
+          es: "Un formulario que usa DatePicker, Dropdown y un input numérico",
+          en: "A form using a DatePicker, a Dropdown and a number input",
+        },
+        caption: {
+          es: "Deja que el componente haga la validación.",
+          en: "Let the component do the validation.",
+        },
+      },
+      {
+        tone: "dont",
+        img: FLOWS_FORM_IMG.dont2,
+        alt: {
+          es: "Una caja de texto libre grande para algo que un input estructurado podría capturar",
+          en: "A big free-text box for what a structured input could capture",
+        },
+        caption: {
+          es: "El mismo problema de interpretación que el chat, con más fricción.",
+          en: "Same parsing problem as the chat, with more friction.",
+        },
+      },
+    ],
+  },
+};
+
+const flowsForm: Pattern = {
+  slug: "flows-form",
+  family: "interaction",
+  name: { es: "Flows: form", en: "Flows: form" },
+  subtitle: {
+    es: "Recolectar información y encuestas",
+    en: "Collect information and surveys",
+  },
+  lede: {
+    es: "Un formulario guiado que se abre sobre el chat para recolectar varios datos a la vez. Úsalo para reunir información del usuario o hacer una encuesta, con validación incluida, en lugar de un ida y vuelta largo en el chat.",
+    en: "A guided form that opens over the chat to collect several inputs at once. Use it to gather user information or run a survey, with validation built in, instead of a long chat back-and-forth.",
+  },
+  cardBody: {
+    es: "Un formulario guiado que se abre sobre el chat para recolectar varios datos a la vez, con validación incluida.",
+    en: "A guided form that opens over the chat to collect several inputs at once, with validation built in.",
+  },
+  hero: FLOWS_FORM_IMG.survey,
+  heroDetail: [FLOWS_FORM_IMG.survey, FLOWS_FORM_IMG.data],
+  heroAlt: {
+    es: "Pantallas de un Flow de formulario: una encuesta NPS y un formulario con los datos del beneficiario",
+    en: "Screens from a Flow form: an NPS survey and a beneficiary-details form",
+  },
+  // Las tres pestañas estándar, con la galería de pantallas al final de Specs.
+  tabs: standardTabs(flowsFormSections).map(
+    (tab): PatternTab =>
+      tab.id !== "specs"
+        ? tab
+        : {
+            ...tab,
+            blocks: [
+              ...tab.blocks,
+              {
+                type: "heading",
+                text: { es: "Pantallas de ejemplo", en: "Example screens" },
+              },
+              {
+                type: "gallery",
+                items: [
+                  {
+                    img: FLOWS_FORM_IMG.survey,
+                    label: { es: "Encuesta", en: "Survey" },
+                    alt: {
+                      es: "Pantalla de encuesta con una calificación y un campo de comentario",
+                      en: "Survey screen with a rating and a comment field",
+                    },
+                  },
+                  {
+                    img: FLOWS_FORM_IMG.data,
+                    label: {
+                      es: "Formulario de datos",
+                      en: "Data-collection form",
+                    },
+                    alt: {
+                      es: "Formulario con un Dropdown y campos validados",
+                      en: "Form with a Dropdown and validated fields",
+                    },
+                  },
+                ],
+              },
+            ],
+          }
+  ),
+};
+
+const flowsVisualSections: StandardSections = {
+  overview: {
+    usage: [
+      {
+        es: "Usa un Flow visual cuando el objetivo es explicar o promocionar, no recolectar: onboarding a un producto nuevo, destacar una función o un push que necesita imágenes y un próximo paso claro.",
+        en: "Use a visual Flow when the goal is to explain or promote, not collect: onboarding to a new product, highlighting a new feature, or a push that needs images and a clear next step.",
+      },
+      {
+        es: "Empieza por la imagen, mantén el texto corto y cierra con una sola acción clara.",
+        en: "Lead with the image, keep the copy short, and end on one clear action.",
+      },
+      {
+        es: "Recurre a él cuando un mensaje de texto o una sola imagen no alcanzan para contar la historia, pero tampoco necesitas un formulario completo.",
+        en: "Reach for it when a plain text message or a single image can't carry the story, but you don't need a full form.",
+      },
+      {
+        es: "Limítalo a unas pocas pantallas. Es un destaque, no un manual.",
+        en: "Keep it to a few screens. It is a highlight, not a manual.",
+      },
+    ],
+    metric: {
+      title: { es: "Por qué funciona", en: "Why this works" },
+      body: [
+        {
+          es: "Muestra un producto o una función nueva con imágenes y un próximo paso guiado, más rico que un mensaje de texto.",
+          en: "Showing a new product or feature with images and a guided next step, richer than a text message.",
+        },
+      ],
+    },
+  },
+
+  specs: {
+    intro: {
+      es: "Lo que te da un Flow visual.",
+      en: "What a visual Flow gives you.",
+    },
+    tables: [
+      {
+        heading: { es: "Cómo funciona", en: "How it works" },
+        columns: [
+          { es: "Elemento", en: "Item" },
+          { es: "Detalle", en: "Detail" },
+        ],
+        rows: [
+          [
+            { es: "Lanzamiento", en: "Launch" },
+            {
+              es: "Un mensaje interactivo con un botón de acción que abre el Flow",
+              en: "An interactive message with a call-to-action button that opens the Flow",
+            },
+          ],
+          [
+            { es: "Propósito", en: "Purpose" },
+            {
+              es: "Presentar y guiar, con poca o ninguna recolección de datos",
+              en: "Present and guide, with little or no data collection",
+            },
+          ],
+          [
+            { es: "Salida", en: "Exit" },
+            {
+              es: "Un botón del Footer para continuar o terminar, o un EmbeddedLink para llevar al usuario a otro lado",
+              en: "A Footer button to continue or finish, or an EmbeddedLink to send the user somewhere",
+            },
+          ],
+        ],
+      },
+      {
+        heading: {
+          es: "Componentes de presentación",
+          en: "Presentational components",
+        },
+        columns: [
+          { es: "Tipo", en: "Type" },
+          { es: "Ejemplos", en: "Examples" },
+        ],
+        rows: [
+          [
+            { es: "Medios", en: "Media" },
+            { es: "Image", en: "Image" },
+          ],
+          [
+            { es: "Texto", en: "Text" },
+            {
+              es: "TextHeading, TextSubheading, TextBody, TextCaption, RichText",
+              en: "TextHeading, TextSubheading, TextBody, TextCaption, RichText",
+            },
+          ],
+          [
+            { es: "Navegación", en: "Navigation" },
+            {
+              es: "Botón del Footer, EmbeddedLink, NavigationList, renderizado condicional (If, Switch)",
+              en: "Footer button, EmbeddedLink, NavigationList, conditional rendering (If, Switch)",
+            },
+          ],
+        ],
+      },
+    ],
+    notes: [
+      {
+        es: "Pendiente de confirmar en developers.facebook.com: los límites de tamaño y formato de imagen, el máximo de pantallas y la versión actual del Flow JSON.",
+        en: "Notes to confirm on developers.facebook.com: image size and format limits, max screens, and the current Flow JSON version.",
+      },
+    ],
+    source: {
+      es: "Fuente: documentación de WhatsApp Flows para desarrolladores. Es un resumen y no está verificado en vivo, así que confirma los límites antes de construir. Confirma en ",
+      en: "Source: WhatsApp Flows developer docs. Summarized, not re-verified live, so confirm the caps before build. Confirm on ",
+    },
+    sourceHref: WA_FLOWS_DOCS_URL,
+    sourceLinkText: "developers.facebook.com",
+  },
+
+  guidelines: {
+    usage: {
+      es: "Recurre a un Flow visual cuando un mensaje necesita mostrar algo y mover al usuario un paso, pero no necesita recolectar datos.",
+      en: "Reach for a visual Flow when a message needs to show something and move the user one step, but does not need to collect data.",
+    },
+    tips: {
+      es: "Una idea por pantalla, primero la imagen, el texto corto. Cierra cada pantalla con una sola acción clara. No lo estires hasta volverlo un manual: un destaque se gana la atención solo si se mantiene breve. Y que el mensaje de lanzamiento deje claro qué se va a abrir.",
+      en: "One idea per screen, image first, copy short. End every screen on a single clear action. Don't stretch it into a manual — a highlight earns attention only if it stays brief. Make the launch message set the expectation of what opens.",
+    },
+    examples: [
+      {
+        tone: "do",
+        img: FLOWS_VISUAL_IMG.do1,
+        alt: {
+          es: 'Un onboarding de dos o tres pantallas para un producto nuevo, guiado por imágenes y cerrando en "Empezar"',
+          en: 'A two or three screen onboarding for a new product, image-led, ending on "Empezar"',
+        },
+        caption: {
+          es: "Muestra el valor y después un solo próximo paso claro.",
+          en: "Show the value, then one clear next step.",
+        },
+      },
+      {
+        tone: "dont",
+        img: FLOWS_VISUAL_IMG.dont1,
+        alt: {
+          es: "Un muro de diez pantallas de texto que se presenta como un destaque",
+          en: "A ten-screen wall of text pretending to be a highlight",
+        },
+        caption: {
+          es: "Si necesita un manual, no es un destaque.",
+          en: "If it needs a manual, it isn't a highlight.",
+        },
+      },
+      {
+        tone: "do",
+        img: FLOWS_VISUAL_IMG.do2,
+        alt: {
+          es: "Una función nueva destacada con una imagen y un botón de acción",
+          en: "One new feature spotlighted with an image and a call to action",
+        },
+        caption: {
+          es: "Una función, una acción.",
+          en: "One feature, one action.",
+        },
+      },
+      {
+        tone: "dont",
+        img: FLOWS_VISUAL_IMG.dont2,
+        alt: {
+          es: "Un Flow visual usado para recolectar datos",
+          en: "A visual Flow used to collect data",
+        },
+        caption: {
+          es: "Recolectar datos es el patrón de formulario, no este.",
+          en: "Collecting inputs is the form pattern, not this one.",
+        },
+      },
+    ],
+  },
+};
+
+const flowsVisual: Pattern = {
+  slug: "flows-visual",
+  family: "interaction",
+  name: { es: "Flows: visual", en: "Flows: visual" },
+  subtitle: {
+    es: "Onboarding y destaque de funciones",
+    en: "Onboarding and feature highlight",
+  },
+  lede: {
+    es: "Un Flow guiado por imágenes que se abre sobre el chat para mostrar, no para preguntar. Úsalo para dar la bienvenida a un producto nuevo, destacar una función o empujar algo que necesita más que un mensaje de texto.",
+    en: "An image-led Flow that opens over the chat to show, not ask. Use it to onboard someone to a new product, spotlight a new feature, or push something that needs more than a text message.",
+  },
+  cardBody: {
+    es: "Un Flow guiado por imágenes que se abre sobre el chat para mostrar, no para preguntar: onboarding, una función nueva o un push.",
+    en: "An image-led Flow that opens over the chat to show, not ask: onboarding, a new feature, or a push.",
+  },
+  hero: FLOWS_VISUAL_IMG.onboarding,
+  heroDetail: [FLOWS_VISUAL_IMG.onboarding, FLOWS_VISUAL_IMG.feature],
+  heroAlt: {
+    es: "Pantallas de un Flow visual: una intro de onboarding con imagen y una pantalla que destaca una función con su botón de acción",
+    en: "Screens from a visual Flow: an onboarding intro with an image and a feature highlight screen with a call to action",
+  },
+  // Las tres pestañas estándar, con la galería de pantallas al final de Specs.
+  tabs: standardTabs(flowsVisualSections).map(
+    (tab): PatternTab =>
+      tab.id !== "specs"
+        ? tab
+        : {
+            ...tab,
+            blocks: [
+              ...tab.blocks,
+              {
+                type: "heading",
+                text: { es: "Pantallas de ejemplo", en: "Example screens" },
+              },
+              {
+                type: "gallery",
+                items: [
+                  {
+                    img: FLOWS_VISUAL_IMG.onboarding,
+                    label: {
+                      es: "Intro de onboarding",
+                      en: "Onboarding intro",
+                    },
+                    alt: {
+                      es: "Primera pantalla de onboarding, con una imagen arriba del texto",
+                      en: "First onboarding screen, with an image above the copy",
+                    },
+                  },
+                  {
+                    img: FLOWS_VISUAL_IMG.feature,
+                    label: {
+                      es: "Destaque de una función",
+                      en: "Feature spotlight",
+                    },
+                    alt: {
+                      es: "Pantalla que destaca una función, con imagen y un botón de acción",
+                      en: "Screen spotlighting a feature, with an image and a call-to-action button",
+                    },
+                  },
+                ],
+              },
+            ],
+          }
+  ),
+};
+
 /** Registro. El orden aquí es el orden de la grilla en la landing. */
 export const PATTERNS: Pattern[] = [
   closedInput,
   openInput,
   mixedInput,
   menu,
+  flowsForm,
+  flowsVisual,
   useOfEmojis,
   useOfImages,
   textFormatting,

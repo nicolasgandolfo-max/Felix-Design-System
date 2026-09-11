@@ -5,11 +5,13 @@
  */
 import {
   ChatCircleTextIcon,
+  ClipboardTextIcon,
   HandTapIcon,
   ImageIcon,
   LightbulbIcon,
   ListBulletsIcon,
   RadioButtonIcon,
+  SlideshowIcon,
   SlidersHorizontalIcon,
   SmileyIcon,
   TextAaIcon,
@@ -53,6 +55,8 @@ const PATTERN_ICONS: Record<string, Icon> = {
   "open-input": TextboxIcon,
   "mixed-input": SlidersHorizontalIcon,
   menu: ListBulletsIcon,
+  "flows-form": ClipboardTextIcon,
+  "flows-visual": SlideshowIcon,
   "use-of-emojis": SmileyIcon,
   "use-of-images": ImageIcon,
   "text-formatting": TextAaIcon,
