@@ -361,11 +361,14 @@ export const typography = {
     bold: "700",
     extrabold: "800",
   },
-  // Maps to CSS custom properties via fonts.css @font-face declarations
+  // Maps to CSS: --font-{name}: {value}
+  // "Plain" and "Saans" are the unified families registered in fonts.css
+  // (weight ranges select the cut). Only system generics as fallback — the
+  // design system has no third-party typeface.
   fonts: {
-    heading: '"Plain-500", serif',
-    sans: '"Saans-300", system-ui, sans-serif',
-    mono: "ui-monospace, monospace",
+    heading: '"Plain", "Saans", system-ui, sans-serif',
+    sans: '"Saans", system-ui, sans-serif',
+    mono: 'ui-monospace, "SF Mono", Menlo, Consolas, monospace',
   },
 } as const;
 

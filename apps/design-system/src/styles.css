@@ -1,4 +1,8 @@
 @import "tailwindcss";
+/* Typefaces (@font-face for Saans/Plain) and font tokens (--font-sans,
+   --font-heading, --font-mono) both come from the library. Font files live
+   in /public/fonts (copied from packages/ui/fonts). */
+@import "@felix/ui/fonts.css";
 @import "@felix/ui/theme.css";
 
 /* Scan the Felix UI library source so its Tailwind classes are generated. */
@@ -7,45 +11,7 @@
 /* Scan this app's own sources. */
 @source "./**/*.{ts,tsx}";
 
-/* ── Felix typefaces, registered as unified families so font-weight selects
-   the right cut (the library ships weight-suffixed faces; we normalize them
-   here so `font-sans` + `font-semibold` resolve crisply). Files live in
-   /public/fonts (copied from packages/ui/fonts). ───────────────────────── */
-@font-face {
-  font-family: "Saans";
-  src: url("/fonts/Saans/SaansLTStd-Light.otf") format("opentype");
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Saans";
-  src: url("/fonts/Saans/SaansLTStd-Regular.otf") format("opentype");
-  font-weight: 400 500;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Saans";
-  src: url("/fonts/Saans/SaansLTStd-SemiBold.otf") format("opentype");
-  font-weight: 600 700;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Plain";
-  src: url("/fonts/Plain/PlainLTStd-Black.otf") format("opentype");
-  font-weight: 800 900;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* Wire the theme font tokens to the real families. */
 :root {
-  --font-sans:
-    "Saans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-heading: "Plain", "Saans", system-ui, sans-serif;
-  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --side: 268px;
 }
 
@@ -1547,6 +1513,20 @@ body {
 .plaza-nav-links a:hover {
   background: var(--stone);
 }
+/* Sección actual: subrayado turquesa de 5px, según Figma (home 386:987). */
+.plaza-nav-links a.is-active {
+  border-bottom: 5px solid var(--turquoise, #2bf2f1);
+  padding-bottom: 7px;
+  border-radius: 10px 10px 0 0;
+}
+.plaza-nav-links a.is-active:hover {
+  background: transparent;
+}
+.plaza-nav .header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 .plaza-lang {
   display: inline-flex;
   background: rgba(8, 36, 34, 0.04);
@@ -1650,23 +1630,39 @@ body {
   max-width: 44%;
   filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.1));
 }
+/* Banner de presentación de Plaza Félix: sólo copy, sin imagen, así las tres
+   secciones de abajo tienen el mismo peso entre sí. */
+.plaza-hero.is-intro {
+  min-height: 340px;
+  padding: 64px 96px;
+}
+.plaza-hero.is-intro .plaza-hero-copy {
+  max-width: 720px;
+}
+.plaza-hero.is-intro .plaza-body {
+  font-size: 19px;
+  line-height: 1.5;
+}
 
-/* Feature cards */
+/* Feature cards: una por sección del portal, las tres iguales. */
 .plaza-cards {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
-  margin-top: 79px;
+  margin-top: 56px;
 }
 .plaza-card {
   background: var(--linen);
   border: 1px solid rgba(8, 36, 34, 0.12);
   border-radius: 31px;
-  padding: 40px;
+  padding: 32px;
   color: var(--slate);
   display: flex;
   flex-direction: column;
   gap: 16px;
+}
+.plaza-card .plaza-body {
+  flex: 1;
 }
 .plaza-card-media {
   background: var(--stone);
@@ -1688,12 +1684,19 @@ body {
   height: 100%;
   object-fit: cover;
 }
+/* Arte casi cuadrado (las capturas del bot): entra completo, a la altura. */
+.plaza-card-media.is-contain img {
+  width: auto;
+  height: 100%;
+  padding: 12px 0;
+  object-fit: contain;
+}
 .plaza-card h2 {
   margin: -10px 0 0;
   font-family: var(--font-heading);
   font-weight: 900;
-  font-size: 48px;
-  line-height: 54px;
+  font-size: 36px;
+  line-height: 40px;
   letter-spacing: -0.01em;
 }
 .plaza-card .plaza-btn {
@@ -1761,9 +1764,16 @@ body {
   .plaza-hero {
     padding-right: 48%;
   }
+  .plaza-hero.is-intro {
+    padding: 56px 64px;
+  }
   .plaza-hero h1 {
     font-size: 48px;
     line-height: 48px;
+  }
+  .plaza-card h2 {
+    font-size: 30px;
+    line-height: 34px;
   }
 }
 @media (max-width: 960px) {
@@ -1847,75 +1857,46 @@ body {
   flex-direction: column;
 }
 
-/* Header */
-.plaza-sys-header {
-  height: 64px;
-  padding: 0 32px;
+/* Header: el mismo `.plaza-nav` del home, sobre linen y alineado al
+   contenedor del contenido (32px de margen, como en Figma). */
+.plaza-sys .plaza-nav {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  background: transparent;
+}
+
+/* Cabecera del panel lateral: título de la sección y su versión, que antes
+   iban en el header. Plain 800 20px + tag turquesa, según Figma. */
+.sys-sidebar-head {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid rgba(8, 36, 34, 0.08);
-  background: rgba(254, 252, 249, 0.9);
-  backdrop-filter: blur(8px);
-  position: sticky;
-  top: 0;
-  z-index: 50;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 0 10px 18px;
 }
-.plaza-sys-header .header-left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.plaza-sys-header .back-link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 9999px;
-  background: rgba(8, 36, 34, 0.06);
-  color: var(--slate, #082422);
-  transition: all 0.15s ease;
-}
-.plaza-sys-header .back-link:hover {
-  background: rgba(8, 36, 34, 0.12);
-  transform: translateX(-2px);
-}
-.plaza-sys-header .brand-pill {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-}
-.plaza-sys-header .brand-pill svg {
-  height: 28px;
-  width: auto;
-}
-.plaza-sys-header .header-center {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.plaza-sys-header .sys-title {
-  font-family: "Plain", var(--font-heading), sans-serif;
+.sys-title {
+  font-family: var(--font-heading);
   font-size: 20px;
+  line-height: 1.5;
   font-weight: 800;
   color: var(--slate, #082422);
   margin: 0;
 }
-.plaza-sys-header .sys-version-badge {
+.sys-version-badge {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   background: #2bf2f1;
   color: #082422;
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: 11px;
-  font-weight: 700;
-  padding: 4px 10px;
+  line-height: 1.1;
+  font-weight: 600;
+  padding: 3px 8px;
   border-radius: 9999px;
-  letter-spacing: 0.02em;
 }
-.plaza-sys-header .sys-version-badge .dot {
+.sys-version-badge .dot {
   width: 6px;
   height: 6px;
   border-radius: 9999px;
@@ -1962,22 +1943,24 @@ body {
   max-width: 1400px;
   width: 100%;
   margin: 0 auto;
-  padding: 32px 32px 120px;
+  /* 43px entre el header y el contenido, como en Figma (top 109 − 66). */
+  padding: 43px 32px 120px;
   display: grid;
-  grid-template-columns: 260px 1fr;
+  grid-template-columns: var(--side, 268px) 1fr;
   gap: 48px;
 }
 
-/* Sidebar Panel (Card style) */
+/* Sidebar Panel (Card style, Figma: 268px, radio 24, borde --border) */
 .plaza-sys-sidebar {
-  background: #ffffff;
-  border: 1px solid rgba(8, 36, 34, 0.1);
-  border-radius: 20px;
-  padding: 20px 14px;
+  background: var(--linen, #fefcf9);
+  border: 1px solid var(--border, #cfcabf);
+  border-radius: 24px;
+  padding: 16px 14px;
   align-self: start;
   position: sticky;
-  top: 96px;
-  box-shadow: 0 2px 8px rgba(8, 36, 34, 0.03);
+  top: 24px;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
 }
 .sys-nav {
   display: flex;
@@ -1990,23 +1973,24 @@ body {
   gap: 4px;
 }
 .sys-group-label {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: 10px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.08em;
-  color: rgba(8, 36, 34, 0.45);
+  color: rgba(8, 36, 34, 0.6);
   padding: 0 10px 6px;
   text-transform: uppercase;
 }
 .sys-nav-item {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
+  min-height: 38px;
   padding: 8px 12px;
-  border-radius: 10px;
+  border-radius: 8px;
   font-size: 14px;
-  font-weight: 600;
-  color: rgba(8, 36, 34, 0.8);
+  font-weight: 500;
+  color: var(--slate, #082422);
   text-decoration: none;
   transition: all 0.15s ease;
   position: relative;
@@ -2015,9 +1999,10 @@ body {
   background: rgba(8, 36, 34, 0.04);
   color: #082422;
 }
+/* Ítem activo según Figma: fondo card-foreground, texto primary. */
 .sys-nav-item.active {
-  background: #082422;
-  color: #ffffff;
+  background: #234343;
+  color: #2bf2f1;
 }
 .sys-nav-item.has-arrow .arrow {
   margin-left: auto;
@@ -2108,6 +2093,22 @@ body {
   display: flex;
   flex-direction: column;
   gap: 24px;
+}
+.sys-grid-section + .sys-grid-section {
+  margin-top: 48px;
+}
+/* Título de sección con una bajada opcional (qué agrupa la subsección). */
+.sys-section-head {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.sys-section-head p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+  color: rgba(8, 36, 34, 0.72);
+  max-width: 680px;
 }
 .sys-section-title {
   font-family: var(--font-mono);
@@ -2205,6 +2206,14 @@ body {
     gap: 20px;
   }
 }
+@media (max-width: 560px) {
+  .sys-hero-title {
+    font-size: 38px;
+  }
+  .sys-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
 /* Helper styles for Plaza Sidebar collapsible items */
 .nav-row-plaza {
   position: relative;
@@ -2272,13 +2281,19 @@ body {
   .menu-btn-plaza {
     display: flex;
   }
+  /* Sin panel lateral a la vista, el contenido ocupa todo el ancho. */
+  .plaza-sys-container {
+    grid-template-columns: 1fr;
+    padding: 24px 20px 80px;
+  }
   .plaza-sys-sidebar {
     display: none;
   }
   .plaza-sys-sidebar.open {
     display: flex;
+    flex-direction: column;
     position: fixed;
-    top: 64px;
+    top: 80px;
     left: 16px;
     right: 16px;
     z-index: 100;

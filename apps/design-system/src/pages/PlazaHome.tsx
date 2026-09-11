@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useLang, useTr } from "../i18n";
-import { GlobeIcon, CaretDownIcon } from "@phosphor-icons/react";
-import { FelixPlazaLogo } from "../components/FelixPlazaLogo";
+import { useTr } from "../i18n";
+import { PlazaHeader } from "../components/PlazaHeader";
 
 /* Enlaces externos de la sección "Enlaces útiles": destinos que viven en Figma
    y no tienen (ni van a tener) sección propia en el portal. */
@@ -31,7 +30,6 @@ function FigmaIcon() {
 
 export function PlazaHome() {
   const tr = useTr();
-  const { lang, setLang } = useLang();
 
   useEffect(() => {
     const prev = document.title;
@@ -43,77 +41,34 @@ export function PlazaHome() {
 
   return (
     <div className="plaza">
-      <header className="plaza-nav">
-        <Link to="/" className="plaza-brand" aria-label="Plaza Félix — inicio">
-          <FelixPlazaLogo />
-        </Link>
-        <nav
-          className="plaza-nav-links"
-          aria-label={tr("Secciones", "Sections", "Seções")}
-        >
-          <Link to="/">{tr("Inicio", "Home", "Início")}</Link>
-          <Link to="/sistema">Design System</Link>
-          <Link to="/voz-y-tono">
-            {tr("Voz y tono", "Voice and tone", "Voz e tom")}
-          </Link>
-          <Link to="/patrones">
-            {tr(
-              "Guías conversacionales",
-              "Conversational guidelines",
-              "Guias de conversa"
-            )}
-          </Link>
-        </nav>
-        <div className="header-right">
-          <div className="lang-dropdown">
-            <GlobeIcon size={18} aria-hidden="true" />
-            <select
-              value={lang}
-              onChange={(e) => setLang(e.target.value as "es" | "en" | "pt")}
-              aria-label={tr(
-                "Seleccionar idioma",
-                "Select language",
-                "Selecionar idioma"
-              )}
-            >
-              <option value="es">ES</option>
-              <option value="en">EN</option>
-              <option value="pt">PT</option>
-            </select>
-            <CaretDownIcon size={14} className="caret" aria-hidden="true" />
-          </div>
-        </div>
-      </header>
+      {/* El mismo menú que las secciones internas, con "Inicio" marcado. */}
+      <PlazaHeader />
 
       <main className="plaza-main">
-        {/* ── Hero: Conversational Design ─────────────────────────────── */}
-        <section className="plaza-hero">
+        {/* ── Hero: qué es Plaza Félix ─────────────────────────────────
+            Banner de presentación del portal. Las tres secciones viven en
+            las tarjetas de abajo, con el mismo peso entre sí. */}
+        <section className="plaza-hero is-intro">
           <div className="plaza-hero-copy">
-            <p className="plaza-eyebrow">FÉLIX · PATTERNS</p>
-            <h1>Conversational Design</h1>
+            <p className="plaza-eyebrow">FÉLIX · PLAZA</p>
+            <h1>
+              {tr(
+                "Todo lo que hace a Félix, en un solo lugar.",
+                "Everything that makes Félix, in one place.",
+                "Tudo o que faz o Félix, em um só lugar."
+              )}
+            </h1>
             <p className="plaza-body">
               {tr(
-                "Los patrones que reutilizamos en el bot, cada uno con cuándo usarlo, cuándo no, un ejemplo y el porqué. Agrupados en dos familias: cómo preguntamos y qué decimos.",
-                "The patterns we reuse across the bot, each with when to use it, when not to, an example, and the reason why. Grouped in two families: how we ask, and what we say.",
-                "Os padrões que reutilizamos no bot, cada um com quando usar, quando não usar, um exemplo e o porquê. Agrupados em duas famílias: como perguntamos e o que dizemos."
+                "Plaza Félix es el punto de encuentro del diseño de Félix: el sistema visual con el que construimos producto, la guía de cómo suena Félix y los patrones con los que conversa el bot. Una sola fuente de verdad para producto, diseño y marketing.",
+                "Plaza Félix is the meeting point for Félix design: the visual system we build product with, the guide to how Félix sounds, and the patterns the bot uses to converse. A single source of truth for product, design, and marketing.",
+                "Plaza Félix é o ponto de encontro do design do Félix: o sistema visual com que construímos produto, o guia de como o Félix soa e os padrões com que o bot conversa. Uma única fonte de verdade para produto, design e marketing."
               )}
             </p>
-            <Link className="plaza-btn" to="/patrones">
-              {tr("Explorar patrones", "Browse patterns", "Explorar padrões")}
-            </Link>
           </div>
-          <img
-            className="plaza-hero-img"
-            src="/assets/plaza/hero-home.png"
-            alt={tr(
-              "Capturas de conversaciones del bot de Félix en WhatsApp",
-              "Screenshots of Félix bot conversations on WhatsApp",
-              "Capturas de conversas do bot do Félix no WhatsApp"
-            )}
-          />
         </section>
 
-        {/* ── Feature cards ───────────────────────────────────────────── */}
+        {/* ── Feature cards: una por sección, en el orden del menú ────── */}
         <section className="plaza-cards">
           <article className="plaza-card">
             <div className="plaza-card-media">
@@ -152,6 +107,30 @@ export function PlazaHome() {
             </p>
             <Link className="plaza-btn" to="/voz-y-tono">
               {tr("Leer la guía", "Read the guide", "Ler o guia")}
+            </Link>
+          </article>
+
+          <article className="plaza-card">
+            <div className="plaza-card-media is-contain">
+              <img src="/assets/plaza/hero-home.png" alt="" />
+            </div>
+            <p className="plaza-eyebrow">FÉLIX · PATTERNS</p>
+            <h2>
+              {tr(
+                "Guías conversacionales",
+                "Conversational guidelines",
+                "Guias de conversa"
+              )}
+            </h2>
+            <p className="plaza-body">
+              {tr(
+                "Los patrones que reutilizamos en el bot, cada uno con cuándo usarlo, cuándo no, un ejemplo y el porqué. Agrupados en dos familias: cómo preguntamos y qué decimos.",
+                "The patterns we reuse across the bot, each with when to use it, when not to, an example, and the reason why. Grouped in two families: how we ask, and what we say.",
+                "Os padrões que reutilizamos no bot, cada um com quando usar, quando não usar, um exemplo e o porquê. Agrupados em duas famílias: como perguntamos e o que dizemos."
+              )}
+            </p>
+            <Link className="plaza-btn" to="/patrones">
+              {tr("Explorar patrones", "Browse patterns", "Explorar padrões")}
             </Link>
           </article>
         </section>

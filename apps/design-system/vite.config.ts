@@ -36,8 +36,9 @@ export default defineConfig({
   plugins: [illustrationsPlugin, react(), tailwindcss()],
   resolve: {
     alias: {
-      // Alias the library theme to source so token edits hot-reload here.
+      // Alias the library CSS to source so token/font edits hot-reload here.
       "@felix/ui/theme.css": path.resolve(__dirname, "../../packages/ui/src/theme.css"),
+      "@felix/ui/fonts.css": path.resolve(__dirname, "../../packages/ui/src/fonts.css"),
     },
   },
   server: {

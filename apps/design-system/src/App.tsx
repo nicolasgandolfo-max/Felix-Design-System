@@ -1,5 +1,5 @@
 import { Routes, Route, Link, Navigate } from "react-router-dom";
-import { Layout, VoiceToneLayout } from "./Layout";
+import { Layout, PatternsLayout, VoiceToneLayout } from "./Layout";
 import {
   Principles,
   Colors,
@@ -51,11 +51,14 @@ export function App() {
         {/* Plaza Félix — hub de entrada, standalone (sin sidebar). */}
         <Route index element={<PlazaHome />} />
 
-        {/* Patrones conversacionales — standalone, misma chrome que la Plaza.
+        {/* Guías conversacionales — misma estructura que el sistema de diseño:
+            menú, panel lateral por familia y visión general en tarjetas.
             `:slug` se resuelve contra el registro en `patterns/content.ts`, así
             que un patrón nuevo no necesita ruta propia. */}
-        <Route path="patrones" element={<PatternsLanding />} />
-        <Route path="patrones/:slug" element={<PatternPage />} />
+        <Route element={<PatternsLayout />}>
+          <Route path="patrones" element={<PatternsLanding />} />
+          <Route path="patrones/:slug" element={<PatternPage />} />
+        </Route>
 
         {/* Voice & Tone — transcripción del Notion de Content Design. Sección
           propia del portal, con su propio nav al costado. Cada sección de la
