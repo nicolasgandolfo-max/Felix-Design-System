@@ -378,7 +378,7 @@ export function PatternPage() {
         {/* Sticky a 16px del borde para que las pestañas acompañen el scroll.
               Con una sola pestaña la barra no aporta y se oculta. */}
         <TabsList
-          className={`sticky top-4 z-30 w-fit gap-1 rounded-full border ${STROKE_SOFT} bg-white p-1 ${
+          className={`sticky top-4 z-30 w-fit gap-1 rounded-2xl border ${STROKE_SOFT} bg-white p-1 ${
             pattern.tabs.length < 2 ? "hidden" : ""
           }`}
         >
@@ -386,7 +386,7 @@ export function PatternPage() {
             <TabsTrigger
               key={tab.id}
               value={tab.id}
-              className="h-8 justify-center rounded-full px-4 font-sans text-sm font-semibold text-foreground data-[state=active]:bg-(--slate) data-[state=active]:text-(--linen) data-[state=active]:shadow-none"
+              className="h-8 justify-center rounded-2xl px-4 font-sans text-sm font-semibold text-foreground data-[state=active]:bg-(--slate) data-[state=active]:text-(--linen) data-[state=active]:shadow-none"
             >
               {L(tr, tab.label)}
             </TabsTrigger>
