@@ -7,6 +7,7 @@ import {
   ChatCircleTextIcon,
   HandTapIcon,
   ImageIcon,
+  LightbulbIcon,
   ListBulletsIcon,
   RadioButtonIcon,
   SlidersHorizontalIcon,
@@ -55,6 +56,7 @@ const PATTERN_ICONS: Record<string, Icon> = {
   "use-of-emojis": SmileyIcon,
   "use-of-images": ImageIcon,
   "text-formatting": TextAaIcon,
+  "format-hints": LightbulbIcon,
 };
 
 /** Icono del patrón; un patrón nuevo sin icono propio toma el de su familia. */
