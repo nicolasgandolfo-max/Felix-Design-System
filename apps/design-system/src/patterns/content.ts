@@ -1693,9 +1693,7 @@ const textFormatting: Pattern = {
 // ─── Format hints as examples ───────────────────────────────────────────────
 
 /* Misma forma que Use of images: una pestaña con la tabla de reglas y los dos
-   callouts de medición. El hero todavía no tiene export de Figma y usa el
-   marcador compartido — al llegar el PNG, cambiar `hero` y `heroDetail` por
-   `${ASSETS}/format-hints-hero.png`.
+   callouts de medición.
    El marcador "Ej.:" y el ejemplo de cuenta quedan en español tal cual porque
    son copy de producto, no de la guía. */
 const formatHints: Pattern = {
@@ -1713,8 +1711,8 @@ const formatHints: Pattern = {
     es: "Muestra el formato esperado con un ejemplo en línea.",
     en: "Show the expected format with an inline example.",
   },
-  hero: `${ASSETS}/placeholder-hero.svg`,
-  heroDetail: [`${ASSETS}/placeholder-hero.svg`],
+  hero: `${ASSETS}/format-hints-hero.png`,
+  heroDetail: [`${ASSETS}/format-hints-hero.png`],
   heroAlt: {
     es: "Mensaje de WhatsApp que pide un número de cuenta con una línea de ejemplo del formato debajo de la pregunta",
     en: "WhatsApp message asking for an account number with a format example line below the question",
@@ -1820,16 +1818,16 @@ const formatHints: Pattern = {
    adelante se suman otros. Los dos abren una experiencia nativa sobre el chat
    desde un mensaje de lanzamiento con botón de acción.
 
-   Pantallas pendientes de export de Figma: cada constante apunta al marcador
-   compartido y el comentario nombra el archivo que va en su lugar. Al llegar
-   los PNG, reemplazar el valor de la constante y no hace falta tocar nada más.
-   El mismo par de pantallas se usa en el hero y en la galería de Specs, que es
-   lo que pide el doc en los dos lugares. */
+   Las dos pantallas del formulario ya salieron de Figma y se usan tanto en el
+   hero como en la galería de Specs, que es lo que pide el doc en los dos
+   lugares. El resto sigue pendiente de export: cada constante apunta al
+   marcador compartido y el comentario nombra el archivo que va en su lugar, así
+   que al llegar el PNG basta con reemplazar el valor de la constante. */
 const PENDING = `${ASSETS}/placeholder-hero.svg`;
 
 const FLOWS_FORM_IMG = {
-  survey: PENDING, // flows-form-survey.png
-  data: PENDING, // flows-form-data.png
+  survey: `${ASSETS}/flows-form-survey.png`,
+  data: `${ASSETS}/flows-form-data.png`,
   launchDo: PENDING, // flows-form-launch-do.png
   launchDont: PENDING, // flows-form-launch-dont.png
   branchDo: PENDING, // flows-form-branch-do.png
