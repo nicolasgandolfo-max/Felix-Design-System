@@ -2517,11 +2517,12 @@ body {
   color: var(--neutral-700);
 }
 
-/* Menú lateral: encabezado de grupo plegable. */
-.vt-nav-group {
+/* Menú lateral: encabezado de grupo plegable. Lo comparten Voz y tono y las
+   guías conversacionales (`CollapsibleNavGroup` en `Sidebar.tsx`). */
+.nav-group-collapsible {
   margin-bottom: 2px;
 }
-.vt-group-toggle {
+.nav-group-toggle {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -2533,15 +2534,15 @@ body {
   text-align: left;
   color: inherit;
 }
-.vt-group-toggle svg {
+.nav-group-toggle svg {
   color: var(--fg-subtle, rgba(8, 36, 34, 0.55));
   transition: transform 0.15s ease;
   flex: none;
 }
-.vt-group-toggle.open svg {
+.nav-group-toggle.open svg {
   transform: rotate(90deg);
 }
-.vt-group-toggle .sys-group-label {
+.nav-group-toggle .sys-group-label {
   cursor: pointer;
 }
 
