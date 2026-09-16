@@ -23,6 +23,42 @@ const itemClass = ({ isActive }: { isActive: boolean }) =>
   "sys-nav-item" + (isActive ? " active" : "");
 
 /**
+ * Grupo del menú cuyo encabezado plega sus ítems. Presentacional a propósito:
+ * el estado vive en quien lo usa, porque cada sección decide con qué criterio
+ * abre un grupo (la ruta activa, un `collapsed` del registro, todo abierto).
+ *
+ * El nombre accesible del botón es la etiqueta del grupo, así que no lleva
+ * `aria-label`: uno diría "Colapsar" y taparía de qué grupo se trata. El
+ * estado lo comunica `aria-expanded`.
+ */
+function CollapsibleNavGroup({
+  label,
+  expanded,
+  onToggle,
+  children,
+}: {
+  label: string;
+  expanded: boolean;
+  onToggle: () => void;
+  children: ReactNode;
+}) {
+  return (
+    <div className="sys-nav-group nav-group-collapsible">
+      <button
+        type="button"
+        className={"nav-group-toggle" + (expanded ? " open" : "")}
+        aria-expanded={expanded}
+        onClick={onToggle}
+      >
+        <CaretRightIcon size={12} weight="bold" />
+        <span className="sys-group-label">{label}</span>
+      </button>
+      {expanded && children}
+    </div>
+  );
+}
+
+/**
  * Renderiza un árbol de nav (hoy sólo `NAV`). Dos casos especiales:
  * "illustrations", que despliega sus anclas, y los ítems cuyo `path` ya trae un
  * ancla — `NavLink` no marca activo por hash, así que lo resolvemos a mano.
@@ -295,60 +331,48 @@ function VoiceToneNavTree({ onNavigate }: { onNavigate: () => void }) {
         // El grupo de la ruta activa manda; después, lo que haya elegido quien lee.
         const expanded = manualOpen[g.id] ?? (hasActive || !g.collapsed);
         return (
-          <div key={g.id} className="sys-nav-group vt-nav-group">
-            <button
-              type="button"
-              className={"vt-group-toggle" + (expanded ? " open" : "")}
-              aria-expanded={expanded}
-              onClick={() =>
-                setManualOpen((m) => ({ ...m, [g.id]: !expanded }))
-              }
-            >
-              <CaretRightIcon size={12} weight="bold" />
-              <span className="sys-group-label">
-                {tr(g.group.es, g.group.en, g.group.pt)}
-              </span>
-            </button>
-            {expanded &&
-              g.items.map((it) => {
-                const Icon = it.icon;
-                /* Los ítems de la versión anterior son anclas de una misma
+          <CollapsibleNavGroup
+            key={g.id}
+            label={tr(g.group.es, g.group.en, g.group.pt)}
+            expanded={expanded}
+            onToggle={() => setManualOpen((m) => ({ ...m, [g.id]: !expanded }))}
+          >
+            {g.items.map((it) => {
+              const Icon = it.icon;
+              /* Los ítems de la versión anterior son anclas de una misma
                    página: `NavLink` no marca activo por hash. */
-                if (it.path.includes("#")) {
-                  const isActive = pathname + hash === it.path;
-                  return (
-                    <Link
-                      key={it.id}
-                      to={it.path}
-                      onClick={onNavigate}
-                      className={itemClass({ isActive })}
-                    >
-                      <Icon size={18} weight={isActive ? "fill" : "regular"} />
-                      <span>{tr(it.es, it.en, it.pt)}</span>
-                    </Link>
-                  );
-                }
+              if (it.path.includes("#")) {
+                const isActive = pathname + hash === it.path;
                 return (
-                  <NavLink
+                  <Link
                     key={it.id}
                     to={it.path}
-                    end={it.end}
                     onClick={onNavigate}
-                    className={itemClass}
+                    className={itemClass({ isActive })}
                   >
-                    {({ isActive }) => (
-                      <>
-                        <Icon
-                          size={18}
-                          weight={isActive ? "fill" : "regular"}
-                        />
-                        <span>{tr(it.es, it.en, it.pt)}</span>
-                      </>
-                    )}
-                  </NavLink>
+                    <Icon size={18} weight={isActive ? "fill" : "regular"} />
+                    <span>{tr(it.es, it.en, it.pt)}</span>
+                  </Link>
                 );
-              })}
-          </div>
+              }
+              return (
+                <NavLink
+                  key={it.id}
+                  to={it.path}
+                  end={it.end}
+                  onClick={onNavigate}
+                  className={itemClass}
+                >
+                  {({ isActive }) => (
+                    <>
+                      <Icon size={18} weight={isActive ? "fill" : "regular"} />
+                      <span>{tr(it.es, it.en, it.pt)}</span>
+                    </>
+                  )}
+                </NavLink>
+              );
+            })}
+          </CollapsibleNavGroup>
         );
       })}
     </>
@@ -386,8 +410,8 @@ export function VoiceToneSidebar({
 
 /**
  * Panel lateral de las guías conversacionales: la visión general y, debajo,
- * un grupo por familia con un ítem por patrón. Se deriva del registro en
- * `patterns/content.ts`, igual que la visión general.
+ * un grupo plegable por familia con un ítem por patrón. Se deriva del registro
+ * en `patterns/content.ts`, igual que la visión general.
  */
 export function PatternsSidebar({
   onNavigate,
@@ -396,6 +420,7 @@ export function PatternsSidebar({
   badge,
 }: SidebarProps) {
   const tr = useTr();
+  const [manualOpen, setManualOpen] = useState<Record<string, boolean>>({});
   return (
     <SidebarShell open={open} title={title} badge={badge}>
       <div className="sys-nav-group">
@@ -411,31 +436,40 @@ export function PatternsSidebar({
           )}
         </NavLink>
       </div>
-      {PATTERN_FAMILIES.map((family) => (
-        <div key={family.id} className="sys-nav-group">
-          <span className="sys-group-label">
-            {tr(family.label.es, family.label.en, family.label.pt)}
-          </span>
-          {patternsOf(family.id).map((p) => {
-            const Icon = patternIcon(p);
-            return (
-              <NavLink
-                key={p.slug}
-                to={`/patrones/${p.slug}`}
-                onClick={onNavigate}
-                className={itemClass}
-              >
-                {({ isActive }) => (
-                  <>
-                    <Icon size={18} weight={isActive ? "fill" : "regular"} />
-                    <span>{tr(p.name.es, p.name.en, p.name.pt)}</span>
-                  </>
-                )}
-              </NavLink>
-            );
-          })}
-        </div>
-      ))}
+      {PATTERN_FAMILIES.map((family) => {
+        // Son dos familias y siete patrones: arrancan abiertas para que el
+        // índice completo se lea de un vistazo, y manda lo que elija quien lee.
+        const expanded = manualOpen[family.id] ?? true;
+        return (
+          <CollapsibleNavGroup
+            key={family.id}
+            label={tr(family.label.es, family.label.en, family.label.pt)}
+            expanded={expanded}
+            onToggle={() =>
+              setManualOpen((m) => ({ ...m, [family.id]: !expanded }))
+            }
+          >
+            {patternsOf(family.id).map((p) => {
+              const Icon = patternIcon(p);
+              return (
+                <NavLink
+                  key={p.slug}
+                  to={`/patrones/${p.slug}`}
+                  onClick={onNavigate}
+                  className={itemClass}
+                >
+                  {({ isActive }) => (
+                    <>
+                      <Icon size={18} weight={isActive ? "fill" : "regular"} />
+                      <span>{tr(p.name.es, p.name.en, p.name.pt)}</span>
+                    </>
+                  )}
+                </NavLink>
+              );
+            })}
+          </CollapsibleNavGroup>
+        );
+      })}
     </SidebarShell>
   );
 }
