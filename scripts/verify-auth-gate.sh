@@ -54,10 +54,27 @@ class H(BaseHTTPRequestHandler):
 HTTPServer(("0.0.0.0", 4180), H).serve_forever()
 ' >/dev/null
 
-for _ in $(seq 1 30); do
-  curl -sf "${BASE}/healthz" >/dev/null 2>&1 && break
+diagnose() {
+  echo
+  echo "── logs de nginx ──"; docker logs "$NGINX" 2>&1 | tail -30 || true
+  echo "── logs del stub ──"; docker logs "$STUB" 2>&1 | tail -30 || true
+}
+
+# Readiness A TRAVÉS del gate: `/` con la cookie de prueba tiene que dar 200.
+# Sondear sólo /healthz no alcanza — nginx responde al instante pero el stub
+# en :4180 tarda unos cientos de ms en escuchar, y el primer request real
+# caería en 502.
+ready=""
+for _ in $(seq 1 60); do
+  code=$(curl -s -o /dev/null -w '%{http_code}' -b "$COOKIE" "${BASE}/" || true)
+  [[ "$code" == "200" ]] && { ready=1; break; }
   sleep 0.5
 done
+if [[ -z "$ready" ]]; then
+  echo "✘ el portal no respondió 200 en / con sesión tras 30 s (último código: '${code:-<sin respuesta>}')"
+  diagnose
+  exit 1
+fi
 
 FAILS=0
 pass() { printf '  ✔ %s\n' "$1"; }
@@ -83,8 +100,13 @@ header() {
   if [[ "$v" == *"$want"* ]]; then pass "$desc"; else fail "$desc" "$name: '${v:-<ausente>}' no contiene '$want'"; fi
 }
 
-ASSET=$(curl -s -b "$COOKIE" "${BASE}/" | grep -o '/assets/index-[^"]*\.js' | head -1)
-[[ -n "$ASSET" ]] || { echo "no encontré el bundle en index.html"; exit 1; }
+# `|| true`: con pipefail, un grep sin match abortaría el script en silencio.
+ASSET=$(curl -s -b "$COOKIE" "${BASE}/" | grep -o '/assets/index-[^"]*\.js' | head -1 || true)
+if [[ -z "$ASSET" ]]; then
+  echo "✘ no encontré el bundle en index.html"
+  diagnose
+  exit 1
+fi
 
 echo
 echo "SIN SESIÓN — nada protegido se sirve, todo va a /login con la ruta original"
@@ -137,5 +159,6 @@ if [[ $FAILS -eq 0 ]]; then
   echo "✅ gate verificado: 0 fallas"
 else
   echo "❌ $FAILS falla(s)"
+  diagnose
   exit 1
 fi
