@@ -1,0 +1,5 @@
+# Storybook @felix/ui — sitio interno, no debe indexarse.
+# El bloqueo real lo da la cabecera HTTP `X-Robots-Tag: noindex` (nginx.conf)
+# y el <meta name="robots"> inyectado en .storybook/main.ts.
+User-agent: *
+Disallow: /
