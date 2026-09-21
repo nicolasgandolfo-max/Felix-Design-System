@@ -53,6 +53,41 @@ src/
   styles.css      Tailwind + theme import + portal chrome CSS
 ```
 
+## Pattern screenshots from Figma
+
+The `do` / `don't` and gallery images on the Conversational guidelines pages
+(`/patrones/:slug`) are PNGs exported from the Figma guidelines file and
+committed to `public/assets/patterns/`. `src/patterns/content.ts` points at them
+by filename; slots still waiting on an export use the shared `PENDING`
+placeholder, with a comment naming the file that belongs there.
+
+**The PNG is the WhatsApp screen only.** The card, the green/orange footer bar,
+its icon and its translated `Do` / `Don't` label are drawn by `ExampleFigure`
+(`src/pages/PatternPage.tsx`) from tokens. The Figma frames bake that bar in, so
+it has to be cropped off — otherwise it renders twice.
+
+To add a pair:
+
+1. In Figma, note the frame's `node-id` and, via `get_metadata`, the bounding
+   box of the bubbles inside it (the bar is the last child, usually 59px tall).
+2. Export the frame as PNG at 2x.
+3. Crop off the bar and the card padding — coordinates doubled, since the export
+   is 2x. Use one shared rectangle for the `do` and the `don't` of a pair so the
+   two line up side by side:
+
+   ```bash
+   node scripts/crop-figma-export.mjs raw.png public/assets/patterns/<pattern>-do-1.png 218 10 886 540
+   ```
+
+4. Reference the file from `content.ts` as `` `${ASSETS}/<pattern>-do-1.png` ``.
+
+Aim for a result near 220×150 as rendered (the template caps images at 220px
+wide); a frame with a lot of empty padding crops down to something legible.
+
+> Flag emoji (🇧🇷, 🇲🇽 …) do not render in Figma exports — they come out as a
+> blank gap. An example whose point is the flag needs the flag placed as an image
+> in the frame, or composited from `public/flags/` after cropping.
+
 ## Deploy to Vercel
 
 A root-level `vercel.json` configures the monorepo build. In the Vercel project
