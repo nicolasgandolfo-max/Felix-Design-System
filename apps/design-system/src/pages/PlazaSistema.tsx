@@ -15,18 +15,28 @@ export function PlazaSistema() {
 
   useEffect(() => {
     const prev = document.title;
-    document.title = "Sistema de Diseño · Félix";
+    document.title = tr(
+      "Sistema de Diseño · Félix",
+      "Design System · Félix",
+      "Sistema de Design · Félix"
+    );
     return () => {
       document.title = prev;
     };
-  }, []);
+  }, [tr]);
 
   return (
     <>
       {/* Eyebrow / Kicker */}
       <div className="sys-hero-eyebrow">
         <span className="dash" />
-        <span>FELIX PAGO · IDENTIDAD DE PRODUCTO</span>
+        <span>
+          {tr(
+            "FELIX PAGO · IDENTIDAD DE PRODUCTO",
+            "FELIX PAGO · PRODUCT IDENTITY",
+            "FELIX PAGO · IDENTIDADE DE PRODUTO"
+          )}
+        </span>
       </div>
 
       {/* Hero Title */}

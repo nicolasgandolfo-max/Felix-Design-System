@@ -27,7 +27,7 @@ export const PATTERN_FAMILIES: Array<{
 }> = [
   {
     id: "interaction",
-    label: { es: "Interaction", en: "Interaction" },
+    label: { es: "Interaction", en: "Interaction", pt: "Interaction" },
     blurb: {
       es: "Cómo preguntamos: los mecanismos con los que el bot pide una respuesta y la forma que toma cada uno en WhatsApp.",
       en: "How we ask: the mechanisms the bot uses to request an answer, and the shape each one takes on WhatsApp.",
@@ -37,7 +37,7 @@ export const PATTERN_FAMILIES: Array<{
   },
   {
     id: "conversational",
-    label: { es: "Conversational", en: "Conversational" },
+    label: { es: "Conversational", en: "Conversational", pt: "Conversational" },
     blurb: {
       es: "Qué decimos: las reglas de formato, emojis e imágenes que mantienen la conversación clara y cálida.",
       en: "What we say: the formatting, emoji and image rules that keep the conversation clear and warm.",

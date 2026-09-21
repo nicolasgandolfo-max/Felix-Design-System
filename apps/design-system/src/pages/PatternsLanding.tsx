@@ -32,13 +32,21 @@ export function PatternsLanding() {
     <>
       <div className="sys-hero-eyebrow">
         <span className="dash" />
-        <span>FÉLIX · CONVERSATIONAL GUIDELINES</span>
+        <span>
+          {tr(
+            "FÉLIX · GUÍAS CONVERSACIONALES",
+            "FÉLIX · CONVERSATIONAL GUIDELINES",
+            "FÉLIX · GUIAS DE CONVERSA"
+          )}
+        </span>
       </div>
 
       <h1 className="sys-hero-title">
-        Conversational
+        {tr("Diseño", "Conversational", "Design")}
         <br />
-        <span className="hero-highlight">Design</span>
+        <span className="hero-highlight">
+          {tr("conversacional", "Design", "conversacional")}
+        </span>
       </h1>
 
       <p className="sys-hero-desc">

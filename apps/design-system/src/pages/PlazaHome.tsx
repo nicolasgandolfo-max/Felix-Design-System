@@ -74,8 +74,16 @@ export function PlazaHome() {
             <div className="plaza-card-media">
               <img src="/assets/plaza/card-ds.png" alt="" />
             </div>
-            <p className="plaza-eyebrow">FÉLIX · FOUNDATIONS</p>
-            <h2>Design System</h2>
+            <p className="plaza-eyebrow">
+              {tr(
+                "FÉLIX · FUNDAMENTOS",
+                "FÉLIX · FOUNDATIONS",
+                "FÉLIX · FUNDAMENTOS"
+              )}
+            </p>
+            <h2>
+              {tr("Sistema de Diseño", "Design System", "Sistema de Design")}
+            </h2>
             <p className="plaza-body">
               {tr(
                 "Las bases visuales sobre las que está construido Félix: color, tipografía, espaciado y los componentes de WhatsApp con los que diseñamos —botones, listas y Flows— junto con los límites que fija Meta para cada uno.",
@@ -96,7 +104,9 @@ export function PlazaHome() {
             <div className="plaza-card-media is-full">
               <img src="/assets/plaza/card-voice.png" alt="" />
             </div>
-            <p className="plaza-eyebrow">FÉLIX · VOICE</p>
+            <p className="plaza-eyebrow">
+              {tr("FÉLIX · VOZ", "FÉLIX · VOICE", "FÉLIX · VOZ")}
+            </p>
             <h2>{tr("Voz y tono", "Voice and tone", "Voz e tom")}</h2>
             <p className="plaza-body">
               {tr(
@@ -114,7 +124,9 @@ export function PlazaHome() {
             <div className="plaza-card-media is-contain">
               <img src="/assets/plaza/hero-home.png" alt="" />
             </div>
-            <p className="plaza-eyebrow">FÉLIX · PATTERNS</p>
+            <p className="plaza-eyebrow">
+              {tr("FÉLIX · PATRONES", "FÉLIX · PATTERNS", "FÉLIX · PADRÕES")}
+            </p>
             <h2>
               {tr(
                 "Guías conversacionales",

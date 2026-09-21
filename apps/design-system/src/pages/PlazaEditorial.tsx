@@ -14,11 +14,15 @@ export function PlazaEditorial() {
 
   useEffect(() => {
     const prev = document.title;
-    document.title = "Guía Editorial · Voz y Tono · Félix";
+    document.title = tr(
+      "Guía Editorial · Voz y Tono · Félix",
+      "Editorial Guide · Voice & Tone · Félix",
+      "Guia Editorial · Voz e Tom · Félix"
+    );
     return () => {
       document.title = prev;
     };
-  }, []);
+  }, [tr]);
 
   // Jump to the requested subsection whenever the hash changes (Sidebar links use #id).
   useEffect(() => {
@@ -32,7 +36,13 @@ export function PlazaEditorial() {
       {/* Eyebrow / Kicker */}
       <div className="sys-hero-eyebrow">
         <span className="dash" />
-        <span>FELIX PAGO · GUÍA EDITORIAL</span>
+        <span>
+          {tr(
+            "FELIX PAGO · GUÍA EDITORIAL",
+            "FELIX PAGO · EDITORIAL GUIDE",
+            "FELIX PAGO · GUIA EDITORIAL"
+          )}
+        </span>
       </div>
 
       {/* Hero Title */}
