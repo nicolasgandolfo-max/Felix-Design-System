@@ -1261,17 +1261,6 @@ const useOfEmojis: Pattern = {
           ],
         },
         {
-          type: "callout",
-          title: {
-            es: "Iconos de menú (excepción).",
-            en: "Menu icons (exception).",
-          },
-          body: {
-            es: "Las diez entradas de arriba son iconos de navegación del menú secundario, no emojis de estado. Etiquetan opciones de menú, nunca estados de mensaje, y quedan exentas de la tabla de excluidos y del criterio de un solo codepoint. La cruz (U+274C) y el dinero con alas (U+1F4B8) siguen prohibidos en el copy de los mensajes; el lápiz (U+270F U+FE0F) y el engranaje (U+2699 U+FE0F), que requieren un selector de variación, existen solo en este contexto de menú.",
-            en: "The ten entries above are navigation icons in the secondary menu, not state emoji. They label menu options, never message states, and are exempt from the Excluded table and from the single-codepoint criterion. The cross mark (U+274C) and the money-with-wings (U+1F4B8) remain prohibited in message copy; the pencil (U+270F U+FE0F) and gear (U+2699 U+FE0F), which require a variation selector, exist only in this menu context.",
-          },
-        },
-        {
           type: "heading",
           text: { es: "Banderas de países", en: "Country flags" },
         },
@@ -1334,8 +1323,8 @@ const useOfEmojis: Pattern = {
         {
           type: "prose",
           text: {
-            es: "Corredores soportados: 🇲🇽 MX · 🇨🇴 CO · 🇬🇹 GT · 🇻🇪 VE · 🇧🇷 BR · 🇨🇷 CR",
-            en: "Supported corridors: 🇲🇽 MX · 🇨🇴 CO · 🇬🇹 GT · 🇻🇪 VE · 🇧🇷 BR · 🇨🇷 CR",
+            es: "Corredores soportados: 🇲🇽 MX · 🇬🇹 GT · 🇭🇳 HN · 🇸🇻 SV · 🇩🇴 DO · 🇨🇴 CO · 🇳🇮 NI · 🇪🇨 EC · 🇵🇪 PE · 🇨🇷 CR",
+            en: "Supported corridors: 🇲🇽 MX · 🇬🇹 GT · 🇭🇳 HN · 🇸🇻 SV · 🇩🇴 DO · 🇨🇴 CO · 🇳🇮 NI · 🇪🇨 EC · 🇵🇪 PE · 🇨🇷 CR",
           },
         },
         {
@@ -1352,13 +1341,6 @@ const useOfEmojis: Pattern = {
             { es: "Motivo", en: "Reason" },
           ],
           rows: [
-            [
-              { es: "⚠️  ❗️  ❌", en: "⚠️  ❗️  ❌" },
-              {
-                es: "Escalan a alarma. Donde la advertencia sería precisa, los emojis ya están prohibidos",
-                en: "Escalate to alarm. Where the warning would be accurate, emoji are already prohibited",
-              },
-            ],
             [
               { es: "💰  💵  💸  🤑", en: "💰  💵  💸  🤑" },
               {
@@ -1390,23 +1372,48 @@ const useOfEmojis: Pattern = {
           ],
         },
         {
-          type: "heading",
-          text: { es: "Implementación", en: "Implementation" },
-        },
-        {
-          type: "prose",
-          text: {
-            es: "El emoji pertenece al estado del mensaje, no al idioma. Se guarda como un token (global.icon.success, global.icon.pending, global.icon.action) y se concatena en la capa de plantilla, nunca embebido dentro de una cadena traducible. Embeberlo implica que el carácter puede alterarse o perderse por locale, y se duplica en cada cadena que lleve ese estado.",
-            en: "The emoji belongs to the message state, not to the language. It is stored as a token — global.icon.success, global.icon.pending, global.icon.action — and concatenated at the template layer, never embedded inside a translatable string. Embedding it means the character can be altered or dropped per locale, and duplicates across every string carrying that state.",
-          },
-        },
-        {
           type: "callout",
           title: { es: "Señal de validación:", en: "Validation signal —" },
           body: {
             es: "Mayormente cualitativa. No hay un evento limpio para el uso de emojis: las grabaciones de sesión y los tickets de CX son la evidencia disponible, no una métrica.",
             en: "Mostly qualitative. There is no clean event for emoji use — session recordings and CX tickets are the available evidence, not a metric.",
           },
+        },
+        {
+          type: "heading",
+          text: { es: "Do's y don'ts", en: "Do's and don'ts" },
+        },
+        /* Lista incremental: cada par sale de un frame de Figma exportado sin su
+           barra Do/Don't, que la pinta `ExampleFigure` con tokens. Al sumar un
+           par nuevo, va como `emojis-do-N.png` / `emojis-dont-N.png`. */
+        {
+          type: "examples",
+          items: [
+            {
+              tone: "do",
+              img: `${ASSETS}/emojis-do-1.png`,
+              alt: {
+                es: "Mensaje con la tasa del día donde la cifra aparece sola, sin bandera al lado",
+                en: "Rate-of-the-day message where the figure stands alone, with no flag beside it",
+              },
+              caption: {
+                es: "La cifra se lee sola: nada compite con el número que el usuario vino a verificar.",
+                en: "The figure reads on its own: nothing competes with the number the user came to verify.",
+              },
+            },
+            {
+              tone: "dont",
+              img: `${ASSETS}/emojis-dont-1.png`,
+              alt: {
+                es: "El mismo mensaje con una bandera pegada al monto de la tasa",
+                en: "The same message with a flag sitting next to the rate amount",
+              },
+              caption: {
+                es: "La bandera pegada al monto compite con la cifra y no etiqueta ningún destino.",
+                en: "A flag next to the amount competes with the figure and labels no destination.",
+              },
+            },
+          ],
         },
       ],
     },
