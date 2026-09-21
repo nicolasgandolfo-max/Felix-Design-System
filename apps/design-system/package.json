@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Felix Pago Design System — public documentation portal",
+  "description": "Felix Pago Design System — internal documentation portal",
   "scripts": {
     "dev": "vite",
     "build": "npm run build -w @felix/ui && tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "login:csp-hash": "node scripts/login-csp-hash.mjs"
   },
   "dependencies": {
     "@felix/ui": "*",
