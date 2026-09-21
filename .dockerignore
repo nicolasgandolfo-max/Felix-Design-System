@@ -1,0 +1,36 @@
+# El contexto de build de las imágenes es la raíz del monorepo. Sin esta lista
+# se le mandan al daemon ~650 MB de los que nada hace falta, y peor: los
+# `COPY packages/ui/ packages/ui/` pisarían con el node_modules del host el que
+# acaba de instalar `npm ci` dentro de la imagen.
+node_modules
+**/node_modules
+
+# Builds locales. Las imágenes compilan de cero (`npm run build -w @felix/ui`),
+# así que un dist viejo del host sólo puede confundir.
+dist
+**/dist
+storybook-static
+**/storybook-static
+
+.git
+.github
+.husky
+.changeset
+.claude
+.cursor
+.vscode
+.deploy
+
+coverage
+**/coverage
+**/.lostpixel
+*.tsbuildinfo
+
+.DS_Store
+**/.DS_Store
+*.log
+npm-debug.log*
+
+.env
+.env.*
+!.env.example

@@ -1,0 +1,5 @@
+# Felix Pago · Sistema de Diseño — sitio interno, no debe indexarse.
+# El bloqueo real lo da la cabecera HTTP `X-Robots-Tag: noindex` (vercel.json)
+# y el <meta name="robots"> de index.html. Este archivo evita el rastreo.
+User-agent: *
+Disallow: /

@@ -1,0 +1,55 @@
+name: Deploy design system portal
+
+# El Storybook se despliega atado a los releases de @felix/ui (ver
+# publish-npm-gar.yml). El portal no: es documentación editorial que cambia
+# sin que salga una versión del paquete, así que se despliega cuando cambia
+# lo que muestra.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "apps/design-system/**"
+      - "packages/ui/**"
+      # `sections.tsx` los importa con `?raw`, así que entran al bundle.
+      - "DESIGN.md"
+      - "components.md"
+      - ".deploy/dev/values-design-system.yaml"
+      - ".github/workflows/deploy-design-system.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+  pull-requests: write # lo pide el job anidado devops-build-and-push-image
+
+concurrency:
+  group: deploy-design-system
+  cancel-in-progress: false
+
+jobs:
+  build-image:
+    name: Build portal image
+    uses: Felix-Pago/felix-pipelines-wf/.github/workflows/devops-build-and-push-image.yml@main
+    with:
+      environment: dev
+      deployment_name: design-system-felix-ui
+      tags: "${{ github.sha }}"
+      # El contexto es la raíz del monorepo: el build necesita el lockfile,
+      # packages/ui y los dos .md de la raíz.
+      context: .
+      file: apps/design-system/Dockerfile
+    secrets: inherit
+
+  deploy:
+    name: Deploy portal
+    needs: build-image
+    uses: Felix-Pago/felix-pipelines-wf/.github/workflows/devops-deploy-to-gke.yml@main
+    with:
+      environment: dev
+      deployment_name: design-system-felix-ui
+      image_tag: "${{ github.sha }}"
+      helm_values_location: .deploy/dev/values-design-system.yaml
+      # `image_tag` pisa el tag de todos los contenedores, así que el sidecar
+      # se vuelve a fijar acá. Mismo motivo que en publish-npm-gar.yml.
+      helm_extra_args: "--set pod.container[1].tag=v7.7.1"
+    secrets: inherit

@@ -1,10 +1,11 @@
 # @felix/design-system-site
 
-Public documentation portal for the Felix Pago Design System — the editorial,
-brand-facing companion to the technical Storybook. Built with \*\*Vite + React 19
-
-- Tailwind v4**, consuming the real **`@felix/ui`** components and the live
-  **`theme.css`\*\* tokens. Bilingual (ES / EN).
+Internal documentation portal for the Felix Pago Design System — the editorial,
+brand-facing companion to the technical Storybook. Built with
+**Vite, React 19 and Tailwind v4**, consuming the real **`@felix/ui`**
+components and the live **`theme.css`** tokens. Bilingual (ES / EN). Access is
+restricted to `@felixpago.com` and `@ext.felixpago.com` accounts — see
+[Deploy](#deploy).
 
 It mirrors the structure of the reference site (felix-design.vercel.app):
 Overview, Principles, Colors, Typography, Illustrations, Iconography,
@@ -88,19 +89,104 @@ wide); a frame with a lot of empty padding crops down to something legible.
 > blank gap. An example whose point is the flag needs the flag placed as an image
 > in the frame, or composited from `public/flags/` after cropping.
 
-## Deploy to Vercel
+## Deploy
 
-A root-level `vercel.json` configures the monorepo build. In the Vercel project
-settings, point the Root Directory at the **repo root** (so workspaces install)
-— the `vercel.json` handles the rest:
+Production is **`plaza.felixpago.com`**, on GKE behind Google SSO. Only
+`@felixpago.com` and `@ext.felixpago.com` accounts get in; anyone without a
+session is redirected to `/login`.
 
-```json
-{
-  "buildCommand": "npm run build -w @felix/design-system-site",
-  "outputDirectory": "apps/design-system/dist",
-  "installCommand": "npm install"
-}
+| Piece                                   | File                                               |
+| --------------------------------------- | -------------------------------------------------- |
+| Image (node build → nginx)              | `Dockerfile`                                       |
+| The gate: routing, auth, headers        | `nginx/nginx.conf`                                 |
+| Security headers (included per block)   | `nginx/security-headers.conf`                      |
+| Login page, the only HTML served openly | `public/login/index.html`                          |
+| CSP hash check for the login script     | `scripts/login-csp-hash.mjs`                       |
+| Deployment + `oauth2-proxy` sidecar     | `../../.deploy/dev/values-design-system.yaml`      |
+| Build & deploy pipeline                 | `../../.github/workflows/deploy-design-system.yml` |
+| End-to-end gate test (needs Docker)     | `../../scripts/verify-auth-gate.sh`                |
+
+### How the gate works
+
+`nginx` is the only port the service exposes. It carries a server-level
+`auth_request /oauth2/auth` — **every** route asks the `oauth2-proxy` sidecar
+for a verdict before anything is served, and a `401` becomes a `302` to
+`/login?rd=<original path>`. A new `location` is protected without doing
+anything; the open routes are an explicit allow-list, each with `auth_request
+off` and a comment saying why:
+
+- `/login` — the login page itself
+- `/oauth2/*` — start, callback, sign-out (the login flow)
+- `/healthz` — the kubelet probe
+- `/favicon.svg`, `/favicon.ico`, `/apple-touch-icon.png`, `/robots.txt` —
+  requested by the browser before there is a session
+
+`oauth2-proxy` runs in auth-only mode (`upstream static://202`): it never
+proxies content, so reaching it directly on the pod IP shows nothing.
+`OAUTH2_PROXY_EMAIL_DOMAINS` is the authorization — Google authenticates
+anyone with an account, that list decides who is let in. A Google account
+outside the two domains comes back as `403`, which nginx turns into
+`/login?error=denied` with a message.
+
+### Why the login page is self-contained
+
+`public/login/index.html` is the one HTML document served without a session,
+so it cannot depend on anything protected:
+
+- The app bundle (`assets/index-*.js`) **embeds `DESIGN.md` and
+  `components.md`** via `?raw` — that is the content the gate protects.
+- Plain and Saans are commercially licensed fonts; serving them openly would
+  hand them to anyone. The page uses the system stack.
+- Its single inline script is pinned by SHA-256 in the `Content-Security-Policy`
+  nginx sends for `/login`. Editing the script changes the hash: run
+  `npm run login:csp-hash -- --write` to update `nginx.conf`. The Dockerfile
+  runs the check and fails the build if they disagree, and the file is in
+  `.prettierignore` because the hash covers exact bytes.
+
+The script only reads `?rd=` to build the "continue" link, and accepts nothing
+but a same-site path (`/…`, never `//host`, `/\host` or a scheme).
+`oauth2-proxy` validates `rd` again server-side.
+
+### Verifying the gate
+
+Neither `nginx` nor Docker may be on a laptop, so two checks run at image
+build time: `nginx -t`, and the CSP hash check above. For behaviour, run
+
+```bash
+scripts/verify-auth-gate.sh
 ```
 
-The output is a static site, so it can equally be containerized (nginx) like the
-Storybook workspace if the team prefers self-hosting.
+from the repo root on a machine with Docker. It builds the real image, stands
+in a stub for `oauth2-proxy`, and asserts ~35 cases: nothing protected is
+served without a `202` (bundle, fonts, SPA routes, `index.html`), the public
+routes are, redirects carry the original path, `/oauth2/auth` is not reachable
+from outside, and every security header arrives.
+
+Unlike the Storybook — deployed on `@felix/ui` releases — the portal deploys
+when the content it renders changes (`apps/design-system/**`, `packages/ui/**`,
+and the two root `.md` files).
+
+### First-time setup (DevOps)
+
+The pipeline is inert until these exist:
+
+1. DNS and TLS for `plaza.felixpago.com`, and the ingress for it. The values
+   file sets `hostname: plaza.felixpago.com`; the Storybook uses a short name
+   the chart suffixes with `.dev.fpago.com`, so confirm how the chart takes a
+   full domain.
+2. Secret `design-system-felix-ui-oauth2-client-secret`, key
+   `design-system-felix-ui_oauth2_client_secret`.
+3. Secret `design-system-felix-ui-oauth2-cookie-secret`, key
+   `design-system-felix-ui_oauth2_cookie_secret` — a fresh 32-byte value, **not**
+   the Storybook's, or a session on one app would be valid on the other.
+4. `https://plaza.felixpago.com/oauth2/callback` added to the redirect URIs of
+   the Google OAuth client. The values file reuses the Storybook's client id;
+   to isolate the apps instead, create a new client and swap both the id and
+   the secret.
+
+### Vercel
+
+`vercel.json` at the repo root still builds the site for **preview deployments
+per PR**. The production Vercel domain must be removed in the project settings
+once GKE is live — otherwise it keeps serving a public, unauthenticated copy and
+the SSO gate protects nothing.

@@ -1,0 +1,160 @@
+# Portal del sistema de diseño (plaza.felixpago.com).
+#
+# A diferencia del Storybook (`values.yaml`), acá el frente es nginx, no
+# oauth2-proxy: nginx le pregunta al sidecar por cada request (`auth_request`)
+# y manda a /login a quien no tiene sesión. oauth2-proxy sólo autentica; no
+# sirve contenido (`static://202`), así que llegarle directo no muestra nada.
+app:
+  name: design-system-felix-ui
+  namespace: design-system-felix-ui
+  lifecycle: Deployment
+  replicaCount: 1
+  environment: dev
+  squadName: devops
+
+# El único puerto expuesto es el de nginx. 4180 queda dentro del pod.
+service:
+  enabled: true
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      protocol: TCP
+
+ingress:
+  - name: design-system-felix-ui-default
+    # Dominio final. El Storybook usa un nombre corto que el chart sufija con
+    # .dev.fpago.com; acá va el FQDN — DevOps confirma cómo lo toma el chart.
+    hostname: plaza.felixpago.com
+    type: public
+    ports:
+      - name: https
+        port: 443
+        targetPort: 80
+        protocol: HTTPS
+        path: /
+
+externalServices:
+  google-accounts:
+    host: accounts.google.com
+    ports:
+      - number: 443
+        name: https
+        protocol: HTTPS
+  google-oauth2:
+    host: oauth2.googleapis.com
+    ports:
+      - number: 443
+        name: https
+        protocol: HTTPS
+
+pod:
+  restartPolicy: Always
+  terminationGracePeriodSecs: 30
+  container:
+    - name: design-system-felix-ui
+      repository: us-docker.pkg.dev/felix-shared-services/felix-container-dev/design-system-felix-ui
+      ports:
+        - containerPort: 80
+      readinessProbe:
+        httpGet:
+          path: /healthz
+          port: 80
+        periodSeconds: 10
+        failureThreshold: 3
+      livenessProbe:
+        httpGet:
+          path: /healthz
+          port: 80
+        periodSeconds: 15
+        failureThreshold: 3
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "50m"
+        limits:
+          memory: "256Mi"
+      env:
+        - name: NEW_RELIC_LICENSE_KEY
+    - name: oauth2-proxy
+      repository: quay.io/oauth2-proxy/oauth2-proxy
+      tag: v7.7.1
+      ports:
+        - containerPort: 4180
+      readinessProbe:
+        httpGet:
+          path: /ping
+          port: 4180
+        periodSeconds: 5
+        failureThreshold: 3
+      livenessProbe:
+        httpGet:
+          path: /ping
+          port: 4180
+        periodSeconds: 10
+        failureThreshold: 3
+      resources:
+        requests:
+          memory: "32Mi"
+          cpu: "25m"
+        limits:
+          memory: "128Mi"
+      env:
+        - name: NEW_RELIC_LICENSE_KEY
+        - name: OAUTH2_PROXY_PROVIDER
+          value: "google"
+        # El requisito: sólo estos dos dominios entran. Google autentica a
+        # cualquiera con cuenta; esta lista es la que autoriza.
+        - name: OAUTH2_PROXY_EMAIL_DOMAINS
+          value: "felixpago.com,ext.felixpago.com"
+        # Modo sólo-auth: no proxea nada. nginx le pregunta a /oauth2/auth y
+        # sirve él. Si alguien alcanzara 4180 por la IP del pod, no vería nada.
+        - name: OAUTH2_PROXY_UPSTREAMS
+          value: "static://202"
+        # 0.0.0.0 y no 127.0.0.1 porque el kubelet sondea /ping por la IP del
+        # pod. Es seguro por lo de arriba: no hay contenido detrás.
+        - name: OAUTH2_PROXY_HTTP_ADDRESS
+          value: "0.0.0.0:4180"
+        # Está detrás de nginx: que confíe en los X-Forwarded-* que nginx fija.
+        - name: OAUTH2_PROXY_REVERSE_PROXY
+          value: "true"
+        - name: OAUTH2_PROXY_REDIRECT_URL
+          value: "https://plaza.felixpago.com/oauth2/callback"
+        # Cookie de sesión: sólo https, sin acceso desde JS, y Lax — Strict
+        # rompería el callback (vuelve de accounts.google.com).
+        - name: OAUTH2_PROXY_COOKIE_SECURE
+          value: "true"
+        - name: OAUTH2_PROXY_COOKIE_HTTPONLY
+          value: "true"
+        - name: OAUTH2_PROXY_COOKIE_SAMESITE
+          value: "lax"
+        # Cada hora revalida con Google. Si dan de baja una cuenta (alguien de
+        # ext. que termina), su sesión muere en la próxima hora, no en 7 días.
+        - name: OAUTH2_PROXY_COOKIE_REFRESH
+          value: "1h"
+        - name: OAUTH2_PROXY_COOKIE_EXPIRE
+          value: "168h"
+        # Un CSRF token por intento de login: dos pestañas entrando a la vez
+        # no se pisan.
+        - name: OAUTH2_PROXY_COOKIE_CSRF_PER_REQUEST
+          value: "true"
+        - name: OAUTH2_PROXY_COOKIE_CSRF_EXPIRE
+          value: "15m"
+        # Mismo OAuth client que el Storybook: alcanza con sumarle la redirect
+        # URI de arriba. Si se prefiere aislar las dos apps, acá va el client
+        # id propio y el secreto nuevo en el `secretKeyRef` de abajo.
+        - name: OAUTH2_PROXY_CLIENT_ID
+          value: "956665378860-v57cg44526udjbljl1hp2e8h8k4m58fl.apps.googleusercontent.com"
+        - name: OAUTH2_PROXY_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: design-system-felix-ui-oauth2-client-secret
+              key: design-system-felix-ui_oauth2_client_secret
+        # Secreto de cookie propio a propósito: si fuera el del Storybook, una
+        # sesión de una app valdría en la otra.
+        - name: OAUTH2_PROXY_COOKIE_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: design-system-felix-ui-oauth2-cookie-secret
+              key: design-system-felix-ui_oauth2_cookie_secret
