@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from "react";
-import { Link, Navigate, useParams } from "react-router-dom";
+import { Link, Navigate, useLocation, useParams } from "react-router-dom";
 import {
   Table,
   TableBody,
@@ -7,10 +7,6 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
 } from "@felix/ui";
 import { CheckCircleIcon, XCircleIcon } from "@phosphor-icons/react";
 import { getPattern, otherPatterns } from "../patterns/content";
@@ -45,9 +41,9 @@ const PROSE =
   "font-sans text-[15px] leading-[1.65] text-pretty text-foreground";
 
 // ─── Bloques ─────────────────────────────────────────────────────────────────
-// Cada pestaña es una lista de bloques (ver `patterns/types.ts`). Los márgenes
-// superiores llevan `first:mt-0` para que el primer bloque de una pestaña o de
-// una columna quede al ras.
+// Cada subsección es una lista de bloques (ver `patterns/types.ts`). Los
+// márgenes superiores llevan `first:mt-0` para que el primer bloque de una
+// subsección o de una columna quede al ras.
 
 function DataTable({
   columns,
@@ -118,7 +114,7 @@ function ExampleFigure({ example, tr }: { example: Example; tr: Tr }) {
             <XCircleIcon size={20} color="white" aria-hidden="true" />
           )}
           <span className="font-heading text-sm font-extrabold tracking-[-0.01em] text-white">
-            {isDo ? tr("Sí", "Do") : tr("No", "Don't")}
+            {isDo ? tr("Sí", "Do", "Sim") : tr("No", "Don't", "Não")}
           </span>
         </div>
       </div>
@@ -297,12 +293,13 @@ function pickTwo<T>(items: T[]): T[] {
 
 export function PatternPage() {
   const { slug = "" } = useParams();
+  const { hash } = useLocation();
   const tr = useTr();
   const pattern = getPattern(slug);
   const heroTitle = pattern && L(tr, pattern.title ?? pattern.name);
 
-  /* Se barajan una vez por visita (clave: slug), así un cambio de idioma o
-     de pestaña no reordena las tarjetas debajo del lector. */
+  /* Se barajan una vez por visita (clave: slug), así un cambio de idioma no
+     reordena las tarjetas debajo del lector. */
   const explore = useMemo(() => pickTwo(otherPatterns(slug)), [slug]);
 
   useEffect(() => {
@@ -313,6 +310,43 @@ export function PatternPage() {
       document.title = prev;
     };
   }, [heroTitle]);
+
+  /* Las subsecciones se enlazan por ancla desde el panel lateral, y React
+     Router no mueve el scroll al cambiar el hash. */
+  useEffect(() => {
+    if (!hash) return;
+    const el = document.getElementById(hash.slice(1));
+    if (!el) return;
+
+    const jump = () =>
+      el.scrollIntoView({ block: "start", behavior: "instant" });
+    jump();
+
+    /* Las láminas del hero y de los ejemplos no reservan alto: al entrar con
+       el ancla en la URL todavía no cargaron, y cuando lo hacen empujan el
+       contenido y la sección queda corrida. Se repite el salto a medida que
+       cargan y se deja de insistir en cuanto quien lee toca el scroll. */
+    const pending = Array.from(document.images).filter((img) => !img.complete);
+    if (!pending.length) return;
+
+    const stop = () => {
+      for (const img of pending) {
+        img.removeEventListener("load", jump);
+        img.removeEventListener("error", jump);
+      }
+      window.removeEventListener("wheel", stop);
+      window.removeEventListener("touchstart", stop);
+      window.removeEventListener("keydown", stop);
+    };
+    for (const img of pending) {
+      img.addEventListener("load", jump);
+      img.addEventListener("error", jump);
+    }
+    window.addEventListener("wheel", stop, { passive: true });
+    window.addEventListener("touchstart", stop, { passive: true });
+    window.addEventListener("keydown", stop);
+    return stop;
+  }, [hash, slug]);
 
   /* Slug desconocido: de vuelta a la landing en lugar de un 404 sin salida. */
   if (!pattern) return <Navigate to="/patrones" replace />;
@@ -363,42 +397,35 @@ export function PatternPage() {
         </div>
       </header>
 
-      {/* ── Tabs ─────────────────────────────────────────────────────────
-            Segmentado compacto: track blanco con borde stroke/soft, pill
-            activo slate con texto linen y labels de 14px, en la misma escala
-            que el resto del portal. Las pestañas salen del contenido, así que
-            un patrón puede tener dos o tres. `key` por slug: al navegar entre
-            patrones el componente no se remonta, y sin esto el tab elegido
-            persistiría. */}
-      <Tabs
-        key={pattern.slug}
-        defaultValue={pattern.tabs[0]?.id}
-        className="mt-8"
-      >
-        {/* Sticky a 16px del borde para que las pestañas acompañen el scroll.
-              Con una sola pestaña la barra no aporta y se oculta. */}
-        <TabsList
-          className={`sticky top-4 z-30 w-fit gap-1 rounded-full border ${STROKE_SOFT} bg-white p-1 ${
-            pattern.tabs.length < 2 ? "hidden" : ""
-          }`}
+      {/* ── Subsecciones ─────────────────────────────────────────────────
+            Lo que antes eran pestañas (Resumen / Especificaciones / Guías)
+            son secciones apiladas de la misma página: se leen de corrido, se
+            buscan con el buscador del navegador y se enlazan por ancla
+            (`/patrones/<slug>#specs`) desde el panel lateral. Cada una lleva
+            el título de sección del portal y, salvo la primera, una línea
+            stroke/soft que la separa de la anterior. Con una sola subsección
+            el título sobra — es la página entera —, igual que antes se
+            ocultaba la barra de pestañas. */}
+      {pattern.sections.map((section, i) => (
+        <section
+          key={section.id}
+          id={section.id}
+          className={
+            i === 0
+              ? "mt-12 scroll-mt-8"
+              : `mt-14 scroll-mt-8 border-t ${STROKE_SOFT} pt-12`
+          }
         >
-          {pattern.tabs.map((tab) => (
-            <TabsTrigger
-              key={tab.id}
-              value={tab.id}
-              className="h-8 justify-center rounded-full px-4 font-sans text-sm font-semibold text-foreground data-[state=active]:bg-(--slate) data-[state=active]:text-(--linen) data-[state=active]:shadow-none"
-            >
-              {L(tr, tab.label)}
-            </TabsTrigger>
-          ))}
-        </TabsList>
-
-        {pattern.tabs.map((tab) => (
-          <TabsContent key={tab.id} value={tab.id} className="pt-8">
-            <Blocks blocks={tab.blocks} tr={tr} />
-          </TabsContent>
-        ))}
-      </Tabs>
+          {pattern.sections.length > 1 && (
+            <h2 className="sys-section-title">{L(tr, section.label)}</h2>
+          )}
+          {/* Los bloques van en su propio contenedor para que el primero siga
+              siendo `:first-child` y su `first:mt-0` gane al título. */}
+          <div className={pattern.sections.length > 1 ? "mt-6" : ""}>
+            <Blocks blocks={section.blocks} tr={tr} />
+          </div>
+        </section>
+      ))}
 
       {/* ── Explorar patrones ────────────────────────────────────────────
             Las mismas tarjetas que la visión general de la sección. */}
