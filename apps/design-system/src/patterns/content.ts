@@ -1413,6 +1413,54 @@ const useOfEmojis: Pattern = {
                 en: "A flag next to the amount competes with the figure and labels no destination.",
               },
             },
+            {
+              tone: "do",
+              img: `${ASSETS}/emojis-do-2.png`,
+              alt: {
+                es: "Pregunta de selección sin emojis, con las opciones «Venezolana (V)» y «Extranjera (E)»",
+                en: 'Selection question with no emoji, offering the options "Venezolana (V)" and "Extranjera (E)"',
+              },
+              caption: {
+                es: "La pregunta y las opciones se leen solas: el usuario compara texto contra texto.",
+                en: "Question and options read on their own: the user compares text against text.",
+              },
+            },
+            {
+              tone: "dont",
+              img: `${ASSETS}/emojis-dont-2.png`,
+              alt: {
+                es: "La misma pregunta con un emoji en el enunciado, una mano que señala las opciones y un corazón en una sola de ellas",
+                en: "The same question with an emoji in the prompt, a hand pointing at the options, and a heart on only one of them",
+              },
+              caption: {
+                es: "Los emojis decoran el enunciado y desequilibran la elección: una opción lleva adorno y la otra no.",
+                en: "The emoji decorate the prompt and tilt the choice: one option carries an ornament and the other does not.",
+              },
+            },
+            {
+              tone: "do",
+              img: `${ASSETS}/emojis-do-3.png`,
+              alt: {
+                es: "Aviso de pago recibido que abre con un solo ✅ y sigue con el detalle en texto",
+                en: "Payment-received notice opening with a single ✅ and carrying the detail in plain text",
+              },
+              caption: {
+                es: "Un marcador de estado, al inicio: dice que la transferencia llegó y deja hablar al dato.",
+                en: "One state marker, up front: it says the transfer landed and lets the detail speak.",
+              },
+            },
+            {
+              tone: "dont",
+              img: `${ASSETS}/emojis-dont-3.png`,
+              alt: {
+                es: "El mismo aviso con confeti al inicio, manos en alto a media frase y un corazón al cierre",
+                en: "The same notice with confetti up front, raised hands mid-sentence and a heart at the close",
+              },
+              caption: {
+                es: "Tres emojis de celebración convierten un deber cumplido en una fiesta y entierran el estado.",
+                en: "Three celebratory emoji turn a duty fulfilled into a party and bury the state.",
+              },
+            },
           ],
         },
       ],
