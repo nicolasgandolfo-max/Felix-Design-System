@@ -54,6 +54,60 @@ src/
   styles.css      Tailwind + theme import + portal chrome CSS
 ```
 
+## Pattern screenshots from Figma
+
+The `do` / `don't` and gallery images on the Conversational guidelines pages
+(`/patrones/:slug`) are PNGs exported from the Figma guidelines file and
+committed to `public/assets/patterns/`. `src/patterns/content.ts` points at them
+by filename; slots still waiting on an export use the shared `PENDING`
+placeholder, with a comment naming the file that belongs there.
+
+**The PNG is the WhatsApp screen only.** The card, the green/orange footer bar,
+its icon and its translated `Do` / `Don't` label are drawn by `ExampleFigure`
+(`src/pages/PatternPage.tsx`) from tokens. The Figma frames bake that bar in, so
+it has to be cropped off — otherwise it renders twice.
+
+To add a pair:
+
+1. In Figma, note the frame's `node-id` and, via `get_metadata`, the bounding
+   box of the bubbles inside it (the bar is the last child, usually 59px tall).
+2. Export the frame as PNG at 2x.
+3. Crop off the bar and the card padding — coordinates doubled, since the export
+   is 2x. Use one shared rectangle for the `do` and the `don't` of a pair so the
+   two line up side by side:
+
+   ```bash
+   node scripts/crop-figma-export.mjs raw.png public/assets/patterns/<pattern>-do-1.png 218 10 886 540
+   ```
+
+4. If the copy contains a flag emoji, paste it back in — see below.
+5. Reference the file from `content.ts` as `` `${ASSETS}/<pattern>-do-1.png` ``.
+
+Aim for a result near 220×150 as rendered (the template caps images at 220px
+wide); a frame with a lot of empty padding crops down to something legible.
+
+### Flag emoji do not survive the export
+
+Figma does not rasterise regional-indicator emoji. A bubble whose copy reads
+`R$5,85 🇧🇷 reais` exports with a **blank gap** where the flag should be, which
+silently guts any example whose point _is_ the flag. The fix is to composite the
+platform emoji (Apple Color Emoji) over that gap:
+
+```bash
+node scripts/composite-emoji.mjs shot.png scripts/assets/emoji-br.png shot.png 374,139 443,267
+```
+
+Positions are the top-left of the glyph, in pixels of the file being written.
+To find them: the gap is the run of background pixels between glyphs on the text
+line, and the glyph's ink sits ~2px above that line's baseline. Centre the glyph
+in the gap.
+
+`scripts/assets/emoji-br.png` is 🇧🇷 at 26×19 — drawn at `font-size: 28px`, which
+matches an 18px cap height, the size the bubble copy uses in these frames. Node
+cannot rasterise Apple Color Emoji, so a glyph for another flag has to come from
+a browser: draw it on a canvas with `font: '28px "Apple Color Emoji"'`, crop to
+its alpha bounds, and save the PNG next to this one.
+
 ## Deploy
 
 Production is **`plaza.felixpago.com`**, on GKE behind Google SSO. Only
