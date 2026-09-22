@@ -2176,7 +2176,7 @@ const formatHints: Pattern = {
     es: "Mensaje de WhatsApp que pide un número de cuenta con una línea de ejemplo del formato debajo de la pregunta",
     en: "WhatsApp message asking for an account number with a format example line below the question",
   },
-  tabs: [
+  sections: [
     {
       id: "overview",
       label: { es: "Resumen", en: "Overview", pt: "Resumo" },
@@ -2310,7 +2310,7 @@ const FLOWS_VISUAL_IMG = {
 
 /* Los límites salen de la documentación de Flows y están resumidos, no
    verificados en vivo: de ahí la nota y la fuente al pie de Specs. */
-const flowsFormSections: StandardSections = {
+const flowsFormSections: StandardContent = {
   overview: {
     usage: [
       {
@@ -2587,15 +2587,16 @@ const flowsForm: Pattern = {
     es: "Pantallas de un Flow de formulario: una encuesta NPS y un formulario con los datos del beneficiario",
     en: "Screens from a Flow form: an NPS survey and a beneficiary-details form",
   },
-  // Las tres pestañas estándar, con la galería de pantallas al final de Specs.
-  tabs: standardTabs(flowsFormSections).map(
-    (tab): PatternTab =>
-      tab.id !== "specs"
-        ? tab
+  // Las tres subsecciones estándar, con la galería de pantallas al final de
+  // Specs.
+  sections: standardSections(flowsFormSections).map(
+    (section): PatternSection =>
+      section.id !== "specs"
+        ? section
         : {
-            ...tab,
+            ...section,
             blocks: [
-              ...tab.blocks,
+              ...section.blocks,
               {
                 type: "heading",
                 text: { es: "Pantallas de ejemplo", en: "Example screens" },
@@ -2629,7 +2630,7 @@ const flowsForm: Pattern = {
   ),
 };
 
-const flowsVisualSections: StandardSections = {
+const flowsVisualSections: StandardContent = {
   overview: {
     usage: [
       {
@@ -2849,15 +2850,16 @@ const flowsVisual: Pattern = {
     es: "Pantallas de un Flow visual: una intro de onboarding con imagen y una pantalla que destaca una función con su botón de acción",
     en: "Screens from a visual Flow: an onboarding intro with an image and a feature highlight screen with a call to action",
   },
-  // Las tres pestañas estándar, con la galería de pantallas al final de Specs.
-  tabs: standardTabs(flowsVisualSections).map(
-    (tab): PatternTab =>
-      tab.id !== "specs"
-        ? tab
+  // Las tres subsecciones estándar, con la galería de pantallas al final de
+  // Specs.
+  sections: standardSections(flowsVisualSections).map(
+    (section): PatternSection =>
+      section.id !== "specs"
+        ? section
         : {
-            ...tab,
+            ...section,
             blocks: [
-              ...tab.blocks,
+              ...section.blocks,
               {
                 type: "heading",
                 text: { es: "Pantallas de ejemplo", en: "Example screens" },

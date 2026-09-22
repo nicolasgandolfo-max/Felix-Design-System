@@ -7,9 +7,8 @@
  * rutas y los links cruzados de "Explorar patrones" se derivan del registro.
  */
 
-/** Texto localizado en los tres idiomas del portal. `pt` es obligatorio: si
- *  fuera opcional, `useTr` caería a inglés en silencio y el hueco no se vería. */
-export type Localized = { es: string; en: string; pt: string };
+/** Texto localizado. Si falta `pt`, el portugués cae a inglés vía `useTr`. */
+export type Localized = { es: string; en: string; pt?: string };
 
 /** Familia con la que filtra el sidebar del directorio. */
 export type PatternFamily = "interaction" | "conversational";
