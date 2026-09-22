@@ -42,7 +42,11 @@ export function PlazaHeader({
 
   const links: Array<{ to: string; section: Section; label: string }> = [
     { to: "/", section: "home", label: tr("Inicio", "Home", "Início") },
-    { to: "/sistema", section: "system", label: "Design System" },
+    {
+      to: "/sistema",
+      section: "system",
+      label: tr("Sistema de Diseño", "Design System", "Sistema de Design"),
+    },
     {
       to: "/voz-y-tono",
       section: "voice",
@@ -78,7 +82,15 @@ export function PlazaHeader({
             {menu.open ? <XIcon size={20} /> : <ListIcon size={20} />}
           </button>
         )}
-        <Link to="/" className="plaza-brand" aria-label="Plaza Félix — inicio">
+        <Link
+          to="/"
+          className="plaza-brand"
+          aria-label={tr(
+            "Plaza Félix — inicio",
+            "Plaza Félix — home",
+            "Plaza Félix — início"
+          )}
+        >
           <FelixPlazaLogo />
         </Link>
       </div>

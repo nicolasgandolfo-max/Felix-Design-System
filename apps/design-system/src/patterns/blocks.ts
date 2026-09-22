@@ -1,4 +1,4 @@
-import type { Block, PatternTab, StandardSections } from "./types";
+import type { Block, PatternSection, StandardContent } from "./types";
 
 const T = {
   overview: { es: "Resumen", en: "Overview", pt: "Resumo" },
@@ -9,11 +9,11 @@ const T = {
 };
 
 /**
- * Convierte la forma estándar (Overview / Specs / Guidelines) en pestañas de
- * bloques, para que los patrones escritos con esa forma rindan con el mismo
- * template que los que definen sus bloques a mano.
+ * Convierte la forma estándar (Overview / Specs / Guidelines) en las
+ * subsecciones de bloques de la página, para que los patrones escritos con esa
+ * forma rindan con el mismo template que los que definen sus bloques a mano.
  */
-export function standardTabs(s: StandardSections): PatternTab[] {
+export function standardSections(s: StandardContent): PatternSection[] {
   const overview: Block[] = [
     {
       type: "columns",
@@ -25,8 +25,9 @@ export function standardTabs(s: StandardSections): PatternTab[] {
     },
   ];
 
+  /* Sin un `heading` propio: el título de la subsección ya dice
+     "Especificaciones" en la página. */
   const specs: Block[] = [
-    { type: "heading", text: T.specs },
     { type: "prose", text: s.specs.intro },
     ...s.specs.tables.map(
       (t): Block => ({

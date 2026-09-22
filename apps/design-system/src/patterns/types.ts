@@ -54,14 +54,14 @@ export type Pattern = {
    *  columna. Si falta, el hero usa `hero`. */
   heroDetail?: string[];
 
-  /** Pestañas con su contenido, en orden. */
-  tabs: PatternTab[];
+  /** Subsecciones de la página con su contenido, apiladas en este orden. */
+  sections: PatternSection[];
 };
 
 // ─── Contenido por bloques ────────────────────────────────────────────────────
 
 /**
- * Cada pestaña de un patrón es una lista de bloques. Así un patrón puede tener
+ * Cada subsección de un patrón es una lista de bloques. Así un patrón puede tener
  * tablas de N columnas, callouts o prosa donde lo necesite (Use of emojis no
  * tiene specs ni do/don't) sin tocar el template.
  */
@@ -97,14 +97,15 @@ export type Block =
  */
 export type TableCell = Localized | Block[];
 
-export type PatternTab = { id: string; label: Localized; blocks: Block[] };
+/** `id` es además el ancla de la subsección: `/patrones/<slug>#specs`. */
+export type PatternSection = { id: string; label: Localized; blocks: Block[] };
 
 /**
- * Forma "estándar" de las tres pestañas (Overview / Specs / Guidelines) con la
- * que se escribieron los primeros patrones. `standardTabs()` la convierte en
- * bloques; los patrones con otra estructura escriben `tabs` directamente.
+ * Forma "estándar" de las tres subsecciones (Overview / Specs / Guidelines) con
+ * la que se escribieron los primeros patrones. `standardSections()` la convierte
+ * en bloques; los patrones con otra estructura escriben `sections` directamente.
  */
-export type StandardSections = {
+export type StandardContent = {
   overview: {
     usage: Localized[];
     /** Los backticks en `body` se renderizan como `<code>`. */

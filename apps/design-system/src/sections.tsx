@@ -899,7 +899,9 @@ export function Tokens() {
     <section className="sec" id="tokens">
       <div className="eyebrow">
         <span className="n">06</span>
-        <span>Design Tokens</span>
+        <span>
+          {tr("Tokens de diseño", "Design Tokens", "Tokens de design")}
+        </span>
       </div>
       <h2 className="h2">
         {tr(

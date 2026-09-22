@@ -1,5 +1,6 @@
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useState,
@@ -29,12 +30,16 @@ export function LangProvider({ children }: { children: ReactNode }) {
 
 export const useLang = () => useContext(LangContext);
 
-/** Returns a translator: tr("Español", "English", "Português") → string for the active language. */
+/** Returns a translator: tr("Español", "English", "Português") → string for the active language.
+ *  Stable per language, so it is safe to list in effect dependencies (document.title). */
 export function useTr() {
   const { lang } = useLang();
-  return (es: string, en: string, pt?: string) => {
-    if (lang === "es") return es;
-    if (lang === "en") return en;
-    return pt || en || es;
-  };
+  return useCallback(
+    (es: string, en: string, pt?: string) => {
+      if (lang === "es") return es;
+      if (lang === "en") return en;
+      return pt || en || es;
+    },
+    [lang]
+  );
 }
