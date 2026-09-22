@@ -1677,8 +1677,8 @@ const textFormatting: Pattern = {
                 {
                   type: "prose",
                   text: {
-                    es: "Apunta a menos de ~300 caracteres por burbuja, unas 4 o 5 líneas en un Android de gama media. Un mensaje de más de ~500 caracteres es una señal, no una violación: tiene que justificar por qué no puede ser una de estas opciones, en este orden:",
-                    en: "Target under ~300 characters per bubble — about 4–5 lines on a mid-range Android. A message over ~500 characters is a signal, not a violation: it must justify why it can't be one of the following, in this order:",
+                    es: "Apunta a menos de ~150 caracteres por burbuja, unas 2 o 3 líneas en un Android de gama media. Un mensaje de más de ~500 caracteres es una señal, no una violación: tiene que justificar por qué no puede ser una de estas opciones, en este orden:",
+                    en: "Target under ~150 characters per bubble — about 2–3 lines on a mid-range Android. A message over ~500 characters is a signal, not a violation: it must justify why it can't be one of the following, in this order:",
                   },
                 },
                 {
