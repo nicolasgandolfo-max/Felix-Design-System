@@ -1413,6 +1413,30 @@ const useOfEmojis: Pattern = {
                 en: "A flag next to the amount competes with the figure and labels no destination.",
               },
             },
+            {
+              tone: "do",
+              img: `${ASSETS}/emojis-do-2.png`,
+              alt: {
+                es: "Pregunta de selección sin emojis, con las opciones «Venezolana (V)» y «Extranjera (E)»",
+                en: 'Selection question with no emoji, offering the options "Venezolana (V)" and "Extranjera (E)"',
+              },
+              caption: {
+                es: "La pregunta y las opciones se leen solas: el usuario compara texto contra texto.",
+                en: "Question and options read on their own: the user compares text against text.",
+              },
+            },
+            {
+              tone: "dont",
+              img: `${ASSETS}/emojis-dont-2.png`,
+              alt: {
+                es: "La misma pregunta con un emoji en el enunciado, una mano que señala las opciones y un corazón en una sola de ellas",
+                en: "The same question with an emoji in the prompt, a hand pointing at the options, and a heart on only one of them",
+              },
+              caption: {
+                es: "Los emojis decoran el enunciado y desequilibran la elección: una opción lleva adorno y la otra no.",
+                en: "The emoji decorate the prompt and tilt the choice: one option carries an ornament and the other does not.",
+              },
+            },
           ],
         },
       ],
