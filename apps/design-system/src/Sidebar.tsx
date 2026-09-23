@@ -410,8 +410,9 @@ export function VoiceToneSidebar({
 
 /**
  * Panel lateral de las guías conversacionales: la visión general y, debajo,
- * un grupo plegable por familia con un ítem por patrón. Se deriva del registro
- * en `patterns/content.ts`, igual que la visión general.
+ * un grupo plegable por familia con un ítem por patrón y, en el patrón
+ * abierto, sus subsecciones como anclas. Se deriva del registro en
+ * `patterns/content.ts`, igual que la visión general.
  */
 export function PatternsSidebar({
   onNavigate,
@@ -420,6 +421,7 @@ export function PatternsSidebar({
   badge,
 }: SidebarProps) {
   const tr = useTr();
+  const { pathname } = useLocation();
   const [manualOpen, setManualOpen] = useState<Record<string, boolean>>({});
   return (
     <SidebarShell open={open} title={title} badge={badge}>
@@ -451,20 +453,41 @@ export function PatternsSidebar({
           >
             {patternsOf(family.id).map((p) => {
               const Icon = patternIcon(p);
+              /* Las subsecciones del patrón (Resumen, Especificaciones,
+                 Guías) sólo se listan en el patrón abierto: son anclas de esa
+                 página y colgarlas de los siete patrones convertiría el menú
+                 en una lista de veinte ítems. */
+              const isOpen = pathname === `/patrones/${p.slug}`;
               return (
-                <NavLink
-                  key={p.slug}
-                  to={`/patrones/${p.slug}`}
-                  onClick={onNavigate}
-                  className={itemClass}
-                >
-                  {({ isActive }) => (
-                    <>
-                      <Icon size={18} weight={isActive ? "fill" : "regular"} />
-                      <span>{tr(p.name.es, p.name.en, p.name.pt)}</span>
-                    </>
-                  )}
-                </NavLink>
+                <Fragment key={p.slug}>
+                  <NavLink
+                    to={`/patrones/${p.slug}`}
+                    onClick={onNavigate}
+                    className={itemClass}
+                  >
+                    {({ isActive }) => (
+                      <>
+                        <Icon
+                          size={18}
+                          weight={isActive ? "fill" : "regular"}
+                        />
+                        <span>{tr(p.name.es, p.name.en, p.name.pt)}</span>
+                      </>
+                    )}
+                  </NavLink>
+                  {isOpen &&
+                    p.sections.length > 1 &&
+                    p.sections.map((s) => (
+                      <Link
+                        key={s.id}
+                        to={`/patrones/${p.slug}#${s.id}`}
+                        onClick={onNavigate}
+                        className="sys-sub-item"
+                      >
+                        <span>{tr(s.label.es, s.label.en, s.label.pt)}</span>
+                      </Link>
+                    ))}
+                </Fragment>
               );
             })}
           </CollapsibleNavGroup>

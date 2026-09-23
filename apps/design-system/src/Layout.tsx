@@ -85,7 +85,7 @@ export function VoiceToneLayout() {
   const tr = useTr();
   return (
     <SectionLayout
-      title="Voice & Tone"
+      title={tr("Voz y tono", "Voice & Tone", "Voz e tom")}
       badge={
         <span className="sys-version-badge">
           <span className="dot" />

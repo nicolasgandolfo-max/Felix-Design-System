@@ -1,15 +1,44 @@
 import { useState, type ReactNode } from "react";
 import {
   // Atoms
-  Avatar, AvatarFallback,
-  Badge, Bubble, Button, Checkbox, CoinLoader, Dots, IconButton,
-  Input, Label, Logo, Marker, Progress, RadioGroup, RadioGroupItem, Separator,
-  Skeleton, Slider, Spinner, Switch, Text, Textarea,
+  Avatar,
+  AvatarFallback,
+  Badge,
+  Bubble,
+  Button,
+  Checkbox,
+  CoinLoader,
+  Dots,
+  IconButton,
+  Input,
+  Label,
+  Logo,
+  Marker,
+  Progress,
+  RadioGroup,
+  RadioGroupItem,
+  Separator,
+  Skeleton,
+  Slider,
+  Spinner,
+  Switch,
+  Text,
+  Textarea,
   // Molecules
-  Accordion, AccordionItem, AccordionTrigger, AccordionContent,
-  Alert, AlertTitle, AlertDescription,
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+  Alert,
+  AlertTitle,
+  AlertDescription,
   Attachment,
-  Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator,
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
   Calendar,
   Card,
   CardHeader,
@@ -23,16 +52,66 @@ import {
   CollapseTrigger,
   CollapseContent,
   DatePicker,
-  Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose,
-  Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerFooter, DrawerClose,
-  DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator,
-  HoverCard, HoverCardTrigger, HoverCardContent,
-  Message, MessageAvatar, MessageContent, MessageHeader, MessageFooter,
-  NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuTrigger, NavigationMenuContent, NavigationMenuLink,
-  Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationPrevious, PaginationNext, PaginationEllipsis,
-  Popover, PopoverTrigger, PopoverContent,
-  Select, SelectTrigger, SelectValue, SelectContent, SelectItem,
-  Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetBody, SheetFooter, SheetClose,
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+  DialogClose,
+  Drawer,
+  DrawerTrigger,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerClose,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  HoverCard,
+  HoverCardTrigger,
+  HoverCardContent,
+  Message,
+  MessageAvatar,
+  MessageContent,
+  MessageHeader,
+  MessageFooter,
+  NavigationMenu,
+  NavigationMenuList,
+  NavigationMenuItem,
+  NavigationMenuTrigger,
+  NavigationMenuContent,
+  NavigationMenuLink,
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationPrevious,
+  PaginationNext,
+  PaginationEllipsis,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+  Sheet,
+  SheetTrigger,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+  SheetBody,
+  SheetFooter,
+  SheetClose,
   SidebarFooter,
   Stepper,
   Table,
@@ -52,8 +131,16 @@ import {
   TooltipTrigger,
   TooltipContent,
   // Organisms
-  MessageScroller, MessageScrollerHeader, MessageScrollerEmpty, MessageScrollerMessages, MessageScrollerInput,
-  Sidebar, SidebarHeader, SidebarBody, SidebarSection, SidebarNavItem,
+  MessageScroller,
+  MessageScrollerHeader,
+  MessageScrollerEmpty,
+  MessageScrollerMessages,
+  MessageScrollerInput,
+  Sidebar,
+  SidebarHeader,
+  SidebarBody,
+  SidebarSection,
+  SidebarNavItem,
 } from "@felix/ui";
 import {
   PencilSimpleIcon,
@@ -64,6 +151,7 @@ import {
   HouseIcon,
   UserIcon,
 } from "@phosphor-icons/react";
+import { useTr } from "./i18n";
 
 export interface Showcase {
   /** Short bilingual description shown under the component title. */
@@ -79,6 +167,70 @@ export interface Showcase {
   previewTall?: boolean;
 }
 
+/**
+ * Demo panel headings, keyed by the Spanish label used at the call site.
+ * The showcases themselves stay in Spanish on purpose (Félix product copy is
+ * Spanish-first); only this docs chrome follows the site language.
+ */
+const DEMO_LABELS: Record<string, [en: string, pt: string]> = {
+  "Tamaños · xs → xl": ["Sizes · xs → xl", "Tamanhos · xs → xl"],
+  Estado: ["Status", "Status"],
+  Variantes: ["Variants", "Variantes"],
+  Tamaños: ["Sizes", "Tamanhos"],
+  Estados: ["States", "Estados"],
+  "Con etiqueta": ["With label", "Com rótulo"],
+  Cargando: ["Loading", "Carregando"],
+  Tipos: ["Types", "Tipos"],
+  Valores: ["Values", "Valores"],
+  Opciones: ["Options", "Opções"],
+  Orientaciones: ["Orientations", "Orientações"],
+  Formas: ["Shapes", "Formas"],
+  "Valor y rango": ["Value and range", "Valor e intervalo"],
+  "Por defecto": ["Default", "Padrão"],
+  "Single · collapsible": ["Single · collapsible", "Single · collapsible"],
+  "Archivos · sm / md / lg": [
+    "Files · sm / md / lg",
+    "Arquivos · sm / md / lg",
+  ],
+  "Imágenes · sm / md / lg": [
+    "Images · sm / md / lg",
+    "Imagens · sm / md / lg",
+  ],
+  "Estados · error / loading": [
+    "States · error / loading",
+    "Estados · error / loading",
+  ],
+  Ruta: ["Path", "Caminho"],
+  "Selección única": ["Single selection", "Seleção única"],
+  Composición: ["Composition", "Composição"],
+  Grupo: ["Group", "Grupo"],
+  Controlado: ["Controlled", "Controlado"],
+  Modal: ["Modal", "Modal"],
+  Drawer: ["Drawer", "Drawer"],
+  Menú: ["Menu", "Menu"],
+  Hover: ["Hover", "Hover"],
+  "Alineación · start / end": [
+    "Alignment · start / end",
+    "Alinhamento · start / end",
+  ],
+  Navegación: ["Navigation", "Navegação"],
+  Páginas: ["Pages", "Páginas"],
+  Popover: ["Popover", "Popover"],
+  Sheet: ["Sheet", "Sheet"],
+  Cuenta: ["Account", "Conta"],
+  "3 pasos · activo en el 2º": [
+    "3 steps · 2nd active",
+    "3 passos · ativo no 2º",
+  ],
+  Historial: ["History", "Histórico"],
+  Pestañas: ["Tabs", "Abas"],
+  Disparadores: ["Triggers", "Disparadores"],
+  Tooltip: ["Tooltip", "Tooltip"],
+  "Estado vacío": ["Empty state", "Estado vazio"],
+  "Con mensajes": ["With messages", "Com mensagens"],
+  Sidebar: ["Sidebar", "Sidebar"],
+};
+
 /** A labelled demo block. `col` stacks items vertically. */
 function Demo({
   label,
@@ -89,9 +241,11 @@ function Demo({
   children: ReactNode;
   col?: boolean;
 }) {
+  const tr = useTr();
+  const [en, pt] = DEMO_LABELS[label] ?? [label, label];
   return (
     <div className="panel">
-      <div className="ph">{label}</div>
+      <div className="ph">{tr(label, en, pt)}</div>
       <div
         className="cluster"
         style={
@@ -198,21 +352,48 @@ export const SHOWCASES: Record<string, Showcase> = {
       pt: "O balão que envolve o texto de uma mensagem em uma conversa. Importe de @felix/ui e escolha o tom com variant: default (turquesa, suas mensagens), secondary, muted (a outra pessoa), tinted, outline, ghost (sem moldura, ideal para respostas de IA ou markdown) ou destructive (erro). Ajusta-se ao conteúdo: limite a largura pelo contêiner ou deixe o Message cuidar disso.",
     },
     preview: () => (
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 8, width: 200 }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-start",
+          gap: 8,
+          width: 200,
+        }}
+      >
         <Bubble variant="muted">¿Cómo va tu envío?</Bubble>
-        <div style={{ alignSelf: "flex-end" }}><Bubble>¡Ya llegó, gracias!</Bubble></div>
+        <div style={{ alignSelf: "flex-end" }}>
+          <Bubble>¡Ya llegó, gracias!</Bubble>
+        </div>
       </div>
     ),
     render: () => (
       <Demo label="Variantes" col>
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 16, width: 284 }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
+            gap: 16,
+            width: 284,
+          }}
+        >
           <Bubble variant="default">¡Hola! ¿Cómo va tu envío?</Bubble>
-          <Bubble variant="secondary">¡Va muy bien, gracias por preguntar!</Bubble>
+          <Bubble variant="secondary">
+            ¡Va muy bien, gracias por preguntar!
+          </Bubble>
           <Bubble variant="muted">Déjame revisarlo por ti.</Bubble>
-          <Bubble variant="tinted">Aquí está la información que pediste.</Bubble>
+          <Bubble variant="tinted">
+            Aquí está la información que pediste.
+          </Bubble>
           <Bubble variant="outline">Tengo una duda sobre la comisión.</Bubble>
-          <Bubble variant="ghost">Este es contenido sin marco, como una respuesta de IA o un bloque de markdown.</Bubble>
-          <Bubble variant="destructive">Error: algo salió mal con la solicitud.</Bubble>
+          <Bubble variant="ghost">
+            Este es contenido sin marco, como una respuesta de IA o un bloque de
+            markdown.
+          </Bubble>
+          <Bubble variant="destructive">
+            Error: algo salió mal con la solicitud.
+          </Bubble>
         </div>
       </Demo>
     ),
@@ -466,7 +647,14 @@ export const SHOWCASES: Record<string, Showcase> = {
     ),
     render: () => (
       <Demo label="Variantes" col>
-        <div style={{ display: "flex", flexDirection: "column", gap: 16, width: 360 }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 16,
+            width: 360,
+          }}
+        >
           <Marker>Cambió a una nueva conversación</Marker>
           <Marker variant="separator">Hoy</Marker>
           <Marker variant="border">Cambió a soporte prioritario</Marker>
@@ -839,25 +1027,91 @@ export const SHOWCASES: Record<string, Showcase> = {
       pt: "O anexo que acompanha uma mensagem ou o compositor do chat: um comprovante em PDF, uma foto do ticket. Importe de @felix/ui e passe name e meta (formato · tamanho). Escolha size (sm, md ou lg), state (default, error ou loading, que mostra spinner e barra de progresso controlada por progress) e type (file ou image; image + lg vira um cartão vertical com miniatura). O botão de fechar dispara onRemove; rotule-o com removeLabel.",
     },
     preview: () => (
-      <Attachment size="md" name="comprobante.pdf" meta="PDF · 2.4 MB" removeLabel="Quitar adjunto" />
+      <Attachment
+        size="md"
+        name="comprobante.pdf"
+        meta="PDF · 2.4 MB"
+        removeLabel="Quitar adjunto"
+      />
     ),
     render: () => (
       <>
         <Demo label="Archivos · sm / md / lg">
-          <Attachment size="sm" name="comprobante.pdf" meta="PDF · 2.4 MB" removeLabel="Quitar adjunto" />
-          <Attachment size="md" name="comprobante.pdf" meta="PDF · 2.4 MB" removeLabel="Quitar adjunto" />
-          <Attachment size="lg" name="comprobante.pdf" meta="PDF · 2.4 MB" removeLabel="Quitar adjunto" />
+          <Attachment
+            size="sm"
+            name="comprobante.pdf"
+            meta="PDF · 2.4 MB"
+            removeLabel="Quitar adjunto"
+          />
+          <Attachment
+            size="md"
+            name="comprobante.pdf"
+            meta="PDF · 2.4 MB"
+            removeLabel="Quitar adjunto"
+          />
+          <Attachment
+            size="lg"
+            name="comprobante.pdf"
+            meta="PDF · 2.4 MB"
+            removeLabel="Quitar adjunto"
+          />
         </Demo>
         <Demo label="Imágenes · sm / md / lg">
-          <Attachment type="image" size="sm" name="foto-ticket.jpg" meta="JPG · 3.8 MB" removeLabel="Quitar adjunto" />
-          <Attachment type="image" size="md" name="foto-ticket.jpg" meta="JPG · 3.8 MB" removeLabel="Quitar adjunto" />
-          <Attachment type="image" size="lg" name="foto-ticket.jpg" meta="JPG · 3.8 MB" removeLabel="Quitar adjunto" />
+          <Attachment
+            type="image"
+            size="sm"
+            name="foto-ticket.jpg"
+            meta="JPG · 3.8 MB"
+            removeLabel="Quitar adjunto"
+          />
+          <Attachment
+            type="image"
+            size="md"
+            name="foto-ticket.jpg"
+            meta="JPG · 3.8 MB"
+            removeLabel="Quitar adjunto"
+          />
+          <Attachment
+            type="image"
+            size="lg"
+            name="foto-ticket.jpg"
+            meta="JPG · 3.8 MB"
+            removeLabel="Quitar adjunto"
+          />
         </Demo>
         <Demo label="Estados · error / loading">
-          <Attachment size="md" state="error" name="comprobante.pdf" meta="PDF · 2.4 MB" removeLabel="Quitar adjunto" />
-          <Attachment type="image" size="md" state="error" name="foto-ticket.jpg" meta="JPG · 3.8 MB" removeLabel="Quitar adjunto" />
-          <Attachment size="md" state="loading" progress={45} name="comprobante.pdf" meta="Subiendo... 45%" removeLabel="Quitar adjunto" />
-          <Attachment type="image" size="lg" state="loading" progress={45} name="foto-ticket.jpg" meta="Subiendo... 45%" removeLabel="Quitar adjunto" />
+          <Attachment
+            size="md"
+            state="error"
+            name="comprobante.pdf"
+            meta="PDF · 2.4 MB"
+            removeLabel="Quitar adjunto"
+          />
+          <Attachment
+            type="image"
+            size="md"
+            state="error"
+            name="foto-ticket.jpg"
+            meta="JPG · 3.8 MB"
+            removeLabel="Quitar adjunto"
+          />
+          <Attachment
+            size="md"
+            state="loading"
+            progress={45}
+            name="comprobante.pdf"
+            meta="Subiendo... 45%"
+            removeLabel="Quitar adjunto"
+          />
+          <Attachment
+            type="image"
+            size="lg"
+            state="loading"
+            progress={45}
+            name="foto-ticket.jpg"
+            meta="Subiendo... 45%"
+            removeLabel="Quitar adjunto"
+          />
         </Demo>
       </>
     ),
@@ -1269,7 +1523,14 @@ export const SHOWCASES: Record<string, Showcase> = {
     preview: () => (
       <div style={{ width: 240 }}>
         <Message align="start">
-          <MessageAvatar><Avatar size="sm" initials="MG" status="success" statusLabel="En línea" /></MessageAvatar>
+          <MessageAvatar>
+            <Avatar
+              size="sm"
+              initials="MG"
+              status="success"
+              statusLabel="En línea"
+            />
+          </MessageAvatar>
           <MessageContent>
             <MessageHeader>María</MessageHeader>
             <Bubble variant="muted">Déjame revisarlo por ti.</Bubble>
@@ -1279,9 +1540,23 @@ export const SHOWCASES: Record<string, Showcase> = {
     ),
     render: () => (
       <Demo label="Alineación · start / end" col>
-        <div style={{ display: "flex", flexDirection: "column", gap: 20, width: 420 }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 20,
+            width: 420,
+          }}
+        >
           <Message align="start">
-            <MessageAvatar><Avatar size="sm" initials="MG" status="success" statusLabel="En línea" /></MessageAvatar>
+            <MessageAvatar>
+              <Avatar
+                size="sm"
+                initials="MG"
+                status="success"
+                statusLabel="En línea"
+              />
+            </MessageAvatar>
             <MessageContent>
               <MessageHeader>María</MessageHeader>
               <Bubble variant="muted">Déjame revisarlo por ti.</Bubble>
@@ -1289,7 +1564,14 @@ export const SHOWCASES: Record<string, Showcase> = {
             </MessageContent>
           </Message>
           <Message align="end">
-            <MessageAvatar><Avatar size="sm" initials="TÚ" status="success" statusLabel="En línea" /></MessageAvatar>
+            <MessageAvatar>
+              <Avatar
+                size="sm"
+                initials="TÚ"
+                status="success"
+                statusLabel="En línea"
+              />
+            </MessageAvatar>
             <MessageContent>
               <MessageHeader>Tú</MessageHeader>
               <Bubble>¡Hola! ¿Cómo va tu envío?</Bubble>
@@ -1774,10 +2056,21 @@ export const SHOWCASES: Record<string, Showcase> = {
     preview: () => (
       <div style={{ transform: "scale(0.45)", transformOrigin: "top center" }}>
         <MessageScroller style={{ width: 380, height: 420 }}>
-          <MessageScrollerHeader title="Chat con soporte" description="Te respondemos en minutos." onRefresh={() => {}} />
+          <MessageScrollerHeader
+            title="Chat con soporte"
+            description="Te respondemos en minutos."
+            onRefresh={() => {}}
+          />
           <MessageScrollerMessages>
             <Message align="start" style={{ width: "100%" }}>
-              <MessageAvatar><Avatar size="sm" initials="MG" status="success" statusLabel="En línea" /></MessageAvatar>
+              <MessageAvatar>
+                <Avatar
+                  size="sm"
+                  initials="MG"
+                  status="success"
+                  statusLabel="En línea"
+                />
+              </MessageAvatar>
               <MessageContent>
                 <MessageHeader>María</MessageHeader>
                 <Bubble variant="muted">Déjame revisarlo por ti.</Bubble>
@@ -1806,10 +2099,18 @@ export const SHOWCASES: Record<string, Showcase> = {
               refreshLabel="Actualizar"
             />
             <MessageScrollerEmpty title="Listo para empezar">
-              Escribe tu consulta y<br />te respondemos enseguida.
+              Escribe tu consulta y<br />
+              te respondemos enseguida.
             </MessageScrollerEmpty>
-            <MessageScrollerInput onAttach={() => {}} onSend={() => {}} attachLabel="Adjuntar" sendLabel="Enviar">
-              <p>Hola, quiero saber cuándo llega el envío que hice ayer a México…</p>
+            <MessageScrollerInput
+              onAttach={() => {}}
+              onSend={() => {}}
+              attachLabel="Adjuntar"
+              sendLabel="Enviar"
+            >
+              <p>
+                Hola, quiero saber cuándo llega el envío que hice ayer a México…
+              </p>
             </MessageScrollerInput>
           </MessageScroller>
         </Demo>
@@ -1821,9 +2122,20 @@ export const SHOWCASES: Record<string, Showcase> = {
               onRefresh={() => {}}
               refreshLabel="Actualizar"
             />
-            <MessageScrollerMessages showScrollToBottom onScrollToBottom={() => {}} scrollToBottomLabel="Ir al final">
+            <MessageScrollerMessages
+              showScrollToBottom
+              onScrollToBottom={() => {}}
+              scrollToBottomLabel="Ir al final"
+            >
               <Message align="start" style={{ width: "100%" }}>
-                <MessageAvatar><Avatar size="sm" initials="MG" status="success" statusLabel="En línea" /></MessageAvatar>
+                <MessageAvatar>
+                  <Avatar
+                    size="sm"
+                    initials="MG"
+                    status="success"
+                    statusLabel="En línea"
+                  />
+                </MessageAvatar>
                 <MessageContent>
                   <MessageHeader>María</MessageHeader>
                   <Bubble variant="muted">Déjame revisarlo por ti.</Bubble>
@@ -1831,7 +2143,14 @@ export const SHOWCASES: Record<string, Showcase> = {
                 </MessageContent>
               </Message>
               <Message align="end" style={{ width: "100%" }}>
-                <MessageAvatar><Avatar size="sm" initials="TÚ" status="success" statusLabel="En línea" /></MessageAvatar>
+                <MessageAvatar>
+                  <Avatar
+                    size="sm"
+                    initials="TÚ"
+                    status="success"
+                    statusLabel="En línea"
+                  />
+                </MessageAvatar>
                 <MessageContent>
                   <MessageHeader>Tú</MessageHeader>
                   <Bubble>¡Hola! ¿Cómo va tu envío?</Bubble>
@@ -1839,7 +2158,14 @@ export const SHOWCASES: Record<string, Showcase> = {
                 </MessageContent>
               </Message>
               <Message align="start" style={{ width: "100%" }}>
-                <MessageAvatar><Avatar size="sm" initials="MG" status="success" statusLabel="En línea" /></MessageAvatar>
+                <MessageAvatar>
+                  <Avatar
+                    size="sm"
+                    initials="MG"
+                    status="success"
+                    statusLabel="En línea"
+                  />
+                </MessageAvatar>
                 <MessageContent>
                   <MessageHeader>María</MessageHeader>
                   <Bubble variant="muted">Déjame revisarlo por ti.</Bubble>
@@ -1847,7 +2173,14 @@ export const SHOWCASES: Record<string, Showcase> = {
                 </MessageContent>
               </Message>
               <Message align="end" style={{ width: "100%" }}>
-                <MessageAvatar><Avatar size="sm" initials="TÚ" status="success" statusLabel="En línea" /></MessageAvatar>
+                <MessageAvatar>
+                  <Avatar
+                    size="sm"
+                    initials="TÚ"
+                    status="success"
+                    statusLabel="En línea"
+                  />
+                </MessageAvatar>
                 <MessageContent>
                   <MessageHeader>Tú</MessageHeader>
                   <Bubble>¡Hola! ¿Cómo va tu envío?</Bubble>
@@ -1855,8 +2188,15 @@ export const SHOWCASES: Record<string, Showcase> = {
                 </MessageContent>
               </Message>
             </MessageScrollerMessages>
-            <MessageScrollerInput onAttach={() => {}} onSend={() => {}} attachLabel="Adjuntar" sendLabel="Enviar">
-              <p>Hola, quiero saber cuándo llega el envío que hice ayer a México…</p>
+            <MessageScrollerInput
+              onAttach={() => {}}
+              onSend={() => {}}
+              attachLabel="Adjuntar"
+              sendLabel="Enviar"
+            >
+              <p>
+                Hola, quiero saber cuándo llega el envío que hice ayer a México…
+              </p>
             </MessageScrollerInput>
           </MessageScroller>
         </Demo>
