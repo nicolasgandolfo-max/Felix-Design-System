@@ -100,7 +100,7 @@ function ExampleFigure({ example, tr }: { example: Example; tr: Tr }) {
             loading="lazy"
             src={example.img}
             alt={L(tr, example.alt)}
-            className="h-auto w-full max-w-[220px]"
+            className="h-auto w-auto max-w-full max-h-[640px]"
           />
         </div>
         <div
@@ -169,7 +169,7 @@ function BlockView({ block, tr }: { block: Block; tr: Tr }) {
                   loading="lazy"
                   src={item.img}
                   alt={L(tr, item.alt)}
-                  className="h-auto w-full max-w-[220px]"
+                  className="h-auto w-auto max-w-full max-h-[620px]"
                 />
               </div>
               <figcaption className="mt-3 font-sans text-sm font-medium leading-[1.6] tracking-[-0.01em] text-pretty text-foreground">
@@ -384,14 +384,14 @@ export function PatternPage() {
           <p className="lead">{L(tr, pattern.lede)}</p>
         </div>
 
-        <div className="flex flex-wrap items-start gap-3 md:max-w-[340px] md:justify-end">
+        <div className="flex flex-wrap items-start gap-3 md:max-w-[340px] xl:max-w-[480px] md:justify-end">
           {heroImgs.map((src, i) => (
             <img
               key={i}
               /* El alt describe el conjunto; las láminas extra son decorativas. */
               alt={i === 0 ? L(tr, pattern.heroAlt) : ""}
               src={src}
-              className="h-auto w-[160px] max-w-full"
+              className="h-auto w-[160px] max-w-full xl:w-[220px]"
             />
           ))}
         </div>
