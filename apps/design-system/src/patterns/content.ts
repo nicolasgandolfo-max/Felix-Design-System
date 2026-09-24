@@ -1641,9 +1641,9 @@ const useOfEmojis: Pattern = {
         {
           type: "prose",
           text: {
-            es: "Las banderas están permitidas, pero no son emojis de estado y no participan del mapeo anterior.",
-            en: "Flags are permitted, but they are not state emoji and do not participate in the mapping above.",
-            pt: "As bandeiras são permitidas, mas não são emojis de estado e não participam do mapeamento acima.",
+            es: "Las banderas están permitidas, pero no son emojis de estado y no participan del mapeo anterior. Una bandera tiene un solo trabajo: identificar el país al que va el dinero.",
+            en: "Flags are permitted, but they are not state emoji and do not participate in the mapping above. A flag has one job: to identify the country the money is going to.",
+            pt: "As bandeiras são permitidas, mas não são emojis de estado e não participam do mapeamento acima. Uma bandeira tem um só trabalho: identificar o país para onde o dinheiro vai.",
           },
         },
         {
@@ -1651,6 +1651,7 @@ const useOfEmojis: Pattern = {
           columns: [
             { es: "Regla", en: "Rule", pt: "Regra" },
             { es: "Estándar", en: "Standard", pt: "Padrão" },
+            { es: "Ejemplo", en: "Example", pt: "Exemplo" },
           ],
           rows: [
             [
@@ -1660,9 +1661,31 @@ const useOfEmojis: Pattern = {
                 pt: "Rotula um destino, não um estado",
               },
               {
-                es: "Una bandera identifica un corredor o un país. Nunca sustituye a un emoji de estado ni aparece junto a uno en el mismo mensaje",
-                en: "A flag identifies a corridor or country. It never substitutes for, or appears alongside, a state emoji in the same message",
-                pt: "Uma bandeira identifica um corredor ou um país. Nunca substitui um emoji de estado nem aparece ao lado de um na mesma mensagem",
+                es: "Una bandera identifica un corredor o un país. Nunca sustituye a un emoji de estado ni aparece junto a uno en el mismo mensaje. Si un mensaje necesita un marcador de estado, gana el marcador y la bandera se quita.",
+                en: "A flag identifies a corridor or country. It never substitutes for, or appears alongside, a state emoji in the same message. If a message needs a state marker, the state marker wins and the flag is dropped.",
+                pt: "Uma bandeira identifica um corredor ou um país. Nunca substitui um emoji de estado nem aparece ao lado de um na mesma mensagem. Se uma mensagem precisa de um marcador de estado, o marcador vence e a bandeira sai.",
+              },
+              {
+                es: '"Tu envío a Venezuela llegó. ✅" ✓ · "Tu envío a Venezuela 🇻🇪 llegó. ✅" ✗',
+                en: '"Tu envío a Venezuela llegó. ✅" ✓ · "Tu envío a Venezuela 🇻🇪 llegó. ✅" ✗',
+                pt: '"Tu envío a Venezuela llegó. ✅" ✓ · "Tu envío a Venezuela 🇻🇪 llegó. ✅" ✗',
+              },
+            ],
+            [
+              {
+                es: "Siempre pegada al nombre del país",
+                en: "Always attached to the country name",
+                pt: "Sempre junto ao nome do país",
+              },
+              {
+                es: "En prosa, una bandera aparece solo inmediatamente después del nombre del país que representa, separada por un espacio. Nunca va sola, nunca precede al nombre y nunca se pega a una ciudad, un banco, una moneda o una persona.",
+                en: "In prose, a flag appears only immediately after the name of the country it represents, separated by a space. It never stands alone, never precedes the name, and never attaches to a city, a bank, a currency or a person.",
+                pt: "Em prosa, uma bandeira aparece só imediatamente depois do nome do país que representa, separada por um espaço. Nunca fica sozinha, nunca precede o nome e nunca se junta a uma cidade, um banco, uma moeda ou uma pessoa.",
+              },
+              {
+                es: '"Tu envío a Venezuela 🇻🇪 está en camino." ✓ · "Tu envío 🇻🇪 está en camino." ✗',
+                en: '"Tu envío a Venezuela 🇻🇪 está en camino." ✓ · "Tu envío 🇻🇪 está en camino." ✗',
+                pt: '"Tu envío a Venezuela 🇻🇪 está en camino." ✓ · "Tu envío 🇻🇪 está en camino." ✗',
               },
             ],
             [
@@ -1672,21 +1695,48 @@ const useOfEmojis: Pattern = {
                 pt: "Uma por linha, em contextos de lista",
               },
               {
-                es: "Permitida en listas de selección de corredor y en etiquetas de país, donde cada bandera va en su propia línea. No permitida a mitad de oración en prosa",
-                en: "Permitted in corridor selection lists and country labels, where each flag sits on its own line. Not permitted mid-sentence in prose",
-                pt: "Permitida em listas de seleção de corredor e em rótulos de país, onde cada bandeira vai em sua própria linha. Não permitida no meio da frase em prosa",
+                es: "En listas de selección de corredor y etiquetas de país, la bandera abre la fila y el nombre del país la sigue. Una bandera por fila.",
+                en: "In corridor selection lists and country labels, the flag opens the row and the country name follows. One flag per row.",
+                pt: "Em listas de seleção de corredor e rótulos de país, a bandeira abre a linha e o nome do país vem depois. Uma bandeira por linha.",
+              },
+              {
+                es: '"🇻🇪 Venezuela" como fila de lista',
+                en: '"🇻🇪 Venezuela" as a list row',
+                pt: '"🇻🇪 Venezuela" como linha de lista',
               },
             ],
             [
               {
-                es: "Nunca junto a un monto",
-                en: "Never adjacent to an amount",
-                pt: "Nunca ao lado de um valor",
+                es: "Una por mensaje",
+                en: "One per message",
+                pt: "Uma por mensagem",
               },
               {
-                es: "Misma restricción que los emojis de estado. Una bandera junto a una cifra compite con el número que el usuario vino a verificar",
-                en: "Same constraint as state emoji. A flag next to a figure competes with the number the user came to verify",
-                pt: "Mesma restrição dos emojis de estado. Uma bandeira ao lado de uma cifra compete com o número que o usuário veio verificar",
+                es: "Máximo una bandera por mensaje, sea en prosa o en una fila de lista. Dos países en una misma oración no llevan bandera: el contraste lo cargan los nombres.",
+                en: "Maximum one flag per message, whether in prose or in a list row. Two countries in one sentence take no flags: the names carry the contrast.",
+                pt: "No máximo uma bandeira por mensagem, seja em prosa ou em uma linha de lista. Dois países na mesma frase não levam bandeira: o contraste fica por conta dos nomes.",
+              },
+              {
+                es: '"Enviamos a Colombia y Venezuela." ✓ · "Colombia 🇨🇴 y Venezuela 🇻🇪" ✗',
+                en: '"Enviamos a Colombia y Venezuela." ✓ · "Colombia 🇨🇴 y Venezuela 🇻🇪" ✗',
+                pt: '"Enviamos a Colombia y Venezuela." ✓ · "Colombia 🇨🇴 y Venezuela 🇻🇪" ✗',
+              },
+            ],
+            [
+              {
+                es: "Nunca junto a un monto o una moneda",
+                en: "Never adjacent to an amount or a currency",
+                pt: "Nunca ao lado de um valor ou de uma moeda",
+              },
+              {
+                es: "Misma restricción que los emojis de estado. Una bandera junto a una cifra, una tasa o un símbolo de moneda compite con el número que el usuario vino a verificar, y una bandera no identifica una moneda: EC y SV envían en USD.",
+                en: "Same constraint as state emoji. A flag next to a figure, a rate or a currency symbol competes with the number the user came to verify, and a flag does not identify a currency: EC and SV send in USD.",
+                pt: "Mesma restrição dos emojis de estado. Uma bandeira ao lado de uma cifra, de uma taxa ou de um símbolo de moeda compete com o número que o usuário veio verificar, e uma bandeira não identifica uma moeda: EC e SV enviam em USD.",
+              },
+              {
+                es: '"Recibirá R$1.500,50 BRL" ✓ · "R$1.500,50 🇧🇷" ✗',
+                en: '"Recibirá R$1.500,50 BRL" ✓ · "R$1.500,50 🇧🇷" ✗',
+                pt: '"Recibirá R$1.500,50 BRL" ✓ · "R$1.500,50 🇧🇷" ✗',
               },
             ],
             [
@@ -1696,18 +1746,54 @@ const useOfEmojis: Pattern = {
                 pt: "Nunca um sinal de idioma",
               },
               {
-                es: "Una bandera marca a dónde va el dinero. No marca qué idioma lee el usuario, dónde vive ni la nacionalidad del destinatario",
-                en: "A flag marks where the money is going. It does not mark what language the user reads, where the user lives, or the recipient's nationality",
-                pt: "Uma bandeira marca para onde o dinheiro vai. Não marca que idioma o usuário lê, onde ele mora nem a nacionalidade do destinatário",
+                es: "Una bandera marca a dónde va el dinero. No marca qué idioma lee el usuario, dónde vive ni la nacionalidad del destinatario.",
+                en: "A flag marks where the money is going. It does not mark what language the user reads, where the user lives, or the recipient's nationality.",
+                pt: "Uma bandeira marca para onde o dinheiro vai. Não marca que idioma o usuário lê, onde ele mora nem a nacionalidade do destinatário.",
               },
+              { es: "—", en: "—", pt: "—" },
+            ],
+            [
+              {
+                es: "Nunca carga el significado",
+                en: "Never load-bearing",
+                pt: "Nunca carrega o significado",
+              },
+              {
+                es: "El nombre del país está siempre en el texto. La bandera es redundancia, nunca la única portadora del destino. Los lectores de pantalla la anuncian como «bandera: Venezuela»; algunos clientes la muestran como «VE».",
+                en: "The country name is always present in text. The flag is redundancy, never the only carrier of the destination. Screen readers announce it as “flag: Venezuela”; some clients render it as “VE”.",
+                pt: "O nome do país está sempre no texto. A bandeira é redundância, nunca a única portadora do destino. Os leitores de tela a anunciam como “bandeira: Venezuela”; alguns clientes a mostram como “VE”.",
+              },
+              { es: "—", en: "—", pt: "—" },
+            ],
+            [
+              {
+                es: "Ni en contextos prohibidos ni en botones",
+                en: "Not in prohibited contexts or buttons",
+                pt: "Nem em contextos proibidos nem em botões",
+              },
+              {
+                es: "Los contextos prohibidos de los emojis de estado aplican aquí por completo: transacciones fallidas, copy de KYC o compliance, avisos legales, derivación a un humano, estados de falla parcial. Las banderas nunca aparecen en etiquetas de botón.",
+                en: "The prohibited contexts for state emoji apply here in full: failed transactions, KYC or compliance copy, legal disclosures, human handoff, partial-failure states. Flags never appear in button labels.",
+                pt: "Os contextos proibidos dos emojis de estado valem aqui por inteiro: transações com falha, copy de KYC ou compliance, avisos legais, transferência para um humano, estados de falha parcial. As bandeiras nunca aparecem em rótulos de botão.",
+              },
+              { es: "—", en: "—", pt: "—" },
             ],
           ],
         },
         {
           type: "prose",
           text: {
-            es: "Corredores soportados: 🇲🇽 MX · 🇬🇹 GT · 🇭🇳 HN · 🇸🇻 SV · 🇩🇴 DO · 🇨🇴 CO · 🇳🇮 NI · 🇪🇨 EC · 🇵🇪 PE · 🇨🇷 CR",
-            en: "Supported corridors: 🇲🇽 MX · 🇬🇹 GT · 🇭🇳 HN · 🇸🇻 SV · 🇩🇴 DO · 🇨🇴 CO · 🇳🇮 NI · 🇪🇨 EC · 🇵🇪 PE · 🇨🇷 CR",
+            es: "Corredores soportados: 🇲🇽 MX · 🇬🇹 GT · 🇭🇳 HN · 🇸🇻 SV · 🇩🇴 DO · 🇨🇴 CO · 🇳🇮 NI · 🇪🇨 EC · 🇵🇪 PE · 🇨🇷 CR · 🇧🇷 BR",
+            en: "Supported corridors: 🇲🇽 MX · 🇬🇹 GT · 🇭🇳 HN · 🇸🇻 SV · 🇩🇴 DO · 🇨🇴 CO · 🇳🇮 NI · 🇪🇨 EC · 🇵🇪 PE · 🇨🇷 CR · 🇧🇷 BR",
+            pt: "Corredores suportados: 🇲🇽 MX · 🇬🇹 GT · 🇭🇳 HN · 🇸🇻 SV · 🇩🇴 DO · 🇨🇴 CO · 🇳🇮 NI · 🇪🇨 EC · 🇵🇪 PE · 🇨🇷 CR · 🇧🇷 BR",
+          },
+        },
+        {
+          type: "note",
+          text: {
+            es: "Pendiente de ratificación: 🇻🇪 VE — se agrega cuando los corredores estén confirmados en vivo.",
+            en: "Pending ratification: 🇻🇪 VE — added once the corridors are confirmed live.",
+            pt: "Pendente de ratificação: 🇻🇪 VE — entra quando os corredores estiverem confirmados em produção.",
           },
         },
         {
