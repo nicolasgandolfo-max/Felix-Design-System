@@ -1345,19 +1345,19 @@ const useOfEmojis: Pattern = {
             ],
             [
               {
-                es: "Uno por mensaje, al inicio",
-                en: "One per message, at the start",
-                pt: "Um por mensagem, no início",
+                es: "Uno por burbuja: las listas lo abren, la prosa lo cierra",
+                en: "One per bubble: lists lead with it, prose ends with it",
+                pt: "Um por balão: listas abrem com ele, a prosa fecha com ele",
               },
               {
-                es: "Máximo un emoji, anclado al inicio de la línea que califica. Nunca disperso a mitad de oración ni junto a un monto, donde compite con la cifra que el usuario vino a verificar.",
-                en: "Maximum one emoji, anchored at the start of the line it qualifies. Never scattered mid-sentence and never adjacent to an amount, where it competes with the figure the user came to verify.",
-                pt: "No máximo um emoji, ancorado no início da linha que qualifica. Nunca espalhado no meio da frase nem ao lado de um valor, onde compete com a cifra que o usuário veio verificar.",
+                es: "Máximo un emoji por mensaje, y «mensaje» es la burbuja entera, no cada línea dentro de ella. La forma decide dónde va: si el mensaje es una lista estructurada, el emoji la abre; si es prosa, el emoji cierra la última oración. Nunca a mitad de oración, bajo ninguna circunstancia, y nunca junto a un monto, donde compite con la cifra que el usuario vino a verificar. Dos excepciones admiten más de uno: el resumen de transacción y el menú secundario.",
+                en: "At most one emoji per message, and “message” means the whole bubble, not each line inside it. Form decides placement: if the message is a structured list, the emoji leads it; if it is prose, the emoji closes the last sentence. Never mid-sentence, under any circumstance, and never adjacent to an amount, where it competes with the figure the user came to verify. Two exceptions allow more than one: the transaction summary and the secondary menu.",
+                pt: "No máximo um emoji por mensagem, e “mensagem” é o balão inteiro, não cada linha dentro dele. A forma decide a posição: se a mensagem é uma lista estruturada, o emoji a abre; se é prosa, o emoji fecha a última frase. Nunca no meio da frase, em nenhuma circunstância, e nunca ao lado de um valor, onde compete com a cifra que o usuário veio verificar. Duas exceções admitem mais de um: o resumo de transação e o menu secundário.",
               },
               {
-                es: "Un emoji a cada lado del monto ✗",
-                en: "An emoji on either side of the amount ✗",
-                pt: "Um emoji de cada lado do valor ✗",
+                es: '"Tu envío está en camino ⏳" ✓ · "Tu envío ⏳ está en camino" ✗',
+                en: '"Tu envío está en camino ⏳" ✓ · "Tu envío ⏳ está en camino" ✗',
+                pt: '"Tu envío está en camino ⏳" ✓ · "Tu envío ⏳ está en camino" ✗',
               },
             ],
             [
