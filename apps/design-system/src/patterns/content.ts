@@ -1690,19 +1690,19 @@ const useOfEmojis: Pattern = {
             ],
             [
               {
-                es: "Una por línea, en contextos de lista",
-                en: "One per line, in list contexts",
-                pt: "Uma por linha, em contextos de lista",
+                es: "En contextos de lista",
+                en: "In list contexts",
+                pt: "Em contextos de lista",
               },
               {
-                es: "En listas de selección de corredor y etiquetas de país, la bandera abre la fila y el nombre del país la sigue. Una bandera por fila.",
-                en: "In corridor selection lists and country labels, the flag opens the row and the country name follows. One flag per row.",
-                pt: "Em listas de seleção de corredor e rótulos de país, a bandeira abre a linha e o nome do país vem depois. Uma bandeira por linha.",
+                es: "Una lista de selección de corredor no lleva banderas: sus filas viven en un mismo mensaje y una bandera por fila rompería el límite de un emoji por burbuja; los nombres de país ya distinguen las opciones. La bandera cabe solo en una etiqueta de país aislada —una fila única o un encabezado de sección—, abriendo la línea con el nombre detrás.",
+                en: "A corridor selection list carries no flags: its rows live in one message and a flag per row would break the one-emoji-per-bubble limit; the country names already tell the options apart. A flag fits only in an isolated country label — a single row or a section header — opening the line, with the name after it.",
+                pt: "Uma lista de seleção de corredor não leva bandeiras: suas linhas vivem em uma mesma mensagem e uma bandeira por linha quebraria o limite de um emoji por balão; os nomes de país já distinguem as opções. A bandeira cabe só em um rótulo de país isolado — uma linha única ou um cabeçalho de seção —, abrindo a linha com o nome depois.",
               },
               {
-                es: '"🇻🇪 Venezuela" como fila de lista',
-                en: '"🇻🇪 Venezuela" as a list row',
-                pt: '"🇻🇪 Venezuela" como linha de lista',
+                es: '"🇻🇪 Venezuela" como etiqueta de país ✓ · lista de corredores con bandera en cada fila ✗',
+                en: '"🇻🇪 Venezuela" as a country label ✓ · corridor list with a flag on every row ✗',
+                pt: '"🇻🇪 Venezuela" como rótulo de país ✓ · lista de corredores com bandeira em cada linha ✗',
               },
             ],
             [
@@ -1712,9 +1712,9 @@ const useOfEmojis: Pattern = {
                 pt: "Uma por mensagem",
               },
               {
-                es: "Máximo una bandera por mensaje, sea en prosa o en una fila de lista. Dos países en una misma oración no llevan bandera: el contraste lo cargan los nombres.",
-                en: "Maximum one flag per message, whether in prose or in a list row. Two countries in one sentence take no flags: the names carry the contrast.",
-                pt: "No máximo uma bandeira por mensagem, seja em prosa ou em uma linha de lista. Dois países na mesma frase não levam bandeira: o contraste fica por conta dos nomes.",
+                es: "Máximo una bandera por mensaje: la burbuja entera cuenta como un todo, sea prosa o lista, y la bandera nunca convive con un emoji de estado, así que el límite de un emoji por burbuja se mantiene. Dos países en una misma oración no llevan bandera: el contraste lo cargan los nombres.",
+                en: "Maximum one flag per message: the whole bubble counts as one, prose or list, and a flag never shares it with a state emoji, so the one-emoji-per-bubble limit holds. Two countries in one sentence take no flags: the names carry the contrast.",
+                pt: "No máximo uma bandeira por mensagem: o balão inteiro conta como um só, prosa ou lista, e a bandeira nunca convive com um emoji de estado, então o limite de um emoji por balão se mantém. Dois países na mesma frase não levam bandeira: o contraste fica por conta dos nomes.",
               },
               {
                 es: '"Enviamos a Colombia y Venezuela." ✓ · "Colombia 🇨🇴 y Venezuela 🇻🇪" ✗',
