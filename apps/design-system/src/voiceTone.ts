@@ -153,7 +153,7 @@ export const VT_SECTIONS: VtSection[] = [
             [
               "Under $1,000",
               "No thousands separator. The number is unambiguous in any locale.",
-              "$100.00 · $500.00 · $999.00",
+              "$100 · $500 · $999",
             ],
             [
               "$1,000 and above",
@@ -162,13 +162,18 @@ export const VT_SECTIONS: VtSection[] = [
             ],
             [
               "Decimals",
-              "Always two decimal places, always visible. A misread decimal is a real financial risk.",
-              "$1,500.50 · R$1.500,50",
+              "Whole amounts stay whole — no `.00`. When an amount has cents, show both decimal places, always: never one, never a bare separator. A misread decimal is a real financial risk, and a `.00` on every figure trains the eye to skip the decimals that do matter.",
+              "$200 · $1,500.50 · R$1.500,50",
             ],
             [
               "Mixed currencies",
               "When two currencies appear in the same message, each uses its own notation. The currency symbol is the visual anchor.",
               "See example below",
+            ],
+            [
+              "Emphasis in chat copy",
+              "In a WhatsApp message the amount is the variable the user must verify, so it is the bold element of the message — WhatsApp `*bold*`, never Markdown `**`. One bold element per message; two only in a transaction summary. Defined in Text formatting & message length (Conversational guidelines); this section does not override it.",
+              "“Envías *$200* a Ana”",
             ],
           ],
         },
@@ -196,8 +201,8 @@ export const VT_SECTIONS: VtSection[] = [
       },
       {
         k: "code",
-        label: "Mixed-currency message — correct format",
-        t: "✓  You are sending $1,500.00 USD\n✓  Your recipient will receive R$26.250,75 BRL",
+        label: "Mixed-currency transaction summary — correct format",
+        t: "✓  You are sending *$1,500 USD*\n✓  Your recipient will receive *R$26.250,75 BRL*",
       },
     ],
   },
@@ -1363,7 +1368,7 @@ export const VT_SECTIONS: VtSection[] = [
       {
         k: "code",
         label: "Example — handoff and re-entry",
-        t: "Félix    No pudimos resolver esto por aquí.\n\n         [ Hablar con un agente ]\n\nFélix    Te pasamos con un agente. Ya tiene tu número de referencia\n         y lo que intentaste hasta ahora.\n\nAgente   Hola, soy Ana. Ya estoy revisando tu caso.\n\nFélix    Listo, seguimos con tu envío a Colombia de $200.00 USD.",
+        t: "Félix    No pudimos resolver esto por aquí.\n\n         [ Hablar con un agente ]\n\nFélix    Te pasamos con un agente. Ya tiene tu número de referencia\n         y lo que intentaste hasta ahora.\n\nAgente   Hola, soy Ana. Ya estoy revisando tu caso.\n\nFélix    Listo, seguimos con tu envío a Colombia de $200 USD.",
       },
       { k: "h", id: "handoff-moment", t: "The handoff moment" },
       {
@@ -1462,7 +1467,7 @@ export const VT_SECTIONS: VtSection[] = [
             [
               "Restore context, not the flow from zero",
               "Re-entry names where the user was. It never restarts a step the user already completed.",
-              "“Seguimos con tu envío a Colombia de $200.00 USD.”",
+              "“Seguimos con tu envío a Colombia de $200 USD.”",
             ],
             [
               "Never re-ask data already given",
