@@ -1384,14 +1384,14 @@ const useOfEmojis: Pattern = {
                 pt: "Contextos proibidos",
               },
               {
-                es: "Sin emojis en transacciones fallidas, copy de KYC o compliance, avisos legales, derivación a un agente humano o estados de falla parcial. Junto a dinero demorado o retenido, un emoji se lee como minimizar el problema.",
-                en: "No emoji in failed transactions, KYC or compliance copy, legal disclosures, handoff to a human agent, or partial-failure states. Next to money that is late or held, an emoji reads as minimizing the problem.",
-                pt: "Sem emojis em transações com falha, copy de KYC ou compliance, avisos legais, transferência para um agente humano ou estados de falha parcial. Ao lado de dinheiro atrasado ou retido, um emoji soa como minimizar o problema.",
+                es: "Sin emojis en transacciones fallidas, copy de KYC o compliance, avisos legales, derivación a un agente humano o estados de falla parcial: junto a dinero demorado o retenido, un emoji se lee como minimizar el problema. Única excepción: 🔔 ❌ ⏳ 🔒 ⚠️, marcadores de estado que ayudan a entender el mensaje y a centrar la atención del usuario. Uno solo, colocado según la regla anterior, y nunca uno de celebración o ánimo.",
+                en: "No emoji in failed transactions, KYC or compliance copy, legal disclosures, handoff to a human agent, or partial-failure states: next to money that is late or held, an emoji reads as minimizing the problem. One exception: 🔔 ❌ ⏳ 🔒 ⚠️, state markers that help the user understand the message and focus their attention. One only, placed per the rule above, and never a celebration or mood emoji.",
+                pt: "Sem emojis em transações com falha, copy de KYC ou compliance, avisos legais, transferência para um agente humano ou estados de falha parcial: ao lado de dinheiro atrasado ou retido, um emoji soa como minimizar o problema. Única exceção: 🔔 ❌ ⏳ 🔒 ⚠️, marcadores de estado que ajudam a entender a mensagem e a centrar a atenção do usuário. Um só, posicionado conforme a regra anterior, e nunca um de celebração ou ânimo.",
               },
               {
-                es: "Error que involucra fondos ✗",
-                en: "Error involving funds ✗",
-                pt: "Erro que envolve fundos ✗",
+                es: "Error que involucra fondos: con ❌ ✓ · con cualquier otro emoji ✗",
+                en: "Error involving funds: with ❌ ✓ · with any other emoji ✗",
+                pt: "Erro que envolve fundos: com ❌ ✓ · com qualquer outro emoji ✗",
               },
             ],
             [
@@ -1506,9 +1506,9 @@ const useOfEmojis: Pattern = {
                 pt: "Campo faltando, taxa prestes a vencer, documento pendente",
               },
               {
-                es: "Se lee como un recordatorio, no como una alarma. Reservado solo para estados accionables por el usuario, nunca para fallas: esas caen en contextos prohibidos",
-                en: "Reads as a reminder, not an alarm. Reserved for user-actionable states only, never for failures — those fall under prohibited contexts",
-                pt: "Soa como um lembrete, não como um alarme. Reservado só para estados acionáveis pelo usuário, nunca para falhas: essas caem em contextos proibidos",
+                es: "Se lee como un recordatorio, no como una alarma. Reservado para estados accionables por el usuario; en los contextos prohibidos entra solo como uno de los cinco marcadores admitidos",
+                en: "Reads as a reminder, not an alarm. Reserved for user-actionable states; in the prohibited contexts it enters only as one of the five admitted markers",
+                pt: "Soa como um lembrete, não como um alarme. Reservado para estados acionáveis pelo usuário; nos contextos proibidos entra só como um dos cinco marcadores admitidos",
               },
             ],
             [
