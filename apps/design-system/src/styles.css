@@ -2064,8 +2064,9 @@ body {
 }
 .sys-meta-strip {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 40px;
+  gap: 12px 40px;
   padding: 18px 0;
   border-top: 1px solid rgba(8, 36, 34, 0.12);
   border-bottom: 1px solid rgba(8, 36, 34, 0.12);
@@ -2086,6 +2087,10 @@ body {
 .sys-meta-strip .val {
   color: #082422;
   font-weight: 600;
+}
+/* Acción de la franja (descargar .md): pegada al borde derecho. */
+.sys-meta-strip .meta-action {
+  margin-left: auto;
 }
 
 /* Grid Section */
