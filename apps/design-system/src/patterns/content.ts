@@ -339,11 +339,8 @@ const openInput: Pattern = {
     en: "A question answered with free text, for when the answer can't be listed in advance (a name, a custom amount, a city). The user types, and the bot has to read whatever comes back.",
     pt: "Uma pergunta respondida com texto livre, para quando a resposta não pode ser listada de antemão (um nome, um valor personalizado, uma cidade). O usuário digita, e o bot precisa ler o que vier.",
   },
-  hero: `${ASSETS}/open-input-hero-a.png`,
-  heroDetail: [
-    `${ASSETS}/open-input-hero-a.png`,
-    `${ASSETS}/open-input-hero-b.png`,
-  ],
+  hero: `${ASSETS}/open-input-hero.png`,
+  heroDetail: [`${ASSETS}/open-input-hero.png`],
   heroAlt: {
     es: "Pantalla de WhatsApp preguntando a quién enviar dinero, con una pista de formato y un ejemplo",
     en: "WhatsApp screen asking who to send money to, with a format hint and a worked example",
@@ -604,11 +601,8 @@ const mixedInput: Pattern = {
     en: "A question that offers the most common answers as buttons and still lets the user type their own. A fast path for the majority, an open door for the long tail.",
     pt: "Uma pergunta que oferece as respostas mais comuns como botões e ainda deixa digitar a própria. Um caminho rápido para a maioria, uma porta aberta para a cauda longa.",
   },
-  hero: `${ASSETS}/mixed-input-hero-a.png`,
-  heroDetail: [
-    `${ASSETS}/mixed-input-hero-a.png`,
-    `${ASSETS}/mixed-input-hero-b.png`,
-  ],
+  hero: `${ASSETS}/mixed-input-hero.png`,
+  heroDetail: [`${ASSETS}/mixed-input-hero.png`],
   heroAlt: {
     es: "Pantalla de WhatsApp con botones de montos comunes y la opción de escribir un monto propio",
     en: "WhatsApp screen with common amount buttons plus the option to type a custom amount",
@@ -1944,6 +1938,54 @@ const useOfEmojis: Pattern = {
                 en: "Three celebratory emoji turn a duty fulfilled into a party and bury the state.",
               },
             },
+            {
+              tone: "do",
+              img: `${ASSETS}/emojis-do-4.png`,
+              alt: {
+                es: "Pregunta de monto para Venezuela con la bandera 🇻🇪 junto al país y la tasa de cambio sola, sin emojis",
+                en: "Amount question for Venezuela with the 🇻🇪 flag beside the country and the exchange rate standing alone",
+              },
+              caption: {
+                es: "Una bandera identifica un corredor o un país.",
+                en: "A flag identifies a corridor or country.",
+              },
+            },
+            {
+              tone: "dont",
+              img: `${ASSETS}/emojis-dont-4.png`,
+              alt: {
+                es: "La misma pregunta con 🤑 y 💵 pegados a la tasa de cambio",
+                en: "The same question with 🤑 and 💵 attached to the exchange rate",
+              },
+              caption: {
+                es: "Prohibidos junto a los montos.",
+                en: "Prohibited next to amounts.",
+              },
+            },
+            {
+              tone: "do",
+              img: `${ASSETS}/emojis-do-5.png`,
+              alt: {
+                es: "Aviso «Estamos generando tu enlace de pago» con un solo ⏳ al final",
+                en: 'Notice "Estamos generando tu enlace de pago" with a single ⏳ at the end',
+              },
+              caption: {
+                es: "Un solo marcador de estado para un proceso en marcha: ⏳ dice que el sistema está trabajando y la frase lleva el resto.",
+                en: "One state marker for a process in motion: ⏳ says the system is working, and the sentence carries the rest.",
+              },
+            },
+            {
+              tone: "dont",
+              img: `${ASSETS}/emojis-dont-5.png`,
+              alt: {
+                es: "Aviso «Tu envío está en revisión» con el mismo ⏳",
+                en: 'Notice "Tu envío está en revisión" with the same ⏳',
+              },
+              caption: {
+                es: "El mismo emoji en el contexto equivocado: esto es una retención por revisión. Junto a dinero retenido, un emoji se lee como minimizar el problema.",
+                en: "Same emoji, wrong context: this is a screening hold. Next to money that is held, an emoji reads as minimizing the problem.",
+              },
+            },
           ],
         },
       ],
@@ -2411,35 +2453,27 @@ const formatHints: Pattern = {
    adelante se suman otros. Los dos abren una experiencia nativa sobre el chat
    desde un mensaje de lanzamiento con botón de acción.
 
-   Las dos pantallas del formulario ya salieron de Figma y se usan tanto en el
-   hero como en la galería de Specs, que es lo que pide el doc en los dos
-   lugares. El resto sigue pendiente de export: cada constante apunta al
-   marcador compartido y el comentario nombra el archivo que va en su lugar, así
-   que al llegar el PNG basta con reemplazar el valor de la constante. */
-const PENDING = `${ASSETS}/placeholder-hero.svg`;
+   Todas las pantallas salen del archivo de Figma (ver el README). En Flows:
+   form, la encuesta y el formulario de datos sirven tanto al hero como a la
+   galería de Specs, que es lo que pide el doc en los dos lugares. */
 
 const FLOWS_FORM_IMG = {
   survey: `${ASSETS}/flows-form-survey.png`,
   data: `${ASSETS}/flows-form-data.png`,
-  launchDo: PENDING, // flows-form-launch-do.png
-  launchDont: PENDING, // flows-form-launch-dont.png
-  branchDo: PENDING, // flows-form-branch-do.png
-  branchDont: PENDING, // flows-form-branch-dont.png
-  validateDo: PENDING, // flows-form-validate-do.png
-  validateDont: PENDING, // flows-form-validate-dont.png
-  prefillDo: PENDING, // flows-form-prefill-do.png
-  prefillDont: PENDING, // flows-form-prefill-dont.png
+  launchDo: `${ASSETS}/flows-form-launch-do.png`,
+  launchDont: `${ASSETS}/flows-form-launch-dont.png`,
+  branchDo: `${ASSETS}/flows-form-branch-do.png`,
+  branchDont: `${ASSETS}/flows-form-branch-dont.png`,
+  validateDo: `${ASSETS}/flows-form-validate-do.png`,
+  validateDont: `${ASSETS}/flows-form-validate-dont.png`,
 };
 
 const FLOWS_VISUAL_IMG = {
-  onboarding: PENDING, // flows-visual-onboarding.png
-  feature: PENDING, // flows-visual-feature.png
-  launchDo: PENDING, // flows-visual-launch-do.png
-  launchDont: PENDING, // flows-visual-launch-dont.png
-  hierarchyDo: PENDING, // flows-visual-hierarchy-do.png
-  hierarchyDont: PENDING, // flows-visual-hierarchy-dont.png
-  lengthDo: PENDING, // flows-visual-length-do.png
-  lengthDont: PENDING, // flows-visual-length-dont.png
+  onboarding: `${ASSETS}/flows-visual-onboarding.png`,
+  launchDo: `${ASSETS}/flows-visual-launch-do.png`,
+  launchDont: `${ASSETS}/flows-visual-launch-dont.png`,
+  lengthDo: `${ASSETS}/flows-visual-length-do.png`,
+  lengthDont: `${ASSETS}/flows-visual-length-dont.png`,
 };
 
 /* Los límites salen de la documentación de Flows y están resumidos, no
@@ -2462,6 +2496,10 @@ const flowsFormSections: StandardContent = {
       {
         es: "Ramifica según la respuesta: con If o Switch, lo que el usuario contesta en el primer input decide qué campos o qué pantalla vienen después, sin pasar por el servidor.",
         en: "Branch on the answer: with If or Switch, what the user picks in the first input decides which fields or which screen come next, with no server round-trip.",
+      },
+      {
+        es: "Si una rama abre un sub-flujo, que tenga como máximo 3 pantallas y devuelva al usuario al flujo principal y a la tarea que estaba haciendo.",
+        en: "If a branch opens a sub-flow, keep it to 3 screens at most and bring the user back to the main flow and the task at hand.",
       },
       {
         es: "Mantenlo corto: pide solo lo que necesitas en ese momento y separa las preguntas compuestas pantalla por pantalla.",
@@ -2501,6 +2539,13 @@ const flowsFormSections: StandardContent = {
             {
               es: "Un mensaje interactivo con un botón de acción que abre el Flow",
               en: "An interactive message with a call-to-action button that opens the Flow",
+            },
+          ],
+          [
+            { es: "Plataformas", en: "Platforms" },
+            {
+              es: "Android 6.0 o superior e iPhone con iOS 12 o superior. No se abre en WhatsApp Web ni en otros dispositivos vinculados",
+              en: "Android 6.0 or later and iPhone on iOS 12 or later. It does not open on WhatsApp Web or other linked devices",
             },
           ],
           [
@@ -2577,13 +2622,13 @@ const flowsFormSections: StandardContent = {
         en: "Confirmed in the docs: If has existed since Flow JSON 4.0 and nests up to 3 levels deep; open_url and update_data since 6.0; ChipSelector inside a branch since 7.1. The current examples use 7.3.",
       },
       {
-        es: "Pendiente de confirmar en developers.facebook.com: el máximo de pantallas por Flow y de componentes por pantalla, y los límites de caracteres y de opciones por campo.",
-        en: "Still to confirm on developers.facebook.com: max screens per flow and components per screen, and per-field character and option limits.",
+        es: "Confirmado en la documentación: hasta 50 componentes por pantalla y sin máximo de pantallas (la pauta de Meta es que la tarea no pase de 5 minutos). Etiquetas de hasta 20 caracteres en TextInput, TextArea y Dropdown, 30 en RadioButtonsGroup y CheckboxGroup, y 40 en DatePicker; textos de ayuda de hasta 80. Opciones: de 1 a 20 en RadioButtonsGroup y CheckboxGroup, y de 1 a 200 en un Dropdown. Botón del Footer de hasta 35 caracteres.",
+        en: "Confirmed in the docs: up to 50 components per screen and no screen limit (Meta's guidance is that the task should take no more than 5 minutes). Labels of up to 20 characters on TextInput, TextArea and Dropdown, 30 on RadioButtonsGroup and CheckboxGroup, and 40 on DatePicker; helper text up to 80. Options: 1 to 20 on RadioButtonsGroup and CheckboxGroup, and 1 to 200 on a Dropdown. Footer button up to 35 characters.",
       },
     ],
     source: {
-      es: "Fuente: documentación de WhatsApp Flows para desarrolladores. Los límites que quedan abiertos no están verificados en vivo, así que confírmalos antes de construir. Confirma en ",
-      en: "Source: WhatsApp Flows developer docs. The caps still left open are not verified live, so confirm them before build. Confirm on ",
+      es: "Fuente: referencia de componentes y prácticas recomendadas de WhatsApp Flows (revisadas en septiembre de 2026). Flows cambia seguido: confirma en ",
+      en: "Source: WhatsApp Flows components reference and best practices (reviewed September 2026). Flows changes often: confirm on ",
     },
     sourceHref: WA_FLOWS_DOCS_URL,
     sourceLinkText: "developers.facebook.com",
@@ -2595,8 +2640,8 @@ const flowsFormSections: StandardContent = {
       en: "Reach for a form only when a single message can't do the job: several inputs, validation, or a short structured form. It is powerful but heavier, so keep the bar high.",
     },
     tips: {
-      es: "Agrupa los datos relacionados en una pantalla y dale a cada pantalla una sola acción clara en su Footer. Elige el tipo de input que se valida solo: un Dropdown para un conjunto conocido, un DatePicker para fechas, un input numérico para montos. Ramifica con If o Switch en lugar de pedir todo junto. Precarga con lo que ya tienes. Y que el mensaje de lanzamiento diga con claridad qué abre el botón y para qué.",
-      en: "Group related inputs on one screen and give each screen a single clear action in its Footer. Choose the input type that validates itself: a Dropdown for a known set, a DatePicker for dates, a number input for amounts. Branch with If or Switch instead of asking for everything at once. Prefill from what you already have. Make the launch message say plainly what the button opens and why.",
+      es: "Agrupa los datos relacionados en una pantalla y dale a cada pantalla una sola acción clara en su Footer. Elige el tipo de input que se valida solo: radio buttons de 1 a 3 opciones y un Dropdown desde 4, igual que botones y listas en el chat, un DatePicker para fechas, un input numérico para montos. Ramifica con If o Switch en lugar de pedir todo junto. Precarga con lo que ya tienes. Y que el mensaje de lanzamiento diga con claridad qué abre el botón y para qué. Si son varios pasos, ciérralo con una pantalla de resumen para revisar antes de enviar, y al terminar responde en el chat con los próximos pasos y a quién escribir para cambiar o cancelar.",
+      en: "Group related inputs on one screen and give each screen a single clear action in its Footer. Choose the input type that validates itself: radio buttons for 1 to 3 options and a Dropdown from 4, the same split as buttons and lists in the chat, a DatePicker for dates, a number input for amounts. Branch with If or Switch instead of asking for everything at once. Prefill from what you already have. Make the launch message say plainly what the button opens and why. If it takes several steps, end on a summary screen to review before submitting, and once it is sent, reply in the chat with the next steps and who to contact to change or cancel.",
     },
     examples: [
       {
@@ -2627,8 +2672,8 @@ const flowsFormSections: StandardContent = {
         tone: "do",
         img: FLOWS_FORM_IMG.branchDo,
         alt: {
-          es: "Formulario que según la primera respuesta muestra solo los campos que corresponden a ese caso",
-          en: "A form that, based on the first answer, shows only the fields that apply to that case",
+          es: "Encuesta NPS en dos pantallas: la escala del 0 al 10 en la primera y, en la segunda, la pregunta de seguimiento «¿Qué influyó más en tu calificación?» con opciones para elegir",
+          en: 'NPS survey over two screens: the 0 to 10 scale on the first, and on the second the follow-up "¿Qué influyó más en tu calificación?" with options to pick from',
         },
         caption: {
           es: "La primera respuesta decide qué se pregunta después.",
@@ -2639,8 +2684,8 @@ const flowsFormSections: StandardContent = {
         tone: "dont",
         img: FLOWS_FORM_IMG.branchDont,
         alt: {
-          es: "Formulario que pide todos los campos de todos los casos y aclara en el texto cuáles ignorar",
-          en: "A form asking for every case's fields at once, with copy telling the user which ones to ignore",
+          es: "La escala NPS y las dos preguntas de seguimiento en la misma pantalla, con el texto «Si pusiste de 0 a 6…» y «Si pusiste 9 o 10…»",
+          en: 'The NPS scale and both follow-up questions on one screen, with copy reading "Si pusiste de 0 a 6…" and "Si pusiste 9 o 10…"',
         },
         caption: {
           es: "Si hay que explicar qué campos ignorar, esa rama la tenía que hacer el Flow.",
@@ -2651,48 +2696,24 @@ const flowsFormSections: StandardContent = {
         tone: "do",
         img: FLOWS_FORM_IMG.validateDo,
         alt: {
-          es: "Un formulario que usa DatePicker, Dropdown y un input numérico",
-          en: "A form using a DatePicker, a Dropdown and a number input",
+          es: "Formulario con nombre, segundo nombre, apellido y segundo apellido, y la casilla «No tiene segundo apellido» marcada, que bloquea ese campo",
+          en: 'Form with first name, middle name, surname and second surname, and the "No tiene segundo apellido" box ticked, which locks that field',
         },
         caption: {
-          es: "Deja que el componente haga la validación.",
-          en: "Let the component do the validation.",
+          es: "El segundo apellido nunca queda vacío por olvido: se escribe o se marca que no hay.",
+          en: "The second surname is never left blank by accident: it's typed, or ticked as not there.",
         },
       },
       {
         tone: "dont",
         img: FLOWS_FORM_IMG.validateDont,
         alt: {
-          es: "Una caja de texto libre grande para algo que un input estructurado podría capturar",
-          en: "A big free-text box for what a structured input could capture",
+          es: "El mismo formulario con el segundo apellido vacío y la casilla sin marcar, y el botón para continuar igual activo",
+          en: "The same form with the second surname blank, the box unticked, and the button to continue still active",
         },
         caption: {
-          es: "El mismo problema de interpretación que el chat, con más fricción.",
-          en: "Same parsing problem as the chat, with more friction.",
-        },
-      },
-      {
-        tone: "do",
-        img: FLOWS_FORM_IMG.prefillDo,
-        alt: {
-          es: "Formulario con el nombre y el teléfono ya cargados y solo el campo nuevo vacío",
-          en: "A form with the name and phone already filled in and only the new field empty",
-        },
-        caption: {
-          es: "Precargado: pregunta solo lo que falta.",
-          en: "Prefilled: it only asks for what's missing.",
-        },
-      },
-      {
-        tone: "dont",
-        img: FLOWS_FORM_IMG.prefillDont,
-        alt: {
-          es: "Formulario que vuelve a pedir el nombre y el teléfono que el usuario ya había dado",
-          en: "A form asking again for the name and phone the user had already given",
-        },
-        caption: {
-          es: "Pedir de nuevo lo que ya tenemos es el paso más fácil de abandonar.",
-          en: "Asking again for what we already have is the easiest step to abandon.",
+          es: "Si el segundo apellido queda vacío por olvido, el banco no puede asociar la cuenta o la tarjeta al nombre completo.",
+          en: "Leave the second surname blank by accident and the bank can't match the account or card to the full name.",
         },
       },
     ],
@@ -2772,8 +2793,8 @@ const flowsVisualSections: StandardContent = {
         en: "Use a visual Flow when the goal is to explain or promote, not collect: onboarding to a new product, highlighting a new feature, or a push that needs images and a clear next step.",
       },
       {
-        es: "Empieza por la imagen, mantén el texto corto y cierra con una sola acción clara.",
-        en: "Lead with the image, keep the copy short, and end on one clear action.",
+        es: "Primero el texto y debajo la imagen que lo acompaña: el mensaje se lee aunque la imagen no cargue. Mantén el texto corto y cierra con una sola acción clara.",
+        en: "Text first, with the image below to support it: the message reads even if the image does not load. Keep the copy short and end on one clear action.",
       },
       {
         es: "Recurre a él cuando un mensaje de texto o una sola imagen no alcanzan para contar la historia, pero tampoco necesitas un formulario completo.",
@@ -2816,6 +2837,13 @@ const flowsVisualSections: StandardContent = {
             },
           ],
           [
+            { es: "Plataformas", en: "Platforms" },
+            {
+              es: "Android 6.0 o superior e iPhone con iOS 12 o superior. No se abre en WhatsApp Web ni en otros dispositivos vinculados",
+              en: "Android 6.0 or later and iPhone on iOS 12 or later. It does not open on WhatsApp Web or other linked devices",
+            },
+          ],
+          [
             { es: "Propósito", en: "Purpose" },
             {
               es: "Presentar y guiar, con poca o ninguna recolección de datos",
@@ -2843,7 +2871,7 @@ const flowsVisualSections: StandardContent = {
         rows: [
           [
             { es: "Medios", en: "Media" },
-            { es: "Image", en: "Image" },
+            { es: "Image, ImageCarousel", en: "Image, ImageCarousel" },
           ],
           [
             { es: "Texto", en: "Text" },
@@ -2864,13 +2892,13 @@ const flowsVisualSections: StandardContent = {
     ],
     notes: [
       {
-        es: "Pendiente de confirmar en developers.facebook.com: los límites de tamaño y formato de imagen, el máximo de pantallas y la versión actual del Flow JSON.",
-        en: "Notes to confirm on developers.facebook.com: image size and format limits, max screens, and the current Flow JSON version.",
+        es: "Confirmado en la documentación: hasta 3 imágenes por pantalla, en JPEG o PNG, de hasta 300 KB recomendados y 1 MB de carga total; hasta 50 componentes por pantalla, y el botón del Footer de hasta 35 caracteres. En Android, una imagen sin alto definido toma 400 por defecto y puede dejar espacio en blanco: define alto y proporción. No hay un máximo de pantallas: la pauta de Meta es que la tarea no pase de 5 minutos. Los ejemplos vigentes usan la versión 7.3 del Flow JSON.",
+        en: "Confirmed in the docs: up to 3 images per screen, JPEG or PNG, up to 300 KB recommended and 1 MB total payload; up to 50 components per screen, and a Footer button of up to 35 characters. On Android, an image with no height set defaults to 400 and can leave blank space: set its height and aspect ratio. There is no screen limit: Meta's guidance is that the task should take no more than 5 minutes. Current examples use Flow JSON version 7.3.",
       },
     ],
     source: {
-      es: "Fuente: documentación de WhatsApp Flows para desarrolladores. Es un resumen y no está verificado en vivo, así que confirma los límites antes de construir. Confirma en ",
-      en: "Source: WhatsApp Flows developer docs. Summarized, not re-verified live, so confirm the caps before build. Confirm on ",
+      es: "Fuente: referencia de componentes y prácticas recomendadas de WhatsApp Flows (revisadas en septiembre de 2026). Flows cambia seguido: confirma en ",
+      en: "Source: WhatsApp Flows components reference and best practices (reviewed September 2026). Flows changes often: confirm on ",
     },
     sourceHref: WA_FLOWS_DOCS_URL,
     sourceLinkText: "developers.facebook.com",
@@ -2882,8 +2910,8 @@ const flowsVisualSections: StandardContent = {
       en: "Reach for a visual Flow when a message needs to show something and move the user one step, but does not need to collect data.",
     },
     tips: {
-      es: "Una idea por pantalla, primero la imagen, el texto corto. Cierra cada pantalla con una sola acción clara. No lo estires hasta volverlo un manual: un destaque se gana la atención solo si se mantiene breve. Y que el mensaje de lanzamiento deje claro qué se va a abrir.",
-      en: "One idea per screen, image first, copy short. End every screen on a single clear action. Don't stretch it into a manual — a highlight earns attention only if it stays brief. Make the launch message set the expectation of what opens.",
+      es: "Una idea por pantalla, con el texto primero y corto, y la imagen debajo. Cierra cada pantalla con una sola acción clara. No lo estires hasta volverlo un manual: un destaque se gana la atención solo si se mantiene breve. Y que el mensaje de lanzamiento deje claro qué se va a abrir, y que la primera pantalla sea justo eso: si abre otra cosa, el usuario cierra el Flow. Marca el avance en el título de cada pantalla (1 de 3) y, al terminar, confirma en el chat qué sigue.",
+      en: "One idea per screen, with the copy first and short, and the image below it. End every screen on a single clear action. Don't stretch it into a manual — a highlight earns attention only if it stays brief. Make the launch message set the expectation of what opens, and make the first screen exactly that: if it opens something else, people close the Flow. Show progress in each screen title (1 of 3) and, once it ends, confirm in the chat what comes next.",
     },
     examples: [
       {
@@ -2912,34 +2940,10 @@ const flowsVisualSections: StandardContent = {
       },
       {
         tone: "do",
-        img: FLOWS_VISUAL_IMG.hierarchyDo,
-        alt: {
-          es: "Pantalla con la imagen arriba, dos líneas de texto y un solo botón de acción",
-          en: "Screen with the image on top, two lines of copy and a single call-to-action button",
-        },
-        caption: {
-          es: "La imagen encabeza y hay una sola acción.",
-          en: "The image leads and there is one action.",
-        },
-      },
-      {
-        tone: "dont",
-        img: FLOWS_VISUAL_IMG.hierarchyDont,
-        alt: {
-          es: "Pantalla con la imagen enterrada bajo un párrafo largo y dos botones que compiten",
-          en: "Screen with the image buried under a long paragraph and two competing buttons",
-        },
-        caption: {
-          es: "Dos acciones compiten y la imagen deja de encabezar.",
-          en: "Two actions compete and the image stops leading.",
-        },
-      },
-      {
-        tone: "do",
         img: FLOWS_VISUAL_IMG.lengthDo,
         alt: {
-          es: 'Un onboarding de dos o tres pantallas para un producto nuevo, guiado por imágenes y cerrando en "Empezar"',
-          en: 'A two or three screen onboarding for a new product, image-led, ending on "Empezar"',
+          es: "Última pantalla del onboarding de Cuenta Félix, «3 de 3»: «Te avisamos cuando llegue», con el texto arriba, una foto debajo y el botón «Recibir mi préstamo»",
+          en: 'Last screen of the Cuenta Félix onboarding, "3 de 3": "Te avisamos cuando llegue", with the copy on top, a photo below and the "Recibir mi préstamo" button',
         },
         caption: {
           es: "Muestra el valor y después un solo próximo paso claro.",
@@ -2950,8 +2954,8 @@ const flowsVisualSections: StandardContent = {
         tone: "dont",
         img: FLOWS_VISUAL_IMG.lengthDont,
         alt: {
-          es: "Un muro de diez pantallas de texto que se presenta como un destaque",
-          en: "A ten-screen wall of text pretending to be a highlight",
+          es: "Pantalla «1 de 10» del mismo onboarding, con un párrafo largo de condiciones que empuja la foto hacia abajo y el botón «Siguiente»",
+          en: 'Screen "1 de 10" of the same onboarding, with a long paragraph of terms pushing the photo down and a "Siguiente" button',
         },
         caption: {
           es: "Si necesita un manual, no es un destaque.",
@@ -2971,63 +2975,20 @@ const flowsVisual: Pattern = {
     en: "Onboarding and feature highlight",
   },
   lede: {
-    es: "Un Flow guiado por imágenes que se abre sobre el chat para mostrar, no para preguntar. Úsalo para dar la bienvenida a un producto nuevo, destacar una función o empujar algo que necesita más que un mensaje de texto.",
-    en: "An image-led Flow that opens over the chat to show, not ask. Use it to onboard someone to a new product, spotlight a new feature, or push something that needs more than a text message.",
+    es: "Un Flow visual que se abre sobre el chat para mostrar, no para preguntar. Úsalo para dar la bienvenida a un producto nuevo, destacar una función o empujar algo que necesita más que un mensaje de texto.",
+    en: "A visual Flow that opens over the chat to show, not ask. Use it to onboard someone to a new product, spotlight a new feature, or push something that needs more than a text message.",
   },
   cardBody: {
-    es: "Un Flow guiado por imágenes que se abre sobre el chat para mostrar, no para preguntar: onboarding, una función nueva o un push.",
-    en: "An image-led Flow that opens over the chat to show, not ask: onboarding, a new feature, or a push.",
+    es: "Un Flow visual que se abre sobre el chat para mostrar, no para preguntar: onboarding, una función nueva o un push.",
+    en: "A visual Flow that opens over the chat to show, not ask: onboarding, a new feature, or a push.",
   },
   hero: FLOWS_VISUAL_IMG.onboarding,
-  heroDetail: [FLOWS_VISUAL_IMG.onboarding, FLOWS_VISUAL_IMG.feature],
+  heroDetail: [FLOWS_VISUAL_IMG.onboarding],
   heroAlt: {
-    es: "Pantallas de un Flow visual: una intro de onboarding con imagen y una pantalla que destaca una función con su botón de acción",
-    en: "Screens from a visual Flow: an onboarding intro with an image and a feature highlight screen with a call to action",
+    es: "Primera pantalla del onboarding de Cuenta Félix, «1 de 3»: «Tu préstamo viene con tu Cuenta Félix», con el texto arriba y una foto debajo",
+    en: 'First screen of the Cuenta Félix onboarding, "1 de 3": "Tu préstamo viene con tu Cuenta Félix", with the copy on top and a photo below',
   },
-  // Las tres subsecciones estándar, con la galería de pantallas al final de
-  // Specs.
-  sections: standardSections(flowsVisualSections).map(
-    (section): PatternSection =>
-      section.id !== "specs"
-        ? section
-        : {
-            ...section,
-            blocks: [
-              ...section.blocks,
-              {
-                type: "heading",
-                text: { es: "Pantallas de ejemplo", en: "Example screens" },
-              },
-              {
-                type: "gallery",
-                items: [
-                  {
-                    img: FLOWS_VISUAL_IMG.onboarding,
-                    label: {
-                      es: "Intro de onboarding",
-                      en: "Onboarding intro",
-                    },
-                    alt: {
-                      es: "Primera pantalla de onboarding, con una imagen arriba del texto",
-                      en: "First onboarding screen, with an image above the copy",
-                    },
-                  },
-                  {
-                    img: FLOWS_VISUAL_IMG.feature,
-                    label: {
-                      es: "Destaque de una función",
-                      en: "Feature spotlight",
-                    },
-                    alt: {
-                      es: "Pantalla que destaca una función, con imagen y un botón de acción",
-                      en: "Screen spotlighting a feature, with an image and a call-to-action button",
-                    },
-                  },
-                ],
-              },
-            ],
-          }
-  ),
+  sections: standardSections(flowsVisualSections),
 };
 
 /** Registro. El orden aquí es el orden de la grilla en la landing. */
