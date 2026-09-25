@@ -2501,6 +2501,10 @@ const flowsFormSections: StandardContent = {
         en: "Branch on the answer: with If or Switch, what the user picks in the first input decides which fields or which screen come next, with no server round-trip.",
       },
       {
+        es: "Si una rama abre un sub-flujo, que tenga como máximo 3 pantallas y devuelva al usuario al flujo principal y a la tarea que estaba haciendo.",
+        en: "If a branch opens a sub-flow, keep it to 3 screens at most and bring the user back to the main flow and the task at hand.",
+      },
+      {
         es: "Mantenlo corto: pide solo lo que necesitas en ese momento y separa las preguntas compuestas pantalla por pantalla.",
         en: "Keep it short. Only ask what you need at that moment, and split compound questions screen by screen.",
       },
@@ -2621,13 +2625,13 @@ const flowsFormSections: StandardContent = {
         en: "Confirmed in the docs: If has existed since Flow JSON 4.0 and nests up to 3 levels deep; open_url and update_data since 6.0; ChipSelector inside a branch since 7.1. The current examples use 7.3.",
       },
       {
-        es: "Pendiente de confirmar en developers.facebook.com: el máximo de pantallas por Flow y de componentes por pantalla, y los límites de caracteres y de opciones por campo.",
-        en: "Still to confirm on developers.facebook.com: max screens per flow and components per screen, and per-field character and option limits.",
+        es: "Confirmado en la documentación: hasta 50 componentes por pantalla y sin máximo de pantallas (la pauta de Meta es que la tarea no pase de 5 minutos). Etiquetas de hasta 20 caracteres en TextInput, TextArea y Dropdown, 30 en RadioButtonsGroup y CheckboxGroup, y 40 en DatePicker; textos de ayuda de hasta 80. Opciones: de 1 a 20 en RadioButtonsGroup y CheckboxGroup, y de 1 a 200 en un Dropdown. Botón del Footer de hasta 35 caracteres.",
+        en: "Confirmed in the docs: up to 50 components per screen and no screen limit (Meta's guidance is that the task should take no more than 5 minutes). Labels of up to 20 characters on TextInput, TextArea and Dropdown, 30 on RadioButtonsGroup and CheckboxGroup, and 40 on DatePicker; helper text up to 80. Options: 1 to 20 on RadioButtonsGroup and CheckboxGroup, and 1 to 200 on a Dropdown. Footer button up to 35 characters.",
       },
     ],
     source: {
-      es: "Fuente: documentación de WhatsApp Flows para desarrolladores. Los límites que quedan abiertos no están verificados en vivo, así que confírmalos antes de construir. Confirma en ",
-      en: "Source: WhatsApp Flows developer docs. The caps still left open are not verified live, so confirm them before build. Confirm on ",
+      es: "Fuente: referencia de componentes y prácticas recomendadas de WhatsApp Flows (revisadas en septiembre de 2026). Flows cambia seguido: confirma en ",
+      en: "Source: WhatsApp Flows components reference and best practices (reviewed September 2026). Flows changes often: confirm on ",
     },
     sourceHref: WA_FLOWS_DOCS_URL,
     sourceLinkText: "developers.facebook.com",
@@ -2639,8 +2643,8 @@ const flowsFormSections: StandardContent = {
       en: "Reach for a form only when a single message can't do the job: several inputs, validation, or a short structured form. It is powerful but heavier, so keep the bar high.",
     },
     tips: {
-      es: "Agrupa los datos relacionados en una pantalla y dale a cada pantalla una sola acción clara en su Footer. Elige el tipo de input que se valida solo: un Dropdown para un conjunto conocido, un DatePicker para fechas, un input numérico para montos. Ramifica con If o Switch en lugar de pedir todo junto. Precarga con lo que ya tienes. Y que el mensaje de lanzamiento diga con claridad qué abre el botón y para qué.",
-      en: "Group related inputs on one screen and give each screen a single clear action in its Footer. Choose the input type that validates itself: a Dropdown for a known set, a DatePicker for dates, a number input for amounts. Branch with If or Switch instead of asking for everything at once. Prefill from what you already have. Make the launch message say plainly what the button opens and why.",
+      es: "Agrupa los datos relacionados en una pantalla y dale a cada pantalla una sola acción clara en su Footer. Elige el tipo de input que se valida solo: un Dropdown para un conjunto conocido, un DatePicker para fechas, un input numérico para montos. Ramifica con If o Switch en lugar de pedir todo junto. Precarga con lo que ya tienes. Y que el mensaje de lanzamiento diga con claridad qué abre el botón y para qué. Si son varios pasos, ciérralo con una pantalla de resumen para revisar antes de enviar, y al terminar responde en el chat con los próximos pasos y a quién escribir para cambiar o cancelar.",
+      en: "Group related inputs on one screen and give each screen a single clear action in its Footer. Choose the input type that validates itself: a Dropdown for a known set, a DatePicker for dates, a number input for amounts. Branch with If or Switch instead of asking for everything at once. Prefill from what you already have. Make the launch message say plainly what the button opens and why. If it takes several steps, end on a summary screen to review before submitting, and once it is sent, reply in the chat with the next steps and who to contact to change or cancel.",
     },
     examples: [
       {
