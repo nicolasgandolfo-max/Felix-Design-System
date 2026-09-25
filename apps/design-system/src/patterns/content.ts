@@ -1345,19 +1345,19 @@ const useOfEmojis: Pattern = {
             ],
             [
               {
-                es: "Uno por mensaje, al inicio",
-                en: "One per message, at the start",
-                pt: "Um por mensagem, no início",
+                es: "Uno por burbuja: las listas lo abren, la prosa lo cierra",
+                en: "One per bubble: lists lead with it, prose ends with it",
+                pt: "Um por balão: listas abrem com ele, a prosa fecha com ele",
               },
               {
-                es: "Máximo un emoji, anclado al inicio de la línea que califica. Nunca disperso a mitad de oración ni junto a un monto, donde compite con la cifra que el usuario vino a verificar.",
-                en: "Maximum one emoji, anchored at the start of the line it qualifies. Never scattered mid-sentence and never adjacent to an amount, where it competes with the figure the user came to verify.",
-                pt: "No máximo um emoji, ancorado no início da linha que qualifica. Nunca espalhado no meio da frase nem ao lado de um valor, onde compete com a cifra que o usuário veio verificar.",
+                es: "Máximo un emoji por mensaje, y «mensaje» es la burbuja entera, no cada línea dentro de ella. La forma decide dónde va el emoji de estado: si el mensaje es una lista estructurada, la abre; si es prosa, la prosa cierra con su emoji de estado. Nunca a mitad de oración, bajo ninguna circunstancia, y nunca junto a un monto, donde compite con la cifra que el usuario vino a verificar. Las banderas siguen su propia colocación, abajo en Banderas de países. Dos excepciones admiten más de uno: el resumen de transacción y el menú secundario.",
+                en: "At most one emoji per message, and “message” means the whole bubble, not each line inside it. Form decides where the state emoji goes: if the message is a structured list, it leads it; if it is prose, the prose closes with its state emoji. Never mid-sentence, under any circumstance, and never adjacent to an amount, where it competes with the figure the user came to verify. Flags follow their own placement, below under Country flags. Two exceptions allow more than one: the transaction summary and the secondary menu.",
+                pt: "No máximo um emoji por mensagem, e “mensagem” é o balão inteiro, não cada linha dentro dele. A forma decide onde vai o emoji de estado: se a mensagem é uma lista estruturada, ele a abre; se é prosa, a prosa fecha com seu emoji de estado. Nunca no meio da frase, em nenhuma circunstância, e nunca ao lado de um valor, onde compete com a cifra que o usuário veio verificar. As bandeiras seguem sua própria posição, abaixo em Bandeiras de países. Duas exceções admitem mais de um: o resumo de transação e o menu secundário.",
               },
               {
-                es: "Un emoji a cada lado del monto ✗",
-                en: "An emoji on either side of the amount ✗",
-                pt: "Um emoji de cada lado do valor ✗",
+                es: '"Tu envío está en camino ⏳" ✓ · "Tu envío ⏳ está en camino" ✗',
+                en: '"Tu envío está en camino ⏳" ✓ · "Tu envío ⏳ está en camino" ✗',
+                pt: '"Tu envío está en camino ⏳" ✓ · "Tu envío ⏳ está en camino" ✗',
               },
             ],
             [
@@ -1384,14 +1384,14 @@ const useOfEmojis: Pattern = {
                 pt: "Contextos proibidos",
               },
               {
-                es: "Sin emojis en transacciones fallidas, copy de KYC o compliance, avisos legales, derivación a un agente humano o estados de falla parcial. Junto a dinero demorado o retenido, un emoji se lee como minimizar el problema.",
-                en: "No emoji in failed transactions, KYC or compliance copy, legal disclosures, handoff to a human agent, or partial-failure states. Next to money that is late or held, an emoji reads as minimizing the problem.",
-                pt: "Sem emojis em transações com falha, copy de KYC ou compliance, avisos legais, transferência para um agente humano ou estados de falha parcial. Ao lado de dinheiro atrasado ou retido, um emoji soa como minimizar o problema.",
+                es: "Sin emojis en transacciones fallidas, copy de KYC o compliance, avisos legales, derivación a un agente humano o estados de falla parcial: junto a dinero demorado o retenido, un emoji se lee como minimizar el problema. Única excepción: 🔔 ❌ ⏳ 🔒 ⚠️, marcadores de estado que ayudan a entender el mensaje y a centrar la atención del usuario. Uno solo, colocado según la regla anterior, y nunca uno de celebración o ánimo.",
+                en: "No emoji in failed transactions, KYC or compliance copy, legal disclosures, handoff to a human agent, or partial-failure states: next to money that is late or held, an emoji reads as minimizing the problem. One exception: 🔔 ❌ ⏳ 🔒 ⚠️, state markers that help the user understand the message and focus their attention. One only, placed per the rule above, and never a celebration or mood emoji.",
+                pt: "Sem emojis em transações com falha, copy de KYC ou compliance, avisos legais, transferência para um agente humano ou estados de falha parcial: ao lado de dinheiro atrasado ou retido, um emoji soa como minimizar o problema. Única exceção: 🔔 ❌ ⏳ 🔒 ⚠️, marcadores de estado que ajudam a entender a mensagem e a centrar a atenção do usuário. Um só, posicionado conforme a regra anterior, e nunca um de celebração ou ânimo.",
               },
               {
-                es: "Error que involucra fondos ✗",
-                en: "Error involving funds ✗",
-                pt: "Erro que envolve fundos ✗",
+                es: "Error que involucra fondos: con ❌ ✓ · con cualquier otro emoji ✗",
+                en: "Error involving funds: with ❌ ✓ · with any other emoji ✗",
+                pt: "Erro que envolve fundos: com ❌ ✓ · com qualquer outro emoji ✗",
               },
             ],
             [
@@ -1506,9 +1506,9 @@ const useOfEmojis: Pattern = {
                 pt: "Campo faltando, taxa prestes a vencer, documento pendente",
               },
               {
-                es: "Se lee como un recordatorio, no como una alarma. Reservado solo para estados accionables por el usuario, nunca para fallas: esas caen en contextos prohibidos",
-                en: "Reads as a reminder, not an alarm. Reserved for user-actionable states only, never for failures — those fall under prohibited contexts",
-                pt: "Soa como um lembrete, não como um alarme. Reservado só para estados acionáveis pelo usuário, nunca para falhas: essas caem em contextos proibidos",
+                es: "Se lee como un recordatorio, no como una alarma. Reservado para estados accionables por el usuario; en los contextos prohibidos entra solo como uno de los cinco marcadores admitidos",
+                en: "Reads as a reminder, not an alarm. Reserved for user-actionable states; in the prohibited contexts it enters only as one of the five admitted markers",
+                pt: "Soa como um lembrete, não como um alarme. Reservado para estados acionáveis pelo usuário; nos contextos proibidos entra só como um dos cinco marcadores admitidos",
               },
             ],
             [
