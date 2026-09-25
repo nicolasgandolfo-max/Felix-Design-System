@@ -2643,8 +2643,8 @@ const flowsFormSections: StandardContent = {
       en: "Reach for a form only when a single message can't do the job: several inputs, validation, or a short structured form. It is powerful but heavier, so keep the bar high.",
     },
     tips: {
-      es: "Agrupa los datos relacionados en una pantalla y dale a cada pantalla una sola acción clara en su Footer. Elige el tipo de input que se valida solo: un Dropdown para un conjunto conocido, un DatePicker para fechas, un input numérico para montos. Ramifica con If o Switch en lugar de pedir todo junto. Precarga con lo que ya tienes. Y que el mensaje de lanzamiento diga con claridad qué abre el botón y para qué. Si son varios pasos, ciérralo con una pantalla de resumen para revisar antes de enviar, y al terminar responde en el chat con los próximos pasos y a quién escribir para cambiar o cancelar.",
-      en: "Group related inputs on one screen and give each screen a single clear action in its Footer. Choose the input type that validates itself: a Dropdown for a known set, a DatePicker for dates, a number input for amounts. Branch with If or Switch instead of asking for everything at once. Prefill from what you already have. Make the launch message say plainly what the button opens and why. If it takes several steps, end on a summary screen to review before submitting, and once it is sent, reply in the chat with the next steps and who to contact to change or cancel.",
+      es: "Agrupa los datos relacionados en una pantalla y dale a cada pantalla una sola acción clara en su Footer. Elige el tipo de input que se valida solo: radio buttons de 1 a 3 opciones y un Dropdown desde 4, igual que botones y listas en el chat, un DatePicker para fechas, un input numérico para montos. Ramifica con If o Switch en lugar de pedir todo junto. Precarga con lo que ya tienes. Y que el mensaje de lanzamiento diga con claridad qué abre el botón y para qué. Si son varios pasos, ciérralo con una pantalla de resumen para revisar antes de enviar, y al terminar responde en el chat con los próximos pasos y a quién escribir para cambiar o cancelar.",
+      en: "Group related inputs on one screen and give each screen a single clear action in its Footer. Choose the input type that validates itself: radio buttons for 1 to 3 options and a Dropdown from 4, the same split as buttons and lists in the chat, a DatePicker for dates, a number input for amounts. Branch with If or Switch instead of asking for everything at once. Prefill from what you already have. Make the launch message say plainly what the button opens and why. If it takes several steps, end on a summary screen to review before submitting, and once it is sent, reply in the chat with the next steps and who to contact to change or cancel.",
     },
     examples: [
       {
@@ -2796,8 +2796,8 @@ const flowsVisualSections: StandardContent = {
         en: "Use a visual Flow when the goal is to explain or promote, not collect: onboarding to a new product, highlighting a new feature, or a push that needs images and a clear next step.",
       },
       {
-        es: "Empieza por la imagen, mantén el texto corto y cierra con una sola acción clara.",
-        en: "Lead with the image, keep the copy short, and end on one clear action.",
+        es: "Primero el texto y debajo la imagen que lo acompaña: el mensaje se lee aunque la imagen no cargue. Mantén el texto corto y cierra con una sola acción clara.",
+        en: "Text first, with the image below to support it: the message reads even if the image does not load. Keep the copy short and end on one clear action.",
       },
       {
         es: "Recurre a él cuando un mensaje de texto o una sola imagen no alcanzan para contar la historia, pero tampoco necesitas un formulario completo.",
@@ -2895,8 +2895,8 @@ const flowsVisualSections: StandardContent = {
     ],
     notes: [
       {
-        es: "Confirmado en la documentación: hasta 3 imágenes por pantalla, en JPEG o PNG, de hasta 300 KB recomendados y 1 MB de carga total; hasta 50 componentes por pantalla, y el botón del Footer de hasta 35 caracteres. No hay un máximo de pantallas: la pauta de Meta es que la tarea no pase de 5 minutos. Los ejemplos vigentes usan la versión 7.3 del Flow JSON.",
-        en: "Confirmed in the docs: up to 3 images per screen, JPEG or PNG, up to 300 KB recommended and 1 MB total payload; up to 50 components per screen, and a Footer button of up to 35 characters. There is no screen limit: Meta's guidance is that the task should take no more than 5 minutes. Current examples use Flow JSON version 7.3.",
+        es: "Confirmado en la documentación: hasta 3 imágenes por pantalla, en JPEG o PNG, de hasta 300 KB recomendados y 1 MB de carga total; hasta 50 componentes por pantalla, y el botón del Footer de hasta 35 caracteres. En Android, una imagen sin alto definido toma 400 por defecto y puede dejar espacio en blanco: define alto y proporción. No hay un máximo de pantallas: la pauta de Meta es que la tarea no pase de 5 minutos. Los ejemplos vigentes usan la versión 7.3 del Flow JSON.",
+        en: "Confirmed in the docs: up to 3 images per screen, JPEG or PNG, up to 300 KB recommended and 1 MB total payload; up to 50 components per screen, and a Footer button of up to 35 characters. On Android, an image with no height set defaults to 400 and can leave blank space: set its height and aspect ratio. There is no screen limit: Meta's guidance is that the task should take no more than 5 minutes. Current examples use Flow JSON version 7.3.",
       },
     ],
     source: {
@@ -2913,8 +2913,8 @@ const flowsVisualSections: StandardContent = {
       en: "Reach for a visual Flow when a message needs to show something and move the user one step, but does not need to collect data.",
     },
     tips: {
-      es: "Una idea por pantalla, primero la imagen, el texto corto. Cierra cada pantalla con una sola acción clara. No lo estires hasta volverlo un manual: un destaque se gana la atención solo si se mantiene breve. Y que el mensaje de lanzamiento deje claro qué se va a abrir, y que la primera pantalla sea justo eso: si abre otra cosa, el usuario cierra el Flow. Marca el avance en el título de cada pantalla (1 de 3) y, al terminar, confirma en el chat qué sigue.",
-      en: "One idea per screen, image first, copy short. End every screen on a single clear action. Don't stretch it into a manual — a highlight earns attention only if it stays brief. Make the launch message set the expectation of what opens, and make the first screen exactly that: if it opens something else, people close the Flow. Show progress in each screen title (1 of 3) and, once it ends, confirm in the chat what comes next.",
+      es: "Una idea por pantalla, con el texto primero y corto, y la imagen debajo. Cierra cada pantalla con una sola acción clara. No lo estires hasta volverlo un manual: un destaque se gana la atención solo si se mantiene breve. Y que el mensaje de lanzamiento deje claro qué se va a abrir, y que la primera pantalla sea justo eso: si abre otra cosa, el usuario cierra el Flow. Marca el avance en el título de cada pantalla (1 de 3) y, al terminar, confirma en el chat qué sigue.",
+      en: "One idea per screen, with the copy first and short, and the image below it. End every screen on a single clear action. Don't stretch it into a manual — a highlight earns attention only if it stays brief. Make the launch message set the expectation of what opens, and make the first screen exactly that: if it opens something else, people close the Flow. Show progress in each screen title (1 of 3) and, once it ends, confirm in the chat what comes next.",
     },
     examples: [
       {
@@ -2988,8 +2988,8 @@ const flowsVisual: Pattern = {
   hero: FLOWS_VISUAL_IMG.onboarding,
   heroDetail: [FLOWS_VISUAL_IMG.onboarding],
   heroAlt: {
-    es: "Primera pantalla de un onboarding a un producto nuevo, con una imagen arriba del texto",
-    en: "First screen of an onboarding to a new product, with an image above the copy",
+    es: "Primera pantalla de un onboarding a un producto nuevo, con el texto arriba y la imagen debajo",
+    en: "First screen of an onboarding to a new product, with the copy on top and the image below",
   },
   sections: standardSections(flowsVisualSections),
 };
