@@ -2942,8 +2942,8 @@ const flowsVisualSections: StandardContent = {
         tone: "do",
         img: FLOWS_VISUAL_IMG.lengthDo,
         alt: {
-          es: 'Un onboarding de dos o tres pantallas para un producto nuevo, guiado por imágenes y cerrando en "Empezar"',
-          en: 'A two or three screen onboarding for a new product, image-led, ending on "Empezar"',
+          es: "Última pantalla del onboarding de Cuenta Félix, «3 de 3»: «Te avisamos cuando llegue», con el texto arriba, una foto debajo y el botón «Recibir mi préstamo»",
+          en: 'Last screen of the Cuenta Félix onboarding, "3 de 3": "Te avisamos cuando llegue", with the copy on top, a photo below and the "Recibir mi préstamo" button',
         },
         caption: {
           es: "Muestra el valor y después un solo próximo paso claro.",
@@ -2954,8 +2954,8 @@ const flowsVisualSections: StandardContent = {
         tone: "dont",
         img: FLOWS_VISUAL_IMG.lengthDont,
         alt: {
-          es: "Un muro de diez pantallas de texto que se presenta como un destaque",
-          en: "A ten-screen wall of text pretending to be a highlight",
+          es: "Pantalla «1 de 10» del mismo onboarding, con un párrafo largo de condiciones que empuja la foto hacia abajo y el botón «Siguiente»",
+          en: 'Screen "1 de 10" of the same onboarding, with a long paragraph of terms pushing the photo down and a "Siguiente" button',
         },
         caption: {
           es: "Si necesita un manual, no es un destaque.",
@@ -2975,18 +2975,18 @@ const flowsVisual: Pattern = {
     en: "Onboarding and feature highlight",
   },
   lede: {
-    es: "Un Flow guiado por imágenes que se abre sobre el chat para mostrar, no para preguntar. Úsalo para dar la bienvenida a un producto nuevo, destacar una función o empujar algo que necesita más que un mensaje de texto.",
-    en: "An image-led Flow that opens over the chat to show, not ask. Use it to onboard someone to a new product, spotlight a new feature, or push something that needs more than a text message.",
+    es: "Un Flow visual que se abre sobre el chat para mostrar, no para preguntar. Úsalo para dar la bienvenida a un producto nuevo, destacar una función o empujar algo que necesita más que un mensaje de texto.",
+    en: "A visual Flow that opens over the chat to show, not ask. Use it to onboard someone to a new product, spotlight a new feature, or push something that needs more than a text message.",
   },
   cardBody: {
-    es: "Un Flow guiado por imágenes que se abre sobre el chat para mostrar, no para preguntar: onboarding, una función nueva o un push.",
-    en: "An image-led Flow that opens over the chat to show, not ask: onboarding, a new feature, or a push.",
+    es: "Un Flow visual que se abre sobre el chat para mostrar, no para preguntar: onboarding, una función nueva o un push.",
+    en: "A visual Flow that opens over the chat to show, not ask: onboarding, a new feature, or a push.",
   },
   hero: FLOWS_VISUAL_IMG.onboarding,
   heroDetail: [FLOWS_VISUAL_IMG.onboarding],
   heroAlt: {
-    es: "Primera pantalla de un onboarding a un producto nuevo, con el texto arriba y la imagen debajo",
-    en: "First screen of an onboarding to a new product, with the copy on top and the image below",
+    es: "Primera pantalla del onboarding de Cuenta Félix, «1 de 3»: «Tu préstamo viene con tu Cuenta Félix», con el texto arriba y una foto debajo",
+    en: 'First screen of the Cuenta Félix onboarding, "1 de 3": "Tu préstamo viene con tu Cuenta Félix", with the copy on top and a photo below',
   },
   sections: standardSections(flowsVisualSections),
 };
