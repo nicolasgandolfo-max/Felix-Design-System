@@ -1,9 +1,12 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { Button } from "@felix/ui";
+import { DownloadSimpleIcon } from "@phosphor-icons/react";
 import { PATTERNS } from "../patterns/content";
+import { markdownFilename, patternsToMarkdown } from "../patterns/markdown";
 import { PATTERN_FAMILIES, patternIcon, patternsOf } from "../patterns/nav";
 import type { Localized } from "../patterns/types";
-import { useTr } from "../i18n";
+import { useLang, useTr } from "../i18n";
 
 /**
  * Visión general de las guías conversacionales, con la misma estructura que
@@ -14,7 +17,26 @@ import { useTr } from "../i18n";
  */
 export function PatternsLanding() {
   const tr = useTr();
+  const { lang } = useLang();
   const L = (l: Localized) => tr(l.es, l.en, l.pt);
+
+  /* Misma mecánica que la tarjeta de la sección Markdown: el archivo se arma
+     en el navegador desde `content.ts`, en el idioma activo, y se descarga
+     como blob. Así nunca hay un .md desfasado que mantener. */
+  const downloadMarkdown = () => {
+    const md = patternsToMarkdown(
+      lang,
+      window.location.origin,
+      window.location.href
+    );
+    const blob = new Blob([md], { type: "text/markdown;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = markdownFilename(lang);
+    a.click();
+    URL.revokeObjectURL(url);
+  };
 
   useEffect(() => {
     const prev = document.title;
@@ -73,6 +95,12 @@ export function PatternsLanding() {
         <div className="meta-col">
           <span className="lbl">{tr("FUENTE", "SOURCE", "FONTE")}</span>
           <span className="val">Figma · Conversational Guidelines</span>
+        </div>
+        <div className="meta-col meta-action">
+          <Button variant="line" size="sm" onClick={downloadMarkdown}>
+            <DownloadSimpleIcon />
+            {tr("Descargar .md", "Download .md", "Baixar .md")}
+          </Button>
         </div>
       </div>
 
