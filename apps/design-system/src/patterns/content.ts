@@ -2473,11 +2473,8 @@ const FLOWS_FORM_IMG = {
 
 const FLOWS_VISUAL_IMG = {
   onboarding: PENDING, // flows-visual-onboarding.png
-  feature: PENDING, // flows-visual-feature.png
   launchDo: PENDING, // flows-visual-launch-do.png
   launchDont: PENDING, // flows-visual-launch-dont.png
-  hierarchyDo: PENDING, // flows-visual-hierarchy-do.png
-  hierarchyDont: PENDING, // flows-visual-hierarchy-dont.png
   lengthDo: PENDING, // flows-visual-length-do.png
   lengthDont: PENDING, // flows-visual-length-dont.png
 };
@@ -2541,6 +2538,13 @@ const flowsFormSections: StandardContent = {
             {
               es: "Un mensaje interactivo con un botón de acción que abre el Flow",
               en: "An interactive message with a call-to-action button that opens the Flow",
+            },
+          ],
+          [
+            { es: "Plataformas", en: "Platforms" },
+            {
+              es: "Android 6.0 o superior e iPhone con iOS 12 o superior. No se abre en WhatsApp Web ni en otros dispositivos vinculados",
+              en: "Android 6.0 or later and iPhone on iOS 12 or later. It does not open on WhatsApp Web or other linked devices",
             },
           ],
           [
@@ -2832,6 +2836,13 @@ const flowsVisualSections: StandardContent = {
             },
           ],
           [
+            { es: "Plataformas", en: "Platforms" },
+            {
+              es: "Android 6.0 o superior e iPhone con iOS 12 o superior. No se abre en WhatsApp Web ni en otros dispositivos vinculados",
+              en: "Android 6.0 or later and iPhone on iOS 12 or later. It does not open on WhatsApp Web or other linked devices",
+            },
+          ],
+          [
             { es: "Propósito", en: "Purpose" },
             {
               es: "Presentar y guiar, con poca o ninguna recolección de datos",
@@ -2859,7 +2870,7 @@ const flowsVisualSections: StandardContent = {
         rows: [
           [
             { es: "Medios", en: "Media" },
-            { es: "Image", en: "Image" },
+            { es: "Image, ImageCarousel", en: "Image, ImageCarousel" },
           ],
           [
             { es: "Texto", en: "Text" },
@@ -2880,13 +2891,13 @@ const flowsVisualSections: StandardContent = {
     ],
     notes: [
       {
-        es: "Pendiente de confirmar en developers.facebook.com: los límites de tamaño y formato de imagen, el máximo de pantallas y la versión actual del Flow JSON.",
-        en: "Notes to confirm on developers.facebook.com: image size and format limits, max screens, and the current Flow JSON version.",
+        es: "Confirmado en la documentación: hasta 3 imágenes por pantalla, en JPEG o PNG, de hasta 300 KB recomendados y 1 MB de carga total; hasta 50 componentes por pantalla, y el botón del Footer de hasta 35 caracteres. No hay un máximo de pantallas: la pauta de Meta es que la tarea no pase de 5 minutos. Los ejemplos vigentes usan la versión 7.3 del Flow JSON.",
+        en: "Confirmed in the docs: up to 3 images per screen, JPEG or PNG, up to 300 KB recommended and 1 MB total payload; up to 50 components per screen, and a Footer button of up to 35 characters. There is no screen limit: Meta's guidance is that the task should take no more than 5 minutes. Current examples use Flow JSON version 7.3.",
       },
     ],
     source: {
-      es: "Fuente: documentación de WhatsApp Flows para desarrolladores. Es un resumen y no está verificado en vivo, así que confirma los límites antes de construir. Confirma en ",
-      en: "Source: WhatsApp Flows developer docs. Summarized, not re-verified live, so confirm the caps before build. Confirm on ",
+      es: "Fuente: referencia de componentes y prácticas recomendadas de WhatsApp Flows (revisadas en septiembre de 2026). Flows cambia seguido: confirma en ",
+      en: "Source: WhatsApp Flows components reference and best practices (reviewed September 2026). Flows changes often: confirm on ",
     },
     sourceHref: WA_FLOWS_DOCS_URL,
     sourceLinkText: "developers.facebook.com",
@@ -2898,8 +2909,8 @@ const flowsVisualSections: StandardContent = {
       en: "Reach for a visual Flow when a message needs to show something and move the user one step, but does not need to collect data.",
     },
     tips: {
-      es: "Una idea por pantalla, primero la imagen, el texto corto. Cierra cada pantalla con una sola acción clara. No lo estires hasta volverlo un manual: un destaque se gana la atención solo si se mantiene breve. Y que el mensaje de lanzamiento deje claro qué se va a abrir.",
-      en: "One idea per screen, image first, copy short. End every screen on a single clear action. Don't stretch it into a manual — a highlight earns attention only if it stays brief. Make the launch message set the expectation of what opens.",
+      es: "Una idea por pantalla, primero la imagen, el texto corto. Cierra cada pantalla con una sola acción clara. No lo estires hasta volverlo un manual: un destaque se gana la atención solo si se mantiene breve. Y que el mensaje de lanzamiento deje claro qué se va a abrir, y que la primera pantalla sea justo eso: si abre otra cosa, el usuario cierra el Flow. Marca el avance en el título de cada pantalla (1 de 3) y, al terminar, confirma en el chat qué sigue.",
+      en: "One idea per screen, image first, copy short. End every screen on a single clear action. Don't stretch it into a manual — a highlight earns attention only if it stays brief. Make the launch message set the expectation of what opens, and make the first screen exactly that: if it opens something else, people close the Flow. Show progress in each screen title (1 of 3) and, once it ends, confirm in the chat what comes next.",
     },
     examples: [
       {
@@ -2924,30 +2935,6 @@ const flowsVisualSections: StandardContent = {
         caption: {
           es: "Un botón sin contexto se toca menos y sorprende más.",
           en: "A button with no context gets fewer taps and more surprise.",
-        },
-      },
-      {
-        tone: "do",
-        img: FLOWS_VISUAL_IMG.hierarchyDo,
-        alt: {
-          es: "Pantalla con la imagen arriba, dos líneas de texto y un solo botón de acción",
-          en: "Screen with the image on top, two lines of copy and a single call-to-action button",
-        },
-        caption: {
-          es: "La imagen encabeza y hay una sola acción.",
-          en: "The image leads and there is one action.",
-        },
-      },
-      {
-        tone: "dont",
-        img: FLOWS_VISUAL_IMG.hierarchyDont,
-        alt: {
-          es: "Pantalla con la imagen enterrada bajo un párrafo largo y dos botones que compiten",
-          en: "Screen with the image buried under a long paragraph and two competing buttons",
-        },
-        caption: {
-          es: "Dos acciones compiten y la imagen deja de encabezar.",
-          en: "Two actions compete and the image stops leading.",
         },
       },
       {
@@ -2995,55 +2982,12 @@ const flowsVisual: Pattern = {
     en: "An image-led Flow that opens over the chat to show, not ask: onboarding, a new feature, or a push.",
   },
   hero: FLOWS_VISUAL_IMG.onboarding,
-  heroDetail: [FLOWS_VISUAL_IMG.onboarding, FLOWS_VISUAL_IMG.feature],
+  heroDetail: [FLOWS_VISUAL_IMG.onboarding],
   heroAlt: {
-    es: "Pantallas de un Flow visual: una intro de onboarding con imagen y una pantalla que destaca una función con su botón de acción",
-    en: "Screens from a visual Flow: an onboarding intro with an image and a feature highlight screen with a call to action",
+    es: "Primera pantalla de un onboarding a un producto nuevo, con una imagen arriba del texto",
+    en: "First screen of an onboarding to a new product, with an image above the copy",
   },
-  // Las tres subsecciones estándar, con la galería de pantallas al final de
-  // Specs.
-  sections: standardSections(flowsVisualSections).map(
-    (section): PatternSection =>
-      section.id !== "specs"
-        ? section
-        : {
-            ...section,
-            blocks: [
-              ...section.blocks,
-              {
-                type: "heading",
-                text: { es: "Pantallas de ejemplo", en: "Example screens" },
-              },
-              {
-                type: "gallery",
-                items: [
-                  {
-                    img: FLOWS_VISUAL_IMG.onboarding,
-                    label: {
-                      es: "Intro de onboarding",
-                      en: "Onboarding intro",
-                    },
-                    alt: {
-                      es: "Primera pantalla de onboarding, con una imagen arriba del texto",
-                      en: "First onboarding screen, with an image above the copy",
-                    },
-                  },
-                  {
-                    img: FLOWS_VISUAL_IMG.feature,
-                    label: {
-                      es: "Destaque de una función",
-                      en: "Feature spotlight",
-                    },
-                    alt: {
-                      es: "Pantalla que destaca una función, con imagen y un botón de acción",
-                      en: "Screen spotlighting a feature, with an image and a call-to-action button",
-                    },
-                  },
-                ],
-              },
-            ],
-          }
-  ),
+  sections: standardSections(flowsVisualSections),
 };
 
 /** Registro. El orden aquí es el orden de la grilla en la landing. */
