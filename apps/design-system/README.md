@@ -59,9 +59,9 @@ src/
 The hero and `do` / `don't` images on the Conversational guidelines pages
 (`/patrones/:slug`) are PNGs exported from the Figma guidelines file
 (_DRAFT Conversational Guidelines_, page _Felix Plaza_) and committed to
-`public/assets/patterns/`. `src/patterns/content.ts` points at them by filename;
-slots still waiting on an export use the shared `PENDING` placeholder, with a
-comment naming the file that belongs there.
+`public/assets/patterns/`. `src/patterns/content.ts` points at them by filename.
+A slot still waiting on an export can point at the shared
+`placeholder-hero.svg`, with a comment naming the file that belongs there.
 
 **Every PNG in that folder is a 2x export.** `PatternPage` declares them as 2x
 (`srcSet`), so each one renders at its real Figma size and every WhatsApp bubble

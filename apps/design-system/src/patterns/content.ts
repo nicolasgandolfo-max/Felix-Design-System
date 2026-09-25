@@ -2453,30 +2453,27 @@ const formatHints: Pattern = {
    adelante se suman otros. Los dos abren una experiencia nativa sobre el chat
    desde un mensaje de lanzamiento con botón de acción.
 
-   Las dos pantallas del formulario ya salieron de Figma y se usan tanto en el
-   hero como en la galería de Specs, que es lo que pide el doc en los dos
-   lugares. El resto sigue pendiente de export: cada constante apunta al
-   marcador compartido y el comentario nombra el archivo que va en su lugar, así
-   que al llegar el PNG basta con reemplazar el valor de la constante. */
-const PENDING = `${ASSETS}/placeholder-hero.svg`;
+   Todas las pantallas salen del archivo de Figma (ver el README). En Flows:
+   form, la encuesta y el formulario de datos sirven tanto al hero como a la
+   galería de Specs, que es lo que pide el doc en los dos lugares. */
 
 const FLOWS_FORM_IMG = {
   survey: `${ASSETS}/flows-form-survey.png`,
   data: `${ASSETS}/flows-form-data.png`,
-  launchDo: PENDING, // flows-form-launch-do.png
-  launchDont: PENDING, // flows-form-launch-dont.png
-  branchDo: PENDING, // flows-form-branch-do.png
-  branchDont: PENDING, // flows-form-branch-dont.png
-  validateDo: PENDING, // flows-form-validate-do.png
-  validateDont: PENDING, // flows-form-validate-dont.png
+  launchDo: `${ASSETS}/flows-form-launch-do.png`,
+  launchDont: `${ASSETS}/flows-form-launch-dont.png`,
+  branchDo: `${ASSETS}/flows-form-branch-do.png`,
+  branchDont: `${ASSETS}/flows-form-branch-dont.png`,
+  validateDo: `${ASSETS}/flows-form-validate-do.png`,
+  validateDont: `${ASSETS}/flows-form-validate-dont.png`,
 };
 
 const FLOWS_VISUAL_IMG = {
-  onboarding: PENDING, // flows-visual-onboarding.png
-  launchDo: PENDING, // flows-visual-launch-do.png
-  launchDont: PENDING, // flows-visual-launch-dont.png
-  lengthDo: PENDING, // flows-visual-length-do.png
-  lengthDont: PENDING, // flows-visual-length-dont.png
+  onboarding: `${ASSETS}/flows-visual-onboarding.png`,
+  launchDo: `${ASSETS}/flows-visual-launch-do.png`,
+  launchDont: `${ASSETS}/flows-visual-launch-dont.png`,
+  lengthDo: `${ASSETS}/flows-visual-length-do.png`,
+  lengthDont: `${ASSETS}/flows-visual-length-dont.png`,
 };
 
 /* Los límites salen de la documentación de Flows y están resumidos, no
@@ -2675,8 +2672,8 @@ const flowsFormSections: StandardContent = {
         tone: "do",
         img: FLOWS_FORM_IMG.branchDo,
         alt: {
-          es: "Encuesta NPS: con una nota de 4, la pantalla siguiente pregunta qué podríamos mejorar, con opciones para elegir",
-          en: "NPS survey: after a score of 4, the next screen asks what we could improve, with options to pick from",
+          es: "Encuesta NPS en dos pantallas: la escala del 0 al 10 en la primera y, en la segunda, la pregunta de seguimiento «¿Qué influyó más en tu calificación?» con opciones para elegir",
+          en: 'NPS survey over two screens: the 0 to 10 scale on the first, and on the second the follow-up "¿Qué influyó más en tu calificación?" with options to pick from',
         },
         caption: {
           es: "La primera respuesta decide qué se pregunta después.",
@@ -2711,8 +2708,8 @@ const flowsFormSections: StandardContent = {
         tone: "dont",
         img: FLOWS_FORM_IMG.validateDont,
         alt: {
-          es: "El mismo formulario sin la casilla: el segundo apellido queda vacío y nada confirma si falta o no existe",
-          en: "The same form without the box: the second surname is left blank, with nothing to confirm whether it's missing or doesn't exist",
+          es: "El mismo formulario con el segundo apellido vacío y la casilla sin marcar, y el botón para continuar igual activo",
+          en: "The same form with the second surname blank, the box unticked, and the button to continue still active",
         },
         caption: {
           es: "Si el segundo apellido queda vacío por olvido, el banco no puede asociar la cuenta o la tarjeta al nombre completo.",
