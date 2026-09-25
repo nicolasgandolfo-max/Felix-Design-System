@@ -2691,8 +2691,8 @@ const flowsFormSections: StandardContent = {
         tone: "do",
         img: FLOWS_FORM_IMG.validateDo,
         alt: {
-          es: "Formulario con nombre, segundo nombre, apellido y segundo apellido, y la casilla «No tengo segundo apellido» marcada, que bloquea ese campo",
-          en: 'Form with first name, middle name, surname and second surname, and the "No tengo segundo apellido" box ticked, which locks that field',
+          es: "Formulario con nombre, segundo nombre, apellido y segundo apellido, y la casilla «No tiene segundo apellido» marcada, que bloquea ese campo",
+          en: 'Form with first name, middle name, surname and second surname, and the "No tiene segundo apellido" box ticked, which locks that field',
         },
         caption: {
           es: "El segundo apellido nunca queda vacío por olvido: se escribe o se marca que no hay.",
