@@ -1364,23 +1364,6 @@ const useOfEmojis: Pattern = {
             ],
             [
               {
-                es: "Contextos prohibidos",
-                en: "Prohibited contexts",
-                pt: "Contextos proibidos",
-              },
-              {
-                es: "Sin emojis en transacciones fallidas, copy de KYC o compliance, avisos legales, derivación a un agente humano o estados de falla parcial: junto a dinero demorado o retenido, un emoji se lee como minimizar el problema. Única excepción: 🔔 ❌ ⏳ 🔒 ⚠️, marcadores de estado que ayudan a entender el mensaje y a centrar la atención del usuario. Uno solo, colocado según la regla anterior, y nunca uno de celebración o ánimo.",
-                en: "No emoji in failed transactions, KYC or compliance copy, legal disclosures, handoff to a human agent, or partial-failure states: next to money that is late or held, an emoji reads as minimizing the problem. One exception: 🔔 ❌ ⏳ 🔒 ⚠️, state markers that help the user understand the message and focus their attention. One only, placed per the rule above, and never a celebration or mood emoji.",
-                pt: "Sem emojis em transações com falha, copy de KYC ou compliance, avisos legais, transferência para um agente humano ou estados de falha parcial: ao lado de dinheiro atrasado ou retido, um emoji soa como minimizar o problema. Única exceção: 🔔 ❌ ⏳ 🔒 ⚠️, marcadores de estado que ajudam a entender a mensagem e a centrar a atenção do usuário. Um só, posicionado conforme a regra anterior, e nunca um de celebração ou ânimo.",
-              },
-              {
-                es: "Error que involucra fondos: con ❌ ✓ · con cualquier otro emoji ✗",
-                en: "Error involving funds: with ❌ ✓ · with any other emoji ✗",
-                pt: "Erro que envolve fundos: com ❌ ✓ · com qualquer outro emoji ✗",
-              },
-            ],
-            [
-              {
                 es: "No en etiquetas de botón",
                 en: "Not in button labels",
                 pt: "Não em rótulos de botão",
@@ -1491,9 +1474,9 @@ const useOfEmojis: Pattern = {
                 pt: "Campo faltando, taxa prestes a vencer, documento pendente",
               },
               {
-                es: "Se lee como un recordatorio, no como una alarma. Reservado para estados accionables por el usuario; en los contextos prohibidos entra solo como uno de los cinco marcadores admitidos",
-                en: "Reads as a reminder, not an alarm. Reserved for user-actionable states; in the prohibited contexts it enters only as one of the five admitted markers",
-                pt: "Soa como um lembrete, não como um alarme. Reservado para estados acionáveis pelo usuário; nos contextos proibidos entra só como um dos cinco marcadores admitidos",
+                es: "Se lee como un recordatorio, no como una alarma. Reservado para estados accionables por el usuario",
+                en: "Reads as a reminder, not an alarm. Reserved for user-actionable states",
+                pt: "Soa como um lembrete, não como um alarme. Reservado para estados acionáveis pelo usuário",
               },
             ],
             [
@@ -1555,8 +1538,8 @@ const useOfEmojis: Pattern = {
               { es: "❌", en: "❌" },
               { es: "U+274C", en: "U+274C" },
               {
-                es: "El registro de alarma que lo descalifica en el copy es justo el que corresponde a una acción destructiva de menú. Excepción solo para el menú a la tabla de excluidos",
-                en: "The alarm register that disqualifies it in copy is exactly right for a destructive menu action. Menu-only exception to Excluded",
+                es: "El registro de alarma que lo descalifica en el copy es justo el que corresponde a una acción destructiva de menú",
+                en: "The alarm register that disqualifies it in copy is exactly right for a destructive menu action",
               },
             ],
             [
@@ -1750,19 +1733,6 @@ const useOfEmojis: Pattern = {
               },
               { es: "—", en: "—", pt: "—" },
             ],
-            [
-              {
-                es: "Ni en contextos prohibidos ni en botones",
-                en: "Not in prohibited contexts or buttons",
-                pt: "Nem em contextos proibidos nem em botões",
-              },
-              {
-                es: "Los contextos prohibidos de los emojis de estado aplican aquí por completo: transacciones fallidas, copy de KYC o compliance, avisos legales, derivación a un humano, estados de falla parcial. Las banderas nunca aparecen en etiquetas de botón.",
-                en: "The prohibited contexts for state emoji apply here in full: failed transactions, KYC or compliance copy, legal disclosures, human handoff, partial-failure states. Flags never appear in button labels.",
-                pt: "Os contextos proibidos dos emojis de estado valem aqui por inteiro: transações com falha, copy de KYC ou compliance, avisos legais, transferência para um humano, estados de falha parcial. As bandeiras nunca aparecem em rótulos de botão.",
-              },
-              { es: "—", en: "—", pt: "—" },
-            ],
           ],
         },
         {
@@ -1788,51 +1758,6 @@ const useOfEmojis: Pattern = {
             en: "Flags are two regional indicator symbols rather than a single codepoint (MX = U+1F1F2 U+1F1FD). They render as the intended flag on mobile WhatsApp clients and fall back to a two-letter code on some desktop and web surfaces. Confirm rendering on target surfaces before shipping a flow that depends on them.",
             pt: "As bandeiras são dois símbolos indicadores regionais e não um único codepoint (MX = U+1F1F2 U+1F1FD). Renderizam como a bandeira esperada nos clientes móveis do WhatsApp e caem para um código de duas letras em algumas superfícies de desktop e web. Confirme a renderização nas superfícies-alvo antes de lançar um fluxo que dependa delas.",
           },
-        },
-        {
-          type: "table",
-          columns: [
-            { es: "Excluidos", en: "Excluded", pt: "Excluídos" },
-            { es: "Motivo", en: "Reason", pt: "Motivo" },
-          ],
-          rows: [
-            [
-              { es: "💰  💵  💸  🤑", en: "💰  💵  💸  🤑" },
-              {
-                es: "Prohibidos junto a montos por la regla anterior. El registro además celebra el dinero en un producto donde enviar suele ser una obligación, no un logro",
-                en: "Prohibited next to amounts by the rule above. The register also celebrates money in a product where sending is usually an obligation, not an achievement",
-                pt: "Proibidos ao lado de valores pela regra anterior. O registro também celebra o dinheiro em um produto em que enviar costuma ser uma obrigação, não uma conquista",
-              },
-            ],
-            [
-              {
-                es: "🎉  🥳  🙌  👏",
-                en: "🎉  🥳  🙌  👏",
-                pt: "🎉  🥳  🙌  👏",
-              },
-              {
-                es: "Celebrar una transferencia completada enmarca un deber cumplido como una victoria",
-                en: "Celebration on a completed transfer frames a duty fulfilled as a win",
-                pt: "Celebrar uma transferência concluída enquadra um dever cumprido como uma vitória",
-              },
-            ],
-            [
-              { es: "👍  👉  🤷", en: "👍  👉  🤷", pt: "👍  👉  🤷" },
-              {
-                es: "Variantes de tono de piel y género; secuencias de varios codepoints",
-                en: "Skin tone and gender variants; multi-codepoint sequences",
-                pt: "Variantes de tom de pele e gênero; sequências de vários codepoints",
-              },
-            ],
-            [
-              { es: "❤️  💚  🏡  👨‍👩‍👧", en: "❤️  💚  🏡  👨‍👩‍👧" },
-              {
-                es: "Ánimo, no estado. Instrumentaliza la relación familiar",
-                en: "Mood, not state. Instrumentalizes the family relationship",
-                pt: "Humor, não estado. Instrumentaliza a relação familiar",
-              },
-            ],
-          ],
         },
         {
           type: "callout",
