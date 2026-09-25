@@ -56,42 +56,68 @@ src/
 
 ## Pattern screenshots from Figma
 
-The `do` / `don't` and gallery images on the Conversational guidelines pages
-(`/patrones/:slug`) are PNGs exported from the Figma guidelines file and
-committed to `public/assets/patterns/`. `src/patterns/content.ts` points at them
-by filename; slots still waiting on an export use the shared `PENDING`
-placeholder, with a comment naming the file that belongs there.
+The hero and `do` / `don't` images on the Conversational guidelines pages
+(`/patrones/:slug`) are PNGs exported from the Figma guidelines file
+(_DRAFT Conversational Guidelines_, page _Felix Plaza_) and committed to
+`public/assets/patterns/`. `src/patterns/content.ts` points at them by filename;
+slots still waiting on an export use the shared `PENDING` placeholder, with a
+comment naming the file that belongs there.
+
+**Every PNG in that folder is a 2x export.** `PatternPage` declares them as 2x
+(`srcSet`), so each one renders at its real Figma size and every WhatsApp bubble
+on the portal comes out at the same scale. Do not cap image widths in the
+template to make an export "fit" — a fixed width is what made the bubbles render
+at a different scale on every page. If an image looks too big or too small, the
+export is at the wrong scale.
 
 **The PNG is the WhatsApp screen only.** The card, the green/orange footer bar,
 its icon and its translated `Do` / `Don't` label are drawn by `ExampleFigure`
-(`src/pages/PatternPage.tsx`) from tokens. The Figma frames bake that bar in, so
-it has to be cropped off — otherwise it renders twice.
+from tokens. The Figma frames bake that bar in, so it has to be cropped off —
+otherwise it renders twice.
 
-To add a pair:
+To add or refresh a pair:
 
-1. In Figma, note the frame's `node-id` and, via `get_metadata`, the bounding
-   box of the bubbles inside it (the bar is the last child, usually 59px tall).
-2. Export the frame as PNG at 2x.
-3. Crop off the bar and the card padding — coordinates doubled, since the export
-   is 2x. Use one shared rectangle for the `do` and the `don't` of a pair so the
-   two line up side by side:
+1. Export both frames as PNG at 2x **through the DesignAgent bridge** (the Figma
+   plugin), not the MCP connector's `download_assets`. The plugin renders with
+   the Figma app and keeps every emoji, flags included; the connector drops the
+   flags and several colour emoji (see below).
+2. Crop them together:
 
    ```bash
-   node scripts/crop-figma-export.mjs raw.png public/assets/patterns/<pattern>-do-1.png 218 10 886 540
+   node scripts/autocrop-figma-export.mjs pair do.png dont.png \
+     public/assets/patterns/<pattern>-do-N.png public/assets/patterns/<pattern>-dont-N.png
    ```
 
-4. If the copy contains a flag emoji, paste it back in — see below.
-5. Reference the file from `content.ts` as `` `${ASSETS}/<pattern>-do-1.png` ``.
+   It finds the content by its pixels — everything that is not the frame's
+   background, above the bar and inside the border — and cuts **both** frames
+   with one rectangle, the union of the two, so the pair lines up side by side.
 
-Aim for a result near 220×150 as rendered (the template caps images at 220px
-wide); a frame with a lot of empty padding crops down to something legible.
+3. Reference the files from `content.ts` as `` `${ASSETS}/<pattern>-do-N.png` ``.
 
-### Flag emoji do not survive the export
+A hero frame (1280×463, title on the left, bubbles on the right) goes through
+`hero` mode, which keeps the bubbles as **one** composition the way Figma stacks
+them — never split a hero into separate plates:
 
-Figma does not rasterise regional-indicator emoji. A bubble whose copy reads
-`R$5,85 🇧🇷 reais` exports with a **blank gap** where the flag should be, which
-silently guts any example whose point _is_ the flag. The fix is to composite the
-platform emoji (Apple Color Emoji) over that gap:
+```bash
+node scripts/autocrop-figma-export.mjs hero hero.png public/assets/patterns/<pattern>-hero.png
+```
+
+A standalone hero frame (a single bubble on a transparent background, like
+`use-of-images` or `format-hints-hero`) goes in as exported.
+
+Watch for frame names: the group named `mixed_Input-guidelines` at `410:5489`
+is actually the Use of emojis page, and its hero is the emojis one.
+
+### Flag emoji do not survive the connector export
+
+The MCP connector's export does not rasterise regional-indicator emoji, and it
+drops or flattens some colour emoji (✅ 🎉 🙌, and ❤️ as a black glyph). A bubble
+whose copy reads `R$5,85 🇧🇷 reais` exports with a **blank gap** where the flag
+should be, which silently guts any example whose point _is_ the flag. Exporting
+through the DesignAgent bridge avoids this entirely.
+
+If an export does come out with a gap, composite the platform emoji (Apple Color
+Emoji) over it:
 
 ```bash
 node scripts/composite-emoji.mjs shot.png scripts/assets/emoji-br.png shot.png 374,139 443,267

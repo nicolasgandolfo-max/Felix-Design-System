@@ -339,11 +339,8 @@ const openInput: Pattern = {
     en: "A question answered with free text, for when the answer can't be listed in advance (a name, a custom amount, a city). The user types, and the bot has to read whatever comes back.",
     pt: "Uma pergunta respondida com texto livre, para quando a resposta não pode ser listada de antemão (um nome, um valor personalizado, uma cidade). O usuário digita, e o bot precisa ler o que vier.",
   },
-  hero: `${ASSETS}/open-input-hero-a.png`,
-  heroDetail: [
-    `${ASSETS}/open-input-hero-a.png`,
-    `${ASSETS}/open-input-hero-b.png`,
-  ],
+  hero: `${ASSETS}/open-input-hero.png`,
+  heroDetail: [`${ASSETS}/open-input-hero.png`],
   heroAlt: {
     es: "Pantalla de WhatsApp preguntando a quién enviar dinero, con una pista de formato y un ejemplo",
     en: "WhatsApp screen asking who to send money to, with a format hint and a worked example",
@@ -604,11 +601,8 @@ const mixedInput: Pattern = {
     en: "A question that offers the most common answers as buttons and still lets the user type their own. A fast path for the majority, an open door for the long tail.",
     pt: "Uma pergunta que oferece as respostas mais comuns como botões e ainda deixa digitar a própria. Um caminho rápido para a maioria, uma porta aberta para a cauda longa.",
   },
-  hero: `${ASSETS}/mixed-input-hero-a.png`,
-  heroDetail: [
-    `${ASSETS}/mixed-input-hero-a.png`,
-    `${ASSETS}/mixed-input-hero-b.png`,
-  ],
+  hero: `${ASSETS}/mixed-input-hero.png`,
+  heroDetail: [`${ASSETS}/mixed-input-hero.png`],
   heroAlt: {
     es: "Pantalla de WhatsApp con botones de montos comunes y la opción de escribir un monto propio",
     en: "WhatsApp screen with common amount buttons plus the option to type a custom amount",
@@ -1942,6 +1936,54 @@ const useOfEmojis: Pattern = {
               caption: {
                 es: "Tres emojis de celebración convierten un deber cumplido en una fiesta y entierran el estado.",
                 en: "Three celebratory emoji turn a duty fulfilled into a party and bury the state.",
+              },
+            },
+            {
+              tone: "do",
+              img: `${ASSETS}/emojis-do-4.png`,
+              alt: {
+                es: "Pregunta de monto para Venezuela con la bandera 🇻🇪 junto al país y la tasa de cambio sola, sin emojis",
+                en: "Amount question for Venezuela with the 🇻🇪 flag beside the country and the exchange rate standing alone",
+              },
+              caption: {
+                es: "Una bandera identifica un corredor o un país.",
+                en: "A flag identifies a corridor or country.",
+              },
+            },
+            {
+              tone: "dont",
+              img: `${ASSETS}/emojis-dont-4.png`,
+              alt: {
+                es: "La misma pregunta con 🤑 y 💵 pegados a la tasa de cambio",
+                en: "The same question with 🤑 and 💵 attached to the exchange rate",
+              },
+              caption: {
+                es: "Prohibidos junto a los montos.",
+                en: "Prohibited next to amounts.",
+              },
+            },
+            {
+              tone: "do",
+              img: `${ASSETS}/emojis-do-5.png`,
+              alt: {
+                es: "Aviso «Estamos generando tu enlace de pago» con un solo ⏳ al final",
+                en: 'Notice "Estamos generando tu enlace de pago" with a single ⏳ at the end',
+              },
+              caption: {
+                es: "Un solo marcador de estado para un proceso en marcha: ⏳ dice que el sistema está trabajando y la frase lleva el resto.",
+                en: "One state marker for a process in motion: ⏳ says the system is working, and the sentence carries the rest.",
+              },
+            },
+            {
+              tone: "dont",
+              img: `${ASSETS}/emojis-dont-5.png`,
+              alt: {
+                es: "Aviso «Tu envío está en revisión» con el mismo ⏳",
+                en: 'Notice "Tu envío está en revisión" with the same ⏳',
+              },
+              caption: {
+                es: "El mismo emoji en el contexto equivocado: esto es una retención por revisión. Junto a dinero retenido, un emoji se lee como minimizar el problema.",
+                en: "Same emoji, wrong context: this is a screening hold. Next to money that is held, an emoji reads as minimizing the problem.",
               },
             },
           ],

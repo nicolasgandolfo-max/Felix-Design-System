@@ -28,6 +28,15 @@ const L = (tr: Tr, l: Localized) => tr(l.es, l.en, l.pt);
    El token --border del DS es #cfcabf y no corresponde aquí. */
 const STROKE_SOFT = "border-[rgba(8,36,34,0.12)]";
 
+/* Las pantallas de `public/assets/patterns/` se exportan de Figma a 2x (ver el
+   README). Declararlas como 2x hace que el navegador las dibuje a su tamaño
+   real de Figma, así cada burbuja de WhatsApp sale a la misma escala en todas
+   las páginas sin fijar anchos a mano. El placeholder SVG va como 1x, y la
+   densidad se declara siempre: al navegar entre patrones React reusa el mismo
+   <img>, y si solo se quitara el srcSet Chrome conservaría la densidad 2 del
+   PNG anterior y dibujaría el placeholder a la mitad. */
+const retina = (src: string) => `${src} ${src.endsWith(".png") ? 2 : 1}x`;
+
 /* Misma escala que el resto del portal: `.h3` (1.15rem / 600) para los títulos
    de sección dentro de una página, 15px para la prosa y 14px en tablas. */
 const SECTION_H =
@@ -99,8 +108,9 @@ function ExampleFigure({ example, tr }: { example: Example; tr: Tr }) {
           <img
             loading="lazy"
             src={example.img}
+            srcSet={retina(example.img)}
             alt={L(tr, example.alt)}
-            className="h-auto w-auto max-w-full max-h-[640px]"
+            className="h-auto w-auto max-w-full"
           />
         </div>
         <div
@@ -384,14 +394,15 @@ export function PatternPage() {
           <p className="lead">{L(tr, pattern.lede)}</p>
         </div>
 
-        <div className="flex flex-wrap items-start gap-3 md:max-w-[340px] xl:max-w-[480px] md:justify-end">
+        <div className="flex items-start gap-3 md:max-w-[260px] md:justify-end xl:max-w-[440px]">
           {heroImgs.map((src, i) => (
             <img
               key={i}
               /* El alt describe el conjunto; las láminas extra son decorativas. */
               alt={i === 0 ? L(tr, pattern.heroAlt) : ""}
               src={src}
-              className="h-auto w-[160px] max-w-full xl:w-[220px]"
+              srcSet={retina(src)}
+              className="h-auto w-auto min-w-0 max-w-full max-h-[340px] xl:max-h-[400px]"
             />
           ))}
         </div>
