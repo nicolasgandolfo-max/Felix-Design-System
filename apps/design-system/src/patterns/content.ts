@@ -42,14 +42,9 @@ const closedInput: Pattern = {
           pt: "Use botões quando há de 1 a 3 opções conhecidas.",
         },
         {
-          es: "Usa una lista cuando hay de 4 a 10 opciones conocidas.",
-          en: "Use a list when there are 4 to 10 known options.",
-          pt: "Use uma lista quando há de 4 a 10 opções conhecidas.",
-        },
-        {
-          es: "Más de 10 opciones: repiensa la pregunta, es demasiado amplia para un solo paso.",
-          en: "Beyond 10 options, rethink the question, it is too broad for a single step.",
-          pt: "Mais de 10 opções: repense a pergunta, ela é ampla demais para um único passo.",
+          es: "Usa una lista cuando hay 4 opciones conocidas o más.",
+          en: "Use a list when there are 4 or more known options.",
+          pt: "Use uma lista quando há 4 opções conhecidas ou mais.",
         },
         {
           es: "Nunca hagas que el usuario adivine cómo escribir algo de un conjunto que ya conoces.",
@@ -220,9 +215,9 @@ const closedInput: Pattern = {
             ],
             [
               {
-                es: "4 a 10 opciones",
-                en: "4 to 10 options",
-                pt: "4 a 10 opções",
+                es: "4 opciones o más",
+                en: "4 or more options",
+                pt: "4 opções ou mais",
               },
               {
                 es: "Mensaje de lista",
@@ -233,9 +228,9 @@ const closedInput: Pattern = {
             [
               { es: "Más de 10", en: "More than 10", pt: "Mais de 10" },
               {
-                es: "Repensar el flujo",
-                en: "Rethink the flow",
-                pt: "Repensar o fluxo",
+                es: "Menú paginado",
+                en: "Paginated menu",
+                pt: "Menu paginado",
               },
             ],
           ],
@@ -356,9 +351,9 @@ const openInput: Pattern = {
           pt: "Use entrada aberta só quando o conjunto de respostas é genuinamente imprevisível (um nome completo, um valor personalizado, uma cidade livre).",
         },
         {
-          es: "Si las respuestas se conocen, usa entrada cerrada (botones para 1 a 3, una lista para 4 a 10).",
-          en: "If the answers are known, use Closed input instead (buttons for 1 to 3, a list for 4 to 10).",
-          pt: "Se as respostas são conhecidas, use entrada fechada (botões para 1 a 3, uma lista para 4 a 10).",
+          es: "Si las respuestas se conocen, usa entrada cerrada (botones para 1 a 3, una lista para 4 o más).",
+          en: "If the answers are known, use Closed input instead (buttons for 1 to 3, a list for 4 or more).",
+          pt: "Se as respostas são conhecidas, use entrada fechada (botões para 1 a 3, uma lista para 4 ou mais).",
         },
         {
           es: "Acompaña siempre la pregunta con una pista de formato, para que el usuario sepa cómo responder.",
@@ -506,9 +501,9 @@ const openInput: Pattern = {
             ],
             [
               {
-                es: "Conjunto conocido, 4 a 10",
-                en: "Known set, 4 to 10",
-                pt: "Conjunto conhecido, 4 a 10",
+                es: "Conjunto conocido, 4 o más",
+                en: "Known set, 4 or more",
+                pt: "Conjunto conhecido, 4 ou mais",
               },
               {
                 es: "Mensaje de lista (ver entrada cerrada)",
@@ -1028,9 +1023,9 @@ const menuSections: StandardContent = {
           ],
           [
             {
-              es: "4 a 10 opciones",
-              en: "4 to 10 options",
-              pt: "4 a 10 opções",
+              es: "4 opciones o más",
+              en: "4 or more options",
+              pt: "4 opções ou mais",
             },
             {
               es: "Menú (mensaje de lista)",
@@ -1040,11 +1035,7 @@ const menuSections: StandardContent = {
           ],
           [
             { es: "Más de 10", en: "More than 10", pt: "Mais de 10" },
-            {
-              es: "Paginar el menú, o repensar el paso",
-              en: "Paginate the menu, or rethink the step",
-              pt: "Paginar o menu, ou repensar o passo",
-            },
+            { es: "Menú paginado", en: "Paginated menu", pt: "Menu paginado" },
           ],
         ],
       },
