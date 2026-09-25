@@ -2469,8 +2469,6 @@ const FLOWS_FORM_IMG = {
   branchDont: PENDING, // flows-form-branch-dont.png
   validateDo: PENDING, // flows-form-validate-do.png
   validateDont: PENDING, // flows-form-validate-dont.png
-  prefillDo: PENDING, // flows-form-prefill-do.png
-  prefillDont: PENDING, // flows-form-prefill-dont.png
 };
 
 const FLOWS_VISUAL_IMG = {
@@ -2669,8 +2667,8 @@ const flowsFormSections: StandardContent = {
         tone: "do",
         img: FLOWS_FORM_IMG.branchDo,
         alt: {
-          es: "Formulario que según la primera respuesta muestra solo los campos que corresponden a ese caso",
-          en: "A form that, based on the first answer, shows only the fields that apply to that case",
+          es: "Encuesta NPS: con una nota de 4, la pantalla siguiente pregunta qué podríamos mejorar, con opciones para elegir",
+          en: "NPS survey: after a score of 4, the next screen asks what we could improve, with options to pick from",
         },
         caption: {
           es: "La primera respuesta decide qué se pregunta después.",
@@ -2681,8 +2679,8 @@ const flowsFormSections: StandardContent = {
         tone: "dont",
         img: FLOWS_FORM_IMG.branchDont,
         alt: {
-          es: "Formulario que pide todos los campos de todos los casos y aclara en el texto cuáles ignorar",
-          en: "A form asking for every case's fields at once, with copy telling the user which ones to ignore",
+          es: "La escala NPS y las dos preguntas de seguimiento en la misma pantalla, con el texto «Si pusiste de 0 a 6…» y «Si pusiste 9 o 10…»",
+          en: 'The NPS scale and both follow-up questions on one screen, with copy reading "Si pusiste de 0 a 6…" and "Si pusiste 9 o 10…"',
         },
         caption: {
           es: "Si hay que explicar qué campos ignorar, esa rama la tenía que hacer el Flow.",
@@ -2693,48 +2691,24 @@ const flowsFormSections: StandardContent = {
         tone: "do",
         img: FLOWS_FORM_IMG.validateDo,
         alt: {
-          es: "Un formulario que usa DatePicker, Dropdown y un input numérico",
-          en: "A form using a DatePicker, a Dropdown and a number input",
+          es: "Formulario con nombre, segundo nombre, apellido y segundo apellido, y la casilla «No tengo segundo apellido» marcada, que bloquea ese campo",
+          en: 'Form with first name, middle name, surname and second surname, and the "No tengo segundo apellido" box ticked, which locks that field',
         },
         caption: {
-          es: "Deja que el componente haga la validación.",
-          en: "Let the component do the validation.",
+          es: "El segundo apellido nunca queda vacío por olvido: se escribe o se marca que no hay.",
+          en: "The second surname is never left blank by accident: it's typed, or ticked as not there.",
         },
       },
       {
         tone: "dont",
         img: FLOWS_FORM_IMG.validateDont,
         alt: {
-          es: "Una caja de texto libre grande para algo que un input estructurado podría capturar",
-          en: "A big free-text box for what a structured input could capture",
+          es: "El mismo formulario sin la casilla: el segundo apellido queda vacío y nada confirma si falta o no existe",
+          en: "The same form without the box: the second surname is left blank, with nothing to confirm whether it's missing or doesn't exist",
         },
         caption: {
-          es: "El mismo problema de interpretación que el chat, con más fricción.",
-          en: "Same parsing problem as the chat, with more friction.",
-        },
-      },
-      {
-        tone: "do",
-        img: FLOWS_FORM_IMG.prefillDo,
-        alt: {
-          es: "Formulario con el nombre y el teléfono ya cargados y solo el campo nuevo vacío",
-          en: "A form with the name and phone already filled in and only the new field empty",
-        },
-        caption: {
-          es: "Precargado: pregunta solo lo que falta.",
-          en: "Prefilled: it only asks for what's missing.",
-        },
-      },
-      {
-        tone: "dont",
-        img: FLOWS_FORM_IMG.prefillDont,
-        alt: {
-          es: "Formulario que vuelve a pedir el nombre y el teléfono que el usuario ya había dado",
-          en: "A form asking again for the name and phone the user had already given",
-        },
-        caption: {
-          es: "Pedir de nuevo lo que ya tenemos es el paso más fácil de abandonar.",
-          en: "Asking again for what we already have is the easiest step to abandon.",
+          es: "Si el segundo apellido queda vacío por olvido, el banco no puede asociar la cuenta o la tarjeta al nombre completo.",
+          en: "Leave the second surname blank by accident and the bank can't match the account or card to the full name.",
         },
       },
     ],
